@@ -37,12 +37,12 @@ namespace microwf.Execution
 
     public TriggerResult Trigger(TriggerParam param)
     {
-      var transition = GetTransition(param.TriggerName, param.Instance);
       var context = CreateTriggerContext(param.Instance, param.Variables);
 
-      var triggerInfo = CanMakeTransition(context, param.TriggerName, param.Instance);
-      if (!triggerInfo.CanTrigger) return triggerInfo;
+      var result = CanMakeTransition(context, param.TriggerName, param.Instance);
+      if (!result.CanTrigger) return result;
 
+      var transition = GetTransition(param.TriggerName, param.Instance);
       if (context.TransitionAborted) return CreateTriggerInfo(param.TriggerName, context, transition);
 
       transition.BeforeTransition?.Invoke(context);
@@ -52,7 +52,7 @@ namespace microwf.Execution
 
       transition.AfterTransition?.Invoke(context);
 
-      return triggerInfo;
+      return result;
     }
 
     private static TriggerContext CreateTriggerContext(IWorkflow instance, Dictionary<string, WorkflowVariableBase> variables)
