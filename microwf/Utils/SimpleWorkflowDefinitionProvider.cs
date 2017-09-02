@@ -5,28 +5,28 @@ using System.Linq;
 
 namespace microwf.Utils
 {
-  public class SingletonWorkflowDefinitionProvider : IWorkflowDefinitionProvider
+  public class SimpleWorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {
     private List<IWorkflowDefinition> _workflowDefinitions = null;
 
-    private static SingletonWorkflowDefinitionProvider _instance;
+    private static SimpleWorkflowDefinitionProvider _instance;
 
-    public static SingletonWorkflowDefinitionProvider Instance
+    public static SimpleWorkflowDefinitionProvider Instance
     {
       get
       {
-        if (_instance == null) _instance = new SingletonWorkflowDefinitionProvider();
+        if (_instance == null) _instance = new SimpleWorkflowDefinitionProvider();
 
         return _instance;
       }
     }
 
-    private SingletonWorkflowDefinitionProvider()
+    private SimpleWorkflowDefinitionProvider()
     {
       // so it remains a singleton
     }
 
-    public void RegisterWorkflow<T>(T workflowDefinition) where T : IWorkflowDefinition
+    public void RegisterWorkflowDefinition(IWorkflowDefinition workflowDefinition)
       => _workflowDefinitions.Add(workflowDefinition);
 
     public IWorkflowDefinition GetWorkflowDefinition(string type)

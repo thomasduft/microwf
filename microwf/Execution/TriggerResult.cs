@@ -12,7 +12,7 @@ namespace microwf.Execution
     public bool CanTrigger { get; private set; }
 
     /// <summary>
-    /// Indicates whether a trigger was aborted.
+    /// Indicates whether a trigger was aborted
     /// </summary>
     public bool IsAborted { get; set; }
 
@@ -22,7 +22,7 @@ namespace microwf.Execution
     public string TriggerName { get; set; }
 
     /// <summary>
-    /// Errors that will happen if trigger cannot be triggered.
+    /// Trigger errors that occured during trying to make the transition
     /// </summary>
     public IEnumerable<string> TriggerErrors { get; set; }
 
@@ -37,13 +37,7 @@ namespace microwf.Execution
       CanTrigger = canTrigger;
     }
 
-    /// <summary>
-    /// Access to the workflow variables.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public T GetTriggerContextValue<T>(string key) where T : WorkflowVariableBase
+    public T GetVariable<T>(string key) where T : WorkflowVariableBase
     {
       if (!HasTriggerContext) return null;
 

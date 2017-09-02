@@ -25,9 +25,14 @@ namespace microwf.Execution
 
       return _definition.Transitions
         .Where(t => t.State == instance.State)
-        .Select(t => CreateTriggerInfo(t.Trigger, context, t)).ToList();
+        .Select(t => CreateTriggerResult(t.Trigger, context, t)).ToList();
     }
-
+    
+    /// <summary>
+    /// Checks whether a trigger can be executed
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
     public TriggerResult CanTrigger(TriggerParam param)
     {
       var context = CreateTriggerContext(param.Instance, param.Variables);
@@ -35,6 +40,11 @@ namespace microwf.Execution
       return CanMakeTransition(context, param.TriggerName, param.Instance);
     }
 
+    /// <summary>
+    /// Triggers and executes a transition.
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
     public TriggerResult Trigger(TriggerParam param)
     {
       var context = CreateTriggerContext(param.Instance, param.Variables);
@@ -43,7 +53,7 @@ namespace microwf.Execution
       if (!result.CanTrigger) return result;
 
       var transition = GetTransition(param.TriggerName, param.Instance);
-      if (context.TransitionAborted) return CreateTriggerInfo(param.TriggerName, context, transition);
+      if (context.TransitionAborted) return CreateTriggerResult(param.TriggerName, context, transition);
 
       transition.BeforeTransition?.Invoke(context);
 
@@ -68,7 +78,7 @@ namespace microwf.Execution
       return context;
     }
 
-    private static TriggerResult CreateTriggerInfo(string triggerName, TriggerContext context, Transition transition)
+    private static TriggerResult CreateTriggerResult(string triggerName, TriggerContext context, Transition transition)
     {
       return new TriggerResult(context, transition != null && transition.CanMakeTransition(context))
       {
@@ -87,12 +97,13 @@ namespace microwf.Execution
     private TriggerResult CanMakeTransition(TriggerContext context, string triggerName, IWorkflow instance)
     {
       var transition = GetTransition(triggerName, instance);
-      var triggerInfo = CreateTriggerInfo(triggerName, context, transition);
-      if (transition != null) return triggerInfo;
+      var triggerResult = CreateTriggerResult(triggerName, context, transition);
+
+      if (transition != null) return triggerResult;
 
       context.AddError($"Transition for trigger '{triggerName}' not found!");
 
-      return triggerInfo;
+      return triggerResult;
     }
   }
 }

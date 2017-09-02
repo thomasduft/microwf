@@ -8,12 +8,12 @@ using System.Linq;
 namespace microwf.tests.Execution
 {
   [TestClass]
-	public class WorkflowExecutionTest
-	{
-		[TestMethod]
-		public void GetTriggers_InitialStateIsOff_PossibleTriggerIsSwitchOn()
-		{
-			// Arrange
+  public class WorkflowExecutionTest
+  {
+    [TestMethod]
+    public void GetTriggers_InitialStateIsOff_TriggerNameIsSwitchOn()
+    {
+      // Arrange
       Switcher switcher = new Switcher
       {
         Type = OnOffWorkflow.NAME
@@ -21,18 +21,18 @@ namespace microwf.tests.Execution
 
       WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
 
-			// Act
-			IEnumerable<TriggerResult> triggerInfos = execution.GetTriggers(switcher);
+      // Act
+      IEnumerable<TriggerResult> result = execution.GetTriggers(switcher);
 
-			// Assert
-			Assert.IsNotNull(triggerInfos);
-			Assert.AreEqual(1, triggerInfos.Count());
-			Assert.AreEqual("SwitchOn", triggerInfos.First().TriggerName);
-		}
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(1, result.Count());
+      Assert.AreEqual("SwitchOn", result.First().TriggerName);
+    }
 
-		[TestMethod]
-		public void Trigger_InitialStateIsOff_StateIsOn()
-		{
+    [TestMethod]
+    public void Trigger_InitialStateIsOff_StateIsOn()
+    {
       // Arrange
       Switcher switcher = new Switcher
       {
@@ -40,12 +40,15 @@ namespace microwf.tests.Execution
       };
       WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
 
-			// Act
-			execution.Trigger(new TriggerParam("SwitchOn", switcher));
+      // Act
+      TriggerResult result = execution.Trigger(new TriggerParam("SwitchOn", switcher));
 
-			// Assert
-			Assert.IsNotNull(switcher);
-			Assert.AreEqual("On", switcher.State);
-		}
-	}
+      // Assert
+      Assert.IsNotNull(switcher);
+      Assert.AreEqual("On", switcher.State);
+
+      Assert.IsNotNull(result);
+      Assert.AreEqual("SwitchOn", result.TriggerName);
+    }
+  }
 }

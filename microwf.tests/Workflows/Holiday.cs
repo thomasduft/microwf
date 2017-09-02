@@ -1,4 +1,4 @@
-﻿using microwf.Execution;
+﻿using microwf.Definition;
 
 namespace microwf.tests.Workflows
 {

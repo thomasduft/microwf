@@ -1,12 +1,13 @@
-﻿using System;
+﻿using microwf.Definition;
+using System;
 using System.Collections.Generic;
 
 namespace microwf.Execution
 {
-	/// <summary>
-	/// Provides information about the trigger to be executed.
-	/// </summary>
-	public class TriggerContext
+  /// <summary>
+  /// Provides information about the trigger to be executed
+  /// </summary>
+  public class TriggerContext
 	{
 		private Dictionary<string, object> _variables { get; set; }
 		private List<string> _errors;
@@ -20,7 +21,7 @@ namespace microwf.Execution
 		}
 
 		/// <summary>
-		/// Indicates whether a transition should be aborted.
+		/// Indicates whether a transition should be aborted
 		/// </summary>
 		public bool TransitionAborted { get; private set; }	
 
@@ -30,7 +31,7 @@ namespace microwf.Execution
 		public IWorkflow Instance { get; private set; }
 
 		/// <summary>
-		/// Returns a list of error messages if during triggering some validation happened.
+		/// Returns a list of error messages if during triggering some validation happened
 		/// </summary>
 		public IEnumerable<string> Errors
 		{
@@ -75,7 +76,7 @@ namespace microwf.Execution
 		}
 
 		/// <summary>
-		/// Gets a workflow variable by its key.
+		/// Gets a workflow variable by its key
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="key"></param>
@@ -88,7 +89,7 @@ namespace microwf.Execution
 		}
 
 		/// <summary>
-		/// Adds an error message.
+		/// Adds an error message
 		/// Note: Use it to do validation.
 		/// </summary>
 		/// <param name="message"></param>
@@ -98,7 +99,7 @@ namespace microwf.Execution
 		}
 
 		/// <summary>
-		/// Stops the current transition to be done.
+		/// Stops the current transition to be done
 		/// Note: this can only be called before the transition is done.
 		/// </summary>
 		public void AbortTransition(string reason)

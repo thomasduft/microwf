@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using microwf.Definition;
+using System.Collections.Generic;
 
 namespace microwf.Execution
 {
@@ -27,7 +28,6 @@ namespace microwf.Execution
       {
         Variables = variables;
       }
-
     }
   }
 }
