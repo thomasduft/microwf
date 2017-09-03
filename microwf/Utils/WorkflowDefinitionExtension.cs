@@ -6,7 +6,7 @@ namespace microwf.Utils
   public static class WorkflowDefinitionExtension
   {
     /// <summary>
-    /// Exports the workflow definition to a dot diagraph.
+    /// Exports the workflow definition to a dot directed graph.
     /// See: http://www.webgraphviz.com/
     /// </summary>
     /// <param name="workflow"></param>
