@@ -31,8 +31,7 @@ namespace microwf.Utils
 
     public IWorkflowDefinition GetWorkflowDefinition(string type)
     {
-      return _workflowDefinitions.First
-              (w => w.WorkflowType.Equals(type, StringComparison.InvariantCultureIgnoreCase));
+      return _workflowDefinitions.First(w => w.WorkflowType == type);
     }
   }
 }
