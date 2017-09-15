@@ -34,7 +34,7 @@ namespace microwf.tests.WorkflowDefinitions
         {
           new Trigger { Name = "Apply", DisplayName = "Apply" },
           new Trigger { Name = "Approve", DisplayName = "Approve" },
-          new Trigger { Name = "Reject", DisplayName = "Reject" },
+          new Trigger { Name = "Reject", DisplayName = "Reject" }
         };
       }
     }
@@ -47,7 +47,7 @@ namespace microwf.tests.WorkflowDefinitions
         {
           new Transition {State = "New", Trigger = "Apply", TargetState ="Applied" },
           new Transition {State = "Applied", Trigger = "Approve", TargetState ="Approved"},
-          new Transition {State = "Applied", Trigger = "Reject", TargetState ="Rejected"},
+          new Transition {State = "Applied", Trigger = "Reject", TargetState ="Rejected"}
         };
       }
     }
