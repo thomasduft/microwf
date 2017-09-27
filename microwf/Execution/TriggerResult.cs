@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace microwf.Execution
 {
@@ -26,9 +27,17 @@ namespace microwf.Execution
     /// </summary>
     public IEnumerable<string> TriggerErrors { get; set; }
 
-    private bool HasTriggerContext
+    /// <summary>
+    /// Returns the current state of the IWorkflow instance.
+    /// </summary>
+    public string CurrentState
     {
-      get { return _triggerContext != null; }
+      get { return _triggerContext.Instance.State; }
+    }
+
+    private bool HasTriggerErrors
+    {
+      get { return TriggerErrors != null && TriggerErrors.Count() > 0; }
     }
 
     public TriggerResult(TriggerContext context, bool canTrigger)
@@ -39,7 +48,7 @@ namespace microwf.Execution
 
     public T GetVariable<T>(string key) where T : WorkflowVariableBase
     {
-      if (!HasTriggerContext) return null;
+      if (_triggerContext == null) return null;
 
       return _triggerContext.GetVariable<T>(key);
     }
