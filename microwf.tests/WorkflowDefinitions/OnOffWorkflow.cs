@@ -65,15 +65,15 @@ namespace microwf.tests.WorkflowDefinitions
 
     private void BeforeTransition(TriggerContext context)
     {
-      Console.WriteLine("Current state is: '{0}'", context.Instance.State);
-
-      var switcher = context.Instance as Switcher;
+      var switcher = context.GetWorkflow<Switcher>();
+      Console.WriteLine("Current state is: '{0}'", switcher.State);
       Console.WriteLine("Amount is: '{0}'", switcher.Amount);
     }
 
     private void AfterTransition(TriggerContext context)
     {
-      Console.WriteLine("Current state is: '{0}'", context.Instance.State);
+      var switcher = context.GetWorkflow<Switcher>();
+      Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
   }
 }

@@ -32,7 +32,7 @@ namespace microwf.Execution
     /// </summary>
     public string CurrentState
     {
-      get { return _triggerContext.Instance.State; }
+      get { return _triggerContext.Workflow.State; }
     }
 
     private bool HasTriggerErrors

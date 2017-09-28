@@ -31,6 +31,25 @@ namespace microwf.tests.Execution
     }
 
     [TestMethod]
+    public void CanTrigger_InitialStateIsOff_CanTriggerToStateOn()
+    {
+      // Arrange
+      Switcher switcher = new Switcher
+      {
+        Type = OnOffWorkflow.NAME
+      };
+
+      WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
+
+      // Act
+      TriggerResult result = execution.CanTrigger(new TriggerParam("SwitchOn", switcher));
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(true, result.CanTrigger);
+    }
+
+    [TestMethod]
     public void Trigger_InitialStateIsOff_StateIsOn()
     {
       // Arrange
@@ -45,7 +64,7 @@ namespace microwf.tests.Execution
 
       // Assert
       Assert.IsNotNull(switcher);
-      Assert.AreEqual("On", switcher.State);
+      Assert.AreEqual("On", result.CurrentState);
 
       Assert.IsNotNull(result);
       Assert.AreEqual("SwitchOn", result.TriggerName);

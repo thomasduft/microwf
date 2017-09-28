@@ -8,104 +8,114 @@ namespace microwf.Execution
   /// Provides information about the trigger to be executed
   /// </summary>
   public class TriggerContext
-	{
-		private Dictionary<string, object> _variables { get; set; }
-		private List<string> _errors;
+  {
+    private Dictionary<string, object> _variables { get; set; }
+    private List<string> _errors;
 
-		/// <summary>
-		/// Indicates whether variables are available
-		/// </summary>
-		public bool HasVariables
-		{
-			get { return _variables.Count > 0; }
-		}
+    /// <summary>
+    /// Indicates whether variables are available
+    /// </summary>
+    public bool HasVariables
+    {
+      get { return _variables.Count > 0; }
+    }
 
-		/// <summary>
-		/// Indicates whether a transition should be aborted
-		/// </summary>
-		public bool TransitionAborted { get; private set; }	
+    /// <summary>
+    /// Indicates whether a transition should be aborted
+    /// </summary>
+    public bool TransitionAborted { get; private set; }
 
-		/// <summary>
-		/// Instance of the workflow
-		/// </summary>
-		public IWorkflow Instance { get; private set; }
+    /// <summary>
+    /// Instance of the workflow
+    /// </summary>
+    public IWorkflow Workflow { get; private set; }
 
-		/// <summary>
-		/// Returns a list of error messages if during triggering some validation happened
-		/// </summary>
-		public IEnumerable<string> Errors
-		{
-			get { return _errors; }
-		}
+    /// <summary>
+    /// Returns a list of error messages if during triggering some validation happened
+    /// </summary>
+    public IEnumerable<string> Errors
+    {
+      get { return _errors; }
+    }
 
-		public TriggerContext(IWorkflow instance)
-		{
-			Instance = instance;
-			_variables = new Dictionary<string, object>();
-			_errors = new List<string>();
-		}
+    public TriggerContext(IWorkflow instance)
+    {
+      Workflow = instance;
+      _variables = new Dictionary<string, object>();
+      _errors = new List<string>();
+    }
 
-		/// <summary>
-		/// Checks whether a key is available for the variables dictionary
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public bool ContainsKey(string key)
-		{
-			if (!HasVariables) return false;
+    /// <summary>
+    /// Returns the typed workflow that you expect.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T GetWorkflow<T>() where T : IWorkflow
+    {
+      return (T)Workflow;
+    }
 
-			return _variables.ContainsKey(key);
-		}
+    /// <summary>
+    /// Checks whether a key is available for the variables dictionary
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public bool ContainsKey(string key)
+    {
+      if (!HasVariables) return false;
 
-		/// <summary>
-		/// Sets a workflow variable
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="key"></param>
-		/// <param name="value"></param>
-		public void SetVariable<T>(string key, T value) where T : WorkflowVariableBase
-		{
-			if (_variables.ContainsKey(key))
-			{
-				_variables[key] = value;
-			}
-			else
-			{
-				_variables.Add(key, value);
-			}
-		}
+      return _variables.ContainsKey(key);
+    }
 
-		/// <summary>
-		/// Gets a workflow variable by its key
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public T GetVariable<T>(string key) where T : WorkflowVariableBase
-		{
-			if (!_variables.ContainsKey(key)) throw new Exception(string.Format("Key '{0}' not found!", key));
+    /// <summary>
+    /// Sets a workflow variable
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    public void SetVariable<T>(string key, T value) where T : WorkflowVariableBase
+    {
+      if (_variables.ContainsKey(key))
+      {
+        _variables[key] = value;
+      }
+      else
+      {
+        _variables.Add(key, value);
+      }
+    }
 
-			return (T)_variables[key];
-		}
+    /// <summary>
+    /// Gets a workflow variable by its key
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public T GetVariable<T>(string key) where T : WorkflowVariableBase
+    {
+      if (!_variables.ContainsKey(key)) throw new Exception(string.Format("Key '{0}' not found!", key));
 
-		/// <summary>
-		/// Adds an error message
-		/// Note: Use it to do validation.
-		/// </summary>
-		/// <param name="message"></param>
-		public void AddError(string message)
-		{
-			_errors.Add(message);
-		}
+      return (T)_variables[key];
+    }
 
-		/// <summary>
-		/// Stops the current transition to be done
-		/// Note: this can only be called before the transition is done.
-		/// </summary>
-		public void AbortTransition(string reason)
-		{
-			TransitionAborted = true;
-			_errors.Add(reason);
-		}
-	}
+    /// <summary>
+    /// Adds an error message
+    /// Note: Use it to do validation.
+    /// </summary>
+    /// <param name="message"></param>
+    public void AddError(string message)
+    {
+      _errors.Add(message);
+    }
+
+    /// <summary>
+    /// Stops the current transition to be done
+    /// Note: this can only be called before the transition is done.
+    /// </summary>
+    public void AbortTransition(string reason)
+    {
+      TransitionAborted = true;
+      _errors.Add(reason);
+    }
+  }
 }
