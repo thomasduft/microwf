@@ -9,8 +9,8 @@ namespace microwf.tests.Workflows
     public string Type { get; set; }
 
     // some other properties
-    public decimal Amount { get; set; }
-    public int UserId { get; set; }
+    public string Me { get; set; }
+    public string Boss { get; set; }
 
     public Holiday()
     {

@@ -1,4 +1,6 @@
 ﻿using microwf.Definition;
+using microwf.Execution;
+using microwf.tests.Workflows;
 using System.Collections.Generic;
 
 namespace microwf.tests.WorkflowDefinitions
@@ -45,11 +47,45 @@ namespace microwf.tests.WorkflowDefinitions
       {
         return new List<Transition>
         {
-          new Transition {State = "New", Trigger = "Apply", TargetState ="Applied" },
-          new Transition {State = "Applied", Trigger = "Approve", TargetState ="Approved"},
-          new Transition {State = "Applied", Trigger = "Reject", TargetState ="Rejected"}
+          new Transition {
+            State = "New",
+            Trigger = "Apply",
+            TargetState ="Applied",
+            CanMakeTransition = MeApplyingForHolidays
+          },
+          new Transition {
+            State = "Applied",
+            Trigger = "Approve",
+            TargetState ="Approved",
+            CanMakeTransition = BossIsApproving,
+            AfterTransition = ThankBossForApproving
+          },
+          new Transition {
+            State = "Applied",
+            Trigger = "Reject",
+            TargetState ="Rejected"
+          }
         };
       }
+    }
+
+    private bool MeApplyingForHolidays(TriggerContext context)
+    {
+      var holiday = context.GetWorkflow<Holiday>();
+
+      return holiday.Me == "Me";
+    }
+
+    private bool BossIsApproving(TriggerContext context)
+    {
+      var holiday = context.GetWorkflow<Holiday>();
+
+      return holiday.Boss == "NiceBoss";
+    }
+
+    private void ThankBossForApproving(TriggerContext context)
+    {
+      // SendMail("Thank you!!!");
     }
   }
 }
