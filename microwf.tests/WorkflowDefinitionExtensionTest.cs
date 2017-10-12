@@ -3,7 +3,7 @@ using microwf.tests.WorkflowDefinitions;
 using microwf.Utils;
 using System.Text;
 
-namespace microwf.tests.Utils
+namespace microwf.tests
 {
   [TestClass]
   public class WorkflowDefinitionExtensionTest
