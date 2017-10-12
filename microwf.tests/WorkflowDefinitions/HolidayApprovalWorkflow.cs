@@ -91,8 +91,8 @@ namespace microwf.tests.WorkflowDefinitions
   public class Holiday : IWorkflow
   {
     // IWorkflow properties
-    public string State { get; set; }
     public string Type { get; set; }
+    public string State { get; set; }
 
     // some other properties
     public string Me { get; set; }

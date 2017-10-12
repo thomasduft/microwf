@@ -66,7 +66,6 @@ namespace microwf.tests.WorkflowDefinitions
     {
       var switcher = context.GetWorkflow<Switcher>();
       Console.WriteLine("Current state is: '{0}'", switcher.State);
-      Console.WriteLine("Amount is: '{0}'", switcher.Amount);
     }
 
     private void AfterTransition(TriggerContext context)
@@ -79,11 +78,10 @@ namespace microwf.tests.WorkflowDefinitions
   public class Switcher : IWorkflow
   {
     // IWorkflow properties
-    public string State { get; set; }
     public string Type { get; set; }
+    public string State { get; set; }
 
     // some other properties
-    public decimal Amount { get; set; }
     public int UserId { get; set; }
 
     public Switcher()

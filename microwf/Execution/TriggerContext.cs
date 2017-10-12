@@ -9,7 +9,7 @@ namespace microwf.Execution
   /// </summary>
   public class TriggerContext
   {
-    private Dictionary<string, object> _variables { get; set; }
+    private Dictionary<string, WorkflowVariableBase> _variables { get; set; }
     private List<string> _errors;
 
     /// <summary>
@@ -41,7 +41,7 @@ namespace microwf.Execution
     public TriggerContext(IWorkflow instance)
     {
       Workflow = instance;
-      _variables = new Dictionary<string, object>();
+      _variables = new Dictionary<string, WorkflowVariableBase>();
       _errors = new List<string>();
     }
 
@@ -93,7 +93,8 @@ namespace microwf.Execution
     /// <returns></returns>
     public T GetVariable<T>(string key) where T : WorkflowVariableBase
     {
-      if (!_variables.ContainsKey(key)) throw new Exception(string.Format("Key '{0}' not found!", key));
+      if (!_variables.ContainsKey(key))
+        throw new Exception(string.Format("Key '{0}' not found!", key));
 
       return (T)_variables[key];
     }
