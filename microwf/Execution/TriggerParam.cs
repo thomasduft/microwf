@@ -6,7 +6,7 @@ namespace microwf.Execution
   public class TriggerParam
   {
     public string TriggerName { get; private set; }
-    public IWorkflow Instance { get; private set; }
+    public IWorkflow Workflow { get; private set; }
     public Dictionary<string, WorkflowVariableBase> Variables { get; private set; }
     public bool HasVariables
     {
@@ -18,11 +18,11 @@ namespace microwf.Execution
 
     public TriggerParam(
       string triggerName,
-      IWorkflow instance,
+      IWorkflow workflow,
       Dictionary<string, WorkflowVariableBase> variables = null)
     {
       TriggerName = triggerName;
-      Instance = instance;
+      Workflow = workflow;
 
       if (variables != null)
       {

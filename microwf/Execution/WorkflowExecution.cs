@@ -19,15 +19,17 @@ namespace microwf.Execution
     /// <summary>
     /// Returns all possible triggers that can be made for the current state
     /// </summary>
-    public IEnumerable<TriggerResult> GetTriggers(IWorkflow instance, Dictionary<string, WorkflowVariableBase> variables = null)
+    public IEnumerable<TriggerResult> GetTriggers(
+      IWorkflow workflow,
+      Dictionary<string, WorkflowVariableBase> variables = null)
     {
-      var context = CreateTriggerContext(instance, variables);
+      var context = CreateTriggerContext(workflow, variables);
 
       return _definition.Transitions
-        .Where(t => t.State == instance.State)
+        .Where(t => t.State == workflow.State)
         .Select(t => CreateTriggerResult(t.Trigger, context, t)).ToList();
     }
-    
+
     /// <summary>
     /// Checks whether a trigger can be executed
     /// </summary>
@@ -35,9 +37,9 @@ namespace microwf.Execution
     /// <returns></returns>
     public TriggerResult CanTrigger(TriggerParam param)
     {
-      var context = CreateTriggerContext(param.Instance, param.Variables);
+      var context = CreateTriggerContext(param.Workflow, param.Variables);
 
-      return CanMakeTransition(context, param.TriggerName, param.Instance);
+      return CanMakeTransition(context, param.TriggerName, param.Workflow);
     }
 
     /// <summary>
@@ -47,25 +49,28 @@ namespace microwf.Execution
     /// <returns></returns>
     public TriggerResult Trigger(TriggerParam param)
     {
-      var context = CreateTriggerContext(param.Instance, param.Variables);
+      var context = CreateTriggerContext(param.Workflow, param.Variables);
 
-      var result = CanMakeTransition(context, param.TriggerName, param.Instance);
+      var result = CanMakeTransition(context, param.TriggerName, param.Workflow);
       if (!result.CanTrigger) return result;
 
-      var transition = GetTransition(param.TriggerName, param.Instance);
-      if (context.TransitionAborted) return CreateTriggerResult(param.TriggerName, context, transition);
+      var transition = GetTransition(param.TriggerName, param.Workflow);
+      if (context.TransitionAborted)
+        return CreateTriggerResult(param.TriggerName, context, transition);
 
       transition.BeforeTransition?.Invoke(context);
 
       var state = _definition.States.Single(s => s == transition.TargetState);
-      param.Instance.State = state;
+      param.Workflow.State = state;
 
       transition.AfterTransition?.Invoke(context);
 
       return result;
     }
 
-    private static TriggerContext CreateTriggerContext(IWorkflow instance, Dictionary<string, WorkflowVariableBase> variables)
+    private static TriggerContext CreateTriggerContext(
+      IWorkflow instance,
+      Dictionary<string, WorkflowVariableBase> variables)
     {
       var context = new TriggerContext(instance);
       if (variables != null)
@@ -78,9 +83,14 @@ namespace microwf.Execution
       return context;
     }
 
-    private static TriggerResult CreateTriggerResult(string triggerName, TriggerContext context, Transition transition)
+    private static TriggerResult CreateTriggerResult(
+      string triggerName,
+      TriggerContext context,
+      Transition transition)
     {
-      return new TriggerResult(context, transition != null && transition.CanMakeTransition(context))
+      var canTrigger = transition != null && transition.CanMakeTransition(context);
+
+      return new TriggerResult(context, canTrigger)
       {
         IsAborted = context.TransitionAborted,
         TriggerName = triggerName,
@@ -94,7 +104,10 @@ namespace microwf.Execution
         .SingleOrDefault(t => t.Trigger == triggerName && t.State == instance.State);
     }
 
-    private TriggerResult CanMakeTransition(TriggerContext context, string triggerName, IWorkflow instance)
+    private TriggerResult CanMakeTransition(
+      TriggerContext context, 
+      string triggerName, 
+      IWorkflow instance)
     {
       var transition = GetTransition(triggerName, instance);
       var triggerResult = CreateTriggerResult(triggerName, context, transition);
