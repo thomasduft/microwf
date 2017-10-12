@@ -69,10 +69,10 @@ namespace microwf.Execution
     }
 
     private static TriggerContext CreateTriggerContext(
-      IWorkflow instance,
+      IWorkflow workflow,
       Dictionary<string, WorkflowVariableBase> variables)
     {
-      var context = new TriggerContext(instance);
+      var context = new TriggerContext(workflow);
       if (variables != null)
       {
         foreach (var variable in variables)
@@ -98,18 +98,18 @@ namespace microwf.Execution
       };
     }
 
-    private Transition GetTransition(string triggerName, IWorkflow instance)
+    private Transition GetTransition(string triggerName, IWorkflow workflow)
     {
       return _definition.Transitions
-        .SingleOrDefault(t => t.Trigger == triggerName && t.State == instance.State);
+        .SingleOrDefault(t => t.Trigger == triggerName && t.State == workflow.State);
     }
 
     private TriggerResult CanMakeTransition(
       TriggerContext context, 
       string triggerName, 
-      IWorkflow instance)
+      IWorkflow workflow)
     {
-      var transition = GetTransition(triggerName, instance);
+      var transition = GetTransition(triggerName, workflow);
       var triggerResult = CreateTriggerResult(triggerName, context, transition);
 
       if (transition != null) return triggerResult;

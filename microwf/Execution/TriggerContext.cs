@@ -38,9 +38,9 @@ namespace microwf.Execution
       get { return _errors; }
     }
 
-    public TriggerContext(IWorkflow instance)
+    public TriggerContext(IWorkflow workflow)
     {
-      Workflow = instance;
+      Workflow = workflow;
       _variables = new Dictionary<string, WorkflowVariableBase>();
       _errors = new List<string>();
     }
