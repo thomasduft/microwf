@@ -46,12 +46,14 @@ public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   private bool MeApplyingForHolidays(TriggerContext context)
   {
     var holiday = context.GetWorkflow<Holiday>();
+
     return holiday.Me == "Me";
   }
 
   private bool BossIsApproving(TriggerContext context)
   {
     var holiday = context.GetWorkflow<Holiday>();
+    
     return holiday.Boss == "NiceBoss";
   }
   
