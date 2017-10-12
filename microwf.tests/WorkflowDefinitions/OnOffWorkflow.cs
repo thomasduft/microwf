@@ -2,43 +2,20 @@
 using microwf.Execution;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace microwf.tests.WorkflowDefinitions
 {
-  public class OnOffWorkflow : IWorkflowDefinition
+  public class OnOffWorkflow : WorkflowDefinitionBase
   {
     public const string NAME = "OnOffWorkflow";
 
-    public string WorkflowType
+    public override string WorkflowType
     {
       get { return NAME; }
     }
 
-    public List<State> States
-    {
-      get
-      {
-        return new List<State>
-        {
-          new State { Name = "On", DisplayName = "On" },
-          new State { Name = "Off", DisplayName = "Off" }
-        };
-      }
-    }
-
-    public List<Trigger> Triggers
-    {
-      get
-      {
-        return new List<Trigger>
-        {
-          new Trigger { Name = "SwitchOn", DisplayName = "Switch on" },
-          new Trigger { Name = "SwitchOff", DisplayName = "Switch off" }
-        };
-      }
-    }
-
-    public List<Transition> Transitions
+    public override List<Transition> Transitions
     {
       get
       {
@@ -65,12 +42,14 @@ namespace microwf.tests.WorkflowDefinitions
     private void BeforeTransition(TriggerContext context)
     {
       var switcher = context.GetWorkflow<Switcher>();
+
       Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
 
     private void AfterTransition(TriggerContext context)
     {
       var switcher = context.GetWorkflow<Switcher>();
+      
       Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
   }

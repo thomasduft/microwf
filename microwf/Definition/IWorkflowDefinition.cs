@@ -12,12 +12,12 @@ namespace microwf.Definition
     /// <summary>
     /// Returns a list of states for the workflow.
     /// </summary>
-    List<State> States { get; }
+    List<string> States { get; }
 
     /// <summary>
     /// Returns a list of triggers for the workflow.
     /// </summary>
-    List<Trigger> Triggers { get; }
+    List<string> Triggers { get; }
 
     /// <summary>
     /// Returns a list of transitions for the workflow.

@@ -1,0 +1,4 @@
+{
+    // Folder path of .NET Core test project. You could set the full path or the relative path to the workspace root path.
+    "dotnet-test-explorer.testProjectPath": "microwf.tests"
+}

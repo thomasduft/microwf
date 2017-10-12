@@ -57,8 +57,8 @@ namespace microwf.Execution
 
       transition.BeforeTransition?.Invoke(context);
 
-      var state = _definition.States.Single(s => s.Name == transition.TargetState);
-      param.Instance.State = state.Name;
+      var state = _definition.States.Single(s => s == transition.TargetState);
+      param.Instance.State = state;
 
       transition.AfterTransition?.Invoke(context);
 
