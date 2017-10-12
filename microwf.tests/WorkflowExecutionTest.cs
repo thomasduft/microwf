@@ -1,11 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Execution;
 using microwf.tests.WorkflowDefinitions;
-using microwf.tests.Workflows;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.tests.Execution
+namespace microwf.tests
 {
   [TestClass]
   public class WorkflowExecutionTest

@@ -1,6 +1,5 @@
 ﻿using microwf.Definition;
 using microwf.Execution;
-using microwf.tests.Workflows;
 using System;
 using System.Collections.Generic;
 
@@ -74,6 +73,22 @@ namespace microwf.tests.WorkflowDefinitions
     {
       var switcher = context.GetWorkflow<Switcher>();
       Console.WriteLine("Current state is: '{0}'", switcher.State);
+    }
+  }
+
+  public class Switcher : IWorkflow
+  {
+    // IWorkflow properties
+    public string State { get; set; }
+    public string Type { get; set; }
+
+    // some other properties
+    public decimal Amount { get; set; }
+    public int UserId { get; set; }
+
+    public Switcher()
+    {
+      State = "Off";
     }
   }
 }
