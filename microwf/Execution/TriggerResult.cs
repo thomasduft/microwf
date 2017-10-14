@@ -8,41 +8,45 @@ namespace microwf.Execution
     private readonly TriggerContext _triggerContext;
 
     /// <summary>
-    /// Indicates whether the trigger can be triggered
+    /// Indicates whether the transition can be triggered
     /// </summary>
     public bool CanTrigger { get; private set; }
 
     /// <summary>
     /// Indicates whether a trigger was aborted
     /// </summary>
-    public bool IsAborted { get; set; }
+    public bool IsAborted { get; private set; }
 
     /// <summary>
     /// Trigger that should be triggered
     /// </summary>
-    public string TriggerName { get; set; }
+    public string TriggerName { get; private set; }
+
+    private bool HasErrors
+    {
+      get { return Errors != null && Errors.Count() > 0; }
+    }
 
     /// <summary>
     /// Trigger errors that occured during trying to make the transition
     /// </summary>
-    public IEnumerable<string> TriggerErrors { get; set; }
+    public IEnumerable<string> Errors { get; private set; }
 
     /// <summary>
-    /// Returns the current state of the IWorkflow instance.
+    /// Returns the current state of the IWorkflow instance
     /// </summary>
     public string CurrentState
     {
       get { return _triggerContext.Workflow.State; }
     }
 
-    private bool HasTriggerErrors
-    {
-      get { return TriggerErrors != null && TriggerErrors.Count() > 0; }
-    }
-
-    public TriggerResult(TriggerContext context, bool canTrigger)
+    public TriggerResult(string triggerName, TriggerContext context, bool canTrigger)
     {
       _triggerContext = context;
+
+      TriggerName = triggerName;
+      Errors = _triggerContext.Errors;
+      IsAborted = _triggerContext.TransitionAborted;
       CanTrigger = canTrigger;
     }
 

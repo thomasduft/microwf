@@ -90,12 +90,7 @@ namespace microwf.Execution
     {
       var canTrigger = transition != null && transition.CanMakeTransition(context);
 
-      return new TriggerResult(context, canTrigger)
-      {
-        IsAborted = context.TransitionAborted,
-        TriggerName = triggerName,
-        TriggerErrors = context.Errors
-      };
+      return new TriggerResult(triggerName, context, canTrigger);
     }
 
     private Transition GetTransition(string triggerName, IWorkflow workflow)

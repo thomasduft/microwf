@@ -31,7 +31,7 @@ namespace microwf.Execution
     public IWorkflow Workflow { get; private set; }
 
     /// <summary>
-    /// Returns a list of error messages if during triggering some validation happened
+    /// Returns a list of error messages if during triggering some validation failed
     /// </summary>
     public IEnumerable<string> Errors
     {
@@ -46,7 +46,7 @@ namespace microwf.Execution
     }
 
     /// <summary>
-    /// Returns the typed workflow that you expect.
+    /// Returns the typed workflow that you expect
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
