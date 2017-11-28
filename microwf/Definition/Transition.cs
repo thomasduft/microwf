@@ -9,9 +9,9 @@ namespace microwf.Definition
     public string Trigger { get; set; }
     public string TargetState { get; set; }
 
-    public Func<TriggerContext, bool> CanMakeTransition { get; set; }
-    public Action<TriggerContext> BeforeTransition { get; set; }
-    public Action<TriggerContext> AfterTransition { get; set; }
+    public Func<TransitionContext, bool> CanMakeTransition { get; set; }
+    public Action<TransitionContext> BeforeTransition { get; set; }
+    public Action<TransitionContext> AfterTransition { get; set; }
 
     public Transition()
     {

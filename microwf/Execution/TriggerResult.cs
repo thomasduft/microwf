@@ -5,7 +5,7 @@ namespace microwf.Execution
 {
   public class TriggerResult
   {
-    private readonly TriggerContext _triggerContext;
+    private readonly TransitionContext _triggerContext;
 
     /// <summary>
     /// Indicates whether the transition can be triggered
@@ -40,7 +40,7 @@ namespace microwf.Execution
       get { return _triggerContext.Workflow.State; }
     }
 
-    public TriggerResult(string triggerName, TriggerContext context, bool canTrigger)
+    public TriggerResult(string triggerName, TransitionContext context, bool canTrigger)
     {
       _triggerContext = context;
 

@@ -7,7 +7,7 @@ namespace microwf.Execution
   /// <summary>
   /// Provides information about the trigger to be executed
   /// </summary>
-  public class TriggerContext
+  public class TransitionContext
   {
     private Dictionary<string, WorkflowVariableBase> _variables { get; set; }
     private List<string> _errors;
@@ -38,7 +38,7 @@ namespace microwf.Execution
       get { return _errors; }
     }
 
-    public TriggerContext(IWorkflow workflow)
+    public TransitionContext(IWorkflow workflow)
     {
       Workflow = workflow;
       _variables = new Dictionary<string, WorkflowVariableBase>();

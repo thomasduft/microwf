@@ -23,7 +23,7 @@ namespace microwf.Execution
       IWorkflow workflow,
       Dictionary<string, WorkflowVariableBase> variables = null)
     {
-      var context = CreateTriggerContext(workflow, variables);
+      var context = CreateTransitionContext(workflow, variables);
 
       return _definition.Transitions
         .Where(t => t.State == workflow.State)
@@ -37,7 +37,7 @@ namespace microwf.Execution
     /// <returns></returns>
     public TriggerResult CanTrigger(TriggerParam param)
     {
-      var context = CreateTriggerContext(param.Workflow, param.Variables);
+      var context = CreateTransitionContext(param.Workflow, param.Variables);
 
       return CanMakeTransition(context, param.TriggerName, param.Workflow);
     }
@@ -49,7 +49,7 @@ namespace microwf.Execution
     /// <returns></returns>
     public TriggerResult Trigger(TriggerParam param)
     {
-      var context = CreateTriggerContext(param.Workflow, param.Variables);
+      var context = CreateTransitionContext(param.Workflow, param.Variables);
 
       var result = CanMakeTransition(context, param.TriggerName, param.Workflow);
       if (!result.CanTrigger) return result;
@@ -68,11 +68,11 @@ namespace microwf.Execution
       return result;
     }
 
-    private static TriggerContext CreateTriggerContext(
+    private static TransitionContext CreateTransitionContext(
       IWorkflow workflow,
       Dictionary<string, WorkflowVariableBase> variables)
     {
-      var context = new TriggerContext(workflow);
+      var context = new TransitionContext(workflow);
       if (variables != null)
       {
         foreach (var variable in variables)
@@ -80,12 +80,13 @@ namespace microwf.Execution
           context.SetVariable(variable.Key, variable.Value);
         }
       }
+      
       return context;
     }
 
     private static TriggerResult CreateTriggerResult(
       string triggerName,
-      TriggerContext context,
+      TransitionContext context,
       Transition transition)
     {
       var canTrigger = transition != null && transition.CanMakeTransition(context);
@@ -100,7 +101,7 @@ namespace microwf.Execution
     }
 
     private TriggerResult CanMakeTransition(
-      TriggerContext context, 
+      TransitionContext context, 
       string triggerName, 
       IWorkflow workflow)
     {

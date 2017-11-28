@@ -43,21 +43,21 @@ public class HolidayApprovalWorkflow : WorkflowDefinitionBase
     }
   }
 
-  private bool MeApplyingForHolidays(TriggerContext context)
+  private bool MeApplyingForHolidays(TransitionContext context)
   {
     var holiday = context.GetWorkflow<Holiday>();
 
     return holiday.Me == "Me";
   }
 
-  private bool BossIsApproving(TriggerContext context)
+  private bool BossIsApproving(TransitionContext context)
   {
     var holiday = context.GetWorkflow<Holiday>();
     
     return holiday.Boss == "NiceBoss";
   }
   
-  private void ThankBossForApproving(TriggerContext context)
+  private void ThankBossForApproving(TransitionContext context)
   {
     // SendMail("Thank you!!!");
   }
