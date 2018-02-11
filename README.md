@@ -1,6 +1,8 @@
 # microwf
 A simple finite state machine (FSM) with workflow character where you define your workflows in code.
 
+[![Build Status](https://travis-ci.org/thomasduft/microwf.svg?branch=master)](https://travis-ci.org/thomasduft/microwf)
+
 ### Holiday approval sample
 ![Holiday Aproval](/holidayapproval.png)
 
