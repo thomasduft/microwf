@@ -1,7 +1,7 @@
-﻿using microwf.Definition;
 using System.Text;
+using tomware.MicroWF.Definition;
 
-namespace microwf.Utils
+namespace tomware.MicroWF.Utils
 {
   public static class WorkflowDefinitionExtension
   {
@@ -17,7 +17,7 @@ namespace microwf.Utils
 
       sb.AppendLine($"digraph {workflow.WorkflowType} {{");
       sb.AppendLine($"  rankdir = {rankDir};");
-      foreach(var t in workflow.Transitions)
+      foreach (var t in workflow.Transitions)
       {
         sb.AppendLine($"  {t.State} -> {t.TargetState} [ label = {t.Trigger} ];");
       }

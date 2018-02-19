@@ -1,8 +1,8 @@
-﻿using microwf.Definition;
-using microwf.Execution;
 using System.Collections.Generic;
+using tomware.MicroWF.Definition;
+using tomware.MicroWF.Execution;
 
-namespace microwf.tests.WorkflowDefinitions
+namespace tomware.MicroWF.Tests.WorkflowDefinitions
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {

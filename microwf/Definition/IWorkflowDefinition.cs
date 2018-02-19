@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace microwf.Definition
+namespace tomware.MicroWF.Definition
 {
   public interface IWorkflowDefinition
   {

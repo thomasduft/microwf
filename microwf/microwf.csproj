@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
+    <AssemblyName>tomware.MicroWF</AssemblyName>
+    <RootNamespace>tomware.MicroWF</RootNamespace>
+    <Authors>Thomas Duft</Authors>
+    <Company>tomware SOLUTIONS</Company>
+    <Description>A simple finite state machine (FSM) with workflow character where you define your workflows in code.</Description>
+    <PackageProjectUrl>https://github.com/thomasduft/microwf</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/thomasduft/microwf</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Product>MicroWF</Product>
   </PropertyGroup>
 
 </Project>

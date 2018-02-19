@@ -1,8 +1,8 @@
-﻿using microwf.Definition;
+using tomware.MicroWF.Definition;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.tests.Utils
+namespace tomware.MicroWF.Tests.Utils
 {
   public class SimpleWorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {

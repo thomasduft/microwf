@@ -1,8 +1,8 @@
-﻿using microwf.Definition;
 using System.Collections.Generic;
 using System.Linq;
+using tomware.MicroWF.Definition;
 
-namespace microwf.Execution
+namespace tomware.MicroWF.Execution
 {
   /// <summary>
   /// Runtime for state transitions
@@ -80,7 +80,7 @@ namespace microwf.Execution
           context.SetVariable(variable.Key, variable.Value);
         }
       }
-      
+
       return context;
     }
 
@@ -101,8 +101,8 @@ namespace microwf.Execution
     }
 
     private TriggerResult CanMakeTransition(
-      TransitionContext context, 
-      string triggerName, 
+      TransitionContext context,
+      string triggerName,
       IWorkflow workflow)
     {
       var transition = GetTransition(triggerName, workflow);

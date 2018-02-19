@@ -1,4 +1,4 @@
-﻿namespace microwf.Definition
+namespace tomware.MicroWF.Definition
 {
   public interface IWorkflow
   {

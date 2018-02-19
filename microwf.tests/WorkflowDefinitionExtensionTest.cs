@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using microwf.tests.WorkflowDefinitions;
-using microwf.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
+using tomware.MicroWF.Tests.WorkflowDefinitions;
+using tomware.MicroWF.Utils;
 
-namespace microwf.tests
+namespace tomware.MicroWF.Tests
 {
   [TestClass]
   public class WorkflowDefinitionExtensionTest

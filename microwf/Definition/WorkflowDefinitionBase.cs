@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.Definition
+namespace tomware.MicroWF.Definition
 {
   public abstract class WorkflowDefinitionBase : IWorkflowDefinition
   {

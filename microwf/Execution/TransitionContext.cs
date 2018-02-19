@@ -1,8 +1,8 @@
-﻿using microwf.Definition;
 using System;
 using System.Collections.Generic;
+using tomware.MicroWF.Definition;
 
-namespace microwf.Execution
+namespace tomware.MicroWF.Execution
 {
   /// <summary>
   /// Provides information about the trigger to be executed.

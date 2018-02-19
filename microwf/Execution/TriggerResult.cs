@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.Execution
+namespace tomware.MicroWF.Execution
 {
   public class TriggerResult
   {

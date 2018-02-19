@@ -1,7 +1,7 @@
-﻿using microwf.Definition;
 using System.Collections.Generic;
+using tomware.MicroWF.Definition;
 
-namespace microwf.Execution
+namespace tomware.MicroWF.Execution
 {
   public class TriggerParam
   {

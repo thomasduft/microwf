@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>tomware.MicroWF.Tests</AssemblyName>
+
+    <RootNamespace>tomware.MicroWF.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
