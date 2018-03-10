@@ -1,5 +1,5 @@
 {
   "editor.tabSize": 2,
   "editor.rulers": [100],
-  "dotnet-test-explorer.testProjectPath": "microwf.tests"
+  "dotnet-test-explorer.testProjectPath": "test/Tests"
 }
