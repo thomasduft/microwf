@@ -47,14 +47,14 @@ public class HolidayApprovalWorkflow : WorkflowDefinitionBase
 
   private bool MeApplyingForHolidays(TransitionContext context)
   {
-    var holiday = context.GetWorkflow<Holiday>();
+    var holiday = context.GetInstance<Holiday>();
 
     return holiday.Me == "Me";
   }
 
   private bool BossIsApproving(TransitionContext context)
   {
-    var holiday = context.GetWorkflow<Holiday>();
+    var holiday = context.GetInstance<Holiday>();
     
     return holiday.Boss == "NiceBoss";
   }
