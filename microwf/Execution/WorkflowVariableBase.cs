@@ -1,4 +1,4 @@
-﻿namespace microwf.Execution
+﻿namespace tomware.Microwf
 {
   public abstract class WorkflowVariableBase
   {

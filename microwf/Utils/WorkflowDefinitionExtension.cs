@@ -1,7 +1,6 @@
-﻿using microwf.Definition;
-using System.Text;
+﻿using System.Text;
 
-namespace microwf.Utils
+namespace tomware.Microwf
 {
   public static class WorkflowDefinitionExtension
   {

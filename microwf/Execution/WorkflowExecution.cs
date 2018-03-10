@@ -1,8 +1,7 @@
-﻿using microwf.Definition;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.Execution
+namespace tomware.Microwf
 {
   /// <summary>
   /// Runtime for state transitions
@@ -20,13 +19,13 @@ namespace microwf.Execution
     /// Returns all possible triggers that can be made for the current state
     /// </summary>
     public IEnumerable<TriggerResult> GetTriggers(
-      IWorkflow workflow,
+      IWorkflow instance,
       Dictionary<string, WorkflowVariableBase> variables = null)
     {
-      var context = CreateTransitionContext(workflow, variables);
+      var context = CreateTransitionContext(instance, variables);
 
       return _definition.Transitions
-        .Where(t => t.State == workflow.State)
+        .Where(t => t.State == instance.State)
         .Select(t => CreateTriggerResult(t.Trigger, context, t)).ToList();
     }
 
@@ -37,9 +36,9 @@ namespace microwf.Execution
     /// <returns></returns>
     public TriggerResult CanTrigger(TriggerParam param)
     {
-      var context = CreateTransitionContext(param.Workflow, param.Variables);
+      var context = CreateTransitionContext(param.Instance, param.Variables);
 
-      return CanMakeTransition(context, param.TriggerName, param.Workflow);
+      return CanMakeTransition(context, param.TriggerName, param.Instance);
     }
 
     /// <summary>
@@ -49,19 +48,19 @@ namespace microwf.Execution
     /// <returns></returns>
     public TriggerResult Trigger(TriggerParam param)
     {
-      var context = CreateTransitionContext(param.Workflow, param.Variables);
+      var context = CreateTransitionContext(param.Instance, param.Variables);
 
-      var result = CanMakeTransition(context, param.TriggerName, param.Workflow);
+      var result = CanMakeTransition(context, param.TriggerName, param.Instance);
       if (!result.CanTrigger) return result;
 
-      var transition = GetTransition(param.TriggerName, param.Workflow);
+      var transition = GetTransition(param.TriggerName, param.Instance);
       if (context.TransitionAborted)
         return CreateTriggerResult(param.TriggerName, context, transition);
 
       transition.BeforeTransition?.Invoke(context);
 
       var state = _definition.States.Single(s => s == transition.TargetState);
-      param.Workflow.State = state;
+      param.Instance.State = state;
 
       transition.AfterTransition?.Invoke(context);
 
@@ -69,10 +68,10 @@ namespace microwf.Execution
     }
 
     private static TransitionContext CreateTransitionContext(
-      IWorkflow workflow,
+      IWorkflow instance,
       Dictionary<string, WorkflowVariableBase> variables)
     {
-      var context = new TransitionContext(workflow);
+      var context = new TransitionContext(instance);
       if (variables != null)
       {
         foreach (var variable in variables)
@@ -94,18 +93,18 @@ namespace microwf.Execution
       return new TriggerResult(triggerName, context, canTrigger);
     }
 
-    private Transition GetTransition(string triggerName, IWorkflow workflow)
+    private Transition GetTransition(string triggerName, IWorkflow instance)
     {
       return _definition.Transitions
-        .SingleOrDefault(t => t.Trigger == triggerName && t.State == workflow.State);
+        .SingleOrDefault(t => t.Trigger == triggerName && t.State == instance.State);
     }
 
     private TriggerResult CanMakeTransition(
       TransitionContext context, 
       string triggerName, 
-      IWorkflow workflow)
+      IWorkflow instance)
     {
-      var transition = GetTransition(triggerName, workflow);
+      var transition = GetTransition(triggerName, instance);
       var triggerResult = CreateTriggerResult(triggerName, context, transition);
 
       if (transition != null) return triggerResult;

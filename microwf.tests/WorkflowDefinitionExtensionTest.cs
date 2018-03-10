@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.tests.WorkflowDefinitions;
-using microwf.Utils;
+using tomware.Microwf;
 using System.Text;
 
 namespace microwf.tests

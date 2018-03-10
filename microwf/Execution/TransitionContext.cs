@@ -1,8 +1,7 @@
-﻿using microwf.Definition;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace microwf.Execution
+namespace tomware.Microwf
 {
   /// <summary>
   /// Provides information about the trigger to be executed.
@@ -26,9 +25,9 @@ namespace microwf.Execution
     public bool TransitionAborted { get; private set; }
 
     /// <summary>
-    /// Instance of the workflow
+    /// Instance of the workflow.
     /// </summary>
-    public IWorkflow Workflow { get; private set; }
+    public IWorkflow Instance { get; private set; }
 
     /// <summary>
     /// Returns a list of error messages if during triggering some validation failed.
@@ -38,21 +37,21 @@ namespace microwf.Execution
       get { return _errors; }
     }
 
-    public TransitionContext(IWorkflow workflow)
+    public TransitionContext(IWorkflow instance)
     {
-      Workflow = workflow;
+      Instance = instance;
       _variables = new Dictionary<string, WorkflowVariableBase>();
       _errors = new List<string>();
     }
 
     /// <summary>
-    /// Returns the typed workflow that you expect.
+    /// Returns the instance of the workflow.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public T GetWorkflow<T>() where T : IWorkflow
+    public T GetInstance<T>() where T : IWorkflow
     {
-      return (T)Workflow;
+      return (T)Instance;
     }
 
     /// <summary>

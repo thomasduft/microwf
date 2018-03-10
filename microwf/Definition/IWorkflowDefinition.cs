@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace microwf.Definition
+namespace tomware.Microwf
 {
   public interface IWorkflowDefinition
   {

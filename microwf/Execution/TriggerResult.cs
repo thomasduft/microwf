@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.Execution
+namespace tomware.Microwf
 {
   public class TriggerResult
   {
@@ -37,7 +37,7 @@ namespace microwf.Execution
     /// </summary>
     public string CurrentState
     {
-      get { return _triggerContext.Workflow.State; }
+      get { return _triggerContext.Instance.State; }
     }
 
     public TriggerResult(string triggerName, TransitionContext context, bool canTrigger)

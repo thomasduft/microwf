@@ -1,7 +1,6 @@
 ﻿using System;
-using microwf.Execution;
 
-namespace microwf.Definition
+namespace tomware.Microwf
 {
   public class Transition
   {

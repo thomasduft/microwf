@@ -1,9 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using microwf.Execution;
+using tomware.Microwf;
 using microwf.tests.WorkflowDefinitions;
 using System.Collections.Generic;
 using System.Linq;
-using microwf.Definition;
 
 namespace microwf.tests
 {

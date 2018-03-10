@@ -1,5 +1,4 @@
-﻿using microwf.Definition;
-using microwf.Execution;
+﻿using tomware.Microwf;
 using System.Collections.Generic;
 
 namespace microwf.tests.WorkflowDefinitions
@@ -43,14 +42,14 @@ namespace microwf.tests.WorkflowDefinitions
 
     private bool MeApplyingForHolidays(TransitionContext context)
     {
-      var holiday = context.GetWorkflow<Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       return holiday.Me == "Me";
     }
 
     private bool BossIsApproving(TransitionContext context)
     {
-      var holiday = context.GetWorkflow<Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       return holiday.Boss == "NiceBoss";
     }

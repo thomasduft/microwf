@@ -1,5 +1,4 @@
-﻿using microwf.Definition;
-using microwf.Execution;
+﻿using tomware.Microwf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +40,14 @@ namespace microwf.tests.WorkflowDefinitions
 
     private void BeforeTransition(TransitionContext context)
     {
-      var switcher = context.GetWorkflow<Switcher>();
+      var switcher = context.GetInstance<Switcher>();
 
       Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
 
     private void AfterTransition(TransitionContext context)
     {
-      var switcher = context.GetWorkflow<Switcher>();
+      var switcher = context.GetInstance<Switcher>();
       
       Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
