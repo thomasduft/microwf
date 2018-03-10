@@ -6,7 +6,7 @@ namespace tomware.Microwf
   {
     /// <summary>
     /// Exports the workflow definition to a dot directed graph.
-    /// See: http://www.webgraphviz.com/
+    /// See: http://www.webgraphviz.com/ 
     /// </summary>
     /// <param name="workflow"></param>
     /// <returns></returns>
