@@ -1,7 +1,8 @@
-using tomware.Microwf;
 using System.Collections.Generic;
+using tomware.Microwf;
+using WebApi.Domain;
 
-namespace microwf.tests.WorkflowDefinitions
+namespace WebApi.Workflows
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {
@@ -40,39 +41,28 @@ namespace microwf.tests.WorkflowDefinitions
       }
     }
 
+    public HolidayApprovalWorkflow()
+    {
+      // inject further dependencies if required i.e. CurrentUser 
+    }
+
     private bool MeApplyingForHolidays(TransitionContext context)
     {
       var holiday = context.GetInstance<Holiday>();
 
-      return holiday.Me == "Me";
+      return holiday.Requestor == "Me";
     }
 
     private bool BossIsApproving(TransitionContext context)
     {
       var holiday = context.GetInstance<Holiday>();
 
-      return holiday.Boss == "NiceBoss";
+      return holiday.Superior == "NiceBoss";
     }
 
     private void ThankBossForApproving(TransitionContext context)
     {
       // SendMail("Thank you!!!");
-    }
-  }
-
-  public class Holiday : IWorkflow
-  {
-    // IWorkflow properties
-    public string Type { get; set; }
-    public string State { get; set; }
-
-    // some other properties
-    public string Me { get; set; }
-    public string Boss { get; set; }
-
-    public Holiday()
-    {
-      this.State = "New";
     }
   }
 }
