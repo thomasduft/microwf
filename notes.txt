@@ -1,5 +1,18 @@
 (-) workflow controller
-  - list all workflows
-  - start a workflow
-  - list my instances
-  - resume a workflow
+  (x) list all workflows
+  (-) start a workflow
+  (-) list my instances
+  (-) resume a workflow
+
+(-) rename IWorkflowDefinition.WorkflowType --> Name
+
+
+
+
+
+EF Commands:
+- see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
+
+dotnet ef migrations add <somename>
+dotnet ef database update
+dotnet ef database drop

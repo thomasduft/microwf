@@ -5,11 +5,11 @@ using tomware.Microwf;
 
 namespace WebApi.Services
 {
-  public class WebWorkflowDefinitionProvider : IWorkflowDefinitionProvider
+  public class WorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {
     private readonly IServiceProvider _serviceProvider;
 
-    public WebWorkflowDefinitionProvider(IServiceProvider serviceProvider)
+    public WorkflowDefinitionProvider(IServiceProvider serviceProvider)
     {
       this._serviceProvider = serviceProvider;
     }

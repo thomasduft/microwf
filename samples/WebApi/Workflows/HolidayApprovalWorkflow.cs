@@ -4,7 +4,7 @@ using WebApi.Domain;
 
 namespace WebApi.Workflows
 {
-  public class HolidayApprovalWorkflow : WorkflowDefinitionBase
+  public class HolidayApprovalWorkflow : WorkflowDefinitionBase, IWorkflowFactory
   {
     public const string NAME = "HolidayApprovalWorkflow";
 
@@ -44,6 +44,11 @@ namespace WebApi.Workflows
     public HolidayApprovalWorkflow()
     {
       // inject further dependencies if required i.e. CurrentUser 
+    }
+
+    public IWorkflow Create()
+    {
+      return new Holiday();
     }
 
     private bool MeApplyingForHolidays(TransitionContext context)

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace WebApi
 {
-    public class Program
+  public class Program
   {
     public static void Main(string[] args)
     {

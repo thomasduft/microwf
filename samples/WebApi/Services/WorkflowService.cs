@@ -31,16 +31,20 @@ namespace WebApi.Services
     {
       var workflowDefinitions = this._serviceProvider.GetServices<IWorkflowDefinition>();
 
-      return workflowDefinitions.Select(d => new WorkflowDefinitionViewModel
-      {
-        WorkflowType = d.WorkflowType,
-        Description = this.FindDescription(d.WorkflowType)
-      });
+      return workflowDefinitions.Select(d => this.CreateViewModel(d));
     }
 
-    private string FindDescription(string workflowType)
+    private WorkflowDefinitionViewModel CreateViewModel(IWorkflowDefinition workflowDefinition)
     {
-      return this._configuration[$"Workflows:{workflowType}:Description"];
+      var workflowType = workflowDefinition.WorkflowType;
+      var url = this._configuration[$"Workflows:{workflowType}:Url"];
+      var description = this._configuration[$"Workflows:{workflowType}:Description"];
+
+      return new WorkflowDefinitionViewModel {
+        WorkflowType = workflowType,
+        Url = url,
+        Description = description
+      };
     }
   }
 }

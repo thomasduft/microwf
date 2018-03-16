@@ -15,11 +15,11 @@ namespace WebApi.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     From = table.Column<DateTime>(nullable: false),
-                    Requestor = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
+                    Requestor = table.Column<string>(nullable: false),
+                    State = table.Column<string>(nullable: false),
                     Superior = table.Column<string>(nullable: true),
                     To = table.Column<DateTime>(nullable: false),
-                    Type = table.Column<string>(nullable: true)
+                    Type = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

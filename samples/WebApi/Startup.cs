@@ -28,11 +28,13 @@ namespace WebApi
         .AddEntityFrameworkSqlite()
         .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
 
-      services.AddSingleton<IWorkflowDefinitionProvider, WebWorkflowDefinitionProvider>();
+      services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine>();
-      services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
-
       services.AddTransient<IWorkflowService, WorkflowService>();
+      services.AddTransient<IWorkflowActivator, WorkflowActivator>();
+
+      services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
+      services.AddTransient<IHolidayService, HolidayService>();
 
       services.AddMvc();
     }

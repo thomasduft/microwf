@@ -11,7 +11,7 @@ using WebApi.Domain;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20180312194128_Initial")]
+    [Migration("20180316211550_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,15 +27,18 @@ namespace WebApi.Migrations
 
                     b.Property<DateTime>("From");
 
-                    b.Property<string>("Requestor");
+                    b.Property<string>("Requestor")
+                        .IsRequired();
 
-                    b.Property<string>("State");
+                    b.Property<string>("State")
+                        .IsRequired();
 
                     b.Property<string>("Superior");
 
                     b.Property<DateTime>("To");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
