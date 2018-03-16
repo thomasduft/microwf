@@ -31,7 +31,6 @@ namespace WebApi
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine>();
       services.AddTransient<IWorkflowService, WorkflowService>();
-      services.AddTransient<IWorkflowActivator, WorkflowActivator>();
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IHolidayService, HolidayService>();

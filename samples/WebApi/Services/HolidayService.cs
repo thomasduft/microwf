@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using tomware.Microwf;
 using WebApi.Domain;
 using WebApi.Models;
 
@@ -8,28 +9,28 @@ namespace WebApi.Services
   {
     HolidayViewModel GetNew();
     Task<HolidayViewModel> GetAsync(int id);
+
+    // Task<HolidayViewModel> ApplyAsync();
   }
 
   public class HolidayService : IHolidayService
   {
     private readonly DomainContext _context;
-    private readonly IWorkflowService _service;
+    private readonly IWorkflowEngine _workflowEngine;
 
     public HolidayService(
       DomainContext context,
-      IWorkflowService service
+      IWorkflowEngine workflowEngine
     )
     {
       _context = context;
-      _service = service;
+      _workflowEngine = workflowEngine;
     }
 
     public HolidayViewModel GetNew()
     {
-      var holiday = new Holiday();
-      holiday.Requestor = "Me";
-      holiday.Superior = "NiceBoss";
-
+      var holiday = Holiday.Create("Me");
+    
       _context.Add(holiday);
       _context.SaveChanges();
 

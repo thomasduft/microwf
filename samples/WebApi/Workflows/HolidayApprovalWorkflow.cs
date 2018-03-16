@@ -4,9 +4,18 @@ using WebApi.Domain;
 
 namespace WebApi.Workflows
 {
-  public class HolidayApprovalWorkflow : WorkflowDefinitionBase, IWorkflowFactory
+  public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {
     public const string NAME = "HolidayApprovalWorkflow";
+
+    public const string APPLY_TRIGGER = "Apply";
+    public const string APPROVE_TRIGGER = "Approve";
+    public const string REJECT_TRIGGER = "Reject";
+
+    public const string NEW_STATE = "New";
+    public const string APPLIED_STATE = "Applied";
+    public const string APPROVED_STATE = "Approved";
+    public const string REJECTED_STATE = "Rejected";
 
     public override string WorkflowType
     {
@@ -20,22 +29,22 @@ namespace WebApi.Workflows
         return new List<Transition>
         {
           new Transition {
-            State = "New",
-            Trigger = "Apply",
-            TargetState ="Applied",
+            State = NEW_STATE,
+            Trigger = APPLY_TRIGGER,
+            TargetState = APPLIED_STATE,
             CanMakeTransition = MeApplyingForHolidays
           },
           new Transition {
-            State = "Applied",
-            Trigger = "Approve",
-            TargetState ="Approved",
+            State = APPLIED_STATE,
+            Trigger = APPROVE_TRIGGER,
+            TargetState = APPROVED_STATE,
             CanMakeTransition = BossIsApproving,
             AfterTransition = ThankBossForApproving
           },
           new Transition {
-            State = "Applied",
-            Trigger = "Reject",
-            TargetState ="Rejected"
+            State = APPLIED_STATE,
+            Trigger = REJECT_TRIGGER,
+            TargetState = REJECTED_STATE
           }
         };
       }
@@ -44,11 +53,6 @@ namespace WebApi.Workflows
     public HolidayApprovalWorkflow()
     {
       // inject further dependencies if required i.e. CurrentUser 
-    }
-
-    public IWorkflow Create()
-    {
-      return new Holiday();
     }
 
     private bool MeApplyingForHolidays(TransitionContext context)

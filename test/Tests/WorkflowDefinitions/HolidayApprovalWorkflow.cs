@@ -21,20 +21,20 @@ namespace microwf.tests.WorkflowDefinitions
           new Transition {
             State = "New",
             Trigger = "Apply",
-            TargetState ="Applied",
+            TargetState = "Applied",
             CanMakeTransition = MeApplyingForHolidays
           },
           new Transition {
             State = "Applied",
             Trigger = "Approve",
-            TargetState ="Approved",
+            TargetState = "Approved",
             CanMakeTransition = BossIsApproving,
             AfterTransition = ThankBossForApproving
           },
           new Transition {
             State = "Applied",
             Trigger = "Reject",
-            TargetState ="Rejected"
+            TargetState = "Rejected"
           }
         };
       }
