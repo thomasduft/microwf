@@ -7,7 +7,7 @@
     {
       "taskName": "build",
       "args": [
-        "${workspaceRoot}/microwf.tests/microwf.tests.csproj"
+        "${workspaceRoot}/samples/WebApi/WebApi.csproj"
       ],
       "isBuildCommand": true,
       "problemMatcher": "$msCompile"

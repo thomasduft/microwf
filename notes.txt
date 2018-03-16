@@ -1,5 +1,5 @@
 (-) workflow controller
   - list all workflows
-  - list my instances
   - start a workflow
+  - list my instances
   - resume a workflow

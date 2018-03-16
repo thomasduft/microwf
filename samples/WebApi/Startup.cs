@@ -10,7 +10,7 @@ using WebApi.Workflows;
 
 namespace WebApi
 {
-    public class Startup
+  public class Startup
   {
     public Startup(IConfiguration configuration)
     {
@@ -32,6 +32,8 @@ namespace WebApi
       services.AddTransient<IWorkflowEngine, WorkflowEngine>();
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
 
+      services.AddTransient<IWorkflowService, WorkflowService>();
+
       services.AddMvc();
     }
 
@@ -42,6 +44,8 @@ namespace WebApi
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseFileServer();
 
       app.UseMvc();
     }
