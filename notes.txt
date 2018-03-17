@@ -1,6 +1,6 @@
 (-) workflow controller
   (x) list all workflows
-  (-) start a workflow
+  (x) start a workflow
   (-) list my instances
   (-) resume a workflow
 

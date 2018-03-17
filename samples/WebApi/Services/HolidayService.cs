@@ -1,16 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf;
 using WebApi.Domain;
 using WebApi.Models;
+using WebApi.Workflows;
 
 namespace WebApi.Services
 {
   public interface IHolidayService
   {
-    HolidayViewModel GetNew();
-    Task<HolidayViewModel> GetAsync(int id);
+    IWorkflowResult<HolidayViewModel> GetNew();
 
-    // Task<HolidayViewModel> ApplyAsync();
+    Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id);
+
+    Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model);
+
+    Task<IWorkflowResult<HolidayViewModel>> ApproveAsync(HolidayViewModel model);
+
+    Task<IWorkflowResult<HolidayViewModel>> RejectAsync(HolidayViewModel model);
   }
 
   public class HolidayService : IHolidayService
@@ -18,35 +27,56 @@ namespace WebApi.Services
     private readonly DomainContext _context;
     private readonly IWorkflowEngine _workflowEngine;
 
-    public HolidayService(
-      DomainContext context,
-      IWorkflowEngine workflowEngine
-    )
+    public HolidayService(DomainContext context, IWorkflowEngine workflowEngine)
     {
       _context = context;
       _workflowEngine = workflowEngine;
     }
 
-    public HolidayViewModel GetNew()
+    public IWorkflowResult<HolidayViewModel> GetNew()
     {
       var holiday = Holiday.Create("Me");
-    
+
       _context.Add(holiday);
       _context.SaveChanges();
 
-      return new HolidayViewModel
-      {
-        Id = holiday.Id,
-        Requestor = holiday.Requestor,
-        Superior = holiday.Superior
-      };
+      return ToResult(holiday);
     }
 
-    public async Task<HolidayViewModel> GetAsync(int id)
+    public async Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id)
     {
       var holiday = await _context.Holidays.FindAsync(id);
 
-      return new HolidayViewModel
+      return ToResult(holiday);
+    }
+
+    public async Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model)
+    {
+      if (model == null) throw new ArgumentNullException(nameof(model));
+
+      return await Trigger(HolidayApprovalWorkflow.APPLY_TRIGGER, model);
+    }
+
+    public async Task<IWorkflowResult<HolidayViewModel>> ApproveAsync(HolidayViewModel model)
+    {
+      if (model == null) throw new ArgumentNullException(nameof(model));
+
+      return await Trigger(HolidayApprovalWorkflow.APPROVE_TRIGGER, model);
+    }
+
+    public async Task<IWorkflowResult<HolidayViewModel>> RejectAsync(HolidayViewModel model)
+    {
+      if (model == null) throw new ArgumentNullException(nameof(model));
+
+      return await Trigger(HolidayApprovalWorkflow.REJECT_TRIGGER, model);
+    }
+
+    private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)
+    {
+      IEnumerable<TriggerResult> result = _workflowEngine.GetTriggers(holiday);
+      var triggers = result.Select(x => x.TriggerName);
+
+      var viewModel = new HolidayViewModel
       {
         Id = holiday.Id,
         Requestor = holiday.Requestor,
@@ -54,6 +84,24 @@ namespace WebApi.Services
         From = holiday.From,
         To = holiday.To
       };
+
+      return new WorkflowResult<HolidayViewModel>(triggers, viewModel);
+    }
+
+    private async Task<IWorkflowResult<HolidayViewModel>> Trigger(
+      string trigger,
+      HolidayViewModel model
+    )
+    {
+      var holiday = await _context.Holidays.FindAsync(model.Id);
+      holiday.Superior = model.Superior;
+      holiday.From = model.From;
+      holiday.To = model.To;
+
+      var triggerParam = new TriggerParam(trigger, holiday);
+      _workflowEngine.Trigger(triggerParam);
+
+      return ToResult(holiday);
     }
   }
 }

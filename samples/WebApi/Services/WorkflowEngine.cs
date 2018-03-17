@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using tomware.Microwf;
 using WebApi.Domain;
 
@@ -58,12 +59,17 @@ namespace WebApi.Services
 
       var execution = GetExecution(param.Instance.Type);
 
-      using (var transaction = _domainContext.Database.BeginTransaction())
+      // using (var transaction = _domainContext.Database.BeginTransaction())
+      // {
+      var result = execution.Trigger(param);
+      if (!result.IsAborted)
       {
-        var result = execution.Trigger(param);
-        if (!result.IsAborted) transaction.Commit();
-        return result;
+        _domainContext.SaveChanges();
+        // transaction.Commit();
       }
+
+      return result;
+      // }
     }
 
     private WorkflowExecution GetExecution(string type)

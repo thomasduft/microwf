@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using tomware.Microwf;
 using WebApi.Domain;
 
@@ -6,16 +7,18 @@ namespace WebApi.Workflows
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {
+    private readonly ILogger<HolidayApprovalWorkflow> _logger;
+
     public const string NAME = "HolidayApprovalWorkflow";
 
-    public const string APPLY_TRIGGER = "Apply";
-    public const string APPROVE_TRIGGER = "Approve";
-    public const string REJECT_TRIGGER = "Reject";
+    public const string APPLY_TRIGGER = "apply";
+    public const string APPROVE_TRIGGER = "approve";
+    public const string REJECT_TRIGGER = "reject";
 
-    public const string NEW_STATE = "New";
-    public const string APPLIED_STATE = "Applied";
-    public const string APPROVED_STATE = "Approved";
-    public const string REJECTED_STATE = "Rejected";
+    public const string NEW_STATE = "new";
+    public const string APPLIED_STATE = "applied";
+    public const string APPROVED_STATE = "approved";
+    public const string REJECTED_STATE = "rejected";
 
     public override string WorkflowType
     {
@@ -50,8 +53,10 @@ namespace WebApi.Workflows
       }
     }
 
-    public HolidayApprovalWorkflow()
+    public HolidayApprovalWorkflow(ILoggerFactory loggerFactory)
     {
+      _logger = loggerFactory.CreateLogger<HolidayApprovalWorkflow>();
+
       // inject further dependencies if required i.e. CurrentUser 
     }
 
@@ -66,12 +71,16 @@ namespace WebApi.Workflows
     {
       var holiday = context.GetInstance<Holiday>();
 
+      _logger.LogInformation($"Holiday entity: {holiday.Superior}");
+
       return holiday.Superior == "NiceBoss";
     }
 
     private void ThankBossForApproving(TransitionContext context)
     {
-      // SendMail("Thank you!!!");
+      var holiday = context.GetInstance<Holiday>();
+
+      _logger.LogInformation($"Thank you very much: {holiday.Superior}!");
     }
   }
 }
