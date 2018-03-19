@@ -4,8 +4,8 @@
   (-) list my instances
   (-) resume a workflow
 
-(-) rename IWorkflowDefinition.WorkflowType --> Name
-
+done:
+(x) rename IWorkflowDefinition.WorkflowType --> Name
 
 
 
