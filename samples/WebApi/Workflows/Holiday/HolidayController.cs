@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using tomware.Microwf.AspNetCore;
-using WebApi.Models;
-using WebApi.Services;
 
-namespace WebApi.Controllers
+namespace WebApi.Workflows.Holiday
 {
   [Route("api/holiday")]
   public class HolidayController : Controller

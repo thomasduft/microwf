@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using tomware.Microwf.Core;
-using WebApi.Workflows;
+using WebApi.Workflows.Holiday;
 
 namespace WebApi.Domain
 {

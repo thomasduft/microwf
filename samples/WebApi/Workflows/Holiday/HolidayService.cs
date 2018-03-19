@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using tomware.Microwf.AspNetCore;
 using tomware.Microwf.Core;
 using WebApi.Domain;
-using WebApi.Models;
-using WebApi.Workflows;
 
-namespace WebApi.Services
+namespace WebApi.Workflows.Holiday
 {
   public interface IHolidayService
   {
@@ -36,7 +34,7 @@ namespace WebApi.Services
 
     public IWorkflowResult<HolidayViewModel> GetNew()
     {
-      var holiday = Holiday.Create("Me");
+      var holiday = Domain.Holiday.Create("Me");
 
       _context.Add(holiday);
       _context.SaveChanges();
@@ -72,7 +70,7 @@ namespace WebApi.Services
       return await Trigger(HolidayApprovalWorkflow.REJECT_TRIGGER, model);
     }
 
-    private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)
+    private IWorkflowResult<HolidayViewModel> ToResult(Domain.Holiday holiday)
     {
       IEnumerable<TriggerResult> result = _workflowEngine.GetTriggers(holiday);
       var triggers = result.Select(x => x.TriggerName);

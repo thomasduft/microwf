@@ -7,8 +7,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using tomware.Microwf.AspNetCore;
 using tomware.Microwf.Core;
 using WebApi.Domain;
-using WebApi.Services;
-using WebApi.Workflows;
+using WebApi.Workflows.Holiday;
 
 namespace WebApi
 {

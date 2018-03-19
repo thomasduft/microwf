@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
-using WebApi.Domain;
 
-namespace WebApi.Workflows
+namespace WebApi.Workflows.Holiday
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {
@@ -62,7 +61,7 @@ namespace WebApi.Workflows
 
     private bool MeApplyingForHolidays(TransitionContext context)
     {
-      var holiday = context.GetInstance<Holiday>();
+      var holiday = context.GetInstance<Domain.Holiday>();
       var canApply = holiday.Requestor == "Me";
 
       _logger.LogInformation($"Can apply: {canApply}");
@@ -72,7 +71,7 @@ namespace WebApi.Workflows
 
     private bool BossIsApproving(TransitionContext context)
     {
-      var holiday = context.GetInstance<Holiday>();
+      var holiday = context.GetInstance<Domain.Holiday>();
 
       _logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
@@ -81,7 +80,7 @@ namespace WebApi.Workflows
 
     private void ThankBossForApproving(TransitionContext context)
     {
-      var holiday = context.GetInstance<Holiday>();
+      var holiday = context.GetInstance<Domain.Holiday>();
 
       _logger.LogInformation($"Thank you very much: {holiday.Superior}!");
     }
