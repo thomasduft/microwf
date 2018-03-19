@@ -30,7 +30,7 @@ namespace microwf.tests.Utils
 
     public IWorkflowDefinition GetWorkflowDefinition(string type)
     {
-      return _workflowDefinitions.First(w => w.WorkflowType == type);
+      return _workflowDefinitions.First(w => w.Type == type);
     }
   }
 

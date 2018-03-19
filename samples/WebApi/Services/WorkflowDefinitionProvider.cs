@@ -17,7 +17,7 @@ namespace WebApi.Services
     public IWorkflowDefinition GetWorkflowDefinition(string type)
     {
       return this._serviceProvider
-        .GetServices<IWorkflowDefinition>().First(t => t.WorkflowType == type);
+        .GetServices<IWorkflowDefinition>().First(t => t.Type == type);
     }
 
     public void RegisterWorkflowDefinition(IWorkflowDefinition workflowDefinition)

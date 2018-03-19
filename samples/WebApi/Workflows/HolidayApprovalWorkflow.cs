@@ -9,7 +9,7 @@ namespace WebApi.Workflows
   {
     private readonly ILogger<HolidayApprovalWorkflow> _logger;
 
-    public const string NAME = "HolidayApprovalWorkflow";
+    public const string TYPE = "HolidayApprovalWorkflow";
 
     public const string APPLY_TRIGGER = "apply";
     public const string APPROVE_TRIGGER = "approve";
@@ -20,9 +20,9 @@ namespace WebApi.Workflows
     public const string APPROVED_STATE = "approved";
     public const string REJECTED_STATE = "rejected";
 
-    public override string WorkflowType
+    public override string Type
     {
-      get { return NAME; }
+      get { return TYPE; }
     }
 
     public override List<Transition> Transitions

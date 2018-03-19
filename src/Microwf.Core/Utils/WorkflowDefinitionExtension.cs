@@ -14,7 +14,7 @@ namespace tomware.Microwf.Core
     {
       var sb = new StringBuilder();
 
-      sb.AppendLine($"digraph {workflow.WorkflowType} {{");
+      sb.AppendLine($"digraph {workflow.Type} {{");
       sb.AppendLine($"  rankdir = {rankDir};");
       foreach(var t in workflow.Transitions)
       {

@@ -15,7 +15,7 @@ namespace microwf.tests
       // Arrange
       Switcher switcher = new Switcher
       {
-        Type = OnOffWorkflow.NAME
+        Type = OnOffWorkflow.TYPE
       };
 
       WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
@@ -35,7 +35,7 @@ namespace microwf.tests
       // Arrange
       Switcher switcher = new Switcher
       {
-        Type = OnOffWorkflow.NAME
+        Type = OnOffWorkflow.TYPE
       };
 
       WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
@@ -54,7 +54,7 @@ namespace microwf.tests
       // Arrange
       Switcher switcher = new Switcher
       {
-        Type = OnOffWorkflow.NAME
+        Type = OnOffWorkflow.TYPE
       };
       WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
 

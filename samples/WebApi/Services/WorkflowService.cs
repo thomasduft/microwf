@@ -36,13 +36,13 @@ namespace WebApi.Services
 
     private WorkflowDefinitionViewModel CreateViewModel(IWorkflowDefinition workflowDefinition)
     {
-      var workflowType = workflowDefinition.WorkflowType;
-      var url = this._configuration[$"Workflows:{workflowType}:Url"];
-      var description = this._configuration[$"Workflows:{workflowType}:Description"];
+      var type = workflowDefinition.Type;
+      var startUrl = this._configuration[$"Workflows:{type}:StartUrl"];
+      var description = this._configuration[$"Workflows:{type}:Description"];
 
       return new WorkflowDefinitionViewModel {
-        WorkflowType = workflowType,
-        Url = url,
+        Type = type,
+        StartUrl = startUrl,
         Description = description
       };
     }

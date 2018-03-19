@@ -16,7 +16,7 @@ namespace WebApi.Domain
     {
       return new Holiday
       {
-        Type = HolidayApprovalWorkflow.NAME,
+        Type = HolidayApprovalWorkflow.TYPE,
         State = HolidayApprovalWorkflow.NEW_STATE,
         Requestor = requestor
       };

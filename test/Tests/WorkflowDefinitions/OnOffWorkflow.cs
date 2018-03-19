@@ -7,11 +7,11 @@ namespace microwf.tests.WorkflowDefinitions
 {
   public class OnOffWorkflow : WorkflowDefinitionBase
   {
-    public const string NAME = "OnOffWorkflow";
+    public const string TYPE = "OnOffWorkflow";
 
-    public override string WorkflowType
+    public override string Type
     {
-      get { return NAME; }
+      get { return TYPE; }
     }
 
     public override List<Transition> Transitions

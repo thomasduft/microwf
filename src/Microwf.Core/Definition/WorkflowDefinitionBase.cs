@@ -8,7 +8,7 @@ namespace tomware.Microwf.Core
     private List<string> _states;
     private List<string> _triggers;
 
-    public abstract string WorkflowType { get; }
+    public abstract string Type { get; }
 
     public virtual List<string> States
     {

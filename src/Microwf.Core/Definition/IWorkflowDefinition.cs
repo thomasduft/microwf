@@ -5,9 +5,9 @@ namespace tomware.Microwf.Core
   public interface IWorkflowDefinition
   {
     /// <summary>
-    /// Returns a unique the workflow type.
+    /// Returns a unique name for the workflow definition.
     /// </summary>
-    string WorkflowType { get; }
+    string Type { get; }
 
     /// <summary>
     /// Returns a list of states for the workflow.

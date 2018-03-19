@@ -5,11 +5,11 @@ namespace microwf.tests.WorkflowDefinitions
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {
-    public const string NAME = "HolidayApprovalWorkflow";
+    public const string TYPE = "HolidayApprovalWorkflow";
 
-    public override string WorkflowType
+    public override string Type
     {
-      get { return NAME; }
+      get { return TYPE; }
     }
 
     public override List<Transition> Transitions
