@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using tomware.Microwf.Core;
 
-namespace WebApi.Services
+namespace tomware.Microwf.AspNetCore
 {
   public class WorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {
@@ -22,23 +22,6 @@ namespace WebApi.Services
 
     public void RegisterWorkflowDefinition(IWorkflowDefinition workflowDefinition)
     {
-       /**
-        * Registering done via di framework during Startup.ConfigureServices
-        * 
-        * public void ConfigureServices(IServiceCollection services)
-        * 
-        * Sample:
-        *  ...
-        *  services.AddMvc();
-        *
-        *  services.AddSingleton<IWorkflowDefinitionProvider, WebWorkflowDefinitionProvider>();
-        *  services.AddTransient<ILoggerService, LoggerService>();
-        *  services.AddTransient<IWorkflowDefinition, OnOffWorkflow>();
-        *  services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
-        *  ...
-        *  
-        */
-
       throw new NotImplementedException();
     }
   }

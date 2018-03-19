@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebApi.Models
+namespace tomware.Microwf.AspNetCore
 {
   public interface IWorkflowResult<T>
   {

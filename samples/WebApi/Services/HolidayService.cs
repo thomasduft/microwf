@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using tomware.Microwf.AspNetCore;
 using tomware.Microwf.Core;
 using WebApi.Domain;
 using WebApi.Models;

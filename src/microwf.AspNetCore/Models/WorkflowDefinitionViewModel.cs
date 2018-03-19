@@ -1,4 +1,4 @@
-namespace WebApi.Models
+namespace tomware.Microwf.AspNetCore
 {
   public class WorkflowDefinitionViewModel
   {

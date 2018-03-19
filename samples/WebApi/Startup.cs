@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using tomware.Microwf.AspNetCore;
 using tomware.Microwf.Core;
 using WebApi.Domain;
 using WebApi.Services;
@@ -29,9 +30,7 @@ namespace WebApi
         .AddEntityFrameworkSqlite()
         .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
 
-      services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
-      services.AddTransient<IWorkflowEngine, WorkflowEngine>();
-      services.AddTransient<IWorkflowService, WorkflowService>();
+      services.AddMicrowfServices<DomainContext>();
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IHolidayService, HolidayService>();

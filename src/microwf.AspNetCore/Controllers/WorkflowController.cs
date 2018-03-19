@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using WebApi.Models;
-using WebApi.Services;
 
-namespace WebApi.Controllers
+namespace tomware.Microwf.AspNetCore
 {
   [Route("api/workflow")]
   public class WorkflowController : Controller

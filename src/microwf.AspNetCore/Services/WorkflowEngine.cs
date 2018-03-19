@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
-using WebApi.Domain;
 
-namespace WebApi.Services
+namespace tomware.Microwf.AspNetCore
 {
   public interface IWorkflowEngine
   {
@@ -17,18 +17,18 @@ namespace WebApi.Services
     TriggerResult Trigger(TriggerParam param);
   }
 
-  public class WorkflowEngine : IWorkflowEngine
+  public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : DbContext
   {
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
-    private readonly DomainContext _domainContext;
+    private readonly TContext _context;
 
     public WorkflowEngine(
       IWorkflowDefinitionProvider workflowDefinitionProvider,
-      DomainContext domainContext
+      TContext context
     )
     {
+      _context = context ?? throw new ArgumentNullException(nameof(context));
       _workflowDefinitionProvider = workflowDefinitionProvider;
-      _domainContext = domainContext;
     }
 
     public TriggerResult CanTrigger(TriggerParam param)
@@ -58,12 +58,12 @@ namespace WebApi.Services
 
       var execution = GetExecution(param.Instance.Type);
 
-      // using (var transaction = _domainContext.Database.BeginTransaction())
+      // using (var transaction = _context.Database.BeginTransaction())
       // {
       var result = execution.Trigger(param);
       if (!result.IsAborted)
       {
-        _domainContext.SaveChanges();
+        _context.SaveChanges();
         // transaction.Commit();
       }
 

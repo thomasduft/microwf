@@ -7,4 +7,4 @@ install:
 
 script:
   - dotnet build
-  - dotnet test test/Tests/microwf.Tests.csproj
+  - dotnet test test/microwf.Tests.csproj
