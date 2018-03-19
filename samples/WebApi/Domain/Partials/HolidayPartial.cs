@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using WebApi.Workflows;
 
 namespace WebApi.Domain

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace tomware.Microwf
+namespace tomware.Microwf.Core
 {
   public class Transition
   {

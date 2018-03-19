@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 
 namespace WebApi.Services
 {

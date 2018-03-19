@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace tomware.Microwf
+namespace tomware.Microwf.Core
 {
   public abstract class WorkflowDefinitionBase : IWorkflowDefinition
   {

@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using microwf.tests.WorkflowDefinitions;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using WebApi.Domain;
 
 namespace WebApi.Services

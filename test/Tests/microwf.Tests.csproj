@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microwf\microwf.csproj" />
+    <ProjectReference Include="..\..\src\Microwf.Core\microwf.Core.csproj" />
   </ItemGroup>
 
 </Project>

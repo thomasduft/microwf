@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace tomware.Microwf
+namespace tomware.Microwf.Core
 {
   /// <summary>
   /// Provides information about the trigger to be executed.

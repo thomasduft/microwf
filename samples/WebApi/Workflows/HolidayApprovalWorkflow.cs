@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using WebApi.Domain;
 
 namespace WebApi.Workflows

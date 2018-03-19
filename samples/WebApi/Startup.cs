@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using WebApi.Domain;
 using WebApi.Services;
 using WebApi.Workflows;

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microwf", "src\Microwf\microwf.csproj", "{D1FC2A68-77CD-4898-95AE-286AD4D44913}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microwf.Core", "src\Microwf.Core\microwf.Core.csproj", "{D1FC2A68-77CD-4898-95AE-286AD4D44913}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microwf.Tests", "test\Tests\microwf.Tests.csproj", "{ABE24716-3030-464D-9866-F0A0912EDC69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "samples\WebApi\WebApi.csproj", "{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "samples\WebApi\WebApi.csproj", "{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

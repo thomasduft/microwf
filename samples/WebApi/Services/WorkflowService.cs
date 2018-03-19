@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using WebApi.Models;
 
 namespace WebApi.Services

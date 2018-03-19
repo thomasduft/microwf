@@ -1,6 +1,6 @@
-﻿using System.Text;
+using System.Text;
 
-namespace tomware.Microwf
+namespace tomware.Microwf.Core
 {
   public static class WorkflowDefinitionExtension
   {

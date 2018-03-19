@@ -1,4 +1,4 @@
-using tomware.Microwf;
+using tomware.Microwf.Core;
 using System.Collections.Generic;
 
 namespace microwf.tests.WorkflowDefinitions

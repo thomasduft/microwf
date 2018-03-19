@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
-    <AssemblyName>tomware.Microwf</AssemblyName>
-    <RootNamespace>tomware.Microwf</RootNamespace>
+    <AssemblyName>tomware.Microwf.Core</AssemblyName>
+    <RootNamespace>tomware.Microwf.Core</RootNamespace>
   </PropertyGroup>
 
 </Project>
