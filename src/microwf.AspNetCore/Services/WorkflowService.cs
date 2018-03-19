@@ -10,6 +10,7 @@ namespace tomware.Microwf.AspNetCore
   public interface IWorkflowService
   {
     IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions();
+    string Dot(string type);
   }
 
   public class WorkflowService : IWorkflowService
@@ -31,6 +32,16 @@ namespace tomware.Microwf.AspNetCore
       var workflowDefinitions = this._serviceProvider.GetServices<IWorkflowDefinition>();
 
       return workflowDefinitions.Select(d => this.CreateViewModel(d));
+    }
+
+    public string Dot(string type)
+    {
+      if (type == null) throw new ArgumentNullException(nameof(type));
+
+      var workflowDefinitions = this._serviceProvider.GetServices<IWorkflowDefinition>();
+      var workflowDefinition = workflowDefinitions.FirstOrDefault(x => x.Type == type);
+
+      return workflowDefinition.ToDot();
     }
 
     private WorkflowDefinitionViewModel CreateViewModel(IWorkflowDefinition workflowDefinition)

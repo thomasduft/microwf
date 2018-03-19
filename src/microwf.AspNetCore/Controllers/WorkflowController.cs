@@ -21,5 +21,14 @@ namespace tomware.Microwf.AspNetCore
 
       return Ok(result);
     }
+
+    [HttpGet("dot/{type}")]
+    [ProducesResponseType(typeof(string), 200)]
+    public IActionResult Dot(string type)
+    {
+      var result = _service.Dot(type);
+
+      return Ok(result);
+    }
   }
 }
