@@ -63,15 +63,18 @@ namespace WebApi.Workflows
     private bool MeApplyingForHolidays(TransitionContext context)
     {
       var holiday = context.GetInstance<Holiday>();
+      var canApply = holiday.Requestor == "Me";
 
-      return holiday.Requestor == "Me";
+      _logger.LogInformation($"Can apply: {canApply}");
+
+      return canApply;
     }
 
     private bool BossIsApproving(TransitionContext context)
     {
       var holiday = context.GetInstance<Holiday>();
 
-      _logger.LogInformation($"Holiday entity: {holiday.Superior}");
+      _logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
       return holiday.Superior == "NiceBoss";
     }
