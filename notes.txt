@@ -1,15 +1,15 @@
-(-) workflow controller
-  (x) list all workflows
-  (x) start a workflow
-  (-) list my instances
-  (-) resume a workflow
+
 
 
 done:
 (x) rename IWorkflowDefinition.WorkflowType --> Name
 (x) CreateViewModel needs an interface
   - default provider will read workflows from configuration
-
+(x) workflow controller
+  (x) list all workflows
+  (x) start a workflow
+  (x) list instances assigned to me
+  (x) resume a workflow
 
 
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using tomware.Microwf.AspNetCore;
 
@@ -64,6 +65,15 @@ namespace WebApi.Workflows.Holiday
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
       var result = await _service.RejectAsync(model);
+
+      return Ok(result);
+    }
+
+    [HttpGet("mywork")]
+    [ProducesResponseType(typeof(IEnumerable<AssignableWorkflowViewModel>), 200)]
+    public async Task<IActionResult> MyWork()
+    {
+      var result = await _service.MyWorkAsync();
 
       return Ok(result);
     }

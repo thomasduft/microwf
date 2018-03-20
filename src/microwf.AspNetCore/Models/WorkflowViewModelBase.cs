@@ -21,4 +21,12 @@ namespace tomware.Microwf.AspNetCore
       ViewModel = viewModel;
     }
   }
+
+  public class AssignableWorkflowViewModel
+  {
+    public int Id { get; set; }
+    public string Type { get; set; }
+    public string Assignee { get; set; }
+    public string Description { get; set; }
+  }
 }

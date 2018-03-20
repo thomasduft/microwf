@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace WebApi.Workflows.Holiday
     Task<IWorkflowResult<HolidayViewModel>> ApproveAsync(HolidayViewModel model);
 
     Task<IWorkflowResult<HolidayViewModel>> RejectAsync(HolidayViewModel model);
+
+    Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync();
   }
 
   public class HolidayService : IHolidayService
@@ -68,6 +71,20 @@ namespace WebApi.Workflows.Holiday
       if (model == null) throw new ArgumentNullException(nameof(model));
 
       return await Trigger(HolidayApprovalWorkflow.REJECT_TRIGGER, model);
+    }
+
+    public async Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync()
+    {
+      var me = "Me";
+      var work = await _context.Holidays.Where(h => h.Assignee == me).ToListAsync();
+
+      return work.Select(h => new AssignableWorkflowViewModel
+      {
+        Id = h.Id,
+        Assignee = h.Assignee,
+        Type = h.Type,
+        Description = string.Empty
+      });
     }
 
     private IWorkflowResult<HolidayViewModel> ToResult(Domain.Holiday holiday)
