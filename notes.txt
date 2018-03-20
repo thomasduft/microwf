@@ -4,8 +4,11 @@
   (-) list my instances
   (-) resume a workflow
 
+
 done:
 (x) rename IWorkflowDefinition.WorkflowType --> Name
+(x) CreateViewModel needs an interface
+  - default provider will read workflows from configuration
 
 
 

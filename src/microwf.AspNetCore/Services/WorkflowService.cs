@@ -17,21 +17,24 @@ namespace tomware.Microwf.AspNetCore
   {
     private readonly IServiceProvider _serviceProvider;
     private readonly IConfiguration _configuration;
+    private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
 
     public WorkflowService(
       IServiceProvider serviceProvider,
-      IConfiguration configuration
+      IConfiguration configuration,
+      IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {
       _serviceProvider = serviceProvider;
       _configuration = configuration;
+      _viewModelCreator = viewModelCreator;
     }
 
     public IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions()
     {
       var workflowDefinitions = this._serviceProvider.GetServices<IWorkflowDefinition>();
 
-      return workflowDefinitions.Select(d => this.CreateViewModel(d));
+      return workflowDefinitions.Select(d => _viewModelCreator.CreateViewModel(d.Type));
     }
 
     public string Dot(string type)
@@ -42,19 +45,6 @@ namespace tomware.Microwf.AspNetCore
       var workflowDefinition = workflowDefinitions.FirstOrDefault(x => x.Type == type);
 
       return workflowDefinition.ToDot();
-    }
-
-    private WorkflowDefinitionViewModel CreateViewModel(IWorkflowDefinition workflowDefinition)
-    {
-      var type = workflowDefinition.Type;
-      var startUrl = this._configuration[$"Workflows:{type}:StartUrl"];
-      var description = this._configuration[$"Workflows:{type}:Description"];
-
-      return new WorkflowDefinitionViewModel {
-        Type = type,
-        StartUrl = startUrl,
-        Description = description
-      };
     }
   }
 }
