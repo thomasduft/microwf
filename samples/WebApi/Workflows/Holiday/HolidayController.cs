@@ -14,20 +14,20 @@ namespace WebApi.Workflows.Holiday
       _service = service;
     }
 
-    [HttpGet("new")]
-    [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
-    public IActionResult New()
-    {
-      var result = _service.GetNew();
-
-      return Ok(result);
-    }
-
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
     public async Task<IActionResult> Get(int id)
     {
       var result = await _service.GetAsync(id);
+
+      return Ok(result);
+    }
+
+    [HttpPost("new")]
+    [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
+    public async Task<IActionResult> New()
+    {
+      var result = await _service.NewAsync();
 
       return Ok(result);
     }

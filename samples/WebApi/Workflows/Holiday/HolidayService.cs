@@ -10,9 +10,9 @@ namespace WebApi.Workflows.Holiday
 {
   public interface IHolidayService
   {
-    IWorkflowResult<HolidayViewModel> GetNew();
-
     Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id);
+
+    Task<IWorkflowResult<HolidayViewModel>> NewAsync();
 
     Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model);
 
@@ -32,16 +32,6 @@ namespace WebApi.Workflows.Holiday
       _workflowEngine = workflowEngine;
     }
 
-    public IWorkflowResult<HolidayViewModel> GetNew()
-    {
-      var holiday = Domain.Holiday.Create("Me");
-
-      _context.Add(holiday);
-      _context.SaveChanges();
-
-      return ToResult(holiday);
-    }
-
     public async Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id)
     {
       var holiday = await _context.Holidays.FindAsync(id);
@@ -49,6 +39,16 @@ namespace WebApi.Workflows.Holiday
       return ToResult(holiday);
     }
 
+    public async Task<IWorkflowResult<HolidayViewModel>> NewAsync()
+    {
+      var holiday = Domain.Holiday.Create("Me");
+
+      _context.Add(holiday);
+      await _context.SaveChangesAsync();
+
+      return ToResult(holiday);
+    }
+    
     public async Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model)
     {
       if (model == null) throw new ArgumentNullException(nameof(model));
