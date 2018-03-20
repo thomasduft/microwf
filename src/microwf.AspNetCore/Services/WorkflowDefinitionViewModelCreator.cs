@@ -7,7 +7,8 @@ namespace tomware.Microwf.AspNetCore
     WorkflowDefinitionViewModel CreateViewModel(string type);
   }
 
-  public class ConfigurationWorkflowDefinitionViewModelCreator : IWorkflowDefinitionViewModelCreator
+  public class ConfigurationWorkflowDefinitionViewModelCreator
+    : IWorkflowDefinitionViewModelCreator
   {
     private readonly IConfiguration _configuration;
 

@@ -14,6 +14,7 @@ namespace WebApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Assignee = table.Column<string>(nullable: false),
                     From = table.Column<DateTime>(nullable: false),
                     Requestor = table.Column<string>(nullable: false),
                     State = table.Column<string>(nullable: false),

@@ -12,7 +12,9 @@ namespace tomware.Microwf.AspNetCore
     {
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
-      services.AddTransient<IWorkflowDefinitionViewModelCreator, ConfigurationWorkflowDefinitionViewModelCreator>();
+      services.AddTransient<
+        IWorkflowDefinitionViewModelCreator,
+        ConfigurationWorkflowDefinitionViewModelCreator>();
       services.AddTransient<IWorkflowService, WorkflowService>();
 
       return services;

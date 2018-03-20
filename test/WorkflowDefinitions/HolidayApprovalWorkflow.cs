@@ -60,11 +60,12 @@ namespace microwf.tests.WorkflowDefinitions
     }
   }
 
-  public class Holiday : IWorkflow
+  public class Holiday : IAssignableWorkflow
   {
     // IWorkflow properties
     public string Type { get; set; }
     public string State { get; set; }
+    public string Assignee { get; set; }
 
     // some other properties
     public string Me { get; set; }

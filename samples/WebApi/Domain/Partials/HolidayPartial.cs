@@ -4,7 +4,7 @@ using WebApi.Workflows.Holiday;
 
 namespace WebApi.Domain
 {
-  public partial class Holiday : IWorkflow
+  public partial class Holiday : IAssignableWorkflow
   {
     [Required]
     public string Type { get; set; }
@@ -12,12 +12,16 @@ namespace WebApi.Domain
     [Required]
     public string State { get; set; }
 
+    [Required]
+    public string Assignee { get; set; }
+
     public static Holiday Create(string requestor)
     {
       return new Holiday
       {
         Type = HolidayApprovalWorkflow.TYPE,
         State = HolidayApprovalWorkflow.NEW_STATE,
+        Assignee = requestor,
         Requestor = requestor
       };
     }

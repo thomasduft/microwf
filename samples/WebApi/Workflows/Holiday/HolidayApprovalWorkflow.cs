@@ -34,7 +34,8 @@ namespace WebApi.Workflows.Holiday
             State = NEW_STATE,
             Trigger = APPLY_TRIGGER,
             TargetState = APPLIED_STATE,
-            CanMakeTransition = MeApplyingForHolidays
+            CanMakeTransition = MeApplyingForHolidays,
+            AfterTransition = AssignBoss
           },
           new Transition {
             State = APPLIED_STATE,
@@ -67,6 +68,14 @@ namespace WebApi.Workflows.Holiday
       _logger.LogInformation($"Can apply: {canApply}");
 
       return canApply;
+    }
+
+    private void AssignBoss(TransitionContext context)
+    {
+      var holiday = context.GetInstance<Domain.Holiday>();
+      holiday.Assignee = holiday.Superior;
+
+      _logger.LogInformation($"Assignee: {holiday.Assignee}");
     }
 
     private bool BossIsApproving(TransitionContext context)

@@ -24,6 +24,9 @@ namespace WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Assignee")
+                        .IsRequired();
+
                     b.Property<DateTime>("From");
 
                     b.Property<string>("Requestor")
