@@ -1,9 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>tomware.Microwf.Core</AssemblyName>
     <RootNamespace>tomware.Microwf.Core</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>A simple finite state machine (FSM) with workflow character where you define your workflows in code.</Description>
+    <RepositoryUrl>https://github.com/thomasduft/microwf</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/thomasduft/microwf/blob/master/LICENSE.md</PackageLicenseUrl>
+    <Authors>Thomas Duft</Authors>
+    <Company>tomWare SOLUTIONS</Company>
+    <PackageProjectUrl>https://github.com/thomasduft/microwf</PackageProjectUrl>
+    <PackageTags>StateMachine Workflow micro</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>2018 tomWare SOLUTIONS</Copyright>
   </PropertyGroup>
 
 </Project>

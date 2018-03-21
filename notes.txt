@@ -19,3 +19,8 @@ EF Commands:
 dotnet ef migrations add <somename>
 dotnet ef database update
 dotnet ef database drop
+
+
+NuGet Commands:
+
+dotnet pack src/microwf.Core -c Release /p:PackageVersion=1.0.0 -o ./../../dist/nupkgs
