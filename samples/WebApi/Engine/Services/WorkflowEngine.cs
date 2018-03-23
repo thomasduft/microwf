@@ -83,7 +83,7 @@ namespace tomware.Microwf.Engine
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
-            if (id.HasValue)
+            if (id.HasValue && param.HasVariables)
             {
               this.PersistContext(id.Value, param.Variables);
             }
@@ -112,7 +112,7 @@ namespace tomware.Microwf.Engine
 
     private WorkflowContext GetContext(int id, TriggerParam triggerParam)
     {
-      return this._workflowContextService.FindOrCreate(id, triggerParam);
+      return this._workflowContextService.FindOrCreate(id, triggerParam.Instance.Type);
     }
 
     private void PersistContext(

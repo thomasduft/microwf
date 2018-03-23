@@ -9,7 +9,7 @@ namespace tomware.Microwf.Engine
 {
   public interface IWorkflowContextService
   {
-    WorkflowContext FindOrCreate(int id, TriggerParam triggerParam);
+    WorkflowContext FindOrCreate(int id, string type);
     
     void Update(
       int id,
@@ -26,12 +26,12 @@ namespace tomware.Microwf.Engine
       this._context = context;
     }
 
-    public WorkflowContext FindOrCreate(int id, TriggerParam triggerParam)
+    public WorkflowContext FindOrCreate(int id, string type)
     {
       var ctx = GetById(id);
       if (ctx == null)
       {
-        ctx = WorkflowContext.Create(id, triggerParam.Instance.Type);
+        ctx = WorkflowContext.Create(id, type);
         this._context.Add(ctx);
       }
 
