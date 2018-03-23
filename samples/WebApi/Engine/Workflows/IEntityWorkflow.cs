@@ -1,6 +1,6 @@
 using tomware.Microwf.Core;
 
-namespace WebApi.Engine.Workflows
+namespace tomware.Microwf.Engine
 {
   public interface IEntityWorkflow : IAssignableWorkflow
   {

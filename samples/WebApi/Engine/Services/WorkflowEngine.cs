@@ -15,7 +15,7 @@ namespace tomware.Microwf.Engine
 
     TriggerResult CanTrigger(TriggerParam param);
 
-    TriggerResult Trigger(int id, TriggerParam param);
+    TriggerResult Trigger(TriggerParam param);
   }
 
   public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : DbContext
@@ -59,7 +59,7 @@ namespace tomware.Microwf.Engine
       return execution.GetTriggers(instance, variables);
     }
 
-    public TriggerResult Trigger(int id, TriggerParam param)
+    public TriggerResult Trigger(TriggerParam param)
     {
       if (param == null) throw new InvalidOperationException(nameof(param));
 
@@ -67,14 +67,27 @@ namespace tomware.Microwf.Engine
 
       using (var transaction = this._context.Database.BeginTransaction())
       {
+        int? id = null;
         try
         {
           var execution = GetExecution(param.Instance.Type);
-          var contextInfo = GetContext(id, param);
+
+          WorkflowContext workflowContext = null;
+          var workflow = param.Instance as IEntityWorkflow;
+          if (workflow != null)
+          {
+            id = workflow.Id;
+            workflowContext = GetContext(id.Value, param);
+          }
 
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
+            if (id.HasValue)
+            {
+              this.PersistContext(id.Value, param.Variables);
+            }
+
             this._context.SaveChanges();
             transaction.Commit();
           }
@@ -97,9 +110,17 @@ namespace tomware.Microwf.Engine
       return new WorkflowExecution(definition);
     }
 
-    private WorkflowContextInfo GetContext(int id, TriggerParam triggerParam)
+    private WorkflowContext GetContext(int id, TriggerParam triggerParam)
     {
       return this._workflowContextService.FindOrCreate(id, triggerParam);
+    }
+
+    private void PersistContext(
+      int id,
+      Dictionary<string, WorkflowVariableBase> variables
+    )
+    {
+      this._workflowContextService.Update(id, variables);
     }
   }
 }

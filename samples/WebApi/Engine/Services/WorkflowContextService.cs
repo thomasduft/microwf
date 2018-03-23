@@ -7,37 +7,26 @@ using WebApi.Domain;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkflowContextInfo
-  {
-    public IWorkflow Workflow { get; set; }
-    public WorkflowContext Context { get; set; }
-  }
-
   public interface IWorkflowContextService
   {
-    WorkflowContextInfo FindOrCreate(int id, TriggerParam triggerParam);
-    void Save(
+    WorkflowContext FindOrCreate(int id, TriggerParam triggerParam);
+    
+    void Update(
       int id,
-      IWorkflow workflow,
-      DateTime? dueDate = null,
-      Dictionary<string, WorkflowVariableBase> variables = null);
+      Dictionary<string, WorkflowVariableBase> variables = null,
+      DateTime? dueDate = null
+      );
   }
 
   public class WorkflowContextService : IWorkflowContextService
   {
     private readonly DomainContext _context;
-    private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
 
-    public WorkflowContextService(
-      DomainContext context,
-      IWorkflowDefinitionProvider workflowDefinitionProvider
-    )
-    {
+    public WorkflowContextService(DomainContext context)    {
       this._context = context;
-      this._workflowDefinitionProvider = workflowDefinitionProvider;
     }
 
-    public WorkflowContextInfo FindOrCreate(int id, TriggerParam triggerParam)
+    public WorkflowContext FindOrCreate(int id, TriggerParam triggerParam)
     {
       var ctx = GetById(id);
       if (ctx == null)
@@ -46,30 +35,17 @@ namespace tomware.Microwf.Engine
         this._context.Add(ctx);
       }
 
-      var definition = this._workflowDefinitionProvider.GetWorkflowDefinition(ctx.Type);
-      var type = ((EntityWorkflowDefinitionBase)definition).EntityType;
-
-      return new WorkflowContextInfo
-      {
-        Workflow = triggerParam.Instance,
-        Context = ctx
-      };
+      return ctx;
     }
 
-    public void Save(
+    public void Update(
       int id,
-      IWorkflow workflow,
-      DateTime? dueDate = null,
-      Dictionary<string, WorkflowVariableBase> variables = null
+      Dictionary<string, WorkflowVariableBase> variables = null,
+      DateTime? dueDate = null
     )
     {
-      if (workflow == null) throw new ArgumentNullException(nameof(workflow));
-
       string context = null;
-      if (variables != null)
-      {
-        context = JsonConvert.SerializeObject(variables);
-      }
+      if (variables != null) context = JsonConvert.SerializeObject(variables);
 
       WorkflowContext workflowContext = GetById(id);
       workflowContext.Context = context;

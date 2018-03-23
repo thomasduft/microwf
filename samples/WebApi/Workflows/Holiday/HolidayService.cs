@@ -115,7 +115,7 @@ namespace WebApi.Workflows.Holiday
       holiday.To = model.To;
 
       var triggerParam = new TriggerParam(trigger, holiday);
-      this._workflowEngine.Trigger(holiday.Id, triggerParam);
+      this._workflowEngine.Trigger(triggerParam);
 
       return ToResult(holiday);
     }
