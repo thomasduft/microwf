@@ -1,10 +1,12 @@
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
+using tomware.Microwf.Engine;
 
 namespace WebApi.Workflows.Holiday
 {
-  public class HolidayApprovalWorkflow : WorkflowDefinitionBase
+  public class HolidayApprovalWorkflow : EntityWorkflowDefinitionBase
   {
     private readonly ILogger<HolidayApprovalWorkflow> _logger;
 
@@ -19,10 +21,9 @@ namespace WebApi.Workflows.Holiday
     public const string APPROVED_STATE = "approved";
     public const string REJECTED_STATE = "rejected";
 
-    public override string Type
-    {
-      get { return TYPE; }
-    }
+    public override string Type => TYPE;
+
+    public override Type EntityType => typeof(Domain.Holiday);
 
     public override List<Transition> Transitions
     {
@@ -55,7 +56,7 @@ namespace WebApi.Workflows.Holiday
 
     public HolidayApprovalWorkflow(ILoggerFactory loggerFactory)
     {
-      _logger = loggerFactory.CreateLogger<HolidayApprovalWorkflow>();
+      this._logger = loggerFactory.CreateLogger<HolidayApprovalWorkflow>();
 
       // inject further dependencies if required i.e. CurrentUser 
     }
@@ -65,7 +66,7 @@ namespace WebApi.Workflows.Holiday
       var holiday = context.GetInstance<Domain.Holiday>();
       var canApply = holiday.Requestor == "Me";
 
-      _logger.LogInformation($"Can apply: {canApply}");
+      this._logger.LogInformation($"Can apply: {canApply}");
 
       return canApply;
     }
@@ -75,14 +76,14 @@ namespace WebApi.Workflows.Holiday
       var holiday = context.GetInstance<Domain.Holiday>();
       holiday.Assignee = holiday.Superior;
 
-      _logger.LogInformation($"Assignee: {holiday.Assignee}");
+      this._logger.LogInformation($"Assignee: {holiday.Assignee}");
     }
 
     private bool BossIsApproving(TransitionContext context)
     {
       var holiday = context.GetInstance<Domain.Holiday>();
 
-      _logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
+      this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
       return holiday.Superior == "NiceBoss";
     }
@@ -91,7 +92,7 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = context.GetInstance<Domain.Holiday>();
 
-      _logger.LogInformation($"Thank you very much: {holiday.Superior}!");
+      this._logger.LogInformation($"Thank you very much: {holiday.Superior}!");
     }
   }
 }

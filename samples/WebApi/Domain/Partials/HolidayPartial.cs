@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using tomware.Microwf.Core;
+using WebApi.Engine.Workflows;
 using WebApi.Workflows.Holiday;
 
 namespace WebApi.Domain
 {
-  public partial class Holiday : IAssignableWorkflow
+  public partial class Holiday : IEntityWorkflow
   {
     [Required]
     public string Type { get; set; }

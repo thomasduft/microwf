@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using tomware.Microwf.Engine;
 
 namespace WebApi.Domain
 {
@@ -8,5 +9,6 @@ namespace WebApi.Domain
     { }
 
     public DbSet<Holiday> Holidays { get; set; }
+    public DbSet<WorkflowContext> Workflows { get; set; }
   }
 }

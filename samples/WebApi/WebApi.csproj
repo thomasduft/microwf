@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\microwf.Core\microwf.Core.csproj" />
-    <ProjectReference Include="..\..\src\microwf.AspNetCore\microwf.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>

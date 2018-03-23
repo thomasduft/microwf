@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using tomware.Microwf.AspNetCore;
 using tomware.Microwf.Core;
+using tomware.Microwf.Engine;
 using WebApi.Domain;
 
 namespace WebApi.Workflows.Holiday
@@ -31,13 +31,13 @@ namespace WebApi.Workflows.Holiday
 
     public HolidayService(DomainContext context, IWorkflowEngine workflowEngine)
     {
-      _context = context;
-      _workflowEngine = workflowEngine;
+      this._context = context;
+      this._workflowEngine = workflowEngine;
     }
 
     public async Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id)
     {
-      var holiday = await _context.Holidays.FindAsync(id);
+      var holiday = await this._context.Holidays.FindAsync(id);
 
       return ToResult(holiday);
     }
@@ -46,8 +46,8 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = Domain.Holiday.Create("Me");
 
-      _context.Add(holiday);
-      await _context.SaveChangesAsync();
+      this._context.Add(holiday);
+      await this._context.SaveChangesAsync();
 
       return ToResult(holiday);
     }
@@ -76,7 +76,7 @@ namespace WebApi.Workflows.Holiday
     public async Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync()
     {
       var me = "Me";
-      var work = await _context.Holidays.Where(h => h.Assignee == me).ToListAsync();
+      var work = await this._context.Holidays.Where(h => h.Assignee == me).ToListAsync();
 
       return work.Select(h => new AssignableWorkflowViewModel
       {
@@ -89,7 +89,7 @@ namespace WebApi.Workflows.Holiday
 
     private IWorkflowResult<HolidayViewModel> ToResult(Domain.Holiday holiday)
     {
-      IEnumerable<TriggerResult> result = _workflowEngine.GetTriggers(holiday);
+      IEnumerable<TriggerResult> result = this._workflowEngine.GetTriggers(holiday);
       var triggers = result.Select(x => x.TriggerName);
 
       var viewModel = new HolidayViewModel
@@ -109,13 +109,13 @@ namespace WebApi.Workflows.Holiday
       HolidayViewModel model
     )
     {
-      var holiday = await _context.Holidays.FindAsync(model.Id);
+      var holiday = await this._context.Holidays.FindAsync(model.Id);
       holiday.Superior = model.Superior;
       holiday.From = model.From;
       holiday.To = model.To;
 
       var triggerParam = new TriggerParam(trigger, holiday);
-      _workflowEngine.Trigger(triggerParam);
+      this._workflowEngine.Trigger(holiday.Id, triggerParam);
 
       return ToResult(holiday);
     }

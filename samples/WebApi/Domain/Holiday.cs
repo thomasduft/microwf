@@ -5,6 +5,7 @@ namespace WebApi.Domain
 {
   public partial class Holiday
   {
+    [Key]
     public int Id { get; set; }
     
     [Required]

@@ -26,12 +26,31 @@ namespace WebApi.Migrations
                 {
                     table.PrimaryKey("PK_Holidays", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Workflows",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Context = table.Column<string>(nullable: true),
+                    CorrelationId = table.Column<int>(nullable: false),
+                    DueDate = table.Column<DateTime>(nullable: true),
+                    Type = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workflows", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Holidays");
+
+            migrationBuilder.DropTable(
+                name: "Workflows");
         }
     }
 }

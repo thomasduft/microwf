@@ -11,7 +11,7 @@ using WebApi.Domain;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20180320103405_Initial")]
+    [Migration("20180323062613_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,6 +19,25 @@ namespace WebApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowContext", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Context");
+
+                    b.Property<int>("CorrelationId");
+
+                    b.Property<DateTime?>("DueDate");
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Workflows");
+                });
 
             modelBuilder.Entity("WebApi.Domain.Holiday", b =>
                 {

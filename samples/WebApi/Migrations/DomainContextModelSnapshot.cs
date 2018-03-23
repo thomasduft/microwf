@@ -19,6 +19,25 @@ namespace WebApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowContext", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Context");
+
+                    b.Property<int>("CorrelationId");
+
+                    b.Property<DateTime?>("DueDate");
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Workflows");
+                });
+
             modelBuilder.Entity("WebApi.Domain.Holiday", b =>
                 {
                     b.Property<int>("Id")
