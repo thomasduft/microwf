@@ -74,7 +74,11 @@ namespace WebApi.Workflows.Holiday
     private void AssignBoss(TransitionContext context)
     {
       var holiday = context.GetInstance<Domain.Holiday>();
-      holiday.Assignee = holiday.Superior;
+
+      if (context.HasVariables) {
+        var model = context.GetVariable<HolidayViewModel>(HolidayViewModel.KEY);
+        holiday.Assignee = model.Superior;
+      }
 
       this._logger.LogInformation($"Assignee: {holiday.Assignee}");
     }

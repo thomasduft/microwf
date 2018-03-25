@@ -11,7 +11,7 @@ namespace tomware.Microwf.Core
     {
       get
       {
-        return Variables != null;
+        return Variables != null && Variables.Count > 0;
       }
     }
 

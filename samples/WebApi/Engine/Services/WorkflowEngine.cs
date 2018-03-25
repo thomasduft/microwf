@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using tomware.Microwf.Core;
+using WebApi.Domain;
 
 namespace tomware.Microwf.Engine
 {
@@ -20,22 +23,19 @@ namespace tomware.Microwf.Engine
 
   public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : DbContext
   {
+    private readonly DomainContext _context;
     private readonly ILogger<WorkflowEngine<TContext>> _logger;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
-    private readonly IWorkflowContextService _workflowContextService;
-    private readonly TContext _context;
 
     public WorkflowEngine(
-      TContext context,
+      DomainContext context,
       ILoggerFactory loggerFactory,
-      IWorkflowDefinitionProvider workflowDefinitionProvider,
-      IWorkflowContextService workflowContextService
+      IWorkflowDefinitionProvider workflowDefinitionProvider
     )
     {
       this._context = context ?? throw new ArgumentNullException(nameof(context));
       this._logger = loggerFactory.CreateLogger<WorkflowEngine<TContext>>();
       this._workflowDefinitionProvider = workflowDefinitionProvider;
-      this._workflowContextService = workflowContextService;
     }
 
     public TriggerResult CanTrigger(TriggerParam param)
@@ -72,12 +72,12 @@ namespace tomware.Microwf.Engine
         {
           var execution = GetExecution(param.Instance.Type);
 
-          WorkflowContext workflowContext = null;
           var workflow = param.Instance as IEntityWorkflow;
+          WorkflowContext workflowContext = null;
           if (workflow != null)
           {
             id = workflow.Id;
-            workflowContext = GetContext(id.Value, param);
+            workflowContext = FindOrCreate(id.Value, param);
           }
 
           result = execution.Trigger(param);
@@ -85,7 +85,7 @@ namespace tomware.Microwf.Engine
           {
             if (id.HasValue && param.HasVariables)
             {
-              this.PersistContext(id.Value, param.Variables);
+              this.PersistContext(workflowContext, param.Variables);
             }
 
             this._context.SaveChanges();
@@ -110,17 +110,44 @@ namespace tomware.Microwf.Engine
       return new WorkflowExecution(definition);
     }
 
-    private WorkflowContext GetContext(int id, TriggerParam triggerParam)
+    private WorkflowContext FindOrCreate(int id, TriggerParam triggerParam)
     {
-      return this._workflowContextService.FindOrCreate(id, triggerParam.Instance.Type);
+      var ctx = this._context.Workflows.SingleOrDefault(w => w.CorrelationId == id);
+      if (ctx == null)
+      {
+        ctx = WorkflowContext.Create(id, triggerParam.Instance.Type);
+        this._context.Add(ctx);
+      }
+
+      if (!triggerParam.HasVariables && !string.IsNullOrWhiteSpace(ctx.Context))
+      {
+        var variables = JsonConvert
+          .DeserializeObject<Dictionary<string, WorkflowVariableBase>>(ctx.Context);
+        foreach (var variable in variables)
+        {
+          triggerParam.Variables.Add(variable.Key, variable.Value);
+        }
+      }
+
+      return ctx;
     }
 
     private void PersistContext(
-      int id,
-      Dictionary<string, WorkflowVariableBase> variables
+      WorkflowContext workflowContext,
+      Dictionary<string, WorkflowVariableBase> variables,
+      DateTime? dueDate = null
     )
     {
-      this._workflowContextService.Update(id, variables);
+      if (workflowContext == null) throw new ArgumentNullException(nameof(workflowContext));
+
+      string context = null;
+      if (variables != null)
+      {
+        context = JsonConvert.SerializeObject(variables);
+        workflowContext.Context = context;
+      }
+
+      workflowContext.DueDate = dueDate;
     }
   }
 }

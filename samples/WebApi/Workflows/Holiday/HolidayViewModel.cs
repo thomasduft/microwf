@@ -1,10 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using tomware.Microwf.Core;
 
 namespace WebApi.Workflows.Holiday
 {
-  public class HolidayViewModel 
+  public class HolidayViewModel : WorkflowVariableBase
   {
+    public const string KEY = "HolidayViewModel";
+
     [Required]
     public int Id { get; set; }
     

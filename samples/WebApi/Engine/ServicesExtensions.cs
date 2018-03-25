@@ -16,7 +16,6 @@ namespace tomware.Microwf.Engine
         IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
       services.AddTransient<IWorkflowService, WorkflowService>();
-      services.AddTransient<IWorkflowContextService, WorkflowContextService>();
 
       return services;
     }

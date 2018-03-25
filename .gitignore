@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 
 samples/WebApi/microwf.sqlite
+test/lcov.info
