@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace WebApi
 {
@@ -11,8 +12,10 @@ namespace WebApi
     }
 
     public static IWebHost BuildWebHost(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
-            .Build();
+      WebHost
+        .CreateDefaultBuilder(args)
+        .UseShutdownTimeout(TimeSpan.FromSeconds(10))
+        .UseStartup<Startup>()
+        .Build();
   }
 }

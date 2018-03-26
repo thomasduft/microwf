@@ -19,6 +19,8 @@ namespace tomware.Microwf.Engine
     TriggerResult CanTrigger(TriggerParam param);
 
     TriggerResult Trigger(TriggerParam param);
+
+    IWorkflow Find(int id, Type type);
   }
 
   public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : DbContext
@@ -77,7 +79,8 @@ namespace tomware.Microwf.Engine
           if (workflow != null)
           {
             id = workflow.Id;
-            workflowContext = FindOrCreate(id.Value, param);
+            workflowContext = FindOrCreate(id.Value, param.Instance.Type);
+            this.EnsureContext(param, workflowContext);
           }
 
           result = execution.Trigger(param);
@@ -103,6 +106,11 @@ namespace tomware.Microwf.Engine
       return result;
     }
 
+    public IWorkflow Find(int id, Type type)
+    {
+      return (IWorkflow) _context.Find(type, id);
+    }
+
     private WorkflowExecution GetExecution(string type)
     {
       var definition = this._workflowDefinitionProvider.GetWorkflowDefinition(type);
@@ -110,14 +118,22 @@ namespace tomware.Microwf.Engine
       return new WorkflowExecution(definition);
     }
 
-    private WorkflowContext FindOrCreate(int id, TriggerParam triggerParam)
+    private WorkflowContext FindOrCreate(int id, string type)
     {
       var ctx = this._context.Workflows.SingleOrDefault(w => w.CorrelationId == id);
       if (ctx == null)
       {
-        ctx = WorkflowContext.Create(id, triggerParam.Instance.Type);
+        ctx = WorkflowContext.Create(id, type);
         this._context.Add(ctx);
       }
+
+      return ctx;
+    }
+
+    private void EnsureContext(TriggerParam triggerParam, WorkflowContext ctx)
+    {
+      if (triggerParam == null) throw new ArgumentNullException(nameof(triggerParam));
+      if (ctx == null) throw new ArgumentNullException(nameof(ctx));
 
       if (!triggerParam.HasVariables && !string.IsNullOrWhiteSpace(ctx.Context))
       {
@@ -128,8 +144,6 @@ namespace tomware.Microwf.Engine
           triggerParam.Variables.Add(variable.Key, variable.Value);
         }
       }
-
-      return ctx;
     }
 
     private void PersistContext(

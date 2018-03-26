@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Domain;
@@ -23,6 +24,8 @@ namespace WebApi
     public void ConfigureServices(IServiceCollection services)
     {
       var connection = this.Configuration["ConnectionString"];
+
+      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
 
       services
         .AddEntityFrameworkSqlite()
@@ -63,7 +66,6 @@ namespace WebApi
       {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI V1");
       });
-
     }
   }
 }
