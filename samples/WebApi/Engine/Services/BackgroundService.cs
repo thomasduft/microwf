@@ -108,7 +108,7 @@ namespace tomware.Microwf.Engine
 
       _logger.LogTrace($"WorkflowProcessor task is doing background work.");
 
-      //// prossess list of WorkflowProcessorItem's
+      /// process list of WorkflowProcessorItem's
       //WorkflowProcessorItem item = new WorkflowProcessorItem();
       //EntityWorkflowDefinitionBase workflowDefinition
       //  = (EntityWorkflowDefinitionBase) workflowDefinitionProvider

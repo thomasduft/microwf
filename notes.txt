@@ -1,6 +1,9 @@
-(-) test TransitionContext
-(-) test TriggerParam
-(-) test TriggerResult
+(-) test 
+  (-) TransitionContext
+  (-) TriggerParam
+  (-) TriggerResult
+(-) add identity to WebApi
+(-) add Angular client 
 
 
 done:
