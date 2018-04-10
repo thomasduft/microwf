@@ -1,4 +1,6 @@
-
+(-) test TransitionContext
+(-) test TriggerParam
+(-) test TriggerResult
 
 
 done:

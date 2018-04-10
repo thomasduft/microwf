@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microwf.Tests", "test\micro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "samples\WebApi\WebApi.csproj", "{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microwf.AspNetCore", "src\microwf.AspNetCore\microwf.AspNetCore.csproj", "{76709F58-DD07-41A0-82DF-38F2D8A3D972}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76709F58-DD07-41A0-82DF-38F2D8A3D972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76709F58-DD07-41A0-82DF-38F2D8A3D972}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76709F58-DD07-41A0-82DF-38F2D8A3D972}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76709F58-DD07-41A0-82DF-38F2D8A3D972}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
