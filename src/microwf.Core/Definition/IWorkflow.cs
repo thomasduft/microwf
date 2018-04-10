@@ -12,12 +12,4 @@ namespace tomware.Microwf.Core
     /// </summary>
     string State { get; set; }
   }
-
-  public interface IAssignableWorkflow : IWorkflow
-  {
-    /// <summary>
-    /// The assigned subject for a workflow.
-    /// </summary>
-    string Assignee { get; set; }
-  }
 }
