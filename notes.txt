@@ -1,7 +1,3 @@
-(x) test 
-  (x) TransitionContext
-  (x) TriggerParam
-  (x) TriggerResult
 (-) add identity to WebApi
 (-) add Angular client 
 
@@ -15,7 +11,10 @@ done:
   (x) start a workflow
   (x) list instances assigned to me
   (x) resume a workflow
-
+(x) test 
+  (x) TransitionContext
+  (x) TriggerParam
+  (x) TriggerResult
 
 
 EF Commands:

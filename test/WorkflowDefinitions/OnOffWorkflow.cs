@@ -24,6 +24,7 @@ namespace microwf.tests.WorkflowDefinitions
             State = "On",
             Trigger = "SwitchOff",
             TargetState ="Off",
+            CanMakeTransition = CanSwitch,
             BeforeTransition = BeforeTransition,
             AfterTransition = AfterTransition
           },
@@ -31,11 +32,27 @@ namespace microwf.tests.WorkflowDefinitions
             State = "Off",
             Trigger = "SwitchOn",
             TargetState ="On",
+            CanMakeTransition = CanSwitch,
             BeforeTransition = BeforeTransition,
             AfterTransition = AfterTransition
           },
         };
       }
+    }
+
+    private bool CanSwitch(TransitionContext context)
+    {
+      var switcher = context.GetInstance<Switcher>();
+
+      if (context.ContainsKey(SwitcherWorkflowVariable.KEY))
+      {
+        var variable = context
+          .GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY);
+
+        return variable.CanSwitch;
+      }
+
+      return true;
     }
 
     private void BeforeTransition(TransitionContext context)
