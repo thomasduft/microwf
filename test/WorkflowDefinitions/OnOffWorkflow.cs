@@ -48,7 +48,7 @@ namespace microwf.tests.WorkflowDefinitions
     private void AfterTransition(TransitionContext context)
     {
       var switcher = context.GetInstance<Switcher>();
-      
+
       Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
   }
@@ -65,6 +65,17 @@ namespace microwf.tests.WorkflowDefinitions
     public Switcher()
     {
       State = "Off";
+    }
+  }
+
+  public class SwitcherWorkflowVariable : WorkflowVariableBase
+  {
+    public const string KEY = "SwitcherWorkflowVariable";
+
+    public bool CanSwitch { get; set; }
+    public SwitcherWorkflowVariable(bool canSwitch)
+    {
+      CanSwitch = canSwitch;
     }
   }
 }

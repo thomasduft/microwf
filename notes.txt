@@ -1,7 +1,7 @@
-(-) test 
-  (-) TransitionContext
-  (-) TriggerParam
-  (-) TriggerResult
+(x) test 
+  (x) TransitionContext
+  (x) TriggerParam
+  (x) TriggerResult
 (-) add identity to WebApi
 (-) add Angular client 
 

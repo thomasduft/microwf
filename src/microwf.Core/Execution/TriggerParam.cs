@@ -11,7 +11,7 @@ namespace tomware.Microwf.Core
     {
       get
       {
-        return Variables != null && Variables.Count > 0;
+        return Variables.Count > 0;
       }
     }
 
@@ -22,11 +22,9 @@ namespace tomware.Microwf.Core
     {
       TriggerName = triggerName;
       Instance = instance;
-
-      if (variables != null)
-      {
-        Variables = variables;
-      }
+      Variables = variables != null 
+        ? variables
+        : new Dictionary<string, WorkflowVariableBase>();
     }
   }
 }

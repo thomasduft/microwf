@@ -8,32 +8,35 @@ namespace tomware.Microwf.Core
     private readonly TransitionContext _triggerContext;
 
     /// <summary>
-    /// Indicates whether the transition can be triggered
+    /// Indicates whether the transition can be triggered.
     /// </summary>
     public bool CanTrigger { get; private set; }
 
     /// <summary>
-    /// Indicates whether a trigger was aborted
+    /// Indicates whether a trigger was aborted.
     /// </summary>
     public bool IsAborted { get; private set; }
 
     /// <summary>
-    /// Trigger that should be triggered
+    /// Trigger that should be triggered.
     /// </summary>
     public string TriggerName { get; private set; }
 
-    private bool HasErrors
+    /// <summary>
+    /// Indicates whether a trigger has errors.
+    /// </summary>
+    public bool HasErrors
     {
       get { return Errors != null && Errors.Count() > 0; }
     }
 
     /// <summary>
-    /// Trigger errors that occured during trying to make the transition
+    /// Trigger errors that occured during trying to make the transition.
     /// </summary>
     public IEnumerable<string> Errors { get; private set; }
 
     /// <summary>
-    /// Returns the current state of the IWorkflow instance
+    /// Returns the current state of the IWorkflow instance.
     /// </summary>
     public string CurrentState
     {

@@ -37,6 +37,14 @@ namespace tomware.Microwf.Core
       get { return _errors; }
     }
 
+    /// <summary>
+    /// Indicates whether there are Errors available.
+    /// </summary>
+    public bool HasErrors 
+    {
+      get { return this._errors.Count > 0; }
+    }
+
     public TransitionContext(IWorkflow instance)
     {
       Instance = instance;
@@ -115,7 +123,7 @@ namespace tomware.Microwf.Core
     public void AbortTransition(string reason)
     {
       TransitionAborted = true;
-      _errors.Add(reason);
+      AddError(reason);
     }
   }
 }
