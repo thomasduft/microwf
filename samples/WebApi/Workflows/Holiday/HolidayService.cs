@@ -51,7 +51,7 @@ namespace WebApi.Workflows.Holiday
 
       return ToResult(holiday);
     }
-    
+
     public async Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model)
     {
       if (model == null) throw new ArgumentNullException(nameof(model));
@@ -114,10 +114,8 @@ namespace WebApi.Workflows.Holiday
       holiday.From = model.From;
       holiday.To = model.To;
 
-      var variables = new Dictionary<string, WorkflowVariableBase>();
-      variables.Add(HolidayViewModel.KEY, model);
-
-      var triggerParam = new TriggerParam(trigger, holiday, variables);
+      var triggerParam = new TriggerParam(trigger, holiday)
+        .AddVariable(HolidayViewModel.KEY, model);
       this._workflowEngine.Trigger(triggerParam);
 
       return ToResult(holiday);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace tomware.Microwf.Core
@@ -22,9 +23,21 @@ namespace tomware.Microwf.Core
     {
       TriggerName = triggerName;
       Instance = instance;
-      Variables = variables != null 
+      Variables = variables != null
         ? variables
         : new Dictionary<string, WorkflowVariableBase>();
+    }
+
+    public TriggerParam AddVariable(string key, WorkflowVariableBase value)
+    {
+      if (Variables.ContainsKey(key))
+      {
+        throw new InvalidOperationException($"Key {key} exists already!");
+      }
+
+      Variables.Add(key, value);
+
+      return this;
     }
   }
 }
