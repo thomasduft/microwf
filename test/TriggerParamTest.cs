@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.tests.WorkflowDefinitions;
@@ -51,6 +52,45 @@ namespace microwf.tests
       Assert.AreEqual(triggerParam.Instance, switcher);
       Assert.IsTrue(triggerParam.HasVariables);
       Assert.IsNotNull(triggerParam.Variables);
+    }
+
+    [TestMethod]
+    public void TriggerParam_NewInstanceWithFluentVariables_CreatesANewInstance()
+    {
+      // Arrange
+      var trigger = "SwitchOn";
+      Switcher switcher = new Switcher
+      {
+        Type = OnOffWorkflow.TYPE
+      };
+
+      // Act
+      var triggerParam = new TriggerParam(trigger, switcher)
+        .AddVariable(SwitcherWorkflowVariable.KEY, new SwitcherWorkflowVariable(true));
+
+      // Assert
+      Assert.IsNotNull(triggerParam);
+      Assert.AreEqual(triggerParam.TriggerName, trigger);
+      Assert.AreEqual(triggerParam.Instance, switcher);
+      Assert.IsTrue(triggerParam.HasVariables);
+      Assert.IsNotNull(triggerParam.Variables);
+    }
+
+    [TestMethod]
+    public void TriggerParam_AddsTheSameWorkflowVariable_ThrowsException()
+    {
+      // Arrange
+      var trigger = "SwitchOn";
+      Switcher switcher = new Switcher
+      {
+        Type = OnOffWorkflow.TYPE
+      };
+
+      // Act
+      Assert.ThrowsException<InvalidOperationException>(
+        () => new TriggerParam(trigger, switcher)
+        .AddVariable(SwitcherWorkflowVariable.KEY, new SwitcherWorkflowVariable(true))
+        .AddVariable(SwitcherWorkflowVariable.KEY, new SwitcherWorkflowVariable(true)));
     }
   }
 }
