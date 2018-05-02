@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -5,6 +6,7 @@ using tomware.Microwf.Engine;
 
 namespace WebApi.Workflows.Holiday
 {
+  [Authorize]
   [Route("api/holiday")]
   public class HolidayController : Controller
   {

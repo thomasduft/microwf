@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace tomware.Microwf.Engine
 {
+  [Authorize]
   [Route("api/workflow")]
   public class WorkflowController : Controller
   {

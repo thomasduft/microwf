@@ -8,6 +8,7 @@ using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Domain;
+using WebApi.Identity;
 using WebApi.Workflows.Holiday;
 
 namespace WebApi
@@ -20,7 +21,7 @@ namespace WebApi
     {
       this.Configuration = configuration;
     }
-    
+
     public void ConfigureServices(IServiceCollection services)
     {
       var connection = this.Configuration["ConnectionString"];
@@ -31,12 +32,40 @@ namespace WebApi
         .AddEntityFrameworkSqlite()
         .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
 
+      // configure identity server with in-memory stores, keys, clients and scopes
+      services.AddIdentityServer()
+          .AddDeveloperSigningCredential()
+          .AddInMemoryApiResources(Config.GetApiResources())
+          .AddInMemoryClients(Config.GetClients())
+          .AddTestUsers(Config.GetUsers());
+
       services.AddMicrowfServices<DomainContext>();
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IHolidayService, HolidayService>();
 
-      services.AddMvc();
+      services.AddCors(options =>
+        {
+          options.AddPolicy("AllowAllOrigins", builder =>
+            {
+              builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        })
+        .AddMvc();
+
+      services.AddAuthorization();
+
+      services.AddAuthentication("Bearer")
+        .AddIdentityServerAuthentication(options =>
+        {
+          options.Authority = "http://localhost:5000";
+          options.RequireHttpsMetadata = false;
+
+          options.ApiName = "api1";
+        });
 
       services.AddSwaggerGen(c =>
       {
@@ -48,6 +77,17 @@ namespace WebApi
           TermsOfService = "N/A"
         });
       });
+
+      services.ConfigureSwaggerGen(options =>
+      {
+        options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+        {
+          In = "header",
+          Description = "Please insert JWT with Bearer into field",
+          Name = "Authorization",
+          Type = "apiKey"
+        });
+      });
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -56,6 +96,11 @@ namespace WebApi
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseCors("AllowAllOrigins");
+
+      app.UseIdentityServer();
+      app.UseAuthentication();
 
       app.UseFileServer();
 
