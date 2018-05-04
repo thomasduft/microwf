@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace tomware.Microwf.Core
 {
   public interface IWorkflowDefinitionProvider
@@ -14,5 +16,11 @@ namespace tomware.Microwf.Core
     /// <param name="type"></param>
     /// <returns></returns>
     IWorkflowDefinition GetWorkflowDefinition(string type);
+
+    /// <summary>
+    /// Returns a list of workflow definitions.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<IWorkflowDefinition> GetWorkflowDefinitions();
   }
 }

@@ -1,5 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
 
@@ -7,17 +7,21 @@ namespace tomware.Microwf.Engine
 {
   public class WorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IEnumerable<IWorkflowDefinition> _workflowDefinitions;
 
-    public WorkflowDefinitionProvider(IServiceProvider serviceProvider)
+    public WorkflowDefinitionProvider(IEnumerable<IWorkflowDefinition> workflowDefinitions)
     {
-      this._serviceProvider = serviceProvider;
+      _workflowDefinitions = workflowDefinitions;
     }
 
     public IWorkflowDefinition GetWorkflowDefinition(string type)
     {
-      return this._serviceProvider
-        .GetServices<IWorkflowDefinition>().First(t => t.Type == type);
+      return _workflowDefinitions.First(t => t.Type == type);
+    }
+
+    public IEnumerable<IWorkflowDefinition> GetWorkflowDefinitions()
+    {
+      return _workflowDefinitions;
     }
 
     public void RegisterWorkflowDefinition(IWorkflowDefinition workflowDefinition)

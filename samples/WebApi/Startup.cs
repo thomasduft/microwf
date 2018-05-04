@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
+using WebApi.Common;
 using WebApi.Domain;
 using WebApi.Identity;
 using WebApi.Workflows.Holiday;
@@ -24,25 +24,7 @@ namespace WebApi
 
     public void ConfigureServices(IServiceCollection services)
     {
-      var connection = this.Configuration["ConnectionString"];
-
-      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
-
-      services
-        .AddEntityFrameworkSqlite()
-        .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
-
-      // configure identity server with in-memory stores, keys, clients and scopes
-      services.AddIdentityServer()
-          .AddDeveloperSigningCredential()
-          .AddInMemoryApiResources(Config.GetApiResources())
-          .AddInMemoryClients(Config.GetClients())
-          .AddTestUsers(Config.GetUsers());
-
-      services.AddMicrowfServices<DomainContext>();
-
-      services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
-      services.AddTransient<IHolidayService, HolidayService>();
+      services.AddOptions();
 
       services.AddCors(options =>
         {
@@ -56,25 +38,38 @@ namespace WebApi
         })
         .AddMvc();
 
+      services.AddRouting(options => options.LowercaseUrls = true);
+
       services.AddAuthorization();
+
+      var connection = this.Configuration["ConnectionString"];
+      services
+        .AddEntityFrameworkSqlite()
+        .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
+
+      // Identity
+      services.AddIdentityServer()
+          .AddDeveloperSigningCredential()
+          .AddInMemoryApiResources(Config.GetApiResources())
+          .AddInMemoryClients(Config.GetClients())
+          .AddTestUsers(Config.GetUsers());
 
       services.AddAuthentication("Bearer")
         .AddIdentityServerAuthentication(options =>
         {
           options.Authority = "http://localhost:5000";
           options.RequireHttpsMetadata = false;
-
           options.ApiName = "api1";
         });
 
+      // Swagger
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new Info
         {
           Version = "v1",
           Title = "WebAPI Documentation",
-          Description = "WebAPI Documentation",
-          TermsOfService = "N/A"
+          Description = "WebAPI Documentation"
         });
       });
 
@@ -88,6 +83,13 @@ namespace WebApi
           Type = "apiKey"
         });
       });
+
+      // Custom services
+       services.AddTransient<UserContextService>();
+      services.AddWorkflowEngineServices<DomainContext>();
+
+      services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
+      services.AddTransient<IHolidayService, HolidayService>();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)

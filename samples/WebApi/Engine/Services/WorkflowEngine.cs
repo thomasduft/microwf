@@ -35,9 +35,9 @@ namespace tomware.Microwf.Engine
       IWorkflowDefinitionProvider workflowDefinitionProvider
     )
     {
-      this._context = context ?? throw new ArgumentNullException(nameof(context));
-      this._logger = loggerFactory.CreateLogger<WorkflowEngine<TContext>>();
-      this._workflowDefinitionProvider = workflowDefinitionProvider;
+      _context = context ?? throw new ArgumentNullException(nameof(context));
+      _logger = loggerFactory.CreateLogger<WorkflowEngine<TContext>>();
+      _workflowDefinitionProvider = workflowDefinitionProvider;
     }
 
     public TriggerResult CanTrigger(TriggerParam param)
@@ -80,7 +80,7 @@ namespace tomware.Microwf.Engine
           {
             id = workflow.Id;
             workflowContext = FindOrCreate(id.Value, param.Instance.Type);
-            this.EnsureContext(param, workflowContext);
+            EnsureContext(param, workflowContext);
           }
 
           result = execution.Trigger(param);
@@ -88,10 +88,10 @@ namespace tomware.Microwf.Engine
           {
             if (id.HasValue && param.HasVariables)
             {
-              this.PersistContext(workflowContext, param.Variables);
+              PersistContext(workflowContext, param.Variables);
             }
 
-            this._context.SaveChanges();
+            _context.SaveChanges();
             transaction.Commit();
           }
         }
@@ -99,7 +99,7 @@ namespace tomware.Microwf.Engine
         {
           transaction.Rollback();
 
-          this._logger.LogError($"Error in triggering: {param.Instance.Type}, EntityId: {id}", ex);
+          _logger.LogError($"Error in triggering: {param.Instance.Type}, EntityId: {id}", ex);
         }
       }
 

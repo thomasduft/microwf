@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
+using WebApi.Common;
 using WebApi.Domain;
 
 namespace WebApi.Workflows.Holiday
@@ -28,11 +29,17 @@ namespace WebApi.Workflows.Holiday
   {
     private readonly DomainContext _context;
     private readonly IWorkflowEngine _workflowEngine;
+    private readonly UserContextService _userContext;
 
-    public HolidayService(DomainContext context, IWorkflowEngine workflowEngine)
+    public HolidayService(
+      DomainContext context, 
+      IWorkflowEngine workflowEngine, 
+      UserContextService userContext
+    )
     {
       this._context = context;
       this._workflowEngine = workflowEngine;
+      this._userContext = userContext;
     }
 
     public async Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id)
@@ -44,7 +51,7 @@ namespace WebApi.Workflows.Holiday
 
     public async Task<IWorkflowResult<HolidayViewModel>> NewAsync()
     {
-      var holiday = Domain.Holiday.Create("Me");
+      var holiday = Domain.Holiday.Create(_userContext.UserName);
 
       this._context.Add(holiday);
       await this._context.SaveChangesAsync();
@@ -75,7 +82,7 @@ namespace WebApi.Workflows.Holiday
 
     public async Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync()
     {
-      var me = "Me";
+      var me = _userContext.UserName;
       var work = await this._context.Holidays.Where(h => h.Assignee == me).ToListAsync();
 
       return work.Select(h => new AssignableWorkflowViewModel

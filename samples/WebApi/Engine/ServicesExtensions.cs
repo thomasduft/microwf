@@ -7,7 +7,7 @@ namespace tomware.Microwf.Engine
 {
   public static class MicrowfServicesExtensions
   {
-    public static IServiceCollection AddMicrowfServices<TContext>(
+    public static IServiceCollection AddWorkflowEngineServices<TContext>(
       this IServiceCollection services
     ) where TContext : DbContext
     {
@@ -18,6 +18,7 @@ namespace tomware.Microwf.Engine
         IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
       services.AddTransient<IWorkflowService, WorkflowService>();
+      
       return services;
     }
   }
