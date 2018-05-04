@@ -1,5 +1,5 @@
 (x) add identity to WebApi
-(-) add db seeder
+(x) add db seeder
 (-) add Angular client 
 
 
