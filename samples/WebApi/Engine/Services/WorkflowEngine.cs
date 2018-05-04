@@ -31,12 +31,12 @@ namespace tomware.Microwf.Engine
 
     public WorkflowEngine(
       DomainContext context,
-      ILoggerFactory loggerFactory,
+      ILogger<WorkflowEngine<TContext>> logger,
       IWorkflowDefinitionProvider workflowDefinitionProvider
     )
     {
       _context = context ?? throw new ArgumentNullException(nameof(context));
-      _logger = loggerFactory.CreateLogger<WorkflowEngine<TContext>>();
+      _logger = logger;
       _workflowDefinitionProvider = workflowDefinitionProvider;
     }
 

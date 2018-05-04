@@ -85,8 +85,13 @@ namespace WebApi
       });
 
       // Custom services
-       services.AddTransient<UserContextService>();
-      services.AddWorkflowEngineServices<DomainContext>();
+      services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
+
+      services.AddTransient<UserContextService>();
+      
+      // TODO: add typed configuration options
+      var enableWorker = this.Configuration["Worker:Enable"].ToLower() == "true";
+      services.AddWorkflowEngineServices<DomainContext>(enableWorker);
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IHolidayService, HolidayService>();
