@@ -1,4 +1,5 @@
-(-) add identity to WebApi
+(x) add identity to WebApi
+(-) add db seeder
 (-) add Angular client 
 
 
