@@ -1,12 +1,13 @@
 (x) add identity to WebApi
 (x) add db seeder
 (-) add Angular client 
+  - https://github.com/DeborahK/MovieHunter-routing
 
 
 done:
 (x) rename IWorkflowDefinition.WorkflowType --> Name
 (x) CreateViewModel needs an interface
-  - default provider will read workflows from configuration
+  (x) default provider will read workflows from configuration
 (x) workflow controller
   (x) list all workflows
   (x) start a workflow
