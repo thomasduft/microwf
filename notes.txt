@@ -2,6 +2,13 @@
 (x) add db seeder
 (-) add Angular client 
   - https://github.com/DeborahK/MovieHunter-routing
+  (-) start workflow 
+    - typeahead search in header
+  (-) titlebar module
+  (-) workflow module
+    - forms generation with formdef
+    - workflow registry
+    - workflow state = component type to open ?!
 
 
 done:
