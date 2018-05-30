@@ -9,7 +9,15 @@ namespace WebApi.Identity
 {
   public class Config
   {
-    // scopes define the API resources in your system
+    public static IEnumerable<IdentityResource> GetIdentityResources()
+    {
+      return new List<IdentityResource>
+      {
+        new IdentityResources.OpenId(),
+        new IdentityResources.Profile()
+      };
+    }
+
     public static IEnumerable<ApiResource> GetApiResources()
     {
       return new List<ApiResource>
@@ -23,7 +31,6 @@ namespace WebApi.Identity
       };
     }
 
-    // clients want to access resources (aka scopes)
     public static IEnumerable<Client> GetClients()
     {
       // client credentials client
@@ -34,11 +41,18 @@ namespace WebApi.Identity
         {
           ClientId = "ro.client",
           AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+          AllowAccessTokensViaBrowser = true,
           ClientSecrets =
           {
             new Secret("secret".Sha256())
           },
-          AllowedScopes = { "api1" }
+          AllowedScopes = {
+            IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
+            IdentityServerConstants.StandardScopes.Profile,
+            "api1"
+          },
+          AllowOfflineAccess = true,
+          AllowedCorsOrigins = { "http://localhost:4200" }
         }
       };
     }
@@ -50,6 +64,15 @@ namespace WebApi.Identity
         new TestUser
         {
           SubjectId = "1",
+          Username = "admin",
+          Password = "password",
+          Claims = {
+            new Claim(JwtClaimTypes.Name, "admin")
+          }
+        },
+        new TestUser
+        {
+          SubjectId = "2",
           Username = "alice",
           Password = "password",
           Claims = {
@@ -58,7 +81,7 @@ namespace WebApi.Identity
         },
         new TestUser
         {
-          SubjectId = "2",
+          SubjectId = "3",
           Username = "bob",
           Password = "password",
           Claims = {

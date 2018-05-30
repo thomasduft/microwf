@@ -1,29 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from '../shared/services/auth.service';
+
 @Component({
   selector: 'tw-shell',
   template: `
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">MircoWF</a>
+    <a class="navbar-brand" routerLink="welcome">MircoWF - {{ username }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
       data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#" i18n>My Work</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-        <li ngbDropdown>
-          <button class="btn btn-outline-primary" ngbDropdownToggle>Toggle dropup</button>
+        <li *ngIf="isAdmin" ngbDropdown>
+          <button class="btn btn-outline-primary" ngbDropdownToggle i18n>Admin</button>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
@@ -31,9 +27,13 @@ import { Component, OnInit } from '@angular/core';
           </div>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2"
+               type="text"
+               placeholder="Start a workflow"
+               i18n-placeholder
+               aria-label="Search">
+        <button class="btn btn-secondary" type="button" i18n>Start</button>
       </form>
     </div>
   </nav>
@@ -44,7 +44,17 @@ import { Component, OnInit } from '@angular/core';
   `
 })
 export class ShellComponent implements OnInit {
-  public constructor() { }
+  public get username(): string {
+    return this._authService.username;
+  }
+
+  public get isAdmin(): boolean {
+    return this._authService.username === 'admin';
+  }
+
+  public constructor(
+    private _authService: AuthService
+  ) { }
 
   public ngOnInit(): void {
   }

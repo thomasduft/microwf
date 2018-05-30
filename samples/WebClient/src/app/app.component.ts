@@ -13,7 +13,9 @@ import { AuthService } from './shared/services/auth.service';
   selector: 'tw-root',
   styleUrls: ['./app.component.css'],
   template: `
-  <span class="glyphicon glyphicon-refresh glyphicon-spin spinner" *ngIf="loading"></span>
+  <span class="glyphicon glyphicon-refresh glyphicon-spin spinner"
+        *ngIf="loading">
+  </span>
   <router-outlet></router-outlet>
   `
 })

@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
@@ -36,7 +39,12 @@ namespace WebApi
                 .AllowAnyMethod();
             });
         })
-        .AddMvc();
+        .AddMvc()
+        .AddJsonOptions(options =>
+        {
+          options.SerializerSettings.ContractResolver 
+            = new CamelCasePropertyNamesContractResolver();
+        });
 
       services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -48,16 +56,19 @@ namespace WebApi
         .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
 
       // Identity
-      services.AddIdentityServer()
-          .AddDeveloperSigningCredential()
-          .AddInMemoryApiResources(Config.GetApiResources())
-          .AddInMemoryClients(Config.GetClients())
-          .AddTestUsers(Config.GetUsers());
+      services
+        .AddIdentityServer()
+        .AddDeveloperSigningCredential()
+        .AddInMemoryIdentityResources(Config.GetIdentityResources())
+        .AddInMemoryApiResources(Config.GetApiResources())
+        .AddInMemoryClients(Config.GetClients())
+        .AddTestUsers(Config.GetUsers());
 
-      services.AddAuthentication("Bearer")
+      services
+        .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
         .AddIdentityServerAuthentication(options =>
         {
-          options.Authority = "http://localhost:5000";
+          options.Authority = this.Configuration["IdentityServer:Authority"];
           options.RequireHttpsMetadata = false;
           options.ApiName = "api1";
         });
@@ -82,13 +93,17 @@ namespace WebApi
           Name = "Authorization",
           Type = "apiKey"
         });
+        options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+        {
+          { "Bearer", new string[] { } }
+        });
       });
 
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
 
       services.AddTransient<UserContextService>();
-      
+
       // TODO: add typed configuration options
       var enableWorker = this.Configuration["Worker:Enable"].ToLower() == "true";
       services.AddWorkflowEngineServices<DomainContext>(enableWorker);
@@ -111,13 +126,13 @@ namespace WebApi
 
       app.UseFileServer();
 
-      app.UseMvc();
-
       app.UseSwagger();
       app.UseSwaggerUI(c =>
       {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI V1");
       });
+
+      app.UseMvc();
     }
   }
 }
