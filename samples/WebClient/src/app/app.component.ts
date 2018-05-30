@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   Router,
   Event,
@@ -7,6 +7,7 @@ import {
   NavigationError,
   NavigationCancel
 } from '@angular/router';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'tw-root',
@@ -16,14 +17,22 @@ import {
   <router-outlet></router-outlet>
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public loading = true;
 
   public constructor(
-    private router: Router
+    private _router: Router,
+    private _authService: AuthService
   ) {
-    router.events.subscribe((routerEvent: Event) => {
+    _router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
+    });
+  }
+
+  public ngOnInit(): void {
+    this._authService.onAuthenticated
+      .subscribe((isOuthenticated: boolean) => {
+        this._router.navigate(['welcome']);
     });
   }
 
