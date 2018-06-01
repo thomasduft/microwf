@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +24,20 @@ namespace tomware.Microwf.Engine
         IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
       services.AddTransient<IWorkflowService, WorkflowService>();
+      services
+            .AddTransient<IUserWorkflowDefinitionService, NoopUserWorkflowDefinitionService>();
+
+      return services;
+    }
+
+    public static IServiceCollection AddTestUserWorkflows(
+      this IServiceCollection services,
+      IEnumerable<UserWorkflows> userWorkflows
+    )
+    {
+      services
+       .AddTransient<IUserWorkflowDefinitionService, InMemoryUserWorkflowDefinitionService>();
+      services.AddSingleton(new UserWorkflowsStore(userWorkflows));
 
       return services;
     }

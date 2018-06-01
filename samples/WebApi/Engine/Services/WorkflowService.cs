@@ -15,16 +15,19 @@ namespace tomware.Microwf.Engine
   public class WorkflowService : IWorkflowService
   {
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
+    private readonly IUserWorkflowDefinitionService _userWorkflowDefinitionService;
     private readonly IConfiguration _configuration;
     private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
 
     public WorkflowService(
-      IWorkflowDefinitionProvider workflowDefinitionProvider,
       IConfiguration configuration,
+      IWorkflowDefinitionProvider workflowDefinitionProvider,
+      IUserWorkflowDefinitionService userWorkflowDefinitionService,
       IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {
       this._workflowDefinitionProvider = workflowDefinitionProvider;
+      this._userWorkflowDefinitionService = userWorkflowDefinitionService;
       this._configuration = configuration;
       this._viewModelCreator = viewModelCreator;
     }
@@ -32,6 +35,8 @@ namespace tomware.Microwf.Engine
     public IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions()
     {
       var workflowDefinitions = this._workflowDefinitionProvider.GetWorkflowDefinitions();
+
+      workflowDefinitions = this._userWorkflowDefinitionService.Filter(workflowDefinitions);
 
       return workflowDefinitions.Select(d => this._viewModelCreator.CreateViewModel(d.Type));
     }

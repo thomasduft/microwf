@@ -42,7 +42,7 @@ namespace WebApi
         .AddMvc()
         .AddJsonOptions(options =>
         {
-          options.SerializerSettings.ContractResolver 
+          options.SerializerSettings.ContractResolver
             = new CamelCasePropertyNamesContractResolver();
         });
 
@@ -106,7 +106,9 @@ namespace WebApi
 
       // TODO: add typed configuration options
       var enableWorker = this.Configuration["Worker:Enable"].ToLower() == "true";
-      services.AddWorkflowEngineServices<DomainContext>(enableWorker);
+      services
+        .AddWorkflowEngineServices<DomainContext>(enableWorker)
+        .AddTestUserWorkflows(CreateUserWorkflow());
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IHolidayService, HolidayService>();
@@ -133,6 +135,32 @@ namespace WebApi
       });
 
       app.UseMvc();
+    }
+
+    private List<UserWorkflows> CreateUserWorkflow()
+    {
+      var list = new List<UserWorkflows> {
+        new UserWorkflows {
+          UserName = "admin",
+          WorkflowDefinitions = new List<string> {
+            HolidayApprovalWorkflow.TYPE
+          }
+        },
+        new UserWorkflows {
+          UserName = "alice",
+          WorkflowDefinitions = new List<string> {
+            HolidayApprovalWorkflow.TYPE
+          }
+        },
+        new UserWorkflows {
+          UserName = "bob",
+          WorkflowDefinitions = new List<string> {
+            // HolidayApprovalWorkflow.TYPE
+          }
+        }
+      };
+
+      return list;
     }
   }
 }
