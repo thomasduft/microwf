@@ -13,6 +13,7 @@ using WebApi.Common;
 using WebApi.Domain;
 using WebApi.Identity;
 using WebApi.Workflows.Holiday;
+using WebApi.Workflows.Issue;
 
 namespace WebApi
 {
@@ -112,6 +113,7 @@ namespace WebApi
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IHolidayService, HolidayService>();
+      services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -143,13 +145,15 @@ namespace WebApi
         new UserWorkflows {
           UserName = "admin",
           WorkflowDefinitions = new List<string> {
-            HolidayApprovalWorkflow.TYPE
+            HolidayApprovalWorkflow.TYPE,
+            IssueTrackingWorkflow.TYPE
           }
         },
         new UserWorkflows {
           UserName = "alice",
           WorkflowDefinitions = new List<string> {
-            HolidayApprovalWorkflow.TYPE
+            HolidayApprovalWorkflow.TYPE,
+            IssueTrackingWorkflow.TYPE
           }
         },
         new UserWorkflows {
