@@ -1,4 +1,6 @@
+using System.Linq;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace tomware.Microwf.Engine
 {
@@ -10,23 +12,24 @@ namespace tomware.Microwf.Engine
   public class ConfigurationWorkflowDefinitionViewModelCreator
     : IWorkflowDefinitionViewModelCreator
   {
-    private readonly IConfiguration _configuration;
+    private readonly WorkflowConfiguration _workflows;
 
-    public ConfigurationWorkflowDefinitionViewModelCreator(IConfiguration configuration)
+    public ConfigurationWorkflowDefinitionViewModelCreator(
+      IOptions<WorkflowConfiguration> workflows
+    )
     {
-      this._configuration = configuration;
+      this._workflows = workflows.Value;
     }
 
     public WorkflowDefinitionViewModel CreateViewModel(string type)
     {
-      var startUrl = this._configuration[$"Workflows:{type}:StartUrl"];
-      var description = this._configuration[$"Workflows:{type}:Description"];
+      var workflow = this._workflows.Types.FirstOrDefault(_ => _.Type == type);
 
       return new WorkflowDefinitionViewModel
       {
-        Type = type,
-        StartUrl = startUrl,
-        Description = description
+        Type = workflow.Type,
+        StartUrl = workflow.StartUrl,
+        Description = workflow.Description
       };
     }
   }
