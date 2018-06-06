@@ -54,14 +54,17 @@ namespace WebApi
         .AddDbContext<DomainContext>(o => o.UseSqlite(connection));
 
       // Identity
+      var authority = this.Configuration["IdentityServer:Authority"];
       services
-        .AddIdentityServer()
+        .AddIdentityServer(o => o.IssuerUri = authority)
         .AddDeveloperSigningCredential()
+        .AddInMemoryPersistedGrants()
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddInMemoryApiResources(Config.GetApiResources())
         .AddInMemoryClients(Config.GetClients())
         .AddTestUsers(Config.GetUsers())
-        .AddJwtBearerClientAuthentication();
+        .AddJwtBearerClientAuthentication()
+        .AddProfileService<ProfileService>();
 
       services
         .AddAuthentication(o =>
@@ -71,7 +74,7 @@ namespace WebApi
         })
         .AddIdentityServerAuthentication(o =>
         {
-          o.Authority = this.Configuration["IdentityServer:Authority"];
+          o.Authority = authority;
           o.RequireHttpsMetadata = false;
           o.ApiName = "api1";
         });
@@ -161,7 +164,7 @@ namespace WebApi
         new UserWorkflows {
           UserName = "bob",
           WorkflowDefinitions = new List<string> {
-          // HolidayApprovalWorkflow.TYPE
+            HolidayApprovalWorkflow.TYPE
           }
         }
       };

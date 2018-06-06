@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { AuthService } from '../shared/services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'tw-shell',
@@ -28,10 +27,9 @@ import { Router } from '@angular/router';
 
   <main role="main" class="container">
     <router-outlet></router-outlet>
-  </main>
-  `
+  </main>`
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent {
   public get username(): string {
     return this._authService.username;
   }
@@ -41,15 +39,10 @@ export class ShellComponent implements OnInit {
   }
 
   public constructor(
-    private _router: Router,
     private _authService: AuthService
   ) { }
 
-  public ngOnInit(): void {
-  }
-
   public logout(): void {
     this._authService.logout();
-    this._router.navigate(['login']);
   }
 }

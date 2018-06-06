@@ -28,7 +28,8 @@ namespace tomware.Microwf.Engine
       return new WorkflowDefinitionViewModel
       {
         Type = workflow.Type,
-        StartUrl = workflow.StartUrl,
+        Title = workflow.Title,
+        Route = workflow.Route,
         Description = workflow.Description
       };
     }

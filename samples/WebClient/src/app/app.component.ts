@@ -7,7 +7,9 @@ import {
   NavigationError,
   NavigationCancel
 } from '@angular/router';
+
 import { AuthService } from './shared/services/auth.service';
+import { WorkflowAreaRegistry } from './shared/services/workflow-area-registry.service';
 
 @Component({
   selector: 'tw-root',
@@ -24,7 +26,8 @@ export class AppComponent implements OnInit {
 
   public constructor(
     private _router: Router,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _workflowAreaRegistry: WorkflowAreaRegistry
   ) {
     _router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
@@ -34,7 +37,12 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this._authService.onAuthenticated
       .subscribe((isOuthenticated: boolean) => {
-        this._router.navigate(['home']);
+        if (isOuthenticated) {
+          this._router.navigate(['home']);
+        } else {
+          this._workflowAreaRegistry.clear();
+          this._router.navigate(['login']);
+        }
     });
   }
 

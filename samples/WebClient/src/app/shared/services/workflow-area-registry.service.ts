@@ -26,4 +26,8 @@ export class WorkflowAreaRegistry {
   public get(key: string): WorkflowArea {
     return this._registry.get(key);
   }
+
+  public clear(): void {
+    this._registry.clear();
+  }
 }

@@ -23,7 +23,7 @@ import { WorkflowDefinition } from './models';
           <tr *ngFor="let area of areas">
             <td>{{ area.title }}</td>
             <td>{{ area.description }}</td>
-            <td><a routerLink="{{area.url}}" i18n>let's go</a></td>
+            <td><a routerLink="/{{ area.route }}" i18n>let's go</a></td>
           </tr>
         </tbody>
       </table>
@@ -49,14 +49,8 @@ export class HomeComponent implements OnInit {
 
   private init(definitions: Array<WorkflowDefinition>): void {
     definitions.forEach((d: WorkflowDefinition) => {
-      this._workflowAreaRegistry.register(
-        new WorkflowArea(
-          d.type,
-          d.type,
-          d.Description,
-          d.startUrl
-        )
-      );
+      this._workflowAreaRegistry
+        .register(new WorkflowArea(d.type, d.title, d.description, d.route));
     });
   }
 }

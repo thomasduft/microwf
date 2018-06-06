@@ -1,5 +1,6 @@
 export interface WorkflowDefinition {
   type: string;
-  startUrl: string;
-  Description: string;
+  title: string;
+  description: string;
+  route: string;
 }
