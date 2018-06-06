@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,31 +31,27 @@ namespace WebApi
     {
       services.AddOptions();
 
-      services.AddCors(options =>
+      services.AddCors(o =>
         {
-          options.AddPolicy("AllowAllOrigins", builder =>
+          o.AddPolicy("AllowAllOrigins", builder =>
             {
               builder
                 .AllowAnyOrigin()
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
             });
         })
-        .AddMvc()
-        .AddJsonOptions(options =>
-        {
-          options.SerializerSettings.ContractResolver
-            = new CamelCasePropertyNamesContractResolver();
-        });
+        .AddMvc();
 
-      services.AddRouting(options => options.LowercaseUrls = true);
+      services.AddRouting(o => o.LowercaseUrls = true);
 
       services.AddAuthorization();
 
       var connection = this.Configuration["ConnectionString"];
       services
         .AddEntityFrameworkSqlite()
-        .AddDbContext<DomainContext>(options => options.UseSqlite(connection));
+        .AddDbContext<DomainContext>(o => o.UseSqlite(connection));
 
       // Identity
       services
@@ -63,15 +60,20 @@ namespace WebApi
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddInMemoryApiResources(Config.GetApiResources())
         .AddInMemoryClients(Config.GetClients())
-        .AddTestUsers(Config.GetUsers());
+        .AddTestUsers(Config.GetUsers())
+        .AddJwtBearerClientAuthentication();
 
       services
-        .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-        .AddIdentityServerAuthentication(options =>
+        .AddAuthentication(o =>
         {
-          options.Authority = this.Configuration["IdentityServer:Authority"];
-          options.RequireHttpsMetadata = false;
-          options.ApiName = "api1";
+          o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+          o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+        })
+        .AddIdentityServerAuthentication(o =>
+        {
+          o.Authority = this.Configuration["IdentityServer:Authority"];
+          o.RequireHttpsMetadata = false;
+          o.ApiName = "api1";
         });
 
       // Swagger
@@ -126,7 +128,7 @@ namespace WebApi
       app.UseCors("AllowAllOrigins");
 
       app.UseIdentityServer();
-      app.UseAuthentication();
+      // app.UseAuthentication();
 
       app.UseFileServer();
 
@@ -136,12 +138,12 @@ namespace WebApi
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI V1");
       });
 
-      app.UseMvc();
+      app.UseMvcWithDefaultRoute();
     }
 
     private List<UserWorkflows> CreateUserWorkflow()
     {
-      var list = new List<UserWorkflows> {
+      return new List<UserWorkflows> {
         new UserWorkflows {
           UserName = "admin",
           WorkflowDefinitions = new List<string> {
@@ -159,12 +161,10 @@ namespace WebApi
         new UserWorkflows {
           UserName = "bob",
           WorkflowDefinitions = new List<string> {
-            // HolidayApprovalWorkflow.TYPE
+          // HolidayApprovalWorkflow.TYPE
           }
         }
       };
-
-      return list;
     }
   }
 }

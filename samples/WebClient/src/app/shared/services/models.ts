@@ -84,3 +84,12 @@ export class AdministratorClaimGuard extends ClaimGuardBase {
   public static CLAIM_NAME = 'Administrator';
   protected claim = AdministratorClaimGuard.CLAIM_NAME;
 }
+
+export class WorkflowArea {
+  public constructor(
+    public key: string,
+    public title: string,
+    public description: string,
+    public url: string
+  ) { }
+}

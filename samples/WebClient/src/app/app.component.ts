@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this._authService.onAuthenticated
       .subscribe((isOuthenticated: boolean) => {
-        this._router.navigate(['welcome']);
+        this._router.navigate(['home']);
     });
   }
 

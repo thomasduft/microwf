@@ -25,7 +25,8 @@ namespace WebApi.Identity
         new ApiResource("api1", "My API") {
           UserClaims = {
             JwtClaimTypes.Subject,
-            JwtClaimTypes.Name
+            JwtClaimTypes.Name,
+            JwtClaimTypes.Role
           }
         }
       };
@@ -42,10 +43,8 @@ namespace WebApi.Identity
           ClientId = "ro.client",
           AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
           AllowAccessTokensViaBrowser = true,
-          ClientSecrets =
-          {
-            new Secret("secret".Sha256())
-          },
+          RequireConsent = false,
+          RequireClientSecret = false,
           AllowedScopes = {
             IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
             IdentityServerConstants.StandardScopes.Profile,

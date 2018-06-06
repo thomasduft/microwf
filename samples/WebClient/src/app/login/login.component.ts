@@ -21,7 +21,6 @@ import { LoginService } from './login.service';
              placeholder="Email address"
              formControlName="username"
              required autofocus>
-      <label for="inputEmail">Email address</label>
     </div>
 
     <div class="form-label-group"
@@ -32,14 +31,8 @@ import { LoginService } from './login.service';
              placeholder="Password"
              formControlName="password"
              required>
-      <label for="inputPassword">Password</label>
     </div>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me" i18n>Remember me
-      </label>
-    </div>
     <button class="btn btn-lg btn-primary btn-block"
             type="submit"
             [disabled]="!formGroup.valid">Sign in</button>

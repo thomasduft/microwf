@@ -30,7 +30,6 @@ export class LoginService {
     body += `&username=${username}`;
     body += `&password=${password}`;
     body += `&client_id=ro.client`;
-    body += `&client_secret=secret`;
     body += `&scope=api1`;
 
     const options = {

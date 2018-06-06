@@ -1,0 +1,62 @@
+import { Component, OnInit } from '@angular/core';
+
+import { WorkflowArea } from '../shared/services/models';
+import { WorkflowAreaRegistry } from '../shared/services/workflow-area-registry.service';
+import { WorkflowDefinitionService } from './workflow-definition.service';
+import { WorkflowDefinition } from './models';
+
+@Component({
+  selector: 'tw-home',
+  template: `
+  <div class="starter-template">
+    <h1 i18n>Workflow areas</h1>
+    <div class="table-responsive-md">
+      <table class="table table-hover" *ngIf="areas.length > 0">
+        <thead>
+          <tr>
+            <th scope="col" i18n>Title</th>
+            <th scope="col" i18n>Description</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let area of areas">
+            <td>{{ area.title }}</td>
+            <td>{{ area.description }}</td>
+            <td><a routerLink="{{area.url}}" i18n>let's go</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>`
+})
+export class HomeComponent implements OnInit {
+  public get areas(): Array<WorkflowArea> {
+    return this._workflowAreaRegistry.areas;
+  }
+
+  public constructor(
+    private _workflowDefinitionService: WorkflowDefinitionService,
+    private _workflowAreaRegistry: WorkflowAreaRegistry
+  ) { }
+
+  public ngOnInit(): void {
+    this._workflowDefinitionService.definitions()
+      .subscribe((definitions: Array<WorkflowDefinition>) => {
+        this.init(definitions);
+      });
+  }
+
+  private init(definitions: Array<WorkflowDefinition>): void {
+    definitions.forEach((d: WorkflowDefinition) => {
+      this._workflowAreaRegistry.register(
+        new WorkflowArea(
+          d.type,
+          d.type,
+          d.Description,
+          d.startUrl
+        )
+      );
+    });
+  }
+}

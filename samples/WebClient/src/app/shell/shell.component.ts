@@ -1,33 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tw-shell',
   template: `
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" routerLink="welcome">MircoWF - {{ username }}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <a class="navbar-brand" routerLink="home">MircoWF - {{ username }}</a>
 
     <div class="navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#" i18n>My Work</a>
-        </li>
-        <li *ngIf="isAdmin" ngbDropdown>
-          <button class="btn btn-outline-primary" ngbDropdownToggle i18n>Admin</button>
-          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+      <ul class="navbar-nav ml-auto">
+        <li *ngIf="isAuthenticated">
+          <a class="nav-link" href="javascript:void(0)" (click)="logout()" i18n>Logout</a>
         </li>
       </ul>
-      <form class="form-inline">
+      <form class="form-inline" *ngIf="false">
         <input class="form-control mr-sm-2"
                type="text"
                placeholder="Start a workflow"
@@ -48,14 +36,20 @@ export class ShellComponent implements OnInit {
     return this._authService.username;
   }
 
-  public get isAdmin(): boolean {
-    return this._authService.username === 'admin';
+  public get isAuthenticated(): boolean {
+    return this._authService.isAuthenticated;
   }
 
   public constructor(
+    private _router: Router,
     private _authService: AuthService
   ) { }
 
   public ngOnInit(): void {
+  }
+
+  public logout(): void {
+    this._authService.logout();
+    this._router.navigate(['login']);
   }
 }
