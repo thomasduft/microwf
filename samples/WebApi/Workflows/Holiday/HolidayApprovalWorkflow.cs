@@ -25,7 +25,7 @@ namespace WebApi.Workflows.Holiday
 
     public override string Type => TYPE;
 
-    public override Type EntityType => typeof(Domain.Holiday);
+    public override Type EntityType => typeof(Holiday);
 
     public override List<Transition> Transitions
     {
@@ -67,7 +67,7 @@ namespace WebApi.Workflows.Holiday
 
     private void AssignBoss(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       if (context.HasVariables)
       {
@@ -80,7 +80,7 @@ namespace WebApi.Workflows.Holiday
 
     private bool BossIsApproving(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
@@ -97,14 +97,14 @@ namespace WebApi.Workflows.Holiday
 
     private void ThankBossForApproving(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       this._logger.LogInformation($"Thank you very much: {holiday.Superior}!");
     }
 
     private void ReAssignToRequestor(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       this._logger.LogInformation($"Reassign Holiday entity to requostor: {holiday.Requestor}");
 

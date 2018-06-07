@@ -28,7 +28,7 @@ namespace WebApi.Workflows.Issue
 
     public override string Type => TYPE;
 
-    public override Type EntityType => typeof(Domain.Holiday);
+    public override Type EntityType => typeof(Issue);
 
     public override List<Transition> Transitions
     {

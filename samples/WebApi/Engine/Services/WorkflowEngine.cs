@@ -75,7 +75,7 @@ namespace tomware.Microwf.Engine
           var execution = GetExecution(param.Instance.Type);
 
           var entity = param.Instance as IEntityWorkflow;
-          WebApi.Domain.Workflow workflow = null;
+          Workflow workflow = null;
           if (entity != null)
           {
             id = entity.Id;
@@ -123,13 +123,13 @@ namespace tomware.Microwf.Engine
       return new WorkflowExecution(definition);
     }
 
-    private WebApi.Domain.Workflow FindOrCreate(int id, string type, string state, string assignee)
+    private Workflow FindOrCreate(int id, string type, string state, string assignee)
     {
       var workflow = this._context.Workflows.Include(_ => _.WorkflowContext)
         .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
       if (workflow == null)
       {
-        workflow = WebApi.Domain.Workflow.Create(id, type, state, assignee);
+        workflow = Workflow.Create(id, type, state, assignee);
         this._context.Add(workflow);
       }
 
@@ -153,7 +153,7 @@ namespace tomware.Microwf.Engine
     }
 
     private void PersistWorkflow(
-      WebApi.Domain.Workflow workflow,
+      Workflow workflow,
       TriggerParam triggerParam,
       DateTime? dueDate = null
     )

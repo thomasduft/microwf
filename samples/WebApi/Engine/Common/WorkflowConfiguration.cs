@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace tomware.Microwf.Engine
 {
-  public class Workflow
+  public class WorkflowType
   {
     public string Type { get; set; }
     public string Title { get; set; }
@@ -12,6 +12,6 @@ namespace tomware.Microwf.Engine
 
   public class WorkflowConfiguration
   {
-    public List<Workflow> Types { get; set; }
+    public List<WorkflowType> Types { get; set; }
   }
 }

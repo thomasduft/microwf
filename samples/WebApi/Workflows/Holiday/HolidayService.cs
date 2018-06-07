@@ -51,7 +51,7 @@ namespace WebApi.Workflows.Holiday
 
     public async Task<IWorkflowResult<HolidayViewModel>> NewAsync()
     {
-      var holiday = Domain.Holiday.Create(_userContext.UserName);
+      var holiday = Holiday.Create(_userContext.UserName);
 
       this._context.Add(holiday);
       await this._context.SaveChangesAsync();
@@ -94,7 +94,7 @@ namespace WebApi.Workflows.Holiday
       });
     }
 
-    private IWorkflowResult<HolidayViewModel> ToResult(Domain.Holiday holiday)
+    private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)
     {
       IEnumerable<TriggerResult> result = this._workflowEngine.GetTriggers(holiday);
       var triggers = result.Select(x => x.TriggerName);

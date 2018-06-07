@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApi.Domain
+namespace tomware.Microwf.Engine
 {
   [Table("Workflow")]
   public partial class Workflow

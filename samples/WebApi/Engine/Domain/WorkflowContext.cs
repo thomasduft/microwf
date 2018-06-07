@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApi.Domain
+namespace tomware.Microwf.Engine
 {
   [Table("WorkflowContext")]
   public partial class WorkflowContext

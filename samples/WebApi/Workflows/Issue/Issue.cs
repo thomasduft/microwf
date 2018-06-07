@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using tomware.Microwf.Engine;
 using WebApi.Workflows.Issue;
 
-namespace WebApi.Domain
+namespace WebApi.Workflows.Issue
 {
   [Table("Issue")]
   public partial class Issue : IEntityWorkflow

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using tomware.Microwf.Engine;
 using WebApi.Workflows.Holiday;
 
-namespace WebApi.Domain
+namespace WebApi.Workflows.Holiday
 {
   [Table("Holiday")]
   public partial class Holiday : IEntityWorkflow
