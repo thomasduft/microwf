@@ -83,13 +83,13 @@ namespace WebApi.Workflows.Holiday
     public async Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync()
     {
       var me = _userContext.UserName;
-      var work = await this._context.Holidays.Where(h => h.Assignee == me).ToListAsync();
+      var holidays = await this._context.Holidays.Where(h => h.Assignee == me).ToListAsync();
 
-      return work.Select(h => new AssignableWorkflowViewModel
+      return holidays.Select(holiday => new AssignableWorkflowViewModel
       {
-        Id = h.Id,
-        Assignee = h.Assignee,
-        Type = h.Type,
+        Id = holiday.Id,
+        Assignee = holiday.Assignee,
+        Type = holiday.Type,
         Description = string.Empty
       });
     }
@@ -123,6 +123,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerParam = new TriggerParam(trigger, holiday)
         .AddVariable(HolidayViewModel.KEY, model);
+        
       this._workflowEngine.Trigger(triggerParam);
 
       return ToResult(holiday);

@@ -11,9 +11,10 @@ using WebApi.Domain;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    partial class DomainContextModelSnapshot : ModelSnapshot
+    [Migration("20180607073457_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

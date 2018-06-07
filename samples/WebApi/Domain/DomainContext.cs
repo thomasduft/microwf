@@ -9,6 +9,7 @@ namespace WebApi.Domain
     { }
 
     public DbSet<Holiday> Holidays { get; set; }
-    public DbSet<WorkflowContext> Workflows { get; set; }
+    public DbSet<Workflow> Workflows { get; set; }
+    // public DbSet<WorkflowContext> WorkflowContexts { get; set; }
   }
 }

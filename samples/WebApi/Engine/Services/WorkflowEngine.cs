@@ -74,21 +74,26 @@ namespace tomware.Microwf.Engine
         {
           var execution = GetExecution(param.Instance.Type);
 
-          var workflow = param.Instance as IEntityWorkflow;
-          WorkflowContext workflowContext = null;
-          if (workflow != null)
+          var entity = param.Instance as IEntityWorkflow;
+          WebApi.Domain.Workflow workflow = null;
+          if (entity != null)
           {
-            id = workflow.Id;
-            workflowContext = FindOrCreate(id.Value, param.Instance.Type);
-            EnsureContext(param, workflowContext);
+            id = entity.Id;
+            workflow = FindOrCreate(
+              id.Value,
+              param.Instance.Type,
+              param.Instance.State,
+              entity.Assignee
+            );
+            EnsureContext(param, workflow.WorkflowContext);
           }
 
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
-            if (id.HasValue && param.HasVariables)
+            if (id.HasValue)
             {
-              PersistContext(workflowContext, param.Variables);
+              PersistWorkflow(workflow, param);
             }
 
             _context.SaveChanges();
@@ -108,7 +113,7 @@ namespace tomware.Microwf.Engine
 
     public IWorkflow Find(int id, Type type)
     {
-      return (IWorkflow) _context.Find(type, id);
+      return (IWorkflow)_context.Workflows.Find(type, id);
     }
 
     private WorkflowExecution GetExecution(string type)
@@ -118,16 +123,17 @@ namespace tomware.Microwf.Engine
       return new WorkflowExecution(definition);
     }
 
-    private WorkflowContext FindOrCreate(int id, string type)
+    private WebApi.Domain.Workflow FindOrCreate(int id, string type, string state, string assignee)
     {
-      var ctx = this._context.Workflows.SingleOrDefault(w => w.CorrelationId == id);
-      if (ctx == null)
+      var workflow = this._context.Workflows.Include(_ => _.WorkflowContext)
+        .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
+      if (workflow == null)
       {
-        ctx = WorkflowContext.Create(id, type);
-        this._context.Add(ctx);
+        workflow = WebApi.Domain.Workflow.Create(id, type, state, assignee);
+        this._context.Add(workflow);
       }
 
-      return ctx;
+      return workflow;
     }
 
     private void EnsureContext(TriggerParam triggerParam, WorkflowContext ctx)
@@ -146,22 +152,28 @@ namespace tomware.Microwf.Engine
       }
     }
 
-    private void PersistContext(
-      WorkflowContext workflowContext,
-      Dictionary<string, WorkflowVariableBase> variables,
+    private void PersistWorkflow(
+      WebApi.Domain.Workflow workflow,
+      TriggerParam triggerParam,
       DateTime? dueDate = null
     )
     {
-      if (workflowContext == null) throw new ArgumentNullException(nameof(workflowContext));
+      if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
-      string context = null;
-      if (variables != null)
+      if (triggerParam.Variables != null && triggerParam.HasVariables)
       {
-        context = JsonConvert.SerializeObject(variables);
-        workflowContext.Context = context;
+        workflow.WorkflowContext.Context = JsonConvert.SerializeObject(triggerParam.Variables);
       }
 
-      workflowContext.DueDate = dueDate;
+      var entityWorkflow = triggerParam.Instance as IEntityWorkflow;
+      if (entityWorkflow != null)
+      {
+        workflow.Type = entityWorkflow.Type;
+        workflow.State = entityWorkflow.State;
+        workflow.Assignee = entityWorkflow.Assignee;
+      }
+
+      workflow.DueDate = dueDate;
     }
   }
 }
