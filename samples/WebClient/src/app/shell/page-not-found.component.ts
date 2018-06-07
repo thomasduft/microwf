@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
 @Component({
-  template: `<h1>This is not the page you were looking for!</h1>`
+  template: `<h1>Oooppss... <br/>This page does not exist!</h1>`
 })
 export class PageNotFoundComponent { }

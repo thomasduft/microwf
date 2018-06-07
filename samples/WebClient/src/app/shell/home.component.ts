@@ -8,26 +8,24 @@ import { WorkflowDefinition } from './models';
 @Component({
   selector: 'tw-home',
   template: `
-  <div class="starter-template">
-    <h1 i18n>Workflow areas</h1>
-    <div class="table-responsive-md">
-      <table class="table table-hover" *ngIf="areas.length > 0">
-        <thead>
-          <tr>
-            <th scope="col" i18n>Title</th>
-            <th scope="col" i18n>Description</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let area of areas">
-            <td>{{ area.title }}</td>
-            <td>{{ area.description }}</td>
-            <td><a routerLink="/{{ area.route }}" i18n>let's go</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <h1 i18n>Workflow areas</h1>
+  <div class="table-responsive-md">
+    <table class="table table-hover" *ngIf="areas.length > 0">
+      <thead>
+        <tr>
+          <th scope="col" i18n>Title</th>
+          <th scope="col" i18n>Description</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let area of areas">
+          <td>{{ area.title }}</td>
+          <td>{{ area.description }}</td>
+          <td><a routerLink="/{{ area.route }}" i18n>let's go</a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>`
 })
 export class HomeComponent implements OnInit {

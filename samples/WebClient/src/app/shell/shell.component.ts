@@ -6,7 +6,7 @@ import { AuthService } from '../shared/services/auth.service';
   selector: 'tw-shell',
   template: `
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" routerLink="home">MircoWF - {{ username }}</a>
+    <a class="navbar-brand" routerLink="/home">MircoWF - {{ username }}</a>
 
     <div class="navbar-collapse">
       <ul class="navbar-nav ml-auto">

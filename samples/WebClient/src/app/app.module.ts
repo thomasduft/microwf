@@ -23,18 +23,18 @@ const ROUTES: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeComponent },
+      {
+        path: 'holiday',
+        canActivate: [AuthGuard],
+        loadChildren: './holiday/holiday.module#HolidayModule'
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
   { path: '**', component: PageNotFoundComponent }
 ];
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    ShellComponent,
-    HomeComponent,
-    PageNotFoundComponent
-  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -42,6 +42,12 @@ const ROUTES: Routes = [
     NgbModule.forRoot(),
     SharedModule,
     LoginModule
+  ],
+  declarations: [
+    AppComponent,
+    ShellComponent,
+    HomeComponent,
+    PageNotFoundComponent
   ],
   providers: [
     httpInterceptorProviders
