@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
+import { FormdefModule } from './../shared/formdef/index';
 
 import { HolidayDashboardComponent } from './holiday-dashboard.component';
 
@@ -11,7 +13,8 @@ const ROUTES: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(ROUTES)
+    RouterModule.forChild(ROUTES),
+    FormdefModule
   ],
   declarations: [
     HolidayDashboardComponent
