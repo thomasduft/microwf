@@ -74,21 +74,20 @@ import { Editor } from './models';
           [formControlName]="editor.key" />
 
     <div *ngIf="control(editor.key).invalid" class="alert alert-danger">
-      <div *ngIf="control(editor.key).errors.required" i18n>
+      <div *ngIf="control(editor.key).hasError('required')" i18n>
         {{ editor.label }} required.
       </div>
-      <div *ngIf="control(editor.key).errors.maxlength" i18n>
+      <div *ngIf="control(editor.key).hasError('maxlength')" i18n>
         {{ editor.label }} must not be longer than {{ editor.size }} characters.
       </div>
-      <div *ngIf="control(editor.key).errors.min" i18n>
+      <div *ngIf="control(editor.key).hasError('min')" i18n>
         {{ editor.label }} must not be lower than {{ editor.valueMin }}.
       </div>
-      <div *ngIf="control(editor.key).errors.max" i18n>
+      <div *ngIf="control(editor.key).hasError('max')" i18n>
         {{ editor.label }} must not be greater than {{ editor.valueMax }}.
       </div>
     </div>
-  </div>
-  `
+  </div>`
 })
 export class EditorComponent {
   @Input()
