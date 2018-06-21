@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
+import { WorkflowModule } from './workflow/workflow.module';
 
 import { httpInterceptorProviders } from './shared/services/interceptors';
 
@@ -41,7 +42,8 @@ const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES),
     NgbModule.forRoot(),
     SharedModule,
-    LoginModule
+    LoginModule,
+    WorkflowModule
   ],
   declarations: [
     AppComponent,

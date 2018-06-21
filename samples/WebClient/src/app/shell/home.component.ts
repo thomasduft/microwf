@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WorkflowArea } from '../shared/services/models';
-import { WorkflowAreaRegistry } from '../shared/services/workflow-area-registry.service';
-import { WorkflowDefinitionService } from './workflow-definition.service';
-import { WorkflowDefinition } from './models';
+import {
+  WorkflowArea,
+  WorkflowAreaRegistry,
+  WorkflowDefinitionService,
+  WorkflowDefinition
+} from '../workflow/index';
 
 @Component({
   selector: 'tw-home',

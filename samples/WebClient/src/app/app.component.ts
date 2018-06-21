@@ -9,7 +9,7 @@ import {
 } from '@angular/router';
 
 import { AuthService } from './shared/services/auth.service';
-import { WorkflowAreaRegistry } from './shared/services/workflow-area-registry.service';
+import { WorkflowAreaRegistry } from './workflow/workflow-area-registry.service';
 
 @Component({
   selector: 'tw-root',
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
           this._workflowAreaRegistry.clear();
           this._router.navigate(['login']);
         }
-    });
+      });
   }
 
   private checkRouterEvent(routerEvent: Event): void {
@@ -51,10 +51,9 @@ export class AppComponent implements OnInit {
       this.loading = true;
     }
 
-    if (
-      routerEvent instanceof NavigationEnd ||
-      routerEvent instanceof NavigationCancel ||
-      routerEvent instanceof NavigationError
+    if (routerEvent instanceof NavigationEnd
+      || routerEvent instanceof NavigationCancel
+      || routerEvent instanceof NavigationError
     ) {
       this.loading = false;
     }

@@ -8,6 +8,8 @@ import { ApiService } from '../shared/services/api.service';
 
 import { WorkflowDefinition } from './models';
 
+// TODO: probably move to shared/workflow directory
+
 @Injectable({
   providedIn: 'root'
 })

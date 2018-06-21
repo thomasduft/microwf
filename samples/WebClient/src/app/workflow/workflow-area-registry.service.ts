@@ -1,10 +1,10 @@
-import { Injectable, LOCALE_ID, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { WorkflowArea } from './models';
-import { ServicesModule } from './services.module';
+import { WorkflowModule } from './workflow.module';
 
 @Injectable({
-  providedIn: ServicesModule
+  providedIn: WorkflowModule
 })
 export class WorkflowAreaRegistry {
   private _registry: Map<string, WorkflowArea> = new Map<string, WorkflowArea>();
