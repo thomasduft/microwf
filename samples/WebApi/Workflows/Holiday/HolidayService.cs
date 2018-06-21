@@ -22,7 +22,8 @@ namespace WebApi.Workflows.Holiday
 
     Task<IWorkflowResult<HolidayViewModel>> RejectAsync(HolidayViewModel model);
 
-    Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync();
+    // TODO: Check for common kind of viewmodel that shows state, short description, id?!
+    Task<IEnumerable<Holiday>> MyWorkAsync();
   }
 
   public class HolidayService : IHolidayService
@@ -80,18 +81,15 @@ namespace WebApi.Workflows.Holiday
       return await Trigger(HolidayApprovalWorkflow.REJECT_TRIGGER, model);
     }
 
-    public async Task<IEnumerable<AssignableWorkflowViewModel>> MyWorkAsync()
+    public async Task<IEnumerable<Holiday>> MyWorkAsync()
     {
       var me = _userContext.UserName;
-      var holidays = await this._context.Holidays.Where(h => h.Assignee == me).ToListAsync();
+      var holidays = await this._context.Holidays
+        .Where(h => h.Assignee == me)
+        .OrderByDescending(h => h.Id)
+        .ToListAsync();
 
-      return holidays.Select(holiday => new AssignableWorkflowViewModel
-      {
-        Id = holiday.Id,
-        Assignee = holiday.Assignee,
-        Type = holiday.Type,
-        Description = string.Empty
-      });
+      return holidays;
     }
 
     private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)

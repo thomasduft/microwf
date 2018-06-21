@@ -72,7 +72,7 @@ namespace WebApi.Workflows.Holiday
     }
 
     [HttpGet("mywork")]
-    [ProducesResponseType(typeof(IEnumerable<AssignableWorkflowViewModel>), 200)]
+    [ProducesResponseType(typeof(IEnumerable<Holiday>), 200)]
     public async Task<IActionResult> MyWork()
     {
       var result = await this._service.MyWorkAsync();

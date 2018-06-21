@@ -4,10 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormdefModule } from './../shared/formdef/index';
 
+import { HolidayComponent } from './holiday.component';
 import { HolidayDashboardComponent } from './holiday-dashboard.component';
 
+import { HolidayService } from './holiday.service';
+
 const ROUTES: Routes = [
-  { path: '', component: HolidayDashboardComponent }
+  { path: '', component: HolidayDashboardComponent },
+  { path: 'detail/:id', component: HolidayComponent },
+  { path: 'detail/new', component: HolidayComponent }
 ];
 
 @NgModule({
@@ -17,7 +22,11 @@ const ROUTES: Routes = [
     FormdefModule
   ],
   declarations: [
-    HolidayDashboardComponent
+    HolidayDashboardComponent,
+    HolidayComponent
+  ],
+  providers: [
+    HolidayService
   ],
   exports: [
     RouterModule

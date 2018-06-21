@@ -4,4 +4,5 @@ export interface Holiday {
   superior: string;
   from: Date;
   to: Date;
+  state: string;
 }
