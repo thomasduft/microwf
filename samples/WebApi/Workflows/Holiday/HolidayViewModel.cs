@@ -8,8 +8,7 @@ namespace WebApi.Workflows.Holiday
   {
     public const string KEY = "HolidayViewModel";
 
-    [Required]
-    public int Id { get; set; }
+    public int? Id { get; set; }
     
     [Required]
     public string Requestor { get; set; }

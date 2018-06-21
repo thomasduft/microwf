@@ -33,8 +33,8 @@ namespace WebApi.Workflows.Holiday
     private readonly UserContextService _userContext;
 
     public HolidayService(
-      DomainContext context, 
-      IWorkflowEngine workflowEngine, 
+      DomainContext context,
+      IWorkflowEngine workflowEngine,
       UserContextService userContext
     )
     {
@@ -94,9 +94,31 @@ namespace WebApi.Workflows.Holiday
 
     private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)
     {
-      IEnumerable<TriggerResult> result = this._workflowEngine.GetTriggers(holiday);
-      var triggers = result.Select(x => x.TriggerName);
+      var info = this.ToWorkflowTriggerInfo(holiday);
+      var viewModel = this.ToViewModel(holiday);
 
+      return new WorkflowResult<HolidayViewModel>(info, viewModel);
+    }
+
+    private WorkflowTriggerInfo ToWorkflowTriggerInfo(Holiday holiday, TriggerResult result = null)
+    {
+      WorkflowTriggerInfo info;
+      if (result == null || !result.HasErrors)
+      {
+        IEnumerable<TriggerResult> triggerResults = this._workflowEngine.GetTriggers(holiday);
+        var triggers = triggerResults.Select(x => x.TriggerName);
+        info = WorkflowTriggerInfo.createForSuccess(triggers);
+      }
+      else
+      {
+        info = WorkflowTriggerInfo.createForError(result.Errors);
+      }
+
+      return info;
+    }
+
+    private HolidayViewModel ToViewModel(Holiday holiday)
+    {
       var viewModel = new HolidayViewModel
       {
         Id = holiday.Id,
@@ -106,7 +128,7 @@ namespace WebApi.Workflows.Holiday
         To = holiday.To
       };
 
-      return new WorkflowResult<HolidayViewModel>(triggers, viewModel);
+      return viewModel;
     }
 
     private async Task<IWorkflowResult<HolidayViewModel>> Trigger(
@@ -121,10 +143,18 @@ namespace WebApi.Workflows.Holiday
 
       var triggerParam = new TriggerParam(trigger, holiday)
         .AddVariable(HolidayViewModel.KEY, model);
-        
-      this._workflowEngine.Trigger(triggerParam);
 
-      return ToResult(holiday);
+      var result = this._workflowEngine.Trigger(triggerParam);
+
+      return ToTriggerResult(holiday, result);
+    }
+
+    private IWorkflowResult<HolidayViewModel> ToTriggerResult(Holiday holiday, TriggerResult result)
+    {
+      var info = this.ToWorkflowTriggerInfo(holiday, result);
+      var viewModel = this.ToViewModel(holiday);
+
+      return new WorkflowResult<HolidayViewModel>(info, viewModel);
     }
   }
 }
