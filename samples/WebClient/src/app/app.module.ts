@@ -17,6 +17,8 @@ import { HomeComponent } from './shell/home.component';
 import { PageNotFoundComponent } from './shell/page-not-found.component';
 import { AuthGuard } from './shared/services/models';
 
+import { DispatchWorkflowComponent } from './workflow/dispatch-workflow.component';
+
 const ROUTES: Routes = [
   {
     path: '',
@@ -24,9 +26,9 @@ const ROUTES: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeComponent },
+      { path: 'dispatch/:assignee/:goto', component: DispatchWorkflowComponent },
       {
         path: 'holiday',
-        canActivate: [AuthGuard],
         loadChildren: './holiday/holiday.module#HolidayModule'
       },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
