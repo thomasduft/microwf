@@ -22,7 +22,7 @@ import { Holiday } from './models';
       <thead>
         <tr>
           <th scope="col" i18n>State</th>
-          <th scope="col" i18n>Requestor</th>
+          <th scope="col" i18n>Requester</th>
           <th scope="col" i18n>From</th>
           <th scope="col" i18n>To</th>
           <th scope="col" i18n>Action</th>
@@ -31,7 +31,7 @@ import { Holiday } from './models';
       <tbody>
         <tr *ngFor="let holiday of myWork">
           <td>{{ holiday.state }}</td>
-          <td>{{ holiday.requestor }}</td>
+          <td>{{ holiday.requester }}</td>
           <td>{{ holiday.from | date }}</td>
           <td>{{ holiday.to | date }}</td>
           <td>

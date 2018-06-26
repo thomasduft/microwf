@@ -11,7 +11,7 @@ import { Slot } from './models';
 @Component({
   selector: 'tw-slot',
   template: `
-  <h3>{{ slot.title }}</h3>
+  <h3 *ngIf="slot.title">{{ slot.title }}</h3>
   <ng-container *ngIf="slot.editors && slot.editors.length > 0">
     <tw-editor *ngFor="let editor of slot.editors"
                [editor]="editor"

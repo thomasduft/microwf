@@ -22,22 +22,22 @@ namespace WebApi.Workflows.Holiday
     public string Assignee { get; set; }
 
     [Required]
-    public string Requestor { get; set; }
+    public string Requester { get; set; }
 
     public string Superior { get; set; }
 
-    public DateTime From { get; set; }
+    public DateTime? From { get; set; }
 
-    public DateTime To { get; set; }
+    public DateTime? To { get; set; }
 
-    public static Holiday Create(string requestor)
+    public static Holiday Create(string requester)
     {
       return new Holiday
       {
         Type = HolidayApprovalWorkflow.TYPE,
         State = HolidayApprovalWorkflow.NEW_STATE,
-        Assignee = requestor,
-        Requestor = requestor
+        Assignee = requester,
+        Requester = requester
       };
     }
   }

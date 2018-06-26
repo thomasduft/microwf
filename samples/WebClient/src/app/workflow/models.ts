@@ -13,3 +13,14 @@ export interface WorkflowDefinition {
   description: string;
   route: string;
 }
+
+export interface TriggerInfo {
+  succeeded: boolean;
+  triggers: Array<string>;
+  errors: Array<string>;
+}
+
+export interface WorkflowResult<T> {
+  triggerInfo: TriggerInfo;
+  viewModel: T;
+}

@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi.Migrations
 {
@@ -14,13 +13,13 @@ namespace WebApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Assignee = table.Column<string>(nullable: false),
-                    From = table.Column<DateTime>(nullable: false),
-                    Requestor = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(nullable: false),
                     State = table.Column<string>(nullable: false),
+                    Assignee = table.Column<string>(nullable: false),
+                    Requester = table.Column<string>(nullable: false),
                     Superior = table.Column<string>(nullable: true),
-                    To = table.Column<DateTime>(nullable: false),
-                    Type = table.Column<string>(nullable: false)
+                    From = table.Column<DateTime>(nullable: true),
+                    To = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,11 +32,11 @@ namespace WebApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Assignee = table.Column<string>(nullable: true),
-                    CorrelationId = table.Column<int>(nullable: false),
-                    DueDate = table.Column<DateTime>(nullable: true),
+                    Type = table.Column<string>(nullable: false),
                     State = table.Column<string>(nullable: false),
-                    Type = table.Column<string>(nullable: false)
+                    CorrelationId = table.Column<int>(nullable: false),
+                    Assignee = table.Column<string>(nullable: true),
+                    DueDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

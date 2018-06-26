@@ -9,16 +9,40 @@ namespace WebApi.Workflows.Holiday
     public const string KEY = "HolidayViewModel";
 
     public int? Id { get; set; }
-    
+
     [Required]
     public string Requestor { get; set; }
 
     public string Superior { get; set; }
-    
+
+    public DateTime? From { get; set; }
+
+    public DateTime? To { get; set; }
+  }
+
+  public class ApplyHolidayViewModel : WorkflowVariableBase
+  {
+    public const string KEY = "ApplyHolidayViewModel";
+
+    [Required]
+    public int Id { get; set; }
+
     [Required]
     public DateTime From { get; set; }
-    
+
     [Required]
     public DateTime To { get; set; }
+  }
+
+  public class ApproveHolidayViewModel : WorkflowVariableBase
+  {
+    public const string KEY = "ApproveHolidayViewModel";
+
+    [Required]
+    public int Id { get; set; }
+
+    public bool Approved { get; set; }
+
+    public string Message { get; set; }
   }
 }

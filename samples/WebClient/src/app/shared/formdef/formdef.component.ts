@@ -23,11 +23,13 @@ import { FormdefService } from './formdef.service';
               class="btn btn-primary"
               [disabled]="!form.valid"
               i18n>Save</button>
-      <button type="button"
+      <button *ngIf="showCancel"
+              type="button"
               class="btn btn-secondary"
               (click)="onReset()"
               i18n>Cancel</button>
-      <button type="button"
+      <button *ngIf="showDelete"
+              type="button"
               class="btn btn-secondary"
               (click)="onDelete()"
               i18n>Delete</button>
@@ -43,6 +45,12 @@ export class FormdefComponent implements OnInit {
 
   @Input()
   public viewModel: any;
+
+  @Input()
+  public showCancel = false;
+
+  @Input()
+  public showDelete = false;
 
   @Output()
   public submitted: EventEmitter<any> = new EventEmitter<any>();

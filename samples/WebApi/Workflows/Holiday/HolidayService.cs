@@ -122,7 +122,7 @@ namespace WebApi.Workflows.Holiday
       var viewModel = new HolidayViewModel
       {
         Id = holiday.Id,
-        Requestor = holiday.Requestor,
+        Requestor = holiday.Requester,
         Superior = holiday.Superior,
         From = holiday.From,
         To = holiday.To

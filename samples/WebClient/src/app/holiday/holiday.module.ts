@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FormdefModule } from './../shared/formdef/index';
+import { FormdefModule, FormdefRegistry } from './../shared/formdef/index';
+import { WorkflowModule } from '../workflow/workflow.module';
 
 import { HolidayComponent } from './holiday.component';
 import { HolidayDashboardComponent } from './holiday-dashboard.component';
-
 import { HolidayService } from './holiday.service';
+import { ApplyHolidayDetailSlot } from './models';
 
 const ROUTES: Routes = [
   { path: '', component: HolidayDashboardComponent },
@@ -19,7 +20,8 @@ const ROUTES: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(ROUTES),
-    FormdefModule
+    FormdefModule,
+    WorkflowModule
   ],
   declarations: [
     HolidayDashboardComponent,
@@ -32,4 +34,10 @@ const ROUTES: Routes = [
     RouterModule
   ]
 })
-export class HolidayModule { }
+export class HolidayModule {
+  public constructor(
+    private _slotRegistry: FormdefRegistry
+  ) {
+    this._slotRegistry.register(new ApplyHolidayDetailSlot());
+  }
+}
