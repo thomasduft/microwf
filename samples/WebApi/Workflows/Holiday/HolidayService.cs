@@ -14,13 +14,13 @@ namespace WebApi.Workflows.Holiday
   {
     Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id);
 
-    Task<IWorkflowResult<HolidayViewModel>> NewAsync();
+    Task<IWorkflowResult<ApplyHolidayViewModel>> NewAsync();
 
-    Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model);
+    Task<IWorkflowResult<NoWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model);
 
-    Task<IWorkflowResult<HolidayViewModel>> ApproveAsync(HolidayViewModel model);
+    Task<IWorkflowResult<NoWorkflowResult>> ApproveAsync(ApproveHolidayViewModel model);
 
-    Task<IWorkflowResult<HolidayViewModel>> RejectAsync(HolidayViewModel model);
+    Task<IWorkflowResult<NoWorkflowResult>> RejectAsync(ApproveHolidayViewModel model);
 
     // TODO: Check for common kind of viewmodel that shows state, short description, id?!
     Task<IEnumerable<Holiday>> MyWorkAsync();
@@ -43,6 +43,21 @@ namespace WebApi.Workflows.Holiday
       this._userContext = userContext;
     }
 
+    public async Task<IWorkflowResult<ApplyHolidayViewModel>> NewAsync()
+    {
+      var holiday = Holiday.Create(_userContext.UserName);
+      var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday);
+
+      var triggerResult = this._workflowEngine.CanTrigger(triggerParam);
+
+      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var viewModel = new ApplyHolidayViewModel();
+
+      var result = new WorkflowResult<ApplyHolidayViewModel>(info, viewModel);
+
+      return await Task.FromResult<IWorkflowResult<ApplyHolidayViewModel>>(result);
+    }
+
     public async Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id)
     {
       var holiday = await this._context.Holidays.FindAsync(id);
@@ -50,35 +65,52 @@ namespace WebApi.Workflows.Holiday
       return ToResult(holiday);
     }
 
-    public async Task<IWorkflowResult<HolidayViewModel>> NewAsync()
-    {
-      var holiday = Holiday.Create(_userContext.UserName);
-
-      this._context.Add(holiday);
-      await this._context.SaveChangesAsync();
-
-      return ToResult(holiday);
-    }
-
-    public async Task<IWorkflowResult<HolidayViewModel>> ApplyAsync(HolidayViewModel model)
+    public async Task<IWorkflowResult<NoWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model)
     {
       if (model == null) throw new ArgumentNullException(nameof(model));
 
-      return await Trigger(HolidayApprovalWorkflow.APPLY_TRIGGER, model);
+      var holiday = await FindOrCreate(null);
+      holiday.Superior = "alice";
+
+      var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday)
+       .AddVariable(ApplyHolidayViewModel.KEY, model);
+
+      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+
+      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var viewModel = new NoWorkflowResult(holiday.Assignee);
+
+      return new WorkflowResult<NoWorkflowResult>(info, viewModel);
     }
 
-    public async Task<IWorkflowResult<HolidayViewModel>> ApproveAsync(HolidayViewModel model)
+    public async Task<IWorkflowResult<NoWorkflowResult>> ApproveAsync(ApproveHolidayViewModel model)
     {
-      if (model == null) throw new ArgumentNullException(nameof(model));
+      var holiday = await FindOrCreate(model.Id);
 
-      return await Trigger(HolidayApprovalWorkflow.APPROVE_TRIGGER, model);
+      var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPROVE_TRIGGER, holiday)
+       .AddVariable(ApproveHolidayViewModel.KEY, model);
+
+      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+
+      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var viewModel = new NoWorkflowResult(holiday.Assignee);
+
+      return new WorkflowResult<NoWorkflowResult>(info, viewModel);
     }
 
-    public async Task<IWorkflowResult<HolidayViewModel>> RejectAsync(HolidayViewModel model)
+    public async Task<IWorkflowResult<NoWorkflowResult>> RejectAsync(ApproveHolidayViewModel model)
     {
-      if (model == null) throw new ArgumentNullException(nameof(model));
+      var holiday = await FindOrCreate(model.Id);
 
-      return await Trigger(HolidayApprovalWorkflow.REJECT_TRIGGER, model);
+      var triggerParam = new TriggerParam(HolidayApprovalWorkflow.REJECT_TRIGGER, holiday)
+       .AddVariable(ApproveHolidayViewModel.KEY, model);
+
+      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+
+      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var viewModel = new NoWorkflowResult(holiday.Assignee);
+
+      return new WorkflowResult<NoWorkflowResult>(info, viewModel);
     }
 
     public async Task<IEnumerable<Holiday>> MyWorkAsync()
@@ -125,36 +157,28 @@ namespace WebApi.Workflows.Holiday
         Requestor = holiday.Requester,
         Superior = holiday.Superior,
         From = holiday.From,
-        To = holiday.To
+        To = holiday.To,
+        State = holiday.State
       };
 
       return viewModel;
     }
 
-    private async Task<IWorkflowResult<HolidayViewModel>> Trigger(
-      string trigger,
-      HolidayViewModel model
-    )
+    private async Task<Holiday> FindOrCreate(int? id)
     {
-      var holiday = await this._context.Holidays.FindAsync(model.Id);
-      holiday.Superior = model.Superior;
-      holiday.From = model.From;
-      holiday.To = model.To;
+      Holiday holiday;
 
-      var triggerParam = new TriggerParam(trigger, holiday)
-        .AddVariable(HolidayViewModel.KEY, model);
+      if (id.HasValue)
+      {
+        holiday = await this._context.Holidays.FindAsync(id.Value);
+      }
+      else
+      {
+        holiday = Holiday.Create(_userContext.UserName);
+        this._context.Add(holiday);
+      }
 
-      var result = this._workflowEngine.Trigger(triggerParam);
-
-      return ToTriggerResult(holiday, result);
-    }
-
-    private IWorkflowResult<HolidayViewModel> ToTriggerResult(Holiday holiday, TriggerResult result)
-    {
-      var info = this.ToWorkflowTriggerInfo(holiday, result);
-      var viewModel = this.ToViewModel(holiday);
-
-      return new WorkflowResult<HolidayViewModel>(info, viewModel);
+      return holiday;
     }
   }
 }

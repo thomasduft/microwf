@@ -47,6 +47,25 @@ namespace tomware.Microwf.Engine
     }
   }
 
+  public class NoWorkflowResult
+  {
+    public string Assignee { get; set; }
+    public string Message { get; set; }
+
+    public NoWorkflowResult() { }
+
+    public NoWorkflowResult(string assignee)
+    {
+      this.Assignee = assignee;
+    }
+
+    public NoWorkflowResult(string assignee, string message)
+    {
+      this.Assignee = assignee;
+      this.Message = message;
+    }
+  }
+
   public class AssignableWorkflowViewModel
   {
     public int Id { get; set; }

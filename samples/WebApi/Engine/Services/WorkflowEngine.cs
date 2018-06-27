@@ -65,36 +65,33 @@ namespace tomware.Microwf.Engine
     {
       if (param == null) throw new InvalidOperationException(nameof(param));
 
-      TriggerResult result = null;
+      var entity = param.Instance as IEntityWorkflow;
+      if (entity == null) throw new Exception("No entity given!");
 
+      TriggerResult result = null;
       using (var transaction = this._context.Database.BeginTransaction())
       {
-        int? id = null;
         try
         {
+          Workflow workflow = null;
+
           var execution = GetExecution(param.Instance.Type);
 
-          var entity = param.Instance as IEntityWorkflow;
-          Workflow workflow = null;
-          if (entity != null)
-          {
-            id = entity.Id;
-            workflow = FindOrCreate(
-              id.Value,
-              param.Instance.Type,
-              param.Instance.State,
-              entity.Assignee
-            );
-            EnsureContext(param, workflow.WorkflowContext);
-          }
+          // so entity id gets resolved!
+          _context.SaveChanges();
+
+          workflow = FindOrCreate(
+            entity.Id,
+            param.Instance.Type,
+            param.Instance.State,
+            entity.Assignee
+          );
+          EnsureContext(param, workflow.WorkflowContext);
 
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
-            if (id.HasValue)
-            {
-              PersistWorkflow(workflow, param);
-            }
+            PersistWorkflow(workflow, param);
 
             _context.SaveChanges();
             transaction.Commit();
@@ -104,7 +101,15 @@ namespace tomware.Microwf.Engine
         {
           transaction.Rollback();
 
-          _logger.LogError($"Error in triggering: {param.Instance.Type}, EntityId: {id}", ex);
+          if (result != null)
+          {
+            result.SetError(ex.ToString());
+          }
+
+          _logger.LogError(
+            $"Error in triggering: {param.Instance.Type}, EntityId: {entity.Id}",
+            ex.StackTrace
+          );
         }
       }
 
@@ -136,18 +141,27 @@ namespace tomware.Microwf.Engine
       return workflow;
     }
 
+    // TODO: approach with restoring WorkflowVariables is not working like this.
+    // => new concept/domain model required!
     private void EnsureContext(TriggerParam triggerParam, WorkflowContext ctx)
     {
       if (triggerParam == null) throw new ArgumentNullException(nameof(triggerParam));
       if (ctx == null) throw new ArgumentNullException(nameof(ctx));
 
-      if (!triggerParam.HasVariables && !string.IsNullOrWhiteSpace(ctx.Context))
+      if (!string.IsNullOrWhiteSpace(ctx.Context))
       {
         var variables = JsonConvert
           .DeserializeObject<Dictionary<string, WorkflowVariableBase>>(ctx.Context);
         foreach (var variable in variables)
         {
-          triggerParam.Variables.Add(variable.Key, variable.Value);
+          if (triggerParam.Variables.ContainsKey(variable.Key))
+          {
+            triggerParam.Variables[variable.Key] = variable.Value;
+          }
+          else
+          {
+            triggerParam.AddVariable(variable.Key, variable.Value);
+          }
         }
       }
     }

@@ -71,8 +71,10 @@ namespace WebApi.Workflows.Holiday
 
       if (context.HasVariables)
       {
-        var model = context.GetVariable<HolidayViewModel>(HolidayViewModel.KEY);
-        holiday.Assignee = model.Superior;
+        var model = context.GetVariable<ApplyHolidayViewModel>(ApplyHolidayViewModel.KEY);
+        holiday.Assignee = holiday.Superior;
+        holiday.From = model.From;
+        holiday.To = model.To;
       }
 
       this._logger.LogInformation($"Assignee: {holiday.Assignee}");
@@ -86,10 +88,15 @@ namespace WebApi.Workflows.Holiday
 
       if (context.HasVariables)
       {
-        var model = context.GetVariable<HolidayViewModel>(HolidayViewModel.KEY);
-        
-        return holiday.Superior == model.Superior
-          && holiday.Superior == this._userContextService.UserName;
+        var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
+
+        // var applyModel = context.GetVariable<ApplyHolidayViewModel>(ApplyHolidayViewModel.KEY);
+        // if (applyModel != null)
+        // {
+        //   model.Message = applyModel.Message;
+        // }
+
+        return holiday.Superior == this._userContextService.UserName;
       }
 
       return false;
@@ -100,6 +107,8 @@ namespace WebApi.Workflows.Holiday
       var holiday = context.GetInstance<Holiday>();
 
       this._logger.LogInformation($"Thank you very much: {holiday.Superior}!");
+
+      holiday.Assignee = holiday.Requester;
     }
 
     private void ReAssignToRequestor(TransitionContext context)

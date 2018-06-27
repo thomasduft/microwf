@@ -9,7 +9,7 @@ import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
 @Component({
   selector: 'tw-dispatch-workflow',
   template: `
-  <p i18n>This workflow has beeing dispatched to {{ assignee }}!</p>
+  <p i18n>This workflow has beeing dispatched to <b>{{ assignee }}</b>!</p>
   <button type="button"
           class="btn btn-primary"
           (click)="goTo()"

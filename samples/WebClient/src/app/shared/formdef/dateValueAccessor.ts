@@ -32,7 +32,8 @@ export class DateValueAccessorDirective implements ControlValueAccessor {
   ) { }
 
   public writeValue(value: Date): void {
-    this._renderer.setElementProperty(this._elementRef.nativeElement, 'valueAsDate', value);
+    const v = new Date(value);
+    this._renderer.setElementProperty(this._elementRef.nativeElement, 'valueAsDate', v);
   }
 
   public registerOnChange(fn: (_: any) => void): void {

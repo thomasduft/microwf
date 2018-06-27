@@ -64,6 +64,10 @@ export class FormdefComponent implements OnInit {
   public form: FormGroup;
   public slot: Slot;
 
+  public get formValue(): any {
+    return this.form.value;
+  }
+
   public constructor(
     private _formdefService: FormdefService
   ) { }

@@ -17,6 +17,18 @@ export interface Holiday {
   state: string;
 }
 
+export interface ApplyHoliday {
+  from: Date;
+  to: Date;
+  message: string;
+}
+
+export interface ApproveHoliday {
+  id: number;
+  approved: boolean;
+  message: string;
+}
+
 export class ApplyHolidayDetailSlot implements Slot {
   public static KEY = 'apply_holidaydetailslot';
 
@@ -27,12 +39,6 @@ export class ApplyHolidayDetailSlot implements Slot {
 
   public constructor() {
     this.editors = [
-      {
-        key: 'id',
-        type: HIDDEN_EDITOR,
-        label: 'Id',
-        required: true
-      },
       {
         key: 'from',
         type: DATE_EDITOR,
@@ -68,12 +74,6 @@ export class ApproveHolidayDetailSlot implements Slot {
         key: 'id',
         type: HIDDEN_EDITOR,
         label: 'Id',
-        required: true
-      },
-      {
-        key: 'approve',
-        type: CHECKBOX_EDITOR,
-        label: 'Approve',
         required: true
       },
       {

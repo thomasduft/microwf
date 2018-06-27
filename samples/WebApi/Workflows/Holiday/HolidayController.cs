@@ -17,6 +17,15 @@ namespace WebApi.Workflows.Holiday
       this._service = service;
     }
 
+    [HttpPost("new")]
+    [ProducesResponseType(typeof(IWorkflowResult<ApplyHolidayViewModel>), 200)]
+    public async Task<IActionResult> New()
+    {
+      var result = await this._service.NewAsync();
+
+      return Ok(result);
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
     public async Task<IActionResult> Get(int id)
@@ -26,18 +35,9 @@ namespace WebApi.Workflows.Holiday
       return Ok(result);
     }
 
-    [HttpPost("new")]
-    [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
-    public async Task<IActionResult> New()
-    {
-      var result = await this._service.NewAsync();
-
-      return Ok(result);
-    }
-
     [HttpPost("apply")]
-    [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
-    public async Task<IActionResult> Apply([FromBody]HolidayViewModel model)
+    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    public async Task<IActionResult> Apply([FromBody]ApplyHolidayViewModel model)
     {
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
@@ -48,8 +48,8 @@ namespace WebApi.Workflows.Holiday
     }
 
     [HttpPost("approve")]
-    [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
-    public async Task<IActionResult> Approve([FromBody]HolidayViewModel model)
+    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    public async Task<IActionResult> Approve([FromBody]ApproveHolidayViewModel model)
     {
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
@@ -60,8 +60,8 @@ namespace WebApi.Workflows.Holiday
     }
 
     [HttpPost("reject")]
-    [ProducesResponseType(typeof(IWorkflowResult<HolidayViewModel>), 200)]
-    public async Task<IActionResult> Reject([FromBody]HolidayViewModel model)
+    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    public async Task<IActionResult> Reject([FromBody]ApproveHolidayViewModel model)
     {
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);

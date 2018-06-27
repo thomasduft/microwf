@@ -8,7 +8,7 @@ import { WorkflowModule } from '../workflow/workflow.module';
 import { HolidayComponent } from './holiday.component';
 import { HolidayDashboardComponent } from './holiday-dashboard.component';
 import { HolidayService } from './holiday.service';
-import { ApplyHolidayDetailSlot } from './models';
+import { ApplyHolidayDetailSlot, ApproveHolidayDetailSlot } from './models';
 
 const ROUTES: Routes = [
   { path: '', component: HolidayDashboardComponent },
@@ -39,5 +39,6 @@ export class HolidayModule {
     private _slotRegistry: FormdefRegistry
   ) {
     this._slotRegistry.register(new ApplyHolidayDetailSlot());
+    this._slotRegistry.register(new ApproveHolidayDetailSlot());
   }
 }

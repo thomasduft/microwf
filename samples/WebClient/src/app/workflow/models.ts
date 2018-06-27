@@ -24,3 +24,8 @@ export interface WorkflowResult<T> {
   triggerInfo: TriggerInfo;
   viewModel: T;
 }
+
+export interface NoWorkflowResult {
+  assignee: string;
+  message: string;
+}

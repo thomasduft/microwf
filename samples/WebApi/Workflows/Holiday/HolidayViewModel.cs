@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using tomware.Microwf.Core;
+using WebApi.Common;
 
 namespace WebApi.Workflows.Holiday
 {
@@ -18,6 +19,8 @@ namespace WebApi.Workflows.Holiday
     public DateTime? From { get; set; }
 
     public DateTime? To { get; set; }
+
+    public string State { get; set; }
   }
 
   public class ApplyHolidayViewModel : WorkflowVariableBase
@@ -25,13 +28,20 @@ namespace WebApi.Workflows.Holiday
     public const string KEY = "ApplyHolidayViewModel";
 
     [Required]
-    public int Id { get; set; }
-
-    [Required]
     public DateTime From { get; set; }
 
     [Required]
     public DateTime To { get; set; }
+
+    public string Message { get; set; }
+
+    public ApplyHolidayViewModel()
+    {
+      var today = SystemTime.Now().Date;
+
+      this.From = today;
+      this.To = today.AddDays(1);
+    }
   }
 
   public class ApproveHolidayViewModel : WorkflowVariableBase
@@ -40,8 +50,6 @@ namespace WebApi.Workflows.Holiday
 
     [Required]
     public int Id { get; set; }
-
-    public bool Approved { get; set; }
 
     public string Message { get; set; }
   }

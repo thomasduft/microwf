@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,6 +6,7 @@ namespace tomware.Microwf.Core
 {
   public class TriggerResult
   {
+    private List<string> _errors;
     private readonly TransitionContext _triggerContext;
 
     /// <summary>
@@ -33,7 +35,13 @@ namespace tomware.Microwf.Core
     /// <summary>
     /// Trigger errors that occured during trying to make the transition.
     /// </summary>
-    public IEnumerable<string> Errors { get; private set; }
+    public IEnumerable<string> Errors
+    {
+      get
+      {
+        return this._errors;
+      }
+    }
 
     /// <summary>
     /// Returns the current state of the IWorkflow instance.
@@ -45,12 +53,15 @@ namespace tomware.Microwf.Core
 
     public TriggerResult(string triggerName, TransitionContext context, bool canTrigger)
     {
-      _triggerContext = context;
-
       TriggerName = triggerName;
-      Errors = _triggerContext.Errors;
-      IsAborted = _triggerContext.TransitionAborted;
+      _triggerContext = context;
       CanTrigger = canTrigger;
+      IsAborted = _triggerContext.TransitionAborted;
+
+      var errors = _triggerContext.Errors != null
+        ? new List<string>(_triggerContext.Errors)
+        : new List<string>();
+      _errors = errors;
     }
 
     public T GetVariable<T>(string key) where T : WorkflowVariableBase
@@ -58,6 +69,11 @@ namespace tomware.Microwf.Core
       if (_triggerContext == null) return null;
 
       return _triggerContext.GetVariable<T>(key);
+    }
+
+    public void SetError(string error)
+    {
+      this._errors.Add(error);
     }
   }
 }
