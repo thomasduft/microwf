@@ -4,8 +4,7 @@ import {
   Editor,
   HIDDEN_EDITOR,
   TEXT_EDITOR,
-  DATE_EDITOR,
-  CHECKBOX_EDITOR
+  DATE_EDITOR
 } from '../shared/formdef/index';
 
 export interface Holiday {
@@ -79,7 +78,8 @@ export class ApproveHolidayDetailSlot implements Slot {
       {
         key: 'message',
         type: TEXT_EDITOR,
-        label: 'Message'
+        label: 'Message',
+        required: false
       }
     ];
   }

@@ -76,7 +76,8 @@ namespace WebApi.Workflows.Holiday
         holiday.From = model.From;
         holiday.To = model.To;
 
-        if (!string.IsNullOrWhiteSpace(model.Message)) {
+        if (!string.IsNullOrWhiteSpace(model.Message))
+        {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
         }
       }
@@ -93,7 +94,8 @@ namespace WebApi.Workflows.Holiday
       if (context.HasVariables)
       {
         var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
-        if (!string.IsNullOrWhiteSpace(model.Message)) {
+        if (!string.IsNullOrWhiteSpace(model.Message))
+        {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
         }
 
@@ -119,6 +121,15 @@ namespace WebApi.Workflows.Holiday
       this._logger.LogInformation($"Reassign Holiday entity to requostor: {holiday.Requester}");
 
       holiday.Assignee = holiday.Requester;
+
+      if (context.HasVariables)
+      {
+        var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
+        if (!string.IsNullOrWhiteSpace(model.Message))
+        {
+          holiday.AddMessage(this._userContextService.UserName, model.Message);
+        }
+      }
     }
   }
 }

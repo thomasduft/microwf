@@ -27,22 +27,25 @@ namespace tomware.Microwf.Engine
     }
   }
 
-  public interface IWorkflowResult<T>
+  public interface IWorkflowResult<TViewModel>
   {
     WorkflowTriggerInfo TriggerInfo { get; set; }
 
-    T ViewModel { get; set; }
+    TViewModel ViewModel { get; set; }
   }
 
-  public class WorkflowResult<T> : IWorkflowResult<T>
+  public class WorkflowResult<TEntity, TViewModel> : IWorkflowResult<TViewModel>
   {
     public WorkflowTriggerInfo TriggerInfo { get; set; }
 
-    public T ViewModel { get; set; }
+    public TEntity Entity { get; set; }
 
-    public WorkflowResult(WorkflowTriggerInfo info, T viewModel)
+    public TViewModel ViewModel { get; set; }
+
+    public WorkflowResult(WorkflowTriggerInfo info, TEntity entity, TViewModel viewModel)
     {
       this.TriggerInfo = info;
+      this.Entity = entity;
       this.ViewModel = viewModel;
     }
   }

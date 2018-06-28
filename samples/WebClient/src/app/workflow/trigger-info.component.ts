@@ -15,8 +15,9 @@ import { TriggerInfo } from './models';
          role="group"
          *ngIf="triggerInfo.triggers">
       <button type="button"
-              class="btn"
+              class="btn btn-secondary"
               *ngFor="let trigger of triggerInfo.triggers"
+              [disabled]="!canTrigger"
               (click)="triggerClick(trigger)">{{ trigger }}
       </button>
     </div>
@@ -32,6 +33,9 @@ import { TriggerInfo } from './models';
 export class TriggerInfoComponent {
   @Input()
   public triggerInfo: TriggerInfo;
+
+  @Input()
+  public canTrigger = false;
 
   @Output()
   public trigger: EventEmitter<string> = new EventEmitter<string>();

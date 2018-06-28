@@ -42,7 +42,10 @@ namespace WebApi
                 .AllowCredentials();
             });
         })
-        .AddMvc();
+        .AddMvc()
+        .AddJsonOptions(o =>
+          o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
 
       services.AddRouting(o => o.LowercaseUrls = true);
 

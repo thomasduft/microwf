@@ -25,7 +25,8 @@ import {
   template: `
   <div class="row">
     <div class="col-sm">
-      <tw-trigger-info
+      <tw-trigger-info *ngIf="formDef"
+        [canTrigger]="formDef.formIsValid"
         [triggerInfo]="triggerInfo"
         (trigger)="triggerClicked($event)">
       </tw-trigger-info>
@@ -34,7 +35,7 @@ import {
 
   <div class="row">
     <div class="col-sm">
-      <tw-formdef *ngIf="viewModel"
+      <tw-formdef
         #formDef
         [key]="key"
         [viewModel]="viewModel"
@@ -50,6 +51,7 @@ export class HolidayComponent implements OnInit {
 
   public key = ApplyHolidayDetailSlot.KEY;
   public viewModel: any;
+  public canTrigger = false;
   public triggerInfo: TriggerInfo;
 
   @ViewChild('formDef')
@@ -79,7 +81,7 @@ export class HolidayComponent implements OnInit {
 
     if (trigger === 'apply') {
       this._service.apply(this.formDef.formValue)
-        .subscribe((result: WorkflowResult<NoWorkflowResult>) => {
+        .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
           if (result.triggerInfo.succeeded) {
             this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
           }
@@ -88,7 +90,7 @@ export class HolidayComponent implements OnInit {
 
     if (trigger === 'approve') {
       this._service.approve(this.formDef.formValue)
-        .subscribe((result: WorkflowResult<NoWorkflowResult>) => {
+        .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
           if (result.triggerInfo.succeeded) {
             this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
           }
@@ -97,7 +99,7 @@ export class HolidayComponent implements OnInit {
 
     if (trigger === 'reject') {
       this._service.reject(this.formDef.formValue)
-        .subscribe((result: WorkflowResult<NoWorkflowResult>) => {
+        .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
           if (result.triggerInfo.succeeded) {
             this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
           }
@@ -115,7 +117,7 @@ export class HolidayComponent implements OnInit {
 
   private load(id: string): void {
     this._holiday$ = this._service.get(id)
-      .subscribe((result: WorkflowResult<Holiday>) => {
+      .subscribe((result: WorkflowResult<null, Holiday>) => {
         this.key = ApproveHolidayDetailSlot.KEY;
         const vm: ApproveHoliday = {
           id: Number(id),
@@ -130,7 +132,7 @@ export class HolidayComponent implements OnInit {
 
   private create(): void {
     this._holiday$ = this._service.create()
-      .subscribe((result: WorkflowResult<ApplyHoliday>) => {
+      .subscribe((result: WorkflowResult<Holiday, ApplyHoliday>) => {
         this.viewModel = result.viewModel;
         this.triggerInfo = result.triggerInfo;
       });

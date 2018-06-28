@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import {
   Component,
   OnInit,
@@ -15,11 +17,13 @@ import { FormdefService } from './formdef.service';
   template: `
   <form [formGroup]="form"
         (ngSubmit)="onSubmit()">
-    <tw-slot [slot]="slot"
+    <tw-slot *ngIf="slot"
+             [slot]="slot"
              [parentForm]="form">
     </tw-slot>
     <div class="btn-group" role="group">
-      <button type="submit"
+      <button *ngIf="showSave"
+              type="submit"
               class="btn btn-primary"
               [disabled]="!form.valid"
               i18n>Save</button>
@@ -40,11 +44,24 @@ import { FormdefService } from './formdef.service';
   ]
 })
 export class FormdefComponent implements OnInit {
+  private _viewModel: any;
+
   @Input()
   public key: string;
 
   @Input()
-  public viewModel: any;
+  public set viewModel(v: any) {
+    if (v) {
+      this._viewModel = v;
+      this.ngOnInit();
+    }
+  }
+  public get viewModel() {
+    return this._viewModel;
+  }
+
+  @Input()
+  public showSave = false;
 
   @Input()
   public showCancel = false;
@@ -61,11 +78,15 @@ export class FormdefComponent implements OnInit {
   @Output()
   public deleted: EventEmitter<any> = new EventEmitter<any>();
 
-  public form: FormGroup;
+  public form: FormGroup = new FormGroup({});
   public slot: Slot;
 
   public get formValue(): any {
     return this.form.value;
+  }
+
+  public get formIsValid(): boolean {
+    return this.form.valid;
   }
 
   public constructor(
@@ -73,6 +94,8 @@ export class FormdefComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    if (!this.viewModel) { return; }
+
     this.form = this._formdefService.toGroup(this.key, this.viewModel);
     this.slot = this._formdefService.getSlot(this.key);
   }

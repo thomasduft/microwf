@@ -20,9 +20,10 @@ export interface TriggerInfo {
   errors: Array<string>;
 }
 
-export interface WorkflowResult<T> {
+export interface WorkflowResult<TEntity, TViewModel> {
   triggerInfo: TriggerInfo;
-  viewModel: T;
+  entity: TEntity;
+  viewModel: TViewModel;
 }
 
 export interface NoWorkflowResult {

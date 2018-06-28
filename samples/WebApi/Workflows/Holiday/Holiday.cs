@@ -31,7 +31,7 @@ namespace WebApi.Workflows.Holiday
 
     public DateTime? To { get; set; }
 
-    public List<HolidayMessage> Messages { get; set; }
+    public List<HolidayMessage> Messages { get; set; } = new List<HolidayMessage>();
 
     public static Holiday Create(string requester)
     {
