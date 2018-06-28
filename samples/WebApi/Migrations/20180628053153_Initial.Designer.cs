@@ -9,7 +9,7 @@ using WebApi.Domain;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20180626074718_Initial")]
+    [Migration("20180628053153_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,23 +40,6 @@ namespace WebApi.Migrations
                     b.ToTable("Workflow");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowContext", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Context");
-
-                    b.Property<int>("WorkflowId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkflowId")
-                        .IsUnique();
-
-                    b.ToTable("WorkflowContext");
-                });
-
             modelBuilder.Entity("WebApi.Workflows.Holiday.Holiday", b =>
                 {
                     b.Property<int>("Id")
@@ -85,11 +68,30 @@ namespace WebApi.Migrations
                     b.ToTable("Holiday");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowContext", b =>
+            modelBuilder.Entity("WebApi.Workflows.Holiday.HolidayMessage", b =>
                 {
-                    b.HasOne("tomware.Microwf.Engine.Workflow", "Workflow")
-                        .WithOne("WorkflowContext")
-                        .HasForeignKey("tomware.Microwf.Engine.WorkflowContext", "WorkflowId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author")
+                        .IsRequired();
+
+                    b.Property<int>("HolidayId");
+
+                    b.Property<string>("Message");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HolidayId");
+
+                    b.ToTable("HolidayMessage");
+                });
+
+            modelBuilder.Entity("WebApi.Workflows.Holiday.HolidayMessage", b =>
+                {
+                    b.HasOne("WebApi.Workflows.Holiday.Holiday", "Holiday")
+                        .WithMany("Messages")
+                        .HasForeignKey("HolidayId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

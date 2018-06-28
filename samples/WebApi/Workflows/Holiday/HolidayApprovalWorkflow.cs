@@ -75,6 +75,10 @@ namespace WebApi.Workflows.Holiday
         holiday.Assignee = holiday.Superior;
         holiday.From = model.From;
         holiday.To = model.To;
+
+        if (!string.IsNullOrWhiteSpace(model.Message)) {
+          holiday.AddMessage(this._userContextService.UserName, model.Message);
+        }
       }
 
       this._logger.LogInformation($"Assignee: {holiday.Assignee}");
@@ -89,12 +93,9 @@ namespace WebApi.Workflows.Holiday
       if (context.HasVariables)
       {
         var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
-
-        // var applyModel = context.GetVariable<ApplyHolidayViewModel>(ApplyHolidayViewModel.KEY);
-        // if (applyModel != null)
-        // {
-        //   model.Message = applyModel.Message;
-        // }
+        if (!string.IsNullOrWhiteSpace(model.Message)) {
+          holiday.AddMessage(this._userContextService.UserName, model.Message);
+        }
 
         return holiday.Superior == this._userContextService.UserName;
       }

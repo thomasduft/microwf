@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using tomware.Microwf.Engine;
@@ -11,7 +12,7 @@ namespace WebApi.Workflows.Holiday
   {
     [Key]
     public int Id { get; set; }
-    
+
     [Required]
     public string Type { get; set; }
 
@@ -30,6 +31,8 @@ namespace WebApi.Workflows.Holiday
 
     public DateTime? To { get; set; }
 
+    public List<HolidayMessage> Messages { get; set; }
+
     public static Holiday Create(string requester)
     {
       return new Holiday
@@ -40,5 +43,32 @@ namespace WebApi.Workflows.Holiday
         Requester = requester
       };
     }
+
+    public void AddMessage(string author, string message)
+    {
+      this.Messages.Add(new HolidayMessage
+      {
+        Author = author,
+        Message = message,
+        Holiday = this
+      });
+    }
+  }
+
+  [Table("HolidayMessage")]
+  public class HolidayMessage
+  {
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    public string Author { get; set; }
+
+    [Required]
+    public string Message { get; set; }
+
+    public int HolidayId { get; set; }
+
+    public Holiday Holiday { get; set; }
   }
 }

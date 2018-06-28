@@ -23,14 +23,11 @@ namespace tomware.Microwf.Engine
 
     public DateTime? DueDate { get; set; }
 
-    public WorkflowContext WorkflowContext { get; set; }
-
     public static Workflow Create(
       int correlationId,
       string type,
       string state,
       string assignee,
-      string context = null,
       DateTime? dueDate = null
     )
     {
@@ -40,8 +37,7 @@ namespace tomware.Microwf.Engine
         Type = type,
         State = state,
         Assignee = assignee,
-        DueDate = dueDate,
-        WorkflowContext = WorkflowContext.Create(context)
+        DueDate = dueDate
       };
     }
   }

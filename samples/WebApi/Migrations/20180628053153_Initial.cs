@@ -44,42 +44,42 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkflowContext",
+                name: "HolidayMessage",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Context = table.Column<string>(nullable: true),
-                    WorkflowId = table.Column<int>(nullable: false)
+                    Author = table.Column<string>(nullable: false),
+                    Message = table.Column<string>(nullable: false),
+                    HolidayId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WorkflowContext", x => x.Id);
+                    table.PrimaryKey("PK_HolidayMessage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkflowContext_Workflow_WorkflowId",
-                        column: x => x.WorkflowId,
-                        principalTable: "Workflow",
+                        name: "FK_HolidayMessage_Holiday_HolidayId",
+                        column: x => x.HolidayId,
+                        principalTable: "Holiday",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkflowContext_WorkflowId",
-                table: "WorkflowContext",
-                column: "WorkflowId",
-                unique: true);
+                name: "IX_HolidayMessage_HolidayId",
+                table: "HolidayMessage",
+                column: "HolidayId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Holiday");
-
-            migrationBuilder.DropTable(
-                name: "WorkflowContext");
+                name: "HolidayMessage");
 
             migrationBuilder.DropTable(
                 name: "Workflow");
+
+            migrationBuilder.DropTable(
+                name: "Holiday");
         }
     }
 }
