@@ -24,7 +24,7 @@ namespace tomware.Microwf.Engine
     
     public DateTime Started { get; set; }
 
-    public DateTime Completed { get; set; }
+    public DateTime? Completed { get; set; }
 
     public DateTime? DueDate { get; set; }
 

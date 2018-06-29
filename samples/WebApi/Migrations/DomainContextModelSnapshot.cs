@@ -23,7 +23,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Assignee");
 
-                    b.Property<DateTime>("Completed");
+                    b.Property<DateTime?>("Completed");
 
                     b.Property<int>("CorrelationId");
 
