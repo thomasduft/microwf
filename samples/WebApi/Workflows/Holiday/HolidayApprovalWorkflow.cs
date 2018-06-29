@@ -69,7 +69,7 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = context.GetInstance<Holiday>();
 
-      if (context.HasVariables)
+      if (context.ContainsKey(ApplyHolidayViewModel.KEY))
       {
         var model = context.GetVariable<ApplyHolidayViewModel>(ApplyHolidayViewModel.KEY);
         holiday.Assignee = holiday.Superior;
@@ -91,7 +91,7 @@ namespace WebApi.Workflows.Holiday
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
-      if (context.HasVariables)
+      if (context.ContainsKey(ApproveHolidayViewModel.KEY))
       {
         var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
         if (!string.IsNullOrWhiteSpace(model.Message))
@@ -122,7 +122,7 @@ namespace WebApi.Workflows.Holiday
 
       holiday.Assignee = holiday.Requester;
 
-      if (context.HasVariables)
+      if (context.ContainsKey(ApproveHolidayViewModel.KEY))
       {
         var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
         if (!string.IsNullOrWhiteSpace(model.Message))

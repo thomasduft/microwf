@@ -36,6 +36,8 @@ namespace WebApi.Migrations
                     State = table.Column<string>(nullable: false),
                     CorrelationId = table.Column<int>(nullable: false),
                     Assignee = table.Column<string>(nullable: true),
+                    Started = table.Column<DateTime>(nullable: false),
+                    Completed = table.Column<DateTime>(nullable: false),
                     DueDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>

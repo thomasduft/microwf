@@ -49,7 +49,7 @@ export class ArraySlotComponent extends SlotComponent {
   }
 
   public add(): void {
-    const row = this.createRow(this.slot, this.rows.at(0) as FormGroup);
+    const row = this.createRow(this.slot);
     this.rows.push(row);
   }
 
@@ -57,7 +57,7 @@ export class ArraySlotComponent extends SlotComponent {
     this.rows.removeAt(idx);
   }
 
-  private createRow(arraySlot: Slot, template: FormGroup): FormGroup {
+  private createRow(arraySlot: Slot): FormGroup {
     const row = this._fb.group({});
 
     arraySlot.editors.forEach((e: Editor) => {

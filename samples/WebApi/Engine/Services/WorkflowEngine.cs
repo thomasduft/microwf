@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
+using WebApi.Common;
 using WebApi.Domain;
 
 namespace tomware.Microwf.Engine
@@ -150,7 +151,19 @@ namespace tomware.Microwf.Engine
         workflow.Assignee = entityWorkflow.Assignee;
       }
 
+      if (WorkflowIsCompleted(triggerParam))
+      {
+        workflow.Completed = SystemTime.Now();
+      }
+      
       workflow.DueDate = dueDate;
+    }
+
+    private bool WorkflowIsCompleted(TriggerParam triggerParam)
+    {
+      var triggerResults = this.GetTriggers(triggerParam.Instance, triggerParam.Variables);
+
+      return triggerResults.Count() == 0;
     }
   }
 }

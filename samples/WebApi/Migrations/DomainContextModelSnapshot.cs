@@ -23,9 +23,13 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Assignee");
 
+                    b.Property<DateTime>("Completed");
+
                     b.Property<int>("CorrelationId");
 
                     b.Property<DateTime?>("DueDate");
+
+                    b.Property<DateTime>("Started");
 
                     b.Property<string>("State")
                         .IsRequired();
@@ -76,7 +80,8 @@ namespace WebApi.Migrations
 
                     b.Property<int>("HolidayId");
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

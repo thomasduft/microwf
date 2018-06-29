@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApi.Common;
 
 namespace tomware.Microwf.Engine
 {
@@ -20,6 +21,10 @@ namespace tomware.Microwf.Engine
     public int CorrelationId { get; set; }
 
     public string Assignee { get; set; }
+    
+    public DateTime Started { get; set; }
+
+    public DateTime Completed { get; set; }
 
     public DateTime? DueDate { get; set; }
 
@@ -33,6 +38,7 @@ namespace tomware.Microwf.Engine
     {
       return new Workflow
       {
+        Started = SystemTime.Now(),
         CorrelationId = correlationId,
         Type = type,
         State = state,
