@@ -32,6 +32,11 @@ namespace microwf.tests.Utils
     {
       return _workflowDefinitions.First(w => w.Type == type);
     }
+
+    public IEnumerable<IWorkflowDefinition> GetWorkflowDefinitions()
+    {
+      return _workflowDefinitions;
+    }
   }
 
   //public class WebWorkflowDefinitionProvider : IWorkflowDefinitionProvider

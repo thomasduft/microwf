@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
+using WebApi.Common;
 
 namespace WebApi.Workflows.Holiday
 {
   public class HolidayApprovalWorkflow : EntityWorkflowDefinitionBase
   {
     private readonly ILogger<HolidayApprovalWorkflow> _logger;
+    private readonly UserContextService _userContextService;
 
     public const string TYPE = "HolidayApprovalWorkflow";
 
@@ -23,7 +25,7 @@ namespace WebApi.Workflows.Holiday
 
     public override string Type => TYPE;
 
-    public override Type EntityType => typeof(Domain.Holiday);
+    public override Type EntityType => typeof(Holiday);
 
     public override List<Transition> Transitions
     {
@@ -35,7 +37,6 @@ namespace WebApi.Workflows.Holiday
             State = NEW_STATE,
             Trigger = APPLY_TRIGGER,
             TargetState = APPLIED_STATE,
-            CanMakeTransition = MeApplyingForHolidays,
             AfterTransition = AssignBoss
           },
           new Transition {
@@ -48,36 +49,37 @@ namespace WebApi.Workflows.Holiday
           new Transition {
             State = APPLIED_STATE,
             Trigger = REJECT_TRIGGER,
-            TargetState = REJECTED_STATE
+            TargetState = REJECTED_STATE,
+            AfterTransition = ReAssignToRequestor
           }
         };
       }
     }
 
-    public HolidayApprovalWorkflow(ILoggerFactory loggerFactory)
+    public HolidayApprovalWorkflow(
+      ILoggerFactory loggerFactory,
+      UserContextService userContextService
+    )
     {
       this._logger = loggerFactory.CreateLogger<HolidayApprovalWorkflow>();
-
-      // inject further dependencies if required i.e. CurrentUser 
-    }
-
-    private bool MeApplyingForHolidays(TransitionContext context)
-    {
-      var holiday = context.GetInstance<Domain.Holiday>();
-      var canApply = holiday.Requestor == "Me";
-
-      this._logger.LogInformation($"Can apply: {canApply}");
-
-      return canApply;
+      this._userContextService = userContextService;
     }
 
     private void AssignBoss(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
-      if (context.HasVariables) {
-        var model = context.GetVariable<HolidayViewModel>(HolidayViewModel.KEY);
-        holiday.Assignee = model.Superior;
+      if (context.ContainsKey(ApplyHolidayViewModel.KEY))
+      {
+        var model = context.GetVariable<ApplyHolidayViewModel>(ApplyHolidayViewModel.KEY);
+        holiday.Assignee = holiday.Superior;
+        holiday.From = model.From;
+        holiday.To = model.To;
+
+        if (!string.IsNullOrWhiteSpace(model.Message))
+        {
+          holiday.AddMessage(this._userContextService.UserName, model.Message);
+        }
       }
 
       this._logger.LogInformation($"Assignee: {holiday.Assignee}");
@@ -85,18 +87,49 @@ namespace WebApi.Workflows.Holiday
 
     private bool BossIsApproving(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
-      return holiday.Superior == "NiceBoss";
+      if (context.ContainsKey(ApproveHolidayViewModel.KEY))
+      {
+        var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
+        if (!string.IsNullOrWhiteSpace(model.Message))
+        {
+          holiday.AddMessage(this._userContextService.UserName, model.Message);
+        }
+
+        return holiday.Superior == this._userContextService.UserName;
+      }
+
+      return false;
     }
 
     private void ThankBossForApproving(TransitionContext context)
     {
-      var holiday = context.GetInstance<Domain.Holiday>();
+      var holiday = context.GetInstance<Holiday>();
 
       this._logger.LogInformation($"Thank you very much: {holiday.Superior}!");
+
+      holiday.Assignee = holiday.Requester;
+    }
+
+    private void ReAssignToRequestor(TransitionContext context)
+    {
+      var holiday = context.GetInstance<Holiday>();
+
+      this._logger.LogInformation($"Reassign Holiday entity to requostor: {holiday.Requester}");
+
+      holiday.Assignee = holiday.Requester;
+
+      if (context.ContainsKey(ApproveHolidayViewModel.KEY))
+      {
+        var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
+        if (!string.IsNullOrWhiteSpace(model.Message))
+        {
+          holiday.AddMessage(this._userContextService.UserName, model.Message);
+        }
+      }
     }
   }
 }

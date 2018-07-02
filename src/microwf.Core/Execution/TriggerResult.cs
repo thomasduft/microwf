@@ -33,7 +33,7 @@ namespace tomware.Microwf.Core
     /// <summary>
     /// Trigger errors that occured during trying to make the transition.
     /// </summary>
-    public IEnumerable<string> Errors { get; private set; }
+    public IEnumerable<string> Errors { get; }
 
     /// <summary>
     /// Returns the current state of the IWorkflow instance.
@@ -45,12 +45,11 @@ namespace tomware.Microwf.Core
 
     public TriggerResult(string triggerName, TransitionContext context, bool canTrigger)
     {
-      _triggerContext = context;
-
       TriggerName = triggerName;
-      Errors = _triggerContext.Errors;
-      IsAborted = _triggerContext.TransitionAborted;
+      _triggerContext = context;
       CanTrigger = canTrigger;
+      IsAborted = _triggerContext.TransitionAborted;
+      this.Errors = _triggerContext.Errors;
     }
 
     public T GetVariable<T>(string key) where T : WorkflowVariableBase

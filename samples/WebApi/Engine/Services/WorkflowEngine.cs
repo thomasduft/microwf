@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
+using WebApi.Common;
 using WebApi.Domain;
 
 namespace tomware.Microwf.Engine
@@ -31,13 +32,13 @@ namespace tomware.Microwf.Engine
 
     public WorkflowEngine(
       DomainContext context,
-      ILoggerFactory loggerFactory,
+      ILogger<WorkflowEngine<TContext>> logger,
       IWorkflowDefinitionProvider workflowDefinitionProvider
     )
     {
-      this._context = context ?? throw new ArgumentNullException(nameof(context));
-      this._logger = loggerFactory.CreateLogger<WorkflowEngine<TContext>>();
-      this._workflowDefinitionProvider = workflowDefinitionProvider;
+      _context = context ?? throw new ArgumentNullException(nameof(context));
+      _logger = logger;
+      _workflowDefinitionProvider = workflowDefinitionProvider;
     }
 
     public TriggerResult CanTrigger(TriggerParam param)
@@ -65,33 +66,33 @@ namespace tomware.Microwf.Engine
     {
       if (param == null) throw new InvalidOperationException(nameof(param));
 
-      TriggerResult result = null;
+      var entity = param.Instance as IEntityWorkflow;
+      if (entity == null) throw new Exception("No entity given!");
 
+      TriggerResult result = null;
       using (var transaction = this._context.Database.BeginTransaction())
       {
-        int? id = null;
         try
         {
+          Workflow workflow = null;
+
           var execution = GetExecution(param.Instance.Type);
 
-          var workflow = param.Instance as IEntityWorkflow;
-          WorkflowContext workflowContext = null;
-          if (workflow != null)
-          {
-            id = workflow.Id;
-            workflowContext = FindOrCreate(id.Value, param.Instance.Type);
-            this.EnsureContext(param, workflowContext);
-          }
+          _context.SaveChanges(); // so entity id gets resolved!
+
+          workflow = FindOrCreate(
+            entity.Id,
+            param.Instance.Type,
+            param.Instance.State,
+            entity.Assignee
+          );
 
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
-            if (id.HasValue && param.HasVariables)
-            {
-              this.PersistContext(workflowContext, param.Variables);
-            }
+            PersistWorkflow(workflow, param);
 
-            this._context.SaveChanges();
+            _context.SaveChanges();
             transaction.Commit();
           }
         }
@@ -99,7 +100,10 @@ namespace tomware.Microwf.Engine
         {
           transaction.Rollback();
 
-          this._logger.LogError($"Error in triggering: {param.Instance.Type}, EntityId: {id}", ex);
+          _logger.LogError(
+            $"Error in triggering: {param.Instance.Type}, EntityId: {entity.Id}",
+            ex.StackTrace
+          );
         }
       }
 
@@ -108,7 +112,7 @@ namespace tomware.Microwf.Engine
 
     public IWorkflow Find(int id, Type type)
     {
-      return (IWorkflow) _context.Find(type, id);
+      return (IWorkflow)_context.Workflows.Find(type, id);
     }
 
     private WorkflowExecution GetExecution(string type)
@@ -118,50 +122,48 @@ namespace tomware.Microwf.Engine
       return new WorkflowExecution(definition);
     }
 
-    private WorkflowContext FindOrCreate(int id, string type)
+    private Workflow FindOrCreate(int id, string type, string state, string assignee)
     {
-      var ctx = this._context.Workflows.SingleOrDefault(w => w.CorrelationId == id);
-      if (ctx == null)
+      var workflow = this._context.Workflows
+        .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
+      if (workflow == null)
       {
-        ctx = WorkflowContext.Create(id, type);
-        this._context.Add(ctx);
+        workflow = Workflow.Create(id, type, state, assignee);
+        this._context.Workflows.Add(workflow);
       }
 
-      return ctx;
+      return workflow;
     }
 
-    private void EnsureContext(TriggerParam triggerParam, WorkflowContext ctx)
-    {
-      if (triggerParam == null) throw new ArgumentNullException(nameof(triggerParam));
-      if (ctx == null) throw new ArgumentNullException(nameof(ctx));
-
-      if (!triggerParam.HasVariables && !string.IsNullOrWhiteSpace(ctx.Context))
-      {
-        var variables = JsonConvert
-          .DeserializeObject<Dictionary<string, WorkflowVariableBase>>(ctx.Context);
-        foreach (var variable in variables)
-        {
-          triggerParam.Variables.Add(variable.Key, variable.Value);
-        }
-      }
-    }
-
-    private void PersistContext(
-      WorkflowContext workflowContext,
-      Dictionary<string, WorkflowVariableBase> variables,
+    private void PersistWorkflow(
+      Workflow workflow,
+      TriggerParam triggerParam,
       DateTime? dueDate = null
     )
     {
-      if (workflowContext == null) throw new ArgumentNullException(nameof(workflowContext));
+      if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
-      string context = null;
-      if (variables != null)
+      var entityWorkflow = triggerParam.Instance as IEntityWorkflow;
+      if (entityWorkflow != null)
       {
-        context = JsonConvert.SerializeObject(variables);
-        workflowContext.Context = context;
+        workflow.Type = entityWorkflow.Type;
+        workflow.State = entityWorkflow.State;
+        workflow.Assignee = entityWorkflow.Assignee;
       }
 
-      workflowContext.DueDate = dueDate;
+      if (WorkflowIsCompleted(triggerParam))
+      {
+        workflow.Completed = SystemTime.Now();
+      }
+      
+      workflow.DueDate = dueDate;
+    }
+
+    private bool WorkflowIsCompleted(TriggerParam triggerParam)
+    {
+      var triggerResults = this.GetTriggers(triggerParam.Instance, triggerParam.Variables);
+
+      return triggerResults.Count() == 0;
     }
   }
 }
