@@ -7,6 +7,11 @@ import {
   DATE_EDITOR
 } from '../shared/formdef/index';
 
+export interface HolidayMessage {
+  author: string;
+  message: string;
+}
+
 export interface Holiday {
   id: number;
   requester: string;
@@ -14,6 +19,7 @@ export interface Holiday {
   from: Date;
   to: Date;
   state: string;
+  messages: HolidayMessage[];
 }
 
 export interface ApplyHoliday {

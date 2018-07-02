@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
+import { AuthService } from '../shared/services/auth.service';
 import { FormdefComponent } from '../shared/formdef/index';
 import { WorkflowResult, TriggerInfo, NoWorkflowResult } from '../workflow/index';
 
@@ -15,8 +16,6 @@ import {
   ApproveHolidayDetailSlot,
   ApproveHoliday
 } from './models';
-
-// TODO: component and route per state/viewmodel?
 
 @AutoUnsubscribe
 @Component({
@@ -43,6 +42,33 @@ import {
       </tw-formdef>
     </div>
   </div>
+
+  <div class="row" *ngIf="entity && entity.id">
+    <div class="col-sm">
+      <p>
+        <b>{{ entity.requester }}</b> applied for holiday between 
+        <b>{{ entity.from | date }}</b> and <b>{{ entity.to | date }}</b>.
+      </p>
+      <h5 i18n>Messages</h5>
+      <div class="table-responsive-md" 
+        *ngIf="entity.messages && entity.messages.length > 0">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" i18n>Author</th>
+              <th scope="col" i18n>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let message of entity.messages">
+              <td>{{ message.author }}</td>
+              <td>{{ message.message }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
   `
 })
 export class HolidayComponent implements OnInit {
@@ -51,6 +77,7 @@ export class HolidayComponent implements OnInit {
 
   public key = ApplyHolidayDetailSlot.KEY;
   public viewModel: any;
+  public entity: Holiday;
   public canTrigger = false;
   public triggerInfo: TriggerInfo;
 
@@ -60,6 +87,7 @@ export class HolidayComponent implements OnInit {
   public constructor(
     private _route: ActivatedRoute,
     private _router: Router,
+    private _auth: AuthService,
     private _service: HolidayService
   ) { }
 
@@ -77,12 +105,11 @@ export class HolidayComponent implements OnInit {
   }
 
   public triggerClicked(trigger: string): void {
-    console.log(trigger);
-
     if (trigger === 'apply') {
       this._service.apply(this.formDef.formValue)
         .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded) {
+          if (result.triggerInfo.succeeded
+            && result.viewModel.assignee !== this._auth.username) {
             this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
           }
         });
@@ -91,7 +118,8 @@ export class HolidayComponent implements OnInit {
     if (trigger === 'approve') {
       this._service.approve(this.formDef.formValue)
         .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded) {
+          if (result.triggerInfo.succeeded
+            && result.viewModel.assignee !== this._auth.username) {
             this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
           }
         });
@@ -100,7 +128,8 @@ export class HolidayComponent implements OnInit {
     if (trigger === 'reject') {
       this._service.reject(this.formDef.formValue)
         .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded) {
+          if (result.triggerInfo.succeeded
+            && result.viewModel.assignee !== this._auth.username) {
             this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
           }
         });
@@ -119,14 +148,10 @@ export class HolidayComponent implements OnInit {
     this._holiday$ = this._service.get(id)
       .subscribe((result: WorkflowResult<null, Holiday>) => {
         this.key = ApproveHolidayDetailSlot.KEY;
-        const vm: ApproveHoliday = {
-          id: Number(id),
-          approved: false,
-          message: ''
-        };
 
-        this.viewModel = vm;
+        this.viewModel = result.viewModel;
         this.triggerInfo = result.triggerInfo;
+        this.entity = result.entity;
       });
   }
 
@@ -135,6 +160,7 @@ export class HolidayComponent implements OnInit {
       .subscribe((result: WorkflowResult<Holiday, ApplyHoliday>) => {
         this.viewModel = result.viewModel;
         this.triggerInfo = result.triggerInfo;
+        this.entity = result.entity;
       });
   }
 }

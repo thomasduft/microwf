@@ -12,6 +12,7 @@ import { WorkflowModule } from './workflow/workflow.module';
 import { httpInterceptorProviders } from './shared/services/interceptors';
 
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './shell/header.component';
 import { ShellComponent } from './shell/shell.component';
 import { HomeComponent } from './shell/home.component';
 import { PageNotFoundComponent } from './shell/page-not-found.component';
@@ -49,6 +50,7 @@ const ROUTES: Routes = [
   ],
   declarations: [
     AppComponent,
+    HeaderComponent,
     ShellComponent,
     HomeComponent,
     PageNotFoundComponent
