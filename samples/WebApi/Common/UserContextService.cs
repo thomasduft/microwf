@@ -11,6 +11,8 @@ namespace WebApi.Common
   {
     private readonly IHttpContextAccessor _context;
 
+    public static readonly string SYSTEM_USER = "system";
+
     public string UserId
     {
       get

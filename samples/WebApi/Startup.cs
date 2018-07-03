@@ -120,8 +120,10 @@ namespace WebApi
         .AddTestUserWorkflows(CreateUserWorkflow());
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
-      services.AddTransient<IHolidayService, HolidayService>();
       services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
+      
+      services.AddTransient<IHolidayService, HolidayService>();
+      services.AddTransient<IIssueService, IssueService>();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)

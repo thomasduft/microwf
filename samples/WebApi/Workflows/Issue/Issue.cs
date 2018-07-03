@@ -26,13 +26,13 @@ namespace WebApi.Workflows.Issue
 
     public string Description { get; set; }
 
-    public static Issue Create(string title)
+    public static Issue Create(string user)
     {
       return new Issue
       {
         Type = IssueTrackingWorkflow.TYPE,
         State = IssueTrackingWorkflow.OPEN_STATE,
-        Title = title
+        Assignee = user
       };
     }
   }

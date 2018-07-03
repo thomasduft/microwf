@@ -12,9 +12,9 @@ namespace WebApi.Workflows.Holiday
 {
   public interface IHolidayService
   {
-    Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id);
-
     Task<IWorkflowResult<ApplyHolidayViewModel>> NewAsync();
+
+    Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id);
 
     Task<IWorkflowResult<NoWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model);
 
@@ -50,7 +50,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerResult = this._workflowEngine.CanTrigger(triggerParam);
 
-      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new ApplyHolidayViewModel();
 
       var result = new WorkflowResult<Holiday, ApplyHolidayViewModel>(info, holiday, viewModel);
@@ -77,7 +77,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerResult = this._workflowEngine.Trigger(triggerParam);
 
-      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new NoWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
@@ -92,7 +92,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerResult = this._workflowEngine.Trigger(triggerParam);
 
-      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new NoWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
@@ -107,7 +107,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerResult = this._workflowEngine.Trigger(triggerParam);
 
-      var info = this.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new NoWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
@@ -126,27 +126,10 @@ namespace WebApi.Workflows.Holiday
 
     private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)
     {
-      var info = this.ToWorkflowTriggerInfo(holiday);
+      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday);
       var viewModel = this.ToViewModel(holiday);
 
       return new WorkflowResult<Holiday, HolidayViewModel>(info, holiday, viewModel);
-    }
-
-    private WorkflowTriggerInfo ToWorkflowTriggerInfo(Holiday holiday, TriggerResult result = null)
-    {
-      WorkflowTriggerInfo info;
-      if (result == null || !result.HasErrors)
-      {
-        IEnumerable<TriggerResult> triggerResults = this._workflowEngine.GetTriggers(holiday);
-        var triggers = triggerResults.Select(x => x.TriggerName);
-        info = WorkflowTriggerInfo.createForSuccess(triggers);
-      }
-      else
-      {
-        info = WorkflowTriggerInfo.createForError(result.Errors);
-      }
-
-      return info;
     }
 
     private HolidayViewModel ToViewModel(Holiday holiday)
@@ -177,7 +160,7 @@ namespace WebApi.Workflows.Holiday
       else
       {
         holiday = Holiday.Create(_userContext.UserName);
-        this._context.Add(holiday);
+        this._context.Holidays.Add(holiday);
       }
 
       return holiday;
