@@ -13,8 +13,7 @@ import {
   Holiday,
   ApplyHolidayDetailSlot,
   ApplyHoliday,
-  ApproveHolidayDetailSlot,
-  ApproveHoliday
+  ApproveHolidayDetailSlot
 } from './models';
 
 @AutoUnsubscribe

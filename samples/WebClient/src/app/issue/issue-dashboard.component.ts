@@ -5,15 +5,15 @@ import { Router } from '@angular/router';
 
 import { AutoUnsubscribe } from './../shared/services/autoUnsubscribe';
 
-import { HolidayService } from './holiday.service';
-import { Holiday } from './models';
+import { IssueService } from './issue.service';
+import { Issue } from './models';
 
 @AutoUnsubscribe
 @Component({
-  selector: 'tw-holiday-dashboard',
-  providers: [HolidayService],
+  selector: 'tw-issue-dashboard',
+  providers: [IssueService],
   template: `
-  <h1 i18n>Holiday</h1>
+  <h1 i18n>Issue</h1>
   <hr />
   <h2 i18n>My work</h2>
   <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
@@ -22,39 +22,37 @@ import { Holiday } from './models';
       <thead>
         <tr>
           <th scope="col" i18n>State</th>
-          <th scope="col" i18n>Requester</th>
-          <th scope="col" i18n>From</th>
-          <th scope="col" i18n>To</th>
+          <th scope="col" i18n>Assignee</th>
+          <th scope="col" i18n>Title</th>
           <th scope="col" i18n>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let holiday of myWork">
-          <td>{{ holiday.state }}</td>
-          <td>{{ holiday.requester }}</td>
-          <td>{{ holiday.from | date }}</td>
-          <td>{{ holiday.to | date }}</td>
+        <tr *ngFor="let issue of myWork">
+          <td>{{ issue.state }}</td>
+          <td>{{ issue.assignee }}</td>
+          <td>{{ issue.title }}</td>
           <td>
-            <a [routerLink]="['detail', holiday.id]" i18n>open</a>
+            <a [routerLink]="['detail', issue.id]" i18n>open</a>
           </td>
         </tr>
       </tbody>
     </table>
   </div>`
 })
-export class HolidayDashboardComponent implements OnInit {
+export class IssueDashboardComponent implements OnInit {
   private _myWork$: Subscription;
 
-  public myWork: Array<Holiday> = [];
+  public myWork: Array<Issue> = [];
 
   public constructor(
     private _router: Router,
-    private _service: HolidayService
+    private _service: IssueService
   ) { }
 
   public ngOnInit(): void {
     this._myWork$ = this._service.myWork()
-      .subscribe((myWork: Array<Holiday>) => {
+      .subscribe((myWork: Array<Issue>) => {
         this.myWork = myWork;
       });
   }

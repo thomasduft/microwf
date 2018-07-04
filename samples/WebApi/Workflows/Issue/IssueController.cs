@@ -35,6 +35,18 @@ namespace WebApi.Workflows.Issue
       return Ok(result);
     }
 
+    [HttpPost]
+    [ProducesResponseType(typeof(Issue), 201)]
+    public async Task<IActionResult> Post([FromBody]IssueViewModel model)
+    {
+      if (model == null) return BadRequest();
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+
+      var result = await _service.CreateAsync(model);
+
+      return Created($"api/issue/{result}", result);
+    }
+
     [HttpPost("process")]
     [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
     public async Task<IActionResult> Process([FromBody]IssueViewModel model)

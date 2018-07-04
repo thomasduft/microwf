@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace WebApi.Workflows.Issue
   public interface IIssueService
   {
     Task<IWorkflowResult<IssueViewModel>> NewAsync();
+
+    Task<int> CreateAsync(IssueViewModel model);
 
     Task<IWorkflowResult<IssueViewModel>> GetAsync(int id);
 
@@ -50,6 +53,22 @@ namespace WebApi.Workflows.Issue
       var result = new WorkflowResult<Issue, IssueViewModel>(info, issue, viewModel);
 
       return await Task.FromResult<IWorkflowResult<IssueViewModel>>(result);
+    }
+
+    public async Task<int> CreateAsync(IssueViewModel model)
+    {
+      if (model == null)
+        throw new ArgumentNullException("model");
+
+      var issue = Issue.Create(UserContextService.SYSTEM_USER);
+      issue.Title = model.Title;
+      issue.Description = model.Description;
+
+      this._context.Issues.Add(issue);
+
+      await this._context.SaveChangesAsync();
+
+      return issue.Id;
     }
 
     public async Task<IWorkflowResult<IssueViewModel>> GetAsync(int id)

@@ -32,6 +32,10 @@ const ROUTES: Routes = [
         path: 'holiday',
         loadChildren: './holiday/holiday.module#HolidayModule'
       },
+      {
+        path: 'issue',
+        loadChildren: './issue/issue.module#IssueModule'
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },

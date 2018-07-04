@@ -67,6 +67,12 @@ import { Editor } from './models';
           [formControlName]="editor.key"
           twUseValueAsDate />
 
+    <textarea *ngSwitchCase="'textarea'"
+              class="form-control"
+              [attr.id]="editor.key"
+              [formControlName]="editor.key">
+    </textarea>
+
    <input *ngSwitchDefault
           type="text"
           class="form-control"

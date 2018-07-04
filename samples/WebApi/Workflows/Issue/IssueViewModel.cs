@@ -10,7 +10,7 @@ namespace WebApi.Workflows.Issue
     public int? Id { get; set; }
 
     [Required]
-    public string Trigger { get; set; }
+    public string Trigger { get; set; } = IssueTrackingWorkflow.ASSIGN_TRIGGER;
 
     public string Assignee { get; set; }
 
