@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Common;
@@ -28,16 +29,19 @@ namespace WebApi.Workflows.Issue
     private readonly DomainContext _context;
     private readonly IWorkflowEngine _workflowEngine;
     private readonly UserContextService _userContext;
+    private readonly IMessageBus _messageBus;
 
     public IssueService(
       DomainContext context,
       IWorkflowEngine workflowEngine,
-      UserContextService userContext
+      UserContextService userContext,
+      IMessageBus messageBus
     )
     {
       this._context = context;
       this._workflowEngine = workflowEngine;
       this._userContext = userContext;
+      this._messageBus = messageBus;
     }
 
     public async Task<IWorkflowResult<IssueViewModel>> NewAsync()
@@ -67,6 +71,9 @@ namespace WebApi.Workflows.Issue
       this._context.Issues.Add(issue);
 
       await this._context.SaveChangesAsync();
+
+      WorkItem wi = WorkItem.Create(IssueTrackingWorkflow.ASSIGN_TRIGGER, issue.Id, issue.Type);
+      await this._messageBus.PublishAsync(wi);
 
       return issue.Id;
     }

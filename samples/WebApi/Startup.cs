@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Common;
@@ -108,6 +109,10 @@ namespace WebApi
         });
       });
 
+      // MessageBus
+      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
+      services.AddSingleton<WorkflowProcessor>();
+
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
 
@@ -121,12 +126,16 @@ namespace WebApi
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
-      
+
       services.AddTransient<IHolidayService, HolidayService>();
       services.AddTransient<IIssueService, IssueService>();
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(
+      IApplicationBuilder app,
+      IHostingEnvironment env,
+      IApplicationLifetime appLifetime
+    )
     {
       if (env.IsDevelopment())
       {
@@ -139,6 +148,8 @@ namespace WebApi
       // app.UseAuthentication();
 
       app.UseFileServer();
+
+      app.SubscribeMessageHandlers();
 
       app.UseSwagger();
       app.UseSwaggerUI(c =>
