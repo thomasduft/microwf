@@ -1,13 +1,14 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
   public static class WorkflowServiceExtension
   {
-    public static WorkflowTriggerInfo ToWorkflowTriggerInfo(
+    public static async Task<WorkflowTriggerInfo> ToWorkflowTriggerInfo(
       this IWorkflowEngine workflowEngine,
       IWorkflow instance,
       TriggerResult result = null)
@@ -15,7 +16,7 @@ namespace tomware.Microwf.Engine
       WorkflowTriggerInfo info;
       if (result == null || !result.HasErrors)
       {
-        IEnumerable<TriggerResult> triggerResults = workflowEngine.GetTriggers(instance);
+        IEnumerable<TriggerResult> triggerResults = await workflowEngine.GetTriggersAsync(instance);
         var triggers = triggerResults.Select(x => x.TriggerName);
         info = WorkflowTriggerInfo.createForSuccess(triggers);
       }

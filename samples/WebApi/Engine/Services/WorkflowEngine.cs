@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using WebApi.Common;
 using WebApi.Domain;
@@ -12,14 +13,14 @@ namespace tomware.Microwf.Engine
 {
   public interface IWorkflowEngine
   {
-    IEnumerable<TriggerResult> GetTriggers(
+    Task<IEnumerable<TriggerResult>> GetTriggersAsync(
       IWorkflow instance,
       Dictionary<string, WorkflowVariableBase> variables = null
     );
 
-    TriggerResult CanTrigger(TriggerParam param);
+    Task<TriggerResult> CanTriggerAsync(TriggerParam param);
 
-    TriggerResult Trigger(TriggerParam param);
+    Task<TriggerResult> TriggerAsync(TriggerParam param);
 
     IWorkflow Find(int id, Type type);
   }
@@ -41,16 +42,16 @@ namespace tomware.Microwf.Engine
       _workflowDefinitionProvider = workflowDefinitionProvider;
     }
 
-    public TriggerResult CanTrigger(TriggerParam param)
+    public async Task<TriggerResult> CanTriggerAsync(TriggerParam param)
     {
       if (param == null) throw new InvalidOperationException(nameof(param));
 
       var execution = GetExecution(param.Instance.Type);
 
-      return execution.CanTrigger(param);
+      return await Task.FromResult(execution.CanTrigger(param));
     }
 
-    public IEnumerable<TriggerResult> GetTriggers(
+    public async Task<IEnumerable<TriggerResult>> GetTriggersAsync(
       IWorkflow instance,
       Dictionary<string, WorkflowVariableBase> variables = null
     )
@@ -59,10 +60,10 @@ namespace tomware.Microwf.Engine
 
       var execution = GetExecution(instance.Type);
 
-      return execution.GetTriggers(instance, variables);
+      return await Task.FromResult(execution.GetTriggers(instance, variables));
     }
 
-    public TriggerResult Trigger(TriggerParam param)
+    public async Task<TriggerResult> TriggerAsync(TriggerParam param)
     {
       if (param == null) throw new InvalidOperationException(nameof(param));
 
@@ -78,7 +79,7 @@ namespace tomware.Microwf.Engine
 
           var execution = GetExecution(param.Instance.Type);
 
-          _context.SaveChanges(); // so entity id gets resolved!
+          await _context.SaveChangesAsync(); // so entity id gets resolved!
 
           workflow = FindOrCreate(
             entity.Id,
@@ -90,9 +91,9 @@ namespace tomware.Microwf.Engine
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
-            PersistWorkflow(workflow, param);
+            await PersistWorkflow(workflow, param);
+            await _context.SaveChangesAsync();
 
-            _context.SaveChanges();
             transaction.Commit();
           }
         }
@@ -135,7 +136,7 @@ namespace tomware.Microwf.Engine
       return workflow;
     }
 
-    private void PersistWorkflow(
+    private async Task PersistWorkflow(
       Workflow workflow,
       TriggerParam triggerParam,
       DateTime? dueDate = null
@@ -151,7 +152,7 @@ namespace tomware.Microwf.Engine
         workflow.Assignee = entityWorkflow.Assignee;
       }
 
-      if (WorkflowIsCompleted(triggerParam))
+      if (await WorkflowIsCompleted(triggerParam))
       {
         workflow.Completed = SystemTime.Now();
       }
@@ -159,9 +160,10 @@ namespace tomware.Microwf.Engine
       workflow.DueDate = dueDate;
     }
 
-    private bool WorkflowIsCompleted(TriggerParam triggerParam)
+    private async Task<bool> WorkflowIsCompleted(TriggerParam triggerParam)
     {
-      var triggerResults = this.GetTriggers(triggerParam.Instance, triggerParam.Variables);
+      var triggerResults 
+        = await this.GetTriggersAsync(triggerParam.Instance, triggerParam.Variables);
 
       return triggerResults.Count() == 0;
     }

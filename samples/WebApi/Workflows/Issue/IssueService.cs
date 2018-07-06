@@ -49,9 +49,9 @@ namespace WebApi.Workflows.Issue
       var issue = Issue.Create(UserContextService.SYSTEM_USER);
       var triggerParam = new TriggerParam(IssueTrackingWorkflow.ASSIGN_TRIGGER, issue);
 
-      var triggerResult = this._workflowEngine.CanTrigger(triggerParam);
+      var triggerResult = await this._workflowEngine.CanTriggerAsync(triggerParam);
 
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(issue, triggerResult);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(issue, triggerResult);
       var viewModel = new IssueViewModel();
 
       var result = new WorkflowResult<Issue, IssueViewModel>(info, issue, viewModel);
@@ -82,7 +82,7 @@ namespace WebApi.Workflows.Issue
     {
       var issue = await this.FindOrCreate(id);
 
-      return ToResult(issue);
+      return await ToResult(issue);
     }
 
     public async Task<IWorkflowResult<NoWorkflowResult>> ProcessAsync(IssueViewModel model)
@@ -92,9 +92,9 @@ namespace WebApi.Workflows.Issue
       var triggerParam = new TriggerParam(model.Trigger, issue)
        .AddVariable(IssueViewModel.KEY, model);
 
-      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+      var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(issue, triggerResult);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(issue, triggerResult);
       var viewModel = new NoWorkflowResult(issue.Assignee);
 
       return new WorkflowResult<Issue, NoWorkflowResult>(info, issue, viewModel);
@@ -130,9 +130,9 @@ namespace WebApi.Workflows.Issue
       return issue;
     }
 
-    private IWorkflowResult<IssueViewModel> ToResult(Issue issue)
+    private async Task<IWorkflowResult<IssueViewModel>> ToResult(Issue issue)
     {
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(issue);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(issue);
       var viewModel = this.ToViewModel(issue);
 
       return new WorkflowResult<Issue, IssueViewModel>(info, issue, viewModel);

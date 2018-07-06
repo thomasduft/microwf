@@ -48,9 +48,9 @@ namespace WebApi.Workflows.Holiday
       var holiday = Holiday.Create(_userContext.UserName);
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday);
 
-      var triggerResult = this._workflowEngine.CanTrigger(triggerParam);
+      var triggerResult = await this._workflowEngine.CanTriggerAsync(triggerParam);
 
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new ApplyHolidayViewModel();
 
       var result = new WorkflowResult<Holiday, ApplyHolidayViewModel>(info, holiday, viewModel);
@@ -62,7 +62,7 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = await this.FindOrCreate(id);
 
-      return ToResult(holiday);
+      return await ToResult(holiday);
     }
 
     public async Task<IWorkflowResult<NoWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model)
@@ -75,9 +75,9 @@ namespace WebApi.Workflows.Holiday
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday)
        .AddVariable(ApplyHolidayViewModel.KEY, model);
 
-      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+      var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new NoWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
@@ -90,9 +90,9 @@ namespace WebApi.Workflows.Holiday
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPROVE_TRIGGER, holiday)
        .AddVariable(ApproveHolidayViewModel.KEY, model);
 
-      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+      var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = await  this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new NoWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
@@ -105,9 +105,9 @@ namespace WebApi.Workflows.Holiday
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.REJECT_TRIGGER, holiday)
        .AddVariable(ApproveHolidayViewModel.KEY, model);
 
-      var triggerResult = this._workflowEngine.Trigger(triggerParam);
+      var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = await  this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new NoWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
@@ -124,9 +124,9 @@ namespace WebApi.Workflows.Holiday
       return holidays;
     }
 
-    private IWorkflowResult<HolidayViewModel> ToResult(Holiday holiday)
+    private async Task<IWorkflowResult<HolidayViewModel>> ToResult(Holiday holiday)
     {
-      var info = this._workflowEngine.ToWorkflowTriggerInfo(holiday);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(holiday);
       var viewModel = this.ToViewModel(holiday);
 
       return new WorkflowResult<Holiday, HolidayViewModel>(info, holiday, viewModel);
