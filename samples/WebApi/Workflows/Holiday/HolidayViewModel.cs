@@ -25,8 +25,6 @@ namespace WebApi.Workflows.Holiday
 
   public class ApplyHolidayViewModel : WorkflowVariableBase
   {
-    public const string KEY = "ApplyHolidayViewModel";
-
     [Required]
     public DateTime From { get; set; }
 
@@ -46,8 +44,6 @@ namespace WebApi.Workflows.Holiday
 
   public class ApproveHolidayViewModel : WorkflowVariableBase
   {
-    public const string KEY = "ApproveHolidayViewModel";
-
     [Required]
     public int Id { get; set; }
 

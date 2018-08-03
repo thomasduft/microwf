@@ -69,9 +69,10 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = context.GetInstance<Holiday>();
 
-      if (context.ContainsKey(ApplyHolidayViewModel.KEY))
+      var key = KeyBuilder.ToKey(typeof(ApplyHolidayViewModel));
+      if (context.ContainsKey(key))
       {
-        var model = context.GetVariable<ApplyHolidayViewModel>(ApplyHolidayViewModel.KEY);
+        var model = context.GetVariable<ApplyHolidayViewModel>(key);
         holiday.Assignee = holiday.Superior;
         holiday.From = model.From;
         holiday.To = model.To;
@@ -91,9 +92,10 @@ namespace WebApi.Workflows.Holiday
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
-      if (context.ContainsKey(ApproveHolidayViewModel.KEY))
+      var key = KeyBuilder.ToKey(typeof(ApproveHolidayViewModel));
+      if (context.ContainsKey(key))
       {
-        var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
+        var model = context.GetVariable<ApproveHolidayViewModel>(key);
         if (!string.IsNullOrWhiteSpace(model.Message))
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
@@ -122,9 +124,10 @@ namespace WebApi.Workflows.Holiday
 
       holiday.Assignee = holiday.Requester;
 
-      if (context.ContainsKey(ApproveHolidayViewModel.KEY))
+      var key = KeyBuilder.ToKey(typeof(ApproveHolidayViewModel));
+      if (context.ContainsKey(key))
       {
-        var model = context.GetVariable<ApproveHolidayViewModel>(ApproveHolidayViewModel.KEY);
+        var model = context.GetVariable<ApproveHolidayViewModel>(key);
         if (!string.IsNullOrWhiteSpace(model.Message))
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);

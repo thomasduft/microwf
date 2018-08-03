@@ -5,8 +5,6 @@ namespace WebApi.Workflows.Issue
 {
   public class IssueViewModel : WorkflowVariableBase
   {
-    public const string KEY = "IssueViewModel";
-
     public int? Id { get; set; }
 
     [Required]

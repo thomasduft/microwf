@@ -90,7 +90,7 @@ namespace WebApi.Workflows.Issue
       var issue = await FindOrCreate(model.Id);
 
       var triggerParam = new TriggerParam(model.Trigger, issue)
-       .AddVariable(IssueViewModel.KEY, model);
+       .AddVariable(KeyBuilder.ToKey(typeof(IssueViewModel)), model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 

@@ -149,12 +149,12 @@ namespace tomware.Microwf.Engine
           var workflowVariableBase = variable as WorkflowVariableBase;
           if (workflowVariableBase != null)
           {
-            param.Variables.Add(workflowVariableBase.Type, variable as WorkflowVariableBase);
+            param.Variables.Add(KeyBuilder.ToKey(type), variable as WorkflowVariableBase);
           }
         }
       }
     }
-    
+
     private async Task PersistWorkflow(
       Workflow workflow,
       TriggerParam triggerParam,
@@ -168,7 +168,7 @@ namespace tomware.Microwf.Engine
         foreach (var v in triggerParam.Variables)
         {
           var variable = workflow.WorkflowVariables
-            .FirstOrDefault(_ => _.Type == v.Value.Type);
+            .FirstOrDefault(_ => _.Type == v.Key);
 
           if (variable != null) {
             variable.Content = JsonConvert.SerializeObject(v.Value);
@@ -177,7 +177,7 @@ namespace tomware.Microwf.Engine
           {
             variable = new WorkflowVariable 
             {
-              Type = v.Value.Type,
+              Type = KeyBuilder.ToKey(v.Value.GetType()),
               Content = JsonConvert.SerializeObject(v.Value)
             };
             workflow.WorkflowVariables.Add(variable);

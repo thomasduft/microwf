@@ -73,7 +73,7 @@ namespace WebApi.Workflows.Holiday
       holiday.Superior = "alice";
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday)
-       .AddVariable(ApplyHolidayViewModel.KEY, model);
+       .AddVariable(KeyBuilder.ToKey(typeof(ApplyHolidayViewModel)), model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
@@ -88,7 +88,7 @@ namespace WebApi.Workflows.Holiday
       var holiday = await FindOrCreate(model.Id);
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPROVE_TRIGGER, holiday)
-       .AddVariable(ApproveHolidayViewModel.KEY, model);
+       .AddVariable(KeyBuilder.ToKey(typeof(ApproveHolidayViewModel)), model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
@@ -103,7 +103,7 @@ namespace WebApi.Workflows.Holiday
       var holiday = await FindOrCreate(model.Id);
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.REJECT_TRIGGER, holiday)
-       .AddVariable(ApproveHolidayViewModel.KEY, model);
+       .AddVariable(KeyBuilder.ToKey(typeof(ApproveHolidayViewModel)), model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
