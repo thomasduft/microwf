@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Common;
@@ -27,6 +28,8 @@ namespace tomware.Microwf.Engine
     public DateTime? Completed { get; set; }
 
     public DateTime? DueDate { get; set; }
+
+    public List<WorkflowVariable> WorkflowVariables { get; set; } = new List<WorkflowVariable>();
 
     public static Workflow Create(
       int correlationId,
