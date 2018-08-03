@@ -1,14 +1,7 @@
-(x) add identity to WebApi
-(x) add db seeder
-(-) add Angular client 
-  - https://github.com/DeborahK/MovieHunter-routing
-  (-) start workflow 
-  (-) titlebar module
-  (-) workflow module
-    - forms generation with formdef
-    - workflow registry
-    - workflow state = component type to open ?!
-
+toto:
+(-) WorkflowItemQueue
+(-) persisting workflow variables
+(-) Issue sample in client
 
 done:
 (x) rename IWorkflowDefinition.WorkflowType --> Name
@@ -23,6 +16,8 @@ done:
   (x) TransitionContext
   (x) TriggerParam
   (x) TriggerResult
+(x) add identity to WebApi
+(x) add db seeder
 
 
 
@@ -30,7 +25,7 @@ EF Commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 
 dotnet ef migrations add <somename>
-dotnet ef database update
+dotnet ef database update -c DomainContext
 dotnet ef database drop
 
 

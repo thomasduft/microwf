@@ -16,7 +16,7 @@ namespace tomware.Microwf.Engine
       this IServiceCollection services,
       IConfiguration workflowsConfiguration,
       bool enableWorker
-    ) where TContext : DbContext
+    ) where TContext : EngineDbContext
     {
       services.Configure<WorkflowConfiguration>(workflowsConfiguration);
       

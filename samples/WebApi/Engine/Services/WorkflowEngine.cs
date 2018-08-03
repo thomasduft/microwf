@@ -25,14 +25,14 @@ namespace tomware.Microwf.Engine
     IWorkflow Find(int id, Type type);
   }
 
-  public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : DbContext
+  public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : EngineDbContext
   {
-    private readonly DomainContext _context;
+    private readonly EngineDbContext _context;
     private readonly ILogger<WorkflowEngine<TContext>> _logger;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
 
     public WorkflowEngine(
-      DomainContext context,
+      TContext context,
       ILogger<WorkflowEngine<TContext>> logger,
       IWorkflowDefinitionProvider workflowDefinitionProvider
     )
