@@ -118,6 +118,9 @@ namespace WebApi.Migrations
                     b.Property<string>("Assignee")
                         .IsRequired();
 
+                    b.Property<string>("Creator")
+                        .IsRequired();
+
                     b.Property<string>("Description");
 
                     b.Property<string>("State")

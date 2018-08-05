@@ -115,7 +115,7 @@ namespace tomware.Microwf.Engine
 
     public IWorkflow Find(int id, Type type)
     {
-      return (IWorkflow)_context.Workflows.Find(type, id);
+      return (IWorkflow)_context.Find(type, id);
     }
 
     private WorkflowExecution GetExecution(string type)
@@ -149,7 +149,15 @@ namespace tomware.Microwf.Engine
           var workflowVariableBase = variable as WorkflowVariableBase;
           if (workflowVariableBase != null)
           {
-            param.Variables.Add(KeyBuilder.ToKey(type), variable as WorkflowVariableBase);
+            var key = KeyBuilder.ToKey(type);
+            if (param.Variables.ContainsKey(key))
+            {
+              param.Variables[key] = variable as WorkflowVariableBase;
+            }
+            else
+            {
+              param.Variables.Add(key, variable as WorkflowVariableBase);
+            }
           }
         }
       }
@@ -170,12 +178,13 @@ namespace tomware.Microwf.Engine
           var variable = workflow.WorkflowVariables
             .FirstOrDefault(_ => _.Type == v.Key);
 
-          if (variable != null) {
-            variable.Content = JsonConvert.SerializeObject(v.Value);
-          } 
-          else 
+          if (variable != null)
           {
-            variable = new WorkflowVariable 
+            variable.Content = JsonConvert.SerializeObject(v.Value);
+          }
+          else
+          {
+            variable = new WorkflowVariable
             {
               Type = KeyBuilder.ToKey(v.Value.GetType()),
               Content = JsonConvert.SerializeObject(v.Value)

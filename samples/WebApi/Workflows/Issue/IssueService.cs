@@ -64,7 +64,7 @@ namespace WebApi.Workflows.Issue
       if (model == null)
         throw new ArgumentNullException("model");
 
-      var issue = Issue.Create(UserContextService.SYSTEM_USER);
+      var issue = Issue.Create(_userContext.UserName);
       issue.Title = model.Title;
       issue.Description = model.Description;
 
@@ -102,10 +102,8 @@ namespace WebApi.Workflows.Issue
 
     public async Task<IEnumerable<Issue>> MyWorkAsync()
     {
-      var users = new List<string> { UserContextService.SYSTEM_USER, _userContext.UserName };
-
       var issues = await this._context.Issues
-        .Where(h => users.Contains(h.Assignee))
+        .Where(h => h.Assignee == _userContext.UserName)
         .OrderByDescending(h => h.Id)
         .ToListAsync();
 

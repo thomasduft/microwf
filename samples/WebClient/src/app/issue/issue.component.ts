@@ -73,7 +73,6 @@ export class IssueComponent implements OnInit {
   }
 
   public submitted(viewModel: IssueViewmodel): void {
-    console.log(viewModel);
     this._issue$ = this._service.save(viewModel)
       .subscribe((id: number) => {
         if (id > 0) {
@@ -87,7 +86,25 @@ export class IssueComponent implements OnInit {
   }
 
   public triggerClicked(trigger: string): void {
-    console.log(trigger);
+    const model: IssueViewmodel = {
+      id: this.viewModel.id,
+      trigger: trigger,
+      assignee: this.viewModel.assignee,
+      title: this.viewModel.title,
+      description: this.viewModel.description
+    };
+
+    this._issue$ = this._service.process(model)
+      .subscribe((result: WorkflowResult<Issue, NoWorkflowResult>) => {
+        if (result.triggerInfo.succeeded
+          && result.viewModel.assignee !== this._auth.username) {
+          this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
+        } else {
+          this.viewModel = result.entity;
+          this.triggerInfo = result.triggerInfo;
+          this.entity = result.entity;
+        }
+      });
   }
 
   private init(id?: string): void {

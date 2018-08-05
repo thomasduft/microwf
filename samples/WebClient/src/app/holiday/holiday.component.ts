@@ -45,11 +45,11 @@ import {
   <div class="row" *ngIf="entity && entity.id">
     <div class="col-sm">
       <p>
-        <b>{{ entity.requester }}</b> applied for holiday between 
+        <b>{{ entity.requester }}</b> applied for holiday between
         <b>{{ entity.from | date }}</b> and <b>{{ entity.to | date }}</b>.
       </p>
       <h5 i18n>Messages</h5>
-      <div class="table-responsive-md" 
+      <div class="table-responsive-md"
         *ngIf="entity.messages && entity.messages.length > 0">
         <table class="table table-hover">
           <thead>

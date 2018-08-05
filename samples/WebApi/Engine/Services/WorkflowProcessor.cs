@@ -10,25 +10,29 @@ using tomware.Microwf.Core;
 namespace tomware.Microwf.Engine
 {
   // TODO: remove IMessageHandler in own class
-  // TODO: add common WorkItem Queue in order to process WorkItems
   public class WorkflowProcessor : BackgroundService, IMessageHandler<WorkItem>
   {
     private readonly ILogger<WorkflowProcessor> _logger;
 
-    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IJobQueueService _jobQueueService;
 
     public WorkflowProcessor(
       ILogger<WorkflowProcessor> logger,
-      IServiceScopeFactory serviceScopeFactory
+      IJobQueueService jobQueueService
     )
     {
       _logger = logger;
-      _serviceScopeFactory = serviceScopeFactory;
+      _jobQueueService = jobQueueService;
     }
 
-    public async Task Handle(WorkItem message, CancellationToken token = default(CancellationToken))
+    public async Task Handle(
+      WorkItem item,
+      CancellationToken token = default(CancellationToken)
+    )
     {
-      _logger.LogTrace($"Adding WorkItem: {message.TriggerName} - {message.EntityId} - {message.WorkflowType}");
+      _logger.LogTrace($"Adding work item", item);
+
+      _jobQueueService.Enqueue(item);
 
       await Task.CompletedTask;
     }
@@ -37,10 +41,7 @@ namespace tomware.Microwf.Engine
     {
       while (!stoppingToken.IsCancellationRequested)
       {
-        using (var scope = this._serviceScopeFactory.CreateScope())
-        {
-          Process(scope.ServiceProvider);
-        }
+        await _jobQueueService.TriggerAsync();
 
         // TODO: delay as WorkflowProcessorOptions property
         await Task.Delay(5000, stoppingToken);
@@ -51,30 +52,9 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace($"Stopping WorkflowProcessor...");
 
-      // stop processing current items -> persist?!
+      await _jobQueueService.PersistWorkItemsAsync();
 
       await Task.CompletedTask;
-    }
-
-    protected void Process(IServiceProvider serviceProvider)
-    {
-      _logger.LogTrace($"Aquire instance of IWorkflowEngine.");
-      var workflowEngine
-        = serviceProvider.GetRequiredService<IWorkflowEngine>();
-      var workflowDefinitionProvider
-        = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
-
-      _logger.LogTrace($"WorkflowProcessor task is doing background work.");
-
-      /// process list of WorkflowProcessorItem's
-      //WorkItem item = new WorkItem();
-      //EntityWorkflowDefinitionBase workflowDefinition
-      //  = (EntityWorkflowDefinitionBase) workflowDefinitionProvider
-      //                                    .GetWorkflowDefinition(item.WorkflowType);
-
-      //IWorkflow workflow = workflowEngine.Find(item.EntityId, workflowDefinition.EntityType);
-      //TriggerParam triggerParam = new TriggerParam(item.TriggerName, workflow);
-      //TriggerResult triggerResult = workflowEngine.Trigger(triggerParam);
     }
   }
 }

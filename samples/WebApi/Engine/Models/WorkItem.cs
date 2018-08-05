@@ -5,6 +5,7 @@ namespace tomware.Microwf.Engine
     public string TriggerName { get; set; }
     public int EntityId { get; set; }
     public string WorkflowType { get; set; }
+    public int Retries { get; set; }
 
     public static WorkItem Create(string triggerName, int entityId, string workflowType)
     {
@@ -12,7 +13,8 @@ namespace tomware.Microwf.Engine
       {
         TriggerName = triggerName,
         EntityId = entityId,
-        WorkflowType = workflowType
+        WorkflowType = workflowType,
+        Retries = 0
       };
     }
   }

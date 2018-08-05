@@ -1,6 +1,7 @@
 toto:
-(-) WorkflowItemQueue
-(-) persisting workflow variables
+(x) persisting workflow variables
+(x) WorkflowItemQueue
+(-) persist/resume work items
 (-) Issue sample in client
 
 done:
@@ -24,7 +25,7 @@ done:
 EF Commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 
-dotnet ef migrations add <somename>
+dotnet ef migrations add <somename> -c DomainContext
 dotnet ef database update -c DomainContext
 dotnet ef database drop
 

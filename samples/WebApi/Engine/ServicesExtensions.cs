@@ -23,6 +23,7 @@ namespace tomware.Microwf.Engine
       if (enableWorker)
       {
         services.AddSingleton<IHostedService, WorkflowProcessor>();
+        services.AddSingleton<IJobQueueService, JobQueueService>();
       }
 
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
