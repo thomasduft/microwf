@@ -24,7 +24,8 @@
     "zone.js": "^0.8.26",
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
-    "bootstrap": "^4.0.0"
+    "bootstrap": "^4.0.0",
+    "viz.js": "2.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.2",

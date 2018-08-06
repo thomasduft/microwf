@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace tomware.Microwf.Engine
 {
-  [Authorize(AuthenticationSchemes = "Bearer")]
+  [Authorize]
   [Route("api/workflow")]
   public class WorkflowController : Controller
   {

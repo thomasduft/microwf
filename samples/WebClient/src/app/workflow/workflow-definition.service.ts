@@ -25,9 +25,9 @@ export class WorkflowDefinitionService {
     return this._http.get<Array<WorkflowDefinition>>(url);
   }
 
-  public dot(txpe: string): Observable<string> {
-    const url = this._api.createApiUrl(`workflow/${txpe}`);
+  public dot(type: string): Observable<string> {
+    const url = this._api.createApiUrl(`workflow/dot/${type}`);
 
-    return this._http.get<string>(url);
+    return this._http.get(url, { responseType: 'text' });
   }
 }

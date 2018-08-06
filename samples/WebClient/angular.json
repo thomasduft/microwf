@@ -20,7 +20,17 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "viz.js",
+                "input": "node_modules/viz.js",
+                "output": "/assets/js"
+              },
+              {
+                "glob": "full.render.js",
+                "input": "node_modules/viz.js",
+                "output": "/assets/js"
+              }
             ],
             "styles": [
               "src/styles.css",
