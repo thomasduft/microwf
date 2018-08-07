@@ -46,7 +46,7 @@ namespace WebApi.Workflows.Issue
 
     public async Task<IWorkflowResult<IssueViewModel>> NewAsync()
     {
-      var issue = Issue.Create(UserContextService.SYSTEM_USER);
+      var issue = Issue.Create(_userContext.UserName);
       var triggerParam = new TriggerParam(IssueTrackingWorkflow.ASSIGN_TRIGGER, issue);
 
       var triggerResult = await this._workflowEngine.CanTriggerAsync(triggerParam);
@@ -72,8 +72,8 @@ namespace WebApi.Workflows.Issue
 
       await this._context.SaveChangesAsync();
 
-      WorkItem wi = WorkItem.Create(IssueTrackingWorkflow.ASSIGN_TRIGGER, issue.Id, issue.Type);
-      await this._messageBus.PublishAsync(wi);
+      // WorkItem wi = WorkItem.Create(IssueTrackingWorkflow.ASSIGN_TRIGGER, issue.Id, issue.Type);
+      // await this._messageBus.PublishAsync(wi);
 
       return issue.Id;
     }
@@ -121,7 +121,7 @@ namespace WebApi.Workflows.Issue
       }
       else
       {
-        issue = Issue.Create(UserContextService.SYSTEM_USER);
+        issue = Issue.Create(_userContext.UserName);
         this._context.Issues.Add(issue);
       }
 

@@ -29,14 +29,14 @@ namespace WebApi.Workflows.Issue
 
     public string Description { get; set; }
 
-    public static Issue Create(string user)
+    public static Issue Create(string creator)
     {
       return new Issue
       {
         Type = IssueTrackingWorkflow.TYPE,
         State = IssueTrackingWorkflow.OPEN_STATE,
-        Creator = user,
-        Assignee = user
+        Creator = creator,
+        Assignee = creator
       };
     }
   }
