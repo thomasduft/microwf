@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
+  // TODO Work with DTO object -> WorkItemInfo/Dto
   public interface IWorkItemService
   {
     Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync();
+
     Task PersistWorkItemsAsync(IEnumerable<WorkItem> items);
 
     Task<int> DeleteAsync(int id);
@@ -36,11 +38,20 @@ namespace tomware.Microwf.Engine
         .ToListAsync<WorkItem>();
     }
 
-    public Task PersistWorkItemsAsync(IEnumerable<WorkItem> items)
+    public async Task PersistWorkItemsAsync(IEnumerable<WorkItem> items)
     {
-      // TODO PersistWorkItemsAsync
+      var ids = items.Select(_ => _.Id).ToArray();
+      var existingItems = await _context.WorkItems
+        .Where(_ => ids.Contains(_.Id))
+        .ToListAsync<WorkItem>();
 
-      return Task.CompletedTask;
+      // updates
+      _context.WorkItems.UpdateRange(items.Intersect(existingItems));
+
+      // new items
+      _context.WorkItems.AddRange(items.Except(existingItems));
+
+      await _context.SaveChangesAsync();
     }
 
     public async Task<int> DeleteAsync(int id)

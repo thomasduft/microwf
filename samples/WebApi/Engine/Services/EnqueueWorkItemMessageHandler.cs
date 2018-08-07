@@ -5,14 +5,15 @@ using tomware.Microbus.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkItemMessageHandler : IMessageHandler<WorkItem>
+  // TODO introduce EnqueWorkItemMessage type
+  public class EnqueueWorkItemMessageHandler : IMessageHandler<WorkItem>
   {
-    private readonly ILogger<WorkItemMessageHandler> _logger;
+    private readonly ILogger<EnqueueWorkItemMessageHandler> _logger;
 
     private readonly IJobQueueService _jobQueueService;
 
-    public WorkItemMessageHandler(
-      ILogger<WorkItemMessageHandler> logger,
+    public EnqueueWorkItemMessageHandler(
+      ILogger<EnqueueWorkItemMessageHandler> logger,
       IJobQueueService jobQueueService
     )
     {
@@ -25,7 +26,7 @@ namespace tomware.Microwf.Engine
       CancellationToken token = default(CancellationToken)
     )
     {
-      _logger.LogTrace($"Adding work item", item);
+      _logger.LogTrace($"Enqueue work item", item);
 
       _jobQueueService.Enqueue(item);
 

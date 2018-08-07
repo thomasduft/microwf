@@ -29,7 +29,7 @@ namespace tomware.Microwf.Engine
       {
         services.AddSingleton<IHostedService, WorkflowProcessor>();
         services.AddSingleton<IJobQueueService, JobQueueService>();
-        services.AddTransient<WorkItemMessageHandler>();
+        services.AddTransient<EnqueueWorkItemMessageHandler>();
       }
 
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
@@ -66,8 +66,8 @@ namespace tomware.Microwf.Engine
 
       var messageBus = app.ApplicationServices.GetRequiredService<IMessageBus>();
 
-      var dispatcher = app.ApplicationServices.GetRequiredService<WorkItemMessageHandler>();
-      messageBus.Subscribe<WorkItemMessageHandler, WorkItem>();
+      var dispatcher = app.ApplicationServices.GetRequiredService<EnqueueWorkItemMessageHandler>();
+      messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItem>();
 
       return app;
     }
