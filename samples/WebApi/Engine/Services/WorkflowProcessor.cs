@@ -1,56 +1,45 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
+using Microsoft.Extensions.Options;
 using System.Threading;
 using System.Threading.Tasks;
-using tomware.Microbus.Core;
-using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  // TODO: remove IMessageHandler in own class
-  public class WorkflowProcessor : BackgroundService, IMessageHandler<WorkItem>
+  public class WorkflowProcessor : BackgroundService
   {
     private readonly ILogger<WorkflowProcessor> _logger;
+
+    private readonly ProcessorConfiguration _options;
 
     private readonly IJobQueueService _jobQueueService;
 
     public WorkflowProcessor(
       ILogger<WorkflowProcessor> logger,
+      IOptions<ProcessorConfiguration> options,
       IJobQueueService jobQueueService
     )
     {
       _logger = logger;
+      _options = options.Value;
       _jobQueueService = jobQueueService;
-    }
-
-    public async Task Handle(
-      WorkItem item,
-      CancellationToken token = default(CancellationToken)
-    )
-    {
-      _logger.LogTrace($"Adding work item", item);
-
-      _jobQueueService.Enqueue(item);
-
-      await Task.CompletedTask;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
       while (!stoppingToken.IsCancellationRequested)
       {
+        _logger.LogTrace($"Triggering processor...");
+
         await _jobQueueService.TriggerAsync();
 
-        // TODO: delay as WorkflowProcessorOptions property
-        await Task.Delay(5000, stoppingToken);
+        await Task.Delay(_options.Intervall, stoppingToken);
       }
     }
 
     public override async Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger.LogTrace($"Stopping WorkflowProcessor...");
+      _logger.LogTrace($"Stopping processor...");
 
       await _jobQueueService.PersistWorkItemsAsync();
 

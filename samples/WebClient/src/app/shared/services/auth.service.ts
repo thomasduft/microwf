@@ -102,7 +102,6 @@ export class AuthService {
 
       this._username = jwt.name;
 
-      // TODO: fetch claims?!
       this._claims = Array.isArray(jwt.role)
         ? jwt.role
         : [jwt.role];

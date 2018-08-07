@@ -119,9 +119,9 @@ namespace WebApi
       services.AddTransient<UserContextService>();
 
       var workflows = this.Configuration.GetSection("Workflows");
-      var enableWorker = this.Configuration.GetSection("Worker").GetValue<bool>("Enable");
+      var worker = this.Configuration.GetSection("Worker");
       services
-        .AddWorkflowEngineServices<DomainContext>(workflows, enableWorker)
+        .AddWorkflowEngineServices<DomainContext>(workflows, worker)
         .AddTestUserWorkflows(CreateUserWorkflow());
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();

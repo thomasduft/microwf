@@ -2,8 +2,8 @@ toto:
 (x) persisting workflow variables
 (x) WorkflowItemQueue
 (-) persist/resume work items
-(-) Issue sample in client
-(-) visualize workflow
+(x) Issue sample in client
+(x) visualize workflow
   - see: https://github.com/mdaines/viz-examples/blob/master/script-tag/no-worker.html
 
 done:
