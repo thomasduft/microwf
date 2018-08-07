@@ -23,9 +23,21 @@ namespace tomware.Microwf.Engine
   public class JobQueueService : IJobQueueService
   {
     private readonly ILogger<JobQueueService> _logger;
-
     private readonly IServiceScopeFactory _serviceScopeFactory;
-    private readonly ConcurrentQueue<WorkItem> _items;
+    private ConcurrentQueue<WorkItem> _items;
+
+    public ConcurrentQueue<WorkItem> Items
+    {
+      get
+      {
+        if (_items == null)
+        {
+          _items = new ConcurrentQueue<WorkItem>();
+          ResumeWorkItems();
+        }
+        return this._items;
+      }
+    }
 
     public JobQueueService(
       ILogger<JobQueueService> logger,
@@ -34,10 +46,6 @@ namespace tomware.Microwf.Engine
     {
       _logger = logger;
       _serviceScopeFactory = serviceScopeFactory;
-
-      _items = new ConcurrentQueue<WorkItem>();
-
-      ResumeWorkItems();
     }
 
     public void Enqueue(WorkItem item)
@@ -45,19 +53,22 @@ namespace tomware.Microwf.Engine
       _logger.LogTrace("Enqueue work item", item);
       if (item.Retries > 3)
       {
-        _logger.LogInformation("Amount of retries exceeded", item);
+        _logger.LogInformation("Amount of retries for exceeded");
         return;
       }
 
-      _items.Enqueue(item);
+      Items.Enqueue(item);
     }
 
     public WorkItem Dequeue()
     {
+      _logger.LogTrace("Dequeued work item");
+
       WorkItem item;
-      if (_items.TryDequeue(out item))
+      if (Items.TryDequeue(out item))
       {
-        _logger.LogTrace("Dequeued work item", item);
+        item.Error = string.Empty;
+
         return item;
       }
 
@@ -68,7 +79,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Triggering job queue for doing work");
 
-      while (_items.Count != 0)
+      while (Items.Count > 0)
       {
         var item = Dequeue();
         if (item == null) continue;
@@ -85,6 +96,14 @@ namespace tomware.Microwf.Engine
           item.Retries++;
           this.Enqueue(item);
         }
+        else
+        {
+          if (item.Id > 0)
+          {
+            // Delete it from db if it was once persisted!
+            await DeleteWorkItem(item);
+          }
+        }
       }
 
       await Task.CompletedTask;
@@ -92,16 +111,45 @@ namespace tomware.Microwf.Engine
 
     public void ResumeWorkItems()
     {
-      // TODO Resuming work items
-      _logger.LogTrace("Resuming work items", _items);
+      _logger.LogTrace("Resuming work items");
+
+      using (var scope = this._serviceScopeFactory.CreateScope())
+      {
+        IServiceProvider serviceProvider = scope.ServiceProvider;
+        var service = serviceProvider.GetRequiredService<IWorkItemService>();
+        var items = service.ResumeWorkItemsAsync()
+          .GetAwaiter()
+          .GetResult();
+
+        foreach (var item in items)
+        {
+          this.Enqueue(item);
+        }
+      }
     }
 
     public async Task PersistWorkItemsAsync()
     {
-      // TODO Persisting work items
-      _logger.LogTrace("Persisting work items", _items);
+      _logger.LogTrace("Persisting work items");
 
-      await Task.CompletedTask;
+      using (var scope = this._serviceScopeFactory.CreateScope())
+      {
+        IServiceProvider serviceProvider = scope.ServiceProvider;
+        var service = serviceProvider.GetRequiredService<IWorkItemService>();
+        await service.PersistWorkItemsAsync(Items.ToArray());
+      }
+    }
+
+    public async Task DeleteWorkItem(WorkItem item)
+    {
+      _logger.LogTrace("Deleting work item");
+
+      using (var scope = this._serviceScopeFactory.CreateScope())
+      {
+        IServiceProvider serviceProvider = scope.ServiceProvider;
+        var service = serviceProvider.GetRequiredService<IWorkItemService>();
+        await service.DeleteAsync(item.Id);
+      }
     }
 
     private async Task<TriggerResult> ProcessItemAsync(WorkItem item)

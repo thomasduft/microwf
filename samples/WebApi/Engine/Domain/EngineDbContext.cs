@@ -12,5 +12,6 @@ namespace tomware.Microwf.Engine
     { }
 
     public DbSet<Workflow> Workflows { get; set; }
+    public DbSet<WorkItem> WorkItems { get; set; }
   }
 }

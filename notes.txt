@@ -1,4 +1,4 @@
-toto:
+todo:
 (x) persisting workflow variables
 (x) WorkflowItemQueue
 (-) persist/resume work items
