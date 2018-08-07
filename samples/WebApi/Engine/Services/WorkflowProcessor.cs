@@ -42,8 +42,6 @@ namespace tomware.Microwf.Engine
       _logger.LogTrace($"Stopping processor...");
 
       await _jobQueueService.PersistWorkItemsAsync();
-
-      await Task.CompletedTask;
     }
   }
 }
