@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config local.proxy.conf.js",
     "build": "ng build",
+    "build-webclient": "ng build --output-path=../../publish/wwwroot",
     "test": "ng test --watch=false",
     "lint": "ng lint"
   },
