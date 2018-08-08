@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,8 +15,11 @@ import { Holiday } from './models';
   template: `
   <h1 i18n>Holiday</h1>
   <hr />
+  <div class="btn-group float-right">
+    <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
+    <button type="button" class="btn btn-secondary" (click)="reload()">reload</button>
+  </div>
   <h2 i18n>My work</h2>
-  <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
   <div class="table-responsive-md">
     <table class="table table-hover">
       <thead>
@@ -29,13 +32,13 @@ import { Holiday } from './models';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let holiday of myWork">
-          <td>{{ holiday.state }}</td>
-          <td>{{ holiday.requester }}</td>
-          <td>{{ holiday.from | date }}</td>
-          <td>{{ holiday.to | date }}</td>
+        <tr *ngFor="let holiday of myWork$ | async">
+          <td>{{ holiday?.state }}</td>
+          <td>{{ holiday?.requester }}</td>
+          <td>{{ holiday?.from | date }}</td>
+          <td>{{ holiday?.to | date }}</td>
           <td>
-            <a [routerLink]="['detail', holiday.id]" i18n>open</a>
+            <a [routerLink]="['detail', holiday?.id]" i18n>open</a>
           </td>
         </tr>
       </tbody>
@@ -43,9 +46,7 @@ import { Holiday } from './models';
   </div>`
 })
 export class HolidayDashboardComponent implements OnInit {
-  private _myWork$: Subscription;
-
-  public myWork: Array<Holiday> = [];
+  public myWork$: Observable<Array<Holiday>>;
 
   public constructor(
     private _router: Router,
@@ -53,13 +54,14 @@ export class HolidayDashboardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._myWork$ = this._service.myWork()
-      .subscribe((myWork: Array<Holiday>) => {
-        this.myWork = myWork;
-      });
+    this.myWork$ = this._service.myWork();
   }
 
   public create(): void {
     this._router.navigate(['./detail/new']);
+  }
+
+  public reload(): void {
+    this.ngOnInit();
   }
 }

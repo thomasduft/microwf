@@ -15,14 +15,14 @@ namespace tomware.Microwf.Engine
   public class WorkflowService : IWorkflowService
   {
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
-    private readonly IUserWorkflowDefinitionService _userWorkflowDefinitionService;
+    private readonly IUserWorkflowMappingService _userWorkflowDefinitionService;
     private readonly IConfiguration _configuration;
     private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
 
     public WorkflowService(
       IConfiguration configuration,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
-      IUserWorkflowDefinitionService userWorkflowDefinitionService,
+      IUserWorkflowMappingService userWorkflowDefinitionService,
       IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {

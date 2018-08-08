@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,8 +15,11 @@ import { Issue } from './models';
   template: `
   <h1 i18n>Issue</h1>
   <hr />
+  <div class="btn-group float-right">
+    <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
+    <button type="button" class="btn btn-secondary" (click)="reload()">reload</button>
+  </div>
   <h2 i18n>My work</h2>
-  <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
   <div class="table-responsive-md">
     <table class="table table-hover">
       <thead>
@@ -28,12 +31,12 @@ import { Issue } from './models';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let issue of myWork">
-          <td>{{ issue.state }}</td>
-          <td>{{ issue.assignee }}</td>
-          <td>{{ issue.title }}</td>
+        <tr *ngFor="let issue of myWork$ | async">
+          <td>{{ issue?.state }}</td>
+          <td>{{ issue?.assignee }}</td>
+          <td>{{ issue?.title }}</td>
           <td>
-            <a [routerLink]="['detail', issue.id]" i18n>open</a>
+            <a [routerLink]="['detail', issue?.id]" i18n>open</a>
           </td>
         </tr>
       </tbody>
@@ -41,9 +44,7 @@ import { Issue } from './models';
   </div>`
 })
 export class IssueDashboardComponent implements OnInit {
-  private _myWork$: Subscription;
-
-  public myWork: Array<Issue> = [];
+  public myWork$: Observable<Array<Issue>>;
 
   public constructor(
     private _router: Router,
@@ -51,13 +52,14 @@ export class IssueDashboardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._myWork$ = this._service.myWork()
-      .subscribe((myWork: Array<Issue>) => {
-        this.myWork = myWork;
-      });
+    this.myWork$ = this._service.myWork();
   }
 
   public create(): void {
     this._router.navigate(['./detail/new']);
+  }
+
+  public reload(): void {
+    this.ngOnInit();
   }
 }

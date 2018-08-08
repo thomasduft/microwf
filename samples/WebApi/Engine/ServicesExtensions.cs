@@ -35,24 +35,21 @@ namespace tomware.Microwf.Engine
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
-      services.AddTransient<
-        IWorkflowDefinitionViewModelCreator,
-        ConfigurationWorkflowDefinitionViewModelCreator>();
       services.AddTransient<IWorkflowService, WorkflowService>();
-      services
-            .AddTransient<IUserWorkflowDefinitionService, NoopUserWorkflowDefinitionService>();
+      services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
+      services.AddTransient<IWorkflowDefinitionViewModelCreator,
+        ConfigurationWorkflowDefinitionViewModelCreator>();
 
       return services;
     }
 
-    public static IServiceCollection AddTestUserWorkflows(
+    public static IServiceCollection AddTestUserWorkflowMappings(
       this IServiceCollection services,
-      IEnumerable<UserWorkflows> userWorkflows
+      IEnumerable<UserWorkflowMapping> userWorkflows
     )
     {
-      services
-       .AddTransient<IUserWorkflowDefinitionService, InMemoryUserWorkflowDefinitionService>();
-      services.AddSingleton(new UserWorkflowsStore(userWorkflows));
+      services.AddTransient<IUserWorkflowMappingService, InMemoryUserWorkflowMappingService>();
+      services.AddSingleton(new UserWorkflowMappingsStore(userWorkflows));
 
       return services;
     }
@@ -66,7 +63,6 @@ namespace tomware.Microwf.Engine
 
       var messageBus = app.ApplicationServices.GetRequiredService<IMessageBus>();
 
-      var dispatcher = app.ApplicationServices.GetRequiredService<EnqueueWorkItemMessageHandler>();
       messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItem>();
 
       return app;

@@ -5,33 +5,36 @@ using WebApi.Common;
 
 namespace tomware.Microwf.Engine
 {
-  public class UserWorkflowsStore 
+  public class UserWorkflowMappingsStore
   {
-    private readonly IEnumerable<UserWorkflows> _workflows;
+    private readonly IEnumerable<UserWorkflowMapping> _workflows;
 
-    public IEnumerable<UserWorkflows> Workflows {
-      get {
+    public IEnumerable<UserWorkflowMapping> Workflows
+    {
+      get
+      {
         return this._workflows;
       }
     }
 
-    public UserWorkflowsStore(IEnumerable<UserWorkflows> workflows)
+    public UserWorkflowMappingsStore(IEnumerable<UserWorkflowMapping> workflows)
     {
       this._workflows = workflows;
     }
   }
 
-  public class UserWorkflows {
+  public class UserWorkflowMapping
+  {
     public string UserName { get; set; }
     public IList<string> WorkflowDefinitions { get; set; }
   }
 
-  public interface IUserWorkflowDefinitionService
+  public interface IUserWorkflowMappingService
   {
     IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> workflowDefinitions);
   }
 
-  public class NoopUserWorkflowDefinitionService : IUserWorkflowDefinitionService
+  public class NoopUserWorkflowMappingService : IUserWorkflowMappingService
   {
     public IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> definitions)
     {
@@ -39,14 +42,14 @@ namespace tomware.Microwf.Engine
     }
   }
 
-  public class InMemoryUserWorkflowDefinitionService : IUserWorkflowDefinitionService
+  public class InMemoryUserWorkflowMappingService : IUserWorkflowMappingService
   {
     private readonly UserContextService _userContext;
-    private readonly UserWorkflowsStore _userWorkflowsStore;
+    private readonly UserWorkflowMappingsStore _userWorkflowsStore;
 
-    public InMemoryUserWorkflowDefinitionService(
+    public InMemoryUserWorkflowMappingService(
       UserContextService userContext,
-      UserWorkflowsStore userWorkflowsStore
+      UserWorkflowMappingsStore userWorkflowsStore
     )
     {
       this._userContext = userContext;

@@ -98,7 +98,7 @@ export class IssueComponent implements OnInit {
       .subscribe((result: WorkflowResult<Issue, NoWorkflowResult>) => {
         if (result.triggerInfo.succeeded
           && result.viewModel.assignee !== this._auth.username) {
-          this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
+          this._router.navigate(['dispatch', result.viewModel.assignee, 'issue']);
         } else {
           this.viewModel = result.entity;
           this.triggerInfo = result.triggerInfo;
