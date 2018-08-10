@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+import { IconModule } from './../shared/icon/icon.module';
 import { FormdefModule, FormdefRegistry } from './../shared/formdef/index';
 import { WorkflowModule } from '../workflow/workflow.module';
 
@@ -21,7 +22,8 @@ const ROUTES: Routes = [
     CommonModule,
     RouterModule.forChild(ROUTES),
     FormdefModule,
-    WorkflowModule
+    WorkflowModule,
+    IconModule
   ],
   declarations: [
     IssueDashboardComponent,

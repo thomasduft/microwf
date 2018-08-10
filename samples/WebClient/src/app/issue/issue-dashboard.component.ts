@@ -13,13 +13,15 @@ import { Issue } from './models';
   selector: 'tw-issue-dashboard',
   providers: [IssueService],
   template: `
-  <h1 i18n>Issue</h1>
-  <hr />
   <div class="btn-group float-right">
-    <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
-    <button type="button" class="btn btn-secondary" (click)="reload()">reload</button>
+    <a class="btn btn-primary" [routerLink]="['detail/new']">
+      <tw-icon name="plus"></tw-icon>
+    </a>
+    <button type="button" class="btn btn-secondary" (click)="reload()">
+      <tw-icon name="refresh"></tw-icon>
+    </button>
   </div>
-  <h2 i18n>My work</h2>
+  <h1 i18n>Issues</h1>
   <div class="table-responsive-md">
     <table class="table table-hover">
       <thead>
@@ -27,7 +29,7 @@ import { Issue } from './models';
           <th scope="col" i18n>State</th>
           <th scope="col" i18n>Assignee</th>
           <th scope="col" i18n>Title</th>
-          <th scope="col" i18n>Action</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -36,7 +38,9 @@ import { Issue } from './models';
           <td>{{ issue?.assignee }}</td>
           <td>{{ issue?.title }}</td>
           <td>
-            <a [routerLink]="['detail', issue?.id]" i18n>open</a>
+            <a [routerLink]="['detail', issue?.id]" i18n>
+              <tw-icon name="arrow-right"></tw-icon>
+            </a>
           </td>
         </tr>
       </tbody>

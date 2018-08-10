@@ -107,30 +107,21 @@ export class HolidayComponent implements OnInit {
     if (trigger === 'apply') {
       this._service.apply(this.formDef.formValue)
         .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded
-            && result.viewModel.assignee !== this._auth.username) {
-            this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
-          }
+          this.checkResponse(result);
         });
     }
 
     if (trigger === 'approve') {
       this._service.approve(this.formDef.formValue)
         .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded
-            && result.viewModel.assignee !== this._auth.username) {
-            this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
-          }
+          this.checkResponse(result);
         });
     }
 
     if (trigger === 'reject') {
       this._service.reject(this.formDef.formValue)
         .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded
-            && result.viewModel.assignee !== this._auth.username) {
-            this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
-          }
+          this.checkResponse(result);
         });
     }
   }
@@ -161,5 +152,14 @@ export class HolidayComponent implements OnInit {
         this.triggerInfo = result.triggerInfo;
         this.entity = result.entity;
       });
+  }
+
+  private checkResponse(result: WorkflowResult<Holiday, NoWorkflowResult>): void {
+    if (result.triggerInfo.succeeded
+      && result.viewModel.assignee !== this._auth.username) {
+      this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
+    } else {
+      this._router.navigate(['holiday']);
+    }
   }
 }

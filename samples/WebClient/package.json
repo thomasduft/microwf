@@ -26,7 +26,8 @@
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
     "bootstrap": "^4.0.0",
-    "viz.js": "2.0.0"
+    "viz.js": "2.0.0",
+    "font-awesome": "4.7.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.2",

@@ -44,6 +44,7 @@ export class DotComponent implements OnChanges {
       viz.renderSVGElement(this.dot.dot)
         .then((element: any) => {
           this._dotElem = element;
+          this._dotElem.width.baseVal.valueAsString = '100%';
           this.renderer.appendChild(this.el.nativeElement, this._dotElem);
         });
       // viz.renderImageElement(this.dot.dot)

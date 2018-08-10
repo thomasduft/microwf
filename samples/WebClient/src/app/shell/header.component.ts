@@ -5,13 +5,14 @@ import { AuthService } from '../shared/services/auth.service';
 @Component({
   selector: 'tw-header',
   template: `
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" routerLink="/home">MircoWF - {{ username }}</a>
-
-    <div class="navbar-collapse">
-      <ul class="navbar-nav ml-auto">
+    <div class="navbar">
+      <ul class="nav navbar-nav mr-auto">
         <li *ngIf="isAuthenticated">
-          <a class="nav-link" href="javascript:void(0)" (click)="logout()" i18n>Logout</a>
+          <a class="nav-link" href="javascript:void(0)" (click)="logout()">
+            <tw-icon name="sign-out"></tw-icon>
+          </a>
         </li>
       </ul>
       <form class="form-inline" *ngIf="false">

@@ -11,7 +11,7 @@ import {
 @Component({
   selector: 'tw-home',
   template: `
-  <h1 i18n>Workflow areas</h1>
+  <h1 i18n>Workflows</h1>
   <div class="row">
     <div class="col table-responsive-md">
       <table class="table table-hover" *ngIf="areas.length > 0">
@@ -19,20 +19,18 @@ import {
           <tr>
             <th scope="col" i18n>Title</th>
             <th scope="col" i18n>Description</th>
-            <th scope="col" i18n>Visualize</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let area of areas">
+          <tr *ngFor="let area of areas" (mouseover)="loadDot(area.key)">
             <td>{{ area.title }}</td>
             <td>{{ area.description }}</td>
             <td>
-              <a href="javascript:void(0);" (click)="loadDot(area.key)">
-                ...
+              <a routerLink="/{{ area.route }}" i18n>
+                <tw-icon name="arrow-right"></tw-icon>
               </a>
             </td>
-            <td><a routerLink="/{{ area.route }}" i18n>let's go</a></td>
           </tr>
         </tbody>
       </table>

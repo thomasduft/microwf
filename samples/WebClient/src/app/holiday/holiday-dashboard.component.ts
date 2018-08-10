@@ -13,13 +13,15 @@ import { Holiday } from './models';
   selector: 'tw-holiday-dashboard',
   providers: [HolidayService],
   template: `
-  <h1 i18n>Holiday</h1>
-  <hr />
   <div class="btn-group float-right">
-    <a class="btn btn-primary" [routerLink]="['detail/new']" i18n>New</a>
-    <button type="button" class="btn btn-secondary" (click)="reload()">reload</button>
+    <a class="btn btn-primary" [routerLink]="['detail/new']">
+      <tw-icon name="plus"></tw-icon>
+    </a>
+    <button type="button" class="btn btn-secondary" (click)="reload()">
+      <tw-icon name="refresh"></tw-icon>
+    </button>
   </div>
-  <h2 i18n>My work</h2>
+  <h1 i18n>Holidays</h1>
   <div class="table-responsive-md">
     <table class="table table-hover">
       <thead>
@@ -28,7 +30,7 @@ import { Holiday } from './models';
           <th scope="col" i18n>Requester</th>
           <th scope="col" i18n>From</th>
           <th scope="col" i18n>To</th>
-          <th scope="col" i18n>Action</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -38,7 +40,9 @@ import { Holiday } from './models';
           <td>{{ holiday?.from | date }}</td>
           <td>{{ holiday?.to | date }}</td>
           <td>
-            <a [routerLink]="['detail', holiday?.id]" i18n>open</a>
+            <a [routerLink]="['detail', holiday?.id]" i18n>
+              <tw-icon name="arrow-right"></tw-icon>
+            </a>
           </td>
         </tr>
       </tbody>
