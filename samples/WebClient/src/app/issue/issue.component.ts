@@ -6,7 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
 import { AuthService } from '../shared/services/auth.service';
 import { FormdefComponent } from '../shared/formdef/index';
-import { WorkflowResult, TriggerInfo, NoWorkflowResult } from '../workflow/index';
+import { WorkflowResult, TriggerInfo, AssigneeWorkflowResult } from '../workflow/index';
 
 import { IssueService } from './issue.service';
 import { IssueDetailSlot, Issue, IssueViewmodel } from './models';
@@ -95,7 +95,7 @@ export class IssueComponent implements OnInit {
     };
 
     this._issue$ = this._service.process(model)
-      .subscribe((result: WorkflowResult<Issue, NoWorkflowResult>) => {
+      .subscribe((result: WorkflowResult<Issue, AssigneeWorkflowResult>) => {
         if (result.triggerInfo.succeeded
           && result.viewModel.assignee !== this._auth.username) {
           this._router.navigate(['dispatch', result.viewModel.assignee, 'issue']);

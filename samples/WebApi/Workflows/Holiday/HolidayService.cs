@@ -16,11 +16,11 @@ namespace WebApi.Workflows.Holiday
 
     Task<IWorkflowResult<HolidayViewModel>> GetAsync(int id);
 
-    Task<IWorkflowResult<NoWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model);
+    Task<IWorkflowResult<AssigneeWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model);
 
-    Task<IWorkflowResult<NoWorkflowResult>> ApproveAsync(ApproveHolidayViewModel model);
+    Task<IWorkflowResult<AssigneeWorkflowResult>> ApproveAsync(ApproveHolidayViewModel model);
 
-    Task<IWorkflowResult<NoWorkflowResult>> RejectAsync(ApproveHolidayViewModel model);
+    Task<IWorkflowResult<AssigneeWorkflowResult>> RejectAsync(ApproveHolidayViewModel model);
 
     // TODO: Check for common kind of viewmodel that shows state, short description, id?!
     Task<IEnumerable<Holiday>> MyWorkAsync();
@@ -65,7 +65,7 @@ namespace WebApi.Workflows.Holiday
       return await ToResult(holiday);
     }
 
-    public async Task<IWorkflowResult<NoWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model)
+    public async Task<IWorkflowResult<AssigneeWorkflowResult>> ApplyAsync(ApplyHolidayViewModel model)
     {
       if (model == null) throw new ArgumentNullException(nameof(model));
 
@@ -78,12 +78,12 @@ namespace WebApi.Workflows.Holiday
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
       var info = await this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
-      var viewModel = new NoWorkflowResult(holiday.Assignee);
+      var viewModel = new AssigneeWorkflowResult(holiday.Assignee);
 
-      return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
+      return new WorkflowResult<Holiday, AssigneeWorkflowResult>(info, holiday, viewModel);
     }
 
-    public async Task<IWorkflowResult<NoWorkflowResult>> ApproveAsync(ApproveHolidayViewModel model)
+    public async Task<IWorkflowResult<AssigneeWorkflowResult>> ApproveAsync(ApproveHolidayViewModel model)
     {
       var holiday = await FindOrCreate(model.Id);
 
@@ -93,12 +93,12 @@ namespace WebApi.Workflows.Holiday
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
       var info = await  this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
-      var viewModel = new NoWorkflowResult(holiday.Assignee);
+      var viewModel = new AssigneeWorkflowResult(holiday.Assignee);
 
-      return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
+      return new WorkflowResult<Holiday, AssigneeWorkflowResult>(info, holiday, viewModel);
     }
 
-    public async Task<IWorkflowResult<NoWorkflowResult>> RejectAsync(ApproveHolidayViewModel model)
+    public async Task<IWorkflowResult<AssigneeWorkflowResult>> RejectAsync(ApproveHolidayViewModel model)
     {
       var holiday = await FindOrCreate(model.Id);
 
@@ -108,9 +108,9 @@ namespace WebApi.Workflows.Holiday
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
       var info = await  this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
-      var viewModel = new NoWorkflowResult(holiday.Assignee);
+      var viewModel = new AssigneeWorkflowResult(holiday.Assignee);
 
-      return new WorkflowResult<Holiday, NoWorkflowResult>(info, holiday, viewModel);
+      return new WorkflowResult<Holiday, AssigneeWorkflowResult>(info, holiday, viewModel);
     }
 
     public async Task<IEnumerable<Holiday>> MyWorkAsync()

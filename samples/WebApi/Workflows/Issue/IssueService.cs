@@ -19,7 +19,7 @@ namespace WebApi.Workflows.Issue
 
     Task<IWorkflowResult<IssueViewModel>> GetAsync(int id);
 
-    Task<IWorkflowResult<NoWorkflowResult>> ProcessAsync(IssueViewModel model);
+    Task<IWorkflowResult<AssigneeWorkflowResult>> ProcessAsync(IssueViewModel model);
 
     Task<IEnumerable<Issue>> MyWorkAsync();
   }
@@ -85,7 +85,7 @@ namespace WebApi.Workflows.Issue
       return await ToResult(issue);
     }
 
-    public async Task<IWorkflowResult<NoWorkflowResult>> ProcessAsync(IssueViewModel model)
+    public async Task<IWorkflowResult<AssigneeWorkflowResult>> ProcessAsync(IssueViewModel model)
     {
       var issue = await FindOrCreate(model.Id);
 
@@ -95,9 +95,9 @@ namespace WebApi.Workflows.Issue
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
       var info = await this._workflowEngine.ToWorkflowTriggerInfo(issue, triggerResult);
-      var viewModel = new NoWorkflowResult(issue.Assignee);
+      var viewModel = new AssigneeWorkflowResult(issue.Assignee);
 
-      return new WorkflowResult<Issue, NoWorkflowResult>(info, issue, viewModel);
+      return new WorkflowResult<Issue, AssigneeWorkflowResult>(info, issue, viewModel);
     }
 
     public async Task<IEnumerable<Issue>> MyWorkAsync()

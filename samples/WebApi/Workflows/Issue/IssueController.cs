@@ -48,7 +48,7 @@ namespace WebApi.Workflows.Issue
     }
 
     [HttpPost("process")]
-    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    [ProducesResponseType(typeof(IWorkflowResult<AssigneeWorkflowResult>), 200)]
     public async Task<IActionResult> Process([FromBody]IssueViewModel model)
     {
       if (model == null) return BadRequest();

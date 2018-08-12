@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiService } from '../shared/services/api.service';
-import { WorkflowResult, NoWorkflowResult } from '../workflow/index';
+import { WorkflowResult, AssigneeWorkflowResult } from '../workflow/index';
 
 import { Issue, IssueViewmodel } from './models';
 
@@ -40,9 +40,9 @@ export class IssueService {
     return this._http.get<WorkflowResult<null, Issue>>(url);
   }
 
-  public process(model: IssueViewmodel): Observable<WorkflowResult<Issue, NoWorkflowResult>> {
+  public process(model: IssueViewmodel): Observable<WorkflowResult<Issue, AssigneeWorkflowResult>> {
     const url = this._api.createApiUrl(`issue/process`);
 
-    return this._http.post<WorkflowResult<Issue, NoWorkflowResult>>(url, model);
+    return this._http.post<WorkflowResult<Issue, AssigneeWorkflowResult>>(url, model);
   }
 }

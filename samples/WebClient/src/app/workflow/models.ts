@@ -26,7 +26,7 @@ export interface WorkflowResult<TEntity, TViewModel> {
   viewModel: TViewModel;
 }
 
-export interface NoWorkflowResult {
+export interface AssigneeWorkflowResult {
   assignee: string;
   message: string;
 }

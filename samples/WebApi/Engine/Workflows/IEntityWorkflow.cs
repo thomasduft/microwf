@@ -12,6 +12,9 @@ namespace tomware.Microwf.Engine
 
   public interface IEntityWorkflow : IAssignableWorkflow
   {
+    /// <summary>
+    /// Id of an entity.
+    /// </summary>
     int Id { get; set; }
   }
 }
