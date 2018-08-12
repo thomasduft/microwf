@@ -1,29 +1,3 @@
-todo:
-(x) persisting workflow variables
-(x) WorkflowItemQueue
-(-) persist/resume work items
-(x) Issue sample in client
-(x) visualize workflow
-  - see: https://github.com/mdaines/viz-examples/blob/master/script-tag/no-worker.html
-
-done:
-(x) rename IWorkflowDefinition.WorkflowType --> Name
-(x) CreateViewModel needs an interface
-  (x) default provider will read workflows from configuration
-(x) workflow controller
-  (x) list all workflows
-  (x) start a workflow
-  (x) list instances assigned to me
-  (x) resume a workflow
-(x) test 
-  (x) TransitionContext
-  (x) TriggerParam
-  (x) TriggerResult
-(x) add identity to WebApi
-(x) add db seeder
-
-
-
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 
