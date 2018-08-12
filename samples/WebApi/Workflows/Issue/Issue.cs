@@ -19,6 +19,9 @@ namespace WebApi.Workflows.Issue
     public string State { get; set; }
 
     [Required]
+    public string Creator { get; set; }
+
+    [Required]
     public string Assignee { get; set; }
 
     [Required]
@@ -26,13 +29,14 @@ namespace WebApi.Workflows.Issue
 
     public string Description { get; set; }
 
-    public static Issue Create(string title)
+    public static Issue Create(string creator)
     {
       return new Issue
       {
         Type = IssueTrackingWorkflow.TYPE,
         State = IssueTrackingWorkflow.OPEN_STATE,
-        Title = title
+        Creator = creator,
+        Assignee = creator
       };
     }
   }

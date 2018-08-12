@@ -20,12 +20,25 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "viz.js",
+                "input": "node_modules/viz.js",
+                "output": "/assets/js"
+              },
+              {
+                "glob": "full.render.js",
+                "input": "node_modules/viz.js",
+                "output": "/assets/js"
+              }
             ],
             "styles": [
               "src/styles.css",
               {
                 "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
+              },
+              {
+                "input": "./node_modules/font-awesome/css/font-awesome.css"
               }
             ],
             "scripts": []

@@ -18,7 +18,7 @@ import { LoginService } from './login.service';
       <input type="email"
              id="inputEmail"
              class="form-control"
-             placeholder="Email address"
+             placeholder="Username"
              formControlName="username"
              required autofocus>
     </div>

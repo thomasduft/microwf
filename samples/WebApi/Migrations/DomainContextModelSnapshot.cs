@@ -42,6 +42,48 @@ namespace WebApi.Migrations
                     b.ToTable("Workflow");
                 });
 
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowVariable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.Property<int>("WorkflowId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkflowId");
+
+                    b.ToTable("WorkflowVariable");
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EntityId");
+
+                    b.Property<string>("Error");
+
+                    b.Property<int>("Retries");
+
+                    b.Property<string>("TriggerName")
+                        .IsRequired();
+
+                    b.Property<string>("WorkflowType")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkItem");
+                });
+
             modelBuilder.Entity("WebApi.Workflows.Holiday.Holiday", b =>
                 {
                     b.Property<int>("Id")
@@ -88,6 +130,41 @@ namespace WebApi.Migrations
                     b.HasIndex("HolidayId");
 
                     b.ToTable("HolidayMessage");
+                });
+
+            modelBuilder.Entity("WebApi.Workflows.Issue.Issue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Assignee")
+                        .IsRequired();
+
+                    b.Property<string>("Creator")
+                        .IsRequired();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("State")
+                        .IsRequired();
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Issue");
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowVariable", b =>
+                {
+                    b.HasOne("tomware.Microwf.Engine.Workflow", "Workflow")
+                        .WithMany("WorkflowVariables")
+                        .HasForeignKey("WorkflowId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApi.Workflows.Holiday.HolidayMessage", b =>

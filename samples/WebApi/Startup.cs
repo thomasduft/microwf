@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
+using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Common;
@@ -108,27 +110,57 @@ namespace WebApi
         });
       });
 
+      // MessageBus
+      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
+      services.AddSingleton<WorkflowProcessor>();
+
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
 
       services.AddTransient<UserContextService>();
 
       var workflows = this.Configuration.GetSection("Workflows");
-      var enableWorker = this.Configuration.GetSection("Worker").GetValue<bool>("Enable");
+      var worker = this.Configuration.GetSection("Worker");
       services
-        .AddWorkflowEngineServices<DomainContext>(workflows, enableWorker)
-        .AddTestUserWorkflows(CreateUserWorkflow());
+        .AddWorkflowEngineServices<DomainContext>(workflows, worker)
+        .AddTestUserWorkflowMappings(CreateSampleUserWorkflowMappings());
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
-      services.AddTransient<IHolidayService, HolidayService>();
       services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
+
+      services.AddTransient<IHolidayService, HolidayService>();
+      services.AddTransient<IIssueService, IssueService>();
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(
+      IApplicationBuilder app,
+      IHostingEnvironment env,
+      IApplicationLifetime appLifetime,
+      ILoggerFactory loggerFactory
+    )
     {
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler(errorApp =>
+        {
+          errorApp.Run(async context =>
+          {
+            context.Response.StatusCode = 500;
+            context.Response.ContentType = "text/plain";
+            var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+            if (errorFeature != null)
+            {
+              var logger = loggerFactory.CreateLogger("Global exception logger");
+              logger.LogError(500, errorFeature.Error, errorFeature.Error.Message);
+            }
+
+            await context.Response.WriteAsync("There was an error");
+          });
+        });
       }
 
       app.UseCors("AllowAllOrigins");
@@ -137,6 +169,8 @@ namespace WebApi
       // app.UseAuthentication();
 
       app.UseFileServer();
+
+      app.SubscribeMessageHandlers();
 
       app.UseSwagger();
       app.UseSwaggerUI(c =>
@@ -147,24 +181,24 @@ namespace WebApi
       app.UseMvcWithDefaultRoute();
     }
 
-    private List<UserWorkflows> CreateUserWorkflow()
+    private List<UserWorkflowMapping> CreateSampleUserWorkflowMappings()
     {
-      return new List<UserWorkflows> {
-        new UserWorkflows {
+      return new List<UserWorkflowMapping> {
+        new UserWorkflowMapping {
           UserName = "admin",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
             IssueTrackingWorkflow.TYPE
           }
         },
-        new UserWorkflows {
+        new UserWorkflowMapping {
           UserName = "alice",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
             IssueTrackingWorkflow.TYPE
           }
         },
-        new UserWorkflows {
+        new UserWorkflowMapping {
           UserName = "bob",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE

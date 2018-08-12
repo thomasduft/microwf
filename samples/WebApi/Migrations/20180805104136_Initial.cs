@@ -27,6 +27,24 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Issue",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Type = table.Column<string>(nullable: false),
+                    State = table.Column<string>(nullable: false),
+                    Creator = table.Column<string>(nullable: false),
+                    Assignee = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Issue", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Workflow",
                 columns: table => new
                 {
@@ -66,10 +84,36 @@ namespace WebApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "WorkflowVariable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Type = table.Column<string>(nullable: false),
+                    Content = table.Column<string>(nullable: false),
+                    WorkflowId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkflowVariable", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkflowVariable_Workflow_WorkflowId",
+                        column: x => x.WorkflowId,
+                        principalTable: "Workflow",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_HolidayMessage_HolidayId",
                 table: "HolidayMessage",
                 column: "HolidayId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkflowVariable_WorkflowId",
+                table: "WorkflowVariable",
+                column: "WorkflowId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -78,10 +122,16 @@ namespace WebApi.Migrations
                 name: "HolidayMessage");
 
             migrationBuilder.DropTable(
-                name: "Workflow");
+                name: "Issue");
+
+            migrationBuilder.DropTable(
+                name: "WorkflowVariable");
 
             migrationBuilder.DropTable(
                 name: "Holiday");
+
+            migrationBuilder.DropTable(
+                name: "Workflow");
         }
     }
 }

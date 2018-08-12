@@ -5,6 +5,7 @@ import {
 
 export const HIDDEN_EDITOR = 'hidden';
 export const TEXT_EDITOR = 'text';
+export const TEXT_AREA_EDITOR = 'textarea';
 export const PASSWORD_EDITOR = 'password';
 export const RADIO_EDITOR = 'radio';
 export const CHECKBOX_EDITOR = 'checkbox';

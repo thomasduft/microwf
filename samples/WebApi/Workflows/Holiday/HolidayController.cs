@@ -36,7 +36,7 @@ namespace WebApi.Workflows.Holiday
     }
 
     [HttpPost("apply")]
-    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    [ProducesResponseType(typeof(IWorkflowResult<AssigneeWorkflowResult>), 200)]
     public async Task<IActionResult> Apply([FromBody]ApplyHolidayViewModel model)
     {
       if (model == null) return BadRequest();
@@ -48,7 +48,7 @@ namespace WebApi.Workflows.Holiday
     }
 
     [HttpPost("approve")]
-    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    [ProducesResponseType(typeof(IWorkflowResult<AssigneeWorkflowResult>), 200)]
     public async Task<IActionResult> Approve([FromBody]ApproveHolidayViewModel model)
     {
       if (model == null) return BadRequest();
@@ -60,7 +60,7 @@ namespace WebApi.Workflows.Holiday
     }
 
     [HttpPost("reject")]
-    [ProducesResponseType(typeof(IWorkflowResult<NoWorkflowResult>), 200)]
+    [ProducesResponseType(typeof(IWorkflowResult<AssigneeWorkflowResult>), 200)]
     public async Task<IActionResult> Reject([FromBody]ApproveHolidayViewModel model)
     {
       if (model == null) return BadRequest();

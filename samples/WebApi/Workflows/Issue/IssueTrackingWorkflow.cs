@@ -39,7 +39,8 @@ namespace WebApi.Workflows.Issue
           new Transition {
             State = OPEN_STATE,
             Trigger = ASSIGN_TRIGGER,
-            TargetState = ASSIGNED_STATE
+            TargetState = ASSIGNED_STATE,
+            AfterTransition = AssignToAdmin
           },
           new Transition {
             State = ASSIGNED_STATE,
@@ -49,7 +50,8 @@ namespace WebApi.Workflows.Issue
           new Transition {
             State = IN_PROGRESS_STATE,
             Trigger = REVIEW_TRIGGER,
-            TargetState = RESOLVED_STATE
+            TargetState = RESOLVED_STATE,
+            AfterTransition = AssignToCreator
           },
           new Transition {
             State = RESOLVED_STATE,
@@ -59,12 +61,14 @@ namespace WebApi.Workflows.Issue
           new Transition {
             State = OPEN_STATE,
             Trigger = REVIEW_TRIGGER,
-            TargetState = RESOLVED_STATE
+            TargetState = RESOLVED_STATE,
+            AfterTransition = AssignToCreator
           },
           new Transition {
             State = ASSIGNED_STATE,
             Trigger = REVIEW_TRIGGER,
-            TargetState = RESOLVED_STATE
+            TargetState = RESOLVED_STATE,
+            AfterTransition = AssignToCreator
           },
           new Transition {
             State = OPEN_STATE,
@@ -74,7 +78,8 @@ namespace WebApi.Workflows.Issue
           new Transition {
             State = RESOLVED_STATE,
             Trigger = REJECT_TRIGGER,
-            TargetState = IN_PROGRESS_STATE
+            TargetState = IN_PROGRESS_STATE,
+            AfterTransition = AssignToAdmin
           }
         };
       }
@@ -83,6 +88,25 @@ namespace WebApi.Workflows.Issue
     public IssueTrackingWorkflow(ILoggerFactory loggerFactory)
     {
       this._logger = loggerFactory.CreateLogger<IssueTrackingWorkflow>();
+    }
+
+    private void AssignToAdmin(TransitionContext context)
+    {
+      // because admin is the dev ;-)...
+      var issue = context.GetInstance<Issue>();
+
+      issue.Assignee = "admin";
+
+      this._logger.LogInformation($"Assignee: {issue.Assignee}");
+    }
+
+    private void AssignToCreator(TransitionContext context)
+    {
+      var issue = context.GetInstance<Issue>();
+
+      issue.Assignee = issue.Creator;
+
+      this._logger.LogInformation($"Assignee: {issue.Assignee}");
     }
   }
 }

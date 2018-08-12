@@ -50,30 +50,22 @@ namespace tomware.Microwf.Engine
     }
   }
 
-  public class NoWorkflowResult
+  public class AssigneeWorkflowResult
   {
     public string Assignee { get; set; }
     public string Message { get; set; }
 
-    public NoWorkflowResult() { }
+    public AssigneeWorkflowResult() { }
 
-    public NoWorkflowResult(string assignee)
+    public AssigneeWorkflowResult(string assignee)
     {
       this.Assignee = assignee;
     }
 
-    public NoWorkflowResult(string assignee, string message)
+    public AssigneeWorkflowResult(string assignee, string message)
     {
       this.Assignee = assignee;
       this.Message = message;
     }
-  }
-
-  public class AssignableWorkflowViewModel
-  {
-    public int Id { get; set; }
-    public string Type { get; set; }
-    public string Assignee { get; set; }
-    public string Description { get; set; }
   }
 }

@@ -9,13 +9,14 @@ namespace tomware.Microwf.Core
     /// See: http://www.webgraphviz.com/ 
     /// </summary>
     /// <param name="workflow"></param>
+    /// <param name="rankDir">Specifies the rank directory the graph will be plotted</param>
     /// <returns></returns>
-    public static string ToDot(this IWorkflowDefinition workflow, string rankDir = "LR")
+    public static string ToDot(this IWorkflowDefinition workflow, string rankDir = "")
     {
       var sb = new StringBuilder();
 
       sb.AppendLine($"digraph {workflow.Type} {{");
-      sb.AppendLine($"  rankdir = {rankDir};");
+      if (!string.IsNullOrEmpty(rankDir)) sb.AppendLine($"  rankdir = {rankDir};");
       foreach(var t in workflow.Transitions)
       {
         sb.AppendLine($"  {t.State} -> {t.TargetState} [ label = {t.Trigger} ];");

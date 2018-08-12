@@ -6,15 +6,14 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
 import { AuthService } from '../shared/services/auth.service';
 import { FormdefComponent } from '../shared/formdef/index';
-import { WorkflowResult, TriggerInfo, NoWorkflowResult } from '../workflow/index';
+import { WorkflowResult, TriggerInfo, AssigneeWorkflowResult } from '../workflow/index';
 
 import { HolidayService } from './holiday.service';
 import {
   Holiday,
   ApplyHolidayDetailSlot,
   ApplyHoliday,
-  ApproveHolidayDetailSlot,
-  ApproveHoliday
+  ApproveHolidayDetailSlot
 } from './models';
 
 @AutoUnsubscribe
@@ -46,12 +45,11 @@ import {
   <div class="row" *ngIf="entity && entity.id">
     <div class="col-sm">
       <p>
-        <b>{{ entity.requester }}</b> applied for holiday between 
+        <b>{{ entity.requester }}</b> applied for holiday between
         <b>{{ entity.from | date }}</b> and <b>{{ entity.to | date }}</b>.
       </p>
-      <h5 i18n>Messages</h5>
-      <div class="table-responsive-md" 
-        *ngIf="entity.messages && entity.messages.length > 0">
+      <div class="table-responsive-md" *ngIf="entity.messages && entity.messages.length > 0">
+        <h5 i18n>Messages</h5>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -107,31 +105,22 @@ export class HolidayComponent implements OnInit {
   public triggerClicked(trigger: string): void {
     if (trigger === 'apply') {
       this._service.apply(this.formDef.formValue)
-        .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded
-            && result.viewModel.assignee !== this._auth.username) {
-            this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
-          }
+        .subscribe((result: WorkflowResult<Holiday, AssigneeWorkflowResult>) => {
+          this.checkResponse(result);
         });
     }
 
     if (trigger === 'approve') {
       this._service.approve(this.formDef.formValue)
-        .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded
-            && result.viewModel.assignee !== this._auth.username) {
-            this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
-          }
+        .subscribe((result: WorkflowResult<Holiday, AssigneeWorkflowResult>) => {
+          this.checkResponse(result);
         });
     }
 
     if (trigger === 'reject') {
       this._service.reject(this.formDef.formValue)
-        .subscribe((result: WorkflowResult<Holiday, NoWorkflowResult>) => {
-          if (result.triggerInfo.succeeded
-            && result.viewModel.assignee !== this._auth.username) {
-            this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
-          }
+        .subscribe((result: WorkflowResult<Holiday, AssigneeWorkflowResult>) => {
+          this.checkResponse(result);
         });
     }
   }
@@ -162,5 +151,14 @@ export class HolidayComponent implements OnInit {
         this.triggerInfo = result.triggerInfo;
         this.entity = result.entity;
       });
+  }
+
+  private checkResponse(result: WorkflowResult<Holiday, AssigneeWorkflowResult>): void {
+    if (result.triggerInfo.succeeded
+      && result.viewModel.assignee !== this._auth.username) {
+      this._router.navigate(['dispatch', result.viewModel.assignee, 'holiday']);
+    } else {
+      this._router.navigate(['holiday']);
+    }
   }
 }
