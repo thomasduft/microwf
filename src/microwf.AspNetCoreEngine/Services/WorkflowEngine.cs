@@ -66,7 +66,16 @@ namespace tomware.Microwf.Engine
       if (param == null) throw new InvalidOperationException(nameof(param));
 
       var entity = param.Instance as IEntityWorkflow;
-      if (entity == null) throw new Exception("No entity given!");
+      if (entity == null)
+      {
+        _logger.LogTrace($@"Processing a non '${param.Instance.Type}' 
+            entity instance.");
+
+        // going the non EF way!
+        var execution = GetExecution(param.Instance.Type);
+
+        return execution.Trigger(param);
+      }
 
       TriggerResult result = null;
       using (var transaction = this._context.Database.BeginTransaction())
@@ -74,6 +83,8 @@ namespace tomware.Microwf.Engine
         try
         {
           Workflow workflow = null;
+          _logger.LogTrace($@"Processing an '${param.Instance.Type}' 
+            entity instance with Id = ${entity.Id}.");
 
           var execution = GetExecution(param.Instance.Type);
 
@@ -102,8 +113,8 @@ namespace tomware.Microwf.Engine
           transaction.Rollback();
 
           _logger.LogError(
-            $"Error in triggering: {param.Instance.Type}, EntityId: {entity.Id}",
-            ex.StackTrace
+            ex,
+            $"Error in triggering: {param.Instance.Type}, EntityId: {entity.Id}"
           );
         }
       }
