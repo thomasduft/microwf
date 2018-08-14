@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace tomware.Microwf.Engine
 {
   public class ProcessorConfiguration

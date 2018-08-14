@@ -1,5 +1,4 @@
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace tomware.Microwf.Engine
@@ -18,12 +17,12 @@ namespace tomware.Microwf.Engine
       IOptions<WorkflowConfiguration> workflows
     )
     {
-      this._workflowConfiguration = workflows.Value;
+      _workflowConfiguration = workflows.Value;
     }
 
     public WorkflowDefinitionViewModel CreateViewModel(string type)
     {
-      var workflowType = this._workflowConfiguration.Types.FirstOrDefault(_ => _.Type == type);
+      var workflowType = _workflowConfiguration.Types.FirstOrDefault(_ => _.Type == type);
 
       return new WorkflowDefinitionViewModel
       {

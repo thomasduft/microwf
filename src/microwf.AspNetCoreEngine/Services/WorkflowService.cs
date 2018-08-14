@@ -26,19 +26,19 @@ namespace tomware.Microwf.Engine
       IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {
-      this._workflowDefinitionProvider = workflowDefinitionProvider;
-      this._userWorkflowDefinitionService = userWorkflowDefinitionService;
-      this._configuration = configuration;
-      this._viewModelCreator = viewModelCreator;
+      _workflowDefinitionProvider = workflowDefinitionProvider;
+      _userWorkflowDefinitionService = userWorkflowDefinitionService;
+      _configuration = configuration;
+      _viewModelCreator = viewModelCreator;
     }
 
     public IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions()
     {
-      var workflowDefinitions = this._workflowDefinitionProvider.GetWorkflowDefinitions();
+      var workflowDefinitions = _workflowDefinitionProvider.GetWorkflowDefinitions();
 
-      workflowDefinitions = this._userWorkflowDefinitionService.Filter(workflowDefinitions);
+      workflowDefinitions = _userWorkflowDefinitionService.Filter(workflowDefinitions);
 
-      return workflowDefinitions.Select(d => this._viewModelCreator.CreateViewModel(d.Type));
+      return workflowDefinitions.Select(d => _viewModelCreator.CreateViewModel(d.Type));
     }
 
     public string Dot(string type)

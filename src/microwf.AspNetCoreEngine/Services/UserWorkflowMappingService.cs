@@ -12,13 +12,13 @@ namespace tomware.Microwf.Engine
     {
       get
       {
-        return this._workflows;
+        return _workflows;
       }
     }
 
     public UserWorkflowMappingsStore(IEnumerable<UserWorkflowMapping> workflows)
     {
-      this._workflows = workflows;
+      _workflows = workflows;
     }
   }
 
@@ -51,14 +51,14 @@ namespace tomware.Microwf.Engine
       UserWorkflowMappingsStore userWorkflowsStore
     )
     {
-      this._userContext = userContext;
-      this._userWorkflowsStore = userWorkflowsStore;
+      _userContext = userContext;
+      _userWorkflowsStore = userWorkflowsStore;
     }
 
     public IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> definitions)
     {
-      var userWorkflow = this._userWorkflowsStore.Workflows
-        .FirstOrDefault(_ => _.UserName == this._userContext.UserName);
+      var userWorkflow = _userWorkflowsStore.Workflows
+        .FirstOrDefault(_ => _.UserName == _userContext.UserName);
 
       return definitions.Where(_ => userWorkflow.WorkflowDefinitions.Contains(_.Type));
     }

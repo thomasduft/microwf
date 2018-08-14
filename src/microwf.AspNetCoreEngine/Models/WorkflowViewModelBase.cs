@@ -4,7 +4,7 @@ namespace tomware.Microwf.Engine
 {
   public class WorkflowTriggerInfo
   {
-    public bool Succeeded { get { return this.Errors == null; } }
+    public bool Succeeded { get { return Errors == null; } }
 
     public IEnumerable<string> Errors { get; set; }
 
@@ -44,9 +44,9 @@ namespace tomware.Microwf.Engine
 
     public WorkflowResult(WorkflowTriggerInfo info, TEntity entity, TViewModel viewModel)
     {
-      this.TriggerInfo = info;
-      this.Entity = entity;
-      this.ViewModel = viewModel;
+      TriggerInfo = info;
+      Entity = entity;
+      ViewModel = viewModel;
     }
   }
 
@@ -59,13 +59,13 @@ namespace tomware.Microwf.Engine
 
     public AssigneeWorkflowResult(string assignee)
     {
-      this.Assignee = assignee;
+      Assignee = assignee;
     }
 
     public AssigneeWorkflowResult(string assignee, string message)
     {
-      this.Assignee = assignee;
-      this.Message = message;
+      Assignee = assignee;
+      Message = message;
     }
   }
 }

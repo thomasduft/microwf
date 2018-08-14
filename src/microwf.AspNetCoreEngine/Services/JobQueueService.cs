@@ -35,7 +35,7 @@ namespace tomware.Microwf.Engine
           _items = new ConcurrentQueue<WorkItem>();
           ResumeWorkItems();
         }
-        return this._items;
+        return _items;
       }
     }
 
@@ -53,7 +53,7 @@ namespace tomware.Microwf.Engine
       _logger.LogTrace("Enqueue work item", item);
       if (item.Retries > 3)
       {
-        _logger.LogInformation("Amount of retries for exceeded");
+        _logger.LogInformation($"Amount of retries for work item ${item.Id} exceeded");
         return;
       }
 
@@ -64,8 +64,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Dequeued work item");
 
-      WorkItem item;
-      if (Items.TryDequeue(out item))
+      if (Items.TryDequeue(out WorkItem item))
       {
         item.Error = string.Empty;
 
@@ -89,12 +88,12 @@ namespace tomware.Microwf.Engine
         {
           _logger.LogError(
             "ProcessingWorkItemFailed",
-            string.Join('-', triggerResult.Errors),
+            string.Join("-", triggerResult.Errors),
             triggerResult
           );
 
           item.Retries++;
-          this.Enqueue(item);
+          Enqueue(item);
         }
         else
         {
@@ -113,7 +112,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Resuming work items");
 
-      using (var scope = this._serviceScopeFactory.CreateScope())
+      using (var scope = _serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
@@ -123,7 +122,7 @@ namespace tomware.Microwf.Engine
 
         foreach (var item in items)
         {
-          this.Enqueue(item);
+          Enqueue(item);
         }
       }
     }
@@ -132,7 +131,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Persisting work items");
 
-      using (var scope = this._serviceScopeFactory.CreateScope())
+      using (var scope = _serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
@@ -144,7 +143,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Deleting work item");
 
-      using (var scope = this._serviceScopeFactory.CreateScope())
+      using (var scope = _serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
@@ -156,7 +155,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Processing work item", item);
 
-      using (var scope = this._serviceScopeFactory.CreateScope())
+      using (var scope = _serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
 

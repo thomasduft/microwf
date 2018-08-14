@@ -49,7 +49,7 @@ namespace tomware.Microwf.Core
       _triggerContext = context;
       CanTrigger = canTrigger;
       IsAborted = _triggerContext.TransitionAborted;
-      this.Errors = _triggerContext.Errors;
+      Errors = _triggerContext.Errors;
     }
 
     public T GetVariable<T>(string key) where T : WorkflowVariableBase

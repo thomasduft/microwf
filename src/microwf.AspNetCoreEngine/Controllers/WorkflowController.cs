@@ -12,14 +12,14 @@ namespace tomware.Microwf.Engine
 
     public WorkflowController(IWorkflowService service)
     {
-      this._service = service;
+      _service = service;
     }
 
     [HttpGet("definitions")]
     [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
     public IActionResult Get()
     {
-      var result = this._service.GetWorkflowDefinitions();
+      var result = _service.GetWorkflowDefinitions();
 
       return Ok(result);
     }
@@ -28,7 +28,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(string), 200)]
     public IActionResult Dot(string type)
     {
-      var result = this._service.Dot(type);
+      var result = _service.Dot(type);
 
       return Ok(result);
     }

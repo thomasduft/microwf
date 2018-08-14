@@ -78,7 +78,7 @@ namespace tomware.Microwf.Engine
       }
 
       TriggerResult result = null;
-      using (var transaction = this._context.Database.BeginTransaction())
+      using (var transaction = _context.Database.BeginTransaction())
       {
         try
         {
@@ -129,19 +129,19 @@ namespace tomware.Microwf.Engine
 
     private WorkflowExecution GetExecution(string type)
     {
-      var definition = this._workflowDefinitionProvider.GetWorkflowDefinition(type);
+      var definition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return new WorkflowExecution(definition);
     }
 
     private Workflow FindOrCreate(int id, string type, string state, string assignee)
     {
-      var workflow = this._context.Workflows.Include(_ => _.WorkflowVariables)
+      var workflow = _context.Workflows.Include(_ => _.WorkflowVariables)
         .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
       if (workflow == null)
       {
         workflow = Workflow.Create(id, type, state, assignee);
-        this._context.Workflows.Add(workflow);
+        _context.Workflows.Add(workflow);
       }
 
       return workflow;
@@ -222,7 +222,7 @@ namespace tomware.Microwf.Engine
     private async Task<bool> WorkflowIsCompleted(TriggerParam triggerParam)
     {
       var triggerResults
-        = await this.GetTriggersAsync(triggerParam.Instance, triggerParam.Variables);
+        = await GetTriggersAsync(triggerParam.Instance, triggerParam.Variables);
 
       return triggerResults.Count() == 0;
     }
