@@ -13,5 +13,6 @@ dotnet restore microwf.sln
 
 echo Packaging solution
 dotnet pack src/microwf.Core -c Release /p:PackageVersion=$1 -o ./../../dist/nupkgs
+dotnet pack src/microwf.AspNetCoreEngine -c Release /p:PackageVersion=$1 -o ./../../dist/nupkgs
 
 echo Done
