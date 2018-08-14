@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microwf.Tests", "test\micro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "samples\WebApi\WebApi.csproj", "{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3FF57038-BF74-4246-A8B1-17AD0F9E25DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microwf.AspNetCoreEngine", "src\microwf.AspNetCoreEngine\microwf.AspNetCoreEngine.csproj", "{C2BD3303-7BF6-4C8F-95B8-88D4890B7603}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,11 +31,18 @@ Global
 		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2BD3303-7BF6-4C8F-95B8-88D4890B7603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2BD3303-7BF6-4C8F-95B8-88D4890B7603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2BD3303-7BF6-4C8F-95B8-88D4890B7603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2BD3303-7BF6-4C8F-95B8-88D4890B7603}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E5EA939-10CC-40AF-82EF-6C990F76C953}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2BD3303-7BF6-4C8F-95B8-88D4890B7603} = {3FF57038-BF74-4246-A8B1-17AD0F9E25DA}
 	EndGlobalSection
 EndGlobal
