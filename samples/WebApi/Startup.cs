@@ -112,7 +112,6 @@ namespace WebApi
 
       // MessageBus
       services.AddSingleton<IMessageBus, InMemoryMessageBus>();
-      services.AddSingleton<WorkflowProcessor>();
 
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
