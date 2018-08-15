@@ -68,10 +68,10 @@ namespace tomware.Microwf.Engine
       var entity = param.Instance as IEntityWorkflow;
       if (entity == null)
       {
+        // going the non EF way!
         _logger.LogTrace($@"Processing a non '${param.Instance.Type}' 
             entity instance.");
 
-        // going the non EF way!
         var execution = GetExecution(param.Instance.Type);
 
         return execution.Trigger(param);

@@ -37,7 +37,7 @@
         "test",
         "/p:CollectCoverage=true",
         "/p:CoverletOutputFormat=lcov",
-        "/p:CoverletOutput=./lcov",
+        "/p:CoverletOutput=./../lcov",
         "${workspaceFolder}/test/microwf.Tests.csproj"
       ],
       "problemMatcher": "$msCompile",
