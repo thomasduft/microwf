@@ -9,7 +9,7 @@ using tomware.Microwf.Engine;
 namespace microwf.Tests.AspNetCoreEngine
 {
   [TestClass]
-  public class TriggerParamTest
+  public class WorkItemServiceTest
   {
     [TestMethod]
     public async Task WorkItemService_ResumeWorkItemsAsync_TwoItemsResumed()
