@@ -1,10 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using tomware.Microwf.Core;
-using microwf.tests.WorkflowDefinitions;
+using microwf.Tests.WorkflowDefinitions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.tests
+namespace microwf.Tests.Core
 {
   [TestClass]
   public class WorkflowDefinitionTest

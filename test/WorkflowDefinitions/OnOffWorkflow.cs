@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.tests.WorkflowDefinitions
+namespace microwf.Tests.WorkflowDefinitions
 {
   public class OnOffWorkflow : WorkflowDefinitionBase
   {

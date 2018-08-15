@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using microwf.tests.WorkflowDefinitions;
+using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Core;
 
-namespace microwf.tests
+namespace microwf.Tests.Core
 {
   [TestClass]
   public class TransitionContextTest
