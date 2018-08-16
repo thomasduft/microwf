@@ -30,7 +30,7 @@ namespace tomware.Microwf.Engine
         services.AddTransient<EnqueueWorkItemMessageHandler>();
       }
 
-      services.AddTransient<UserContextService>();
+      services.AddTransient<IUserContextService, UserContextService>();
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();

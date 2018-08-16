@@ -27,13 +27,13 @@ namespace WebApi.Workflows.Issue
   {
     private readonly DomainContext _context;
     private readonly IWorkflowEngine _workflowEngine;
-    private readonly UserContextService _userContext;
+    private readonly IUserContextService _userContext;
     private readonly IMessageBus _messageBus;
 
     public IssueService(
       DomainContext context,
       IWorkflowEngine workflowEngine,
-      UserContextService userContext,
+      IUserContextService userContext,
       IMessageBus messageBus
     )
     {
@@ -89,7 +89,7 @@ namespace WebApi.Workflows.Issue
       var issue = await FindOrCreate(model.Id);
 
       var triggerParam = new TriggerParam(model.Trigger, issue)
-       .AddVariable(KeyBuilder.ToKey(typeof(IssueViewModel)), model);
+       .AddVariableWithKey<IssueViewModel>(model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 

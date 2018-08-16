@@ -43,11 +43,11 @@ namespace tomware.Microwf.Engine
 
   public class InMemoryUserWorkflowMappingService : IUserWorkflowMappingService
   {
-    private readonly UserContextService _userContext;
+    private readonly IUserContextService _userContext;
     private readonly UserWorkflowMappingsStore _userWorkflowsStore;
 
     public InMemoryUserWorkflowMappingService(
-      UserContextService userContext,
+      IUserContextService userContext,
       UserWorkflowMappingsStore userWorkflowsStore
     )
     {

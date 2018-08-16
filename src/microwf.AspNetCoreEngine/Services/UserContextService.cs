@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace tomware.Microwf.Engine
 {
-  // see: http://stackoverflow.com/questions/36401026/how-to-get-user-information-in-dbcontext-using-net-core
+  public interface IUserContextService
+  {
+    string UserName { get; }
+  }
 
-  public class UserContextService
+  public class UserContextService : IUserContextService
   {
     private readonly IHttpContextAccessor _context;
 

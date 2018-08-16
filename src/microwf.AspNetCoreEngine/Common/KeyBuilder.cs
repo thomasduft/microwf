@@ -2,7 +2,7 @@ using System;
 
 namespace tomware.Microwf.Engine
 {
-  public class KeyBuilder
+  internal static class KeyBuilder
   {
     public static string ToKey(Type type)
     {

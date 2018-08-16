@@ -115,8 +115,6 @@ namespace WebApi
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
 
-      services.AddTransient<UserContextService>();
-
       var workflows = this.Configuration.GetSection("Workflows");
       var worker = this.Configuration.GetSection("Worker");
       services
