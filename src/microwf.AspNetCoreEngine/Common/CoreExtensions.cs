@@ -15,14 +15,14 @@ namespace tomware.Microwf.Core
 
   public static class TransitionContextExtension
   {
-    public static bool ContainsVariableKey<TVariable>(
+    public static bool HasVariable<TVariable>(
       this TransitionContext transitionContext
     ) 
     {
       return transitionContext.ContainsKey(KeyBuilder.ToKey(typeof(TVariable)));
     }
 
-    public static TVariable GetVariableFromKey<TVariable>(
+    public static TVariable ReturnVariable<TVariable>(
       this TransitionContext transitionContext
     ) where TVariable : WorkflowVariableBase
     {

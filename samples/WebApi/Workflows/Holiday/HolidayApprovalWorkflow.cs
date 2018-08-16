@@ -68,9 +68,9 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = context.GetInstance<Holiday>();
 
-      if (context.ContainsVariableKey<ApplyHolidayViewModel>())
+      if (context.HasVariable<ApplyHolidayViewModel>())
       {
-        var model = context.GetVariableFromKey<ApplyHolidayViewModel>();
+        var model = context.ReturnVariable<ApplyHolidayViewModel>();
         holiday.Assignee = holiday.Superior;
         holiday.From = model.From;
         holiday.To = model.To;
@@ -90,9 +90,9 @@ namespace WebApi.Workflows.Holiday
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
-      if (context.ContainsVariableKey<ApproveHolidayViewModel>())
+      if (context.HasVariable<ApproveHolidayViewModel>())
       {
-        var model = context.GetVariableFromKey<ApproveHolidayViewModel>();
+        var model = context.ReturnVariable<ApproveHolidayViewModel>();
         if (!string.IsNullOrWhiteSpace(model.Message))
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
@@ -121,9 +121,9 @@ namespace WebApi.Workflows.Holiday
 
       holiday.Assignee = holiday.Requester;
 
-      if (context.ContainsVariableKey<ApproveHolidayViewModel>())
+      if (context.HasVariable<ApproveHolidayViewModel>())
       {
-        var model = context.GetVariableFromKey<ApproveHolidayViewModel>();
+        var model = context.ReturnVariable<ApproveHolidayViewModel>();
         if (!string.IsNullOrWhiteSpace(model.Message))
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
