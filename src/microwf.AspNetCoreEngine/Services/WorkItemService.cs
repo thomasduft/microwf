@@ -45,11 +45,15 @@ namespace tomware.Microwf.Engine
         .Where(_ => ids.Contains(_.Id))
         .ToListAsync<WorkItem>();
 
+      var comparer = new WorkItemComparer();
+
       // updates
-      _context.WorkItems.UpdateRange(items.Intersect(existingItems));
+      var updates = items.Intersect(existingItems, comparer);
+      _context.WorkItems.UpdateRange(updates);
 
       // new items
-      _context.WorkItems.AddRange(items.Except(existingItems));
+      var inserts = items.Except(existingItems, comparer);
+      _context.WorkItems.AddRange(inserts);
 
       await _context.SaveChangesAsync();
     }
@@ -63,6 +67,24 @@ namespace tomware.Microwf.Engine
       await _context.SaveChangesAsync();
 
       return item.Id;
+    }
+  }
+
+  public class WorkItemComparer : IEqualityComparer<WorkItem>
+  {
+    public bool Equals(WorkItem emp1, WorkItem emp2)
+    {
+      if (emp1.Id == emp2.Id)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public int GetHashCode(WorkItem obj)
+    {
+      return obj.Id.GetHashCode();
     }
   }
 }

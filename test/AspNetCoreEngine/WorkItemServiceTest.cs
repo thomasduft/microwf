@@ -58,6 +58,37 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
+    public async Task WorkItemService_PersistWorkItemsAsync_OneItemPersistedOneItemUpdated()
+    {
+      // Arrange
+      var options = TestDbContext.CreateDbContextOptions();
+      var context = new EngineDbContext(options);
+      var workItems = GetWorkItems();
+
+      var firstWorkItem = workItems.First();
+      firstWorkItem.WorkflowType = "firstCopy";
+
+      await context.WorkItems.AddAsync(firstWorkItem);
+      await context.SaveChangesAsync();
+
+      firstWorkItem.WorkflowType = "first";
+
+      var diHelper = new DITestHelper();
+      var loggerFactory = diHelper.GetLoggerFactory();
+      ILogger<WorkItemService<EngineDbContext>> logger = loggerFactory
+        .CreateLogger<WorkItemService<EngineDbContext>>();
+
+      var service = new WorkItemService<EngineDbContext>(context, logger);
+
+      // Act
+      await service.PersistWorkItemsAsync(workItems);
+
+      // Assert
+      Assert.AreEqual(2, context.WorkItems.Count());
+      Assert.AreEqual("first", context.WorkItems.First().WorkflowType);
+    }
+
+    [TestMethod]
     public async Task WorkItemService_DeleteAsync_OneItemDeleted()
     {
       // Arrange
@@ -81,6 +112,7 @@ namespace microwf.Tests.AspNetCoreEngine
       // Assert
       Assert.AreEqual(1, result);
       Assert.AreEqual(1, context.WorkItems.Count());
+      Assert.AreEqual(2, context.WorkItems.First().Id);
     }
 
     private List<WorkItem> GetWorkItems()
