@@ -109,9 +109,6 @@ namespace WebApi
         });
       });
 
-      // MessageBus
-      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
-
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
 

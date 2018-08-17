@@ -39,6 +39,9 @@ namespace tomware.Microwf.Engine
       services.AddTransient<IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
 
+      // MessageBus
+      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
+
       return services;
     }
 
@@ -62,7 +65,10 @@ namespace tomware.Microwf.Engine
 
       var messageBus = app.ApplicationServices.GetRequiredService<IMessageBus>();
 
-      messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItem>();
+      if (messageBus != null)
+      {
+        messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItem>();
+      }
 
       return app;
     }
