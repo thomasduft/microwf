@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace tomware.Microwf.Engine
+namespace WebApi.Common
 {
   public class WorkflowTriggerInfo
   {

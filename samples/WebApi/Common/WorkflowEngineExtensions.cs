@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
+using tomware.Microwf.Engine;
 
-namespace tomware.Microwf.Engine
+namespace WebApi.Common
 {
   public static class WorkflowServiceExtension
   {

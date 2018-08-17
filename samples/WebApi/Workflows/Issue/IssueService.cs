@@ -7,6 +7,7 @@ using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Domain;
+using WebApi.Common;
 
 namespace WebApi.Workflows.Issue
 {
