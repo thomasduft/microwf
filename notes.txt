@@ -1,7 +1,4 @@
 notes:
-- move to samples/WebApi
-  (x) WorkflowViewModelBase.cs 
-  (x) WorkflowServiceExtension.cs 
 
 
 ----------------------------------------------------------------------------------------------------

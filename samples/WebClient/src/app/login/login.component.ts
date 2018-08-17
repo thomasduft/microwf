@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { ApiService } from '../shared/services/api.service';
 import { IToken } from '../shared/services/auth.service';
 
 import { LoginService } from './login.service';
@@ -33,6 +34,10 @@ import { LoginService } from './login.service';
              required>
     </div>
 
+    <div *ngIf="error" class="alert alert-danger">
+      Username or password is wrong!
+    </div>
+
     <button class="btn btn-lg btn-primary btn-block"
             type="submit"
             [disabled]="!formGroup.valid">Sign in</button>
@@ -43,10 +48,12 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
   public formGroup: FormGroup;
+  public error: any;
 
   public constructor(
     private _loginService: LoginService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _api: ApiService
   ) { }
 
   public ngOnInit(): void {
@@ -54,13 +61,15 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
+    delete this.error;
+
     this._loginService.login(
       this.formGroup.value.username,
       this.formGroup.value.password
     ).subscribe((token: IToken) => {
       this._loginService.authenticate(token);
     }, (error) => {
-      console.log(error);
+      this.error = this._api.handleError(error);
     });
   }
 
