@@ -1,6 +1,7 @@
 using tomware.Microwf.Core;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace microwf.Tests.Utils
 {
@@ -18,6 +19,11 @@ namespace microwf.Tests.Utils
 
         return _instance;
       }
+    }
+
+    internal void Invalidate()
+    {
+      _workflowDefinitions = new List<IWorkflowDefinition>();
     }
 
     private SimpleWorkflowDefinitionProvider()

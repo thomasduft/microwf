@@ -42,7 +42,7 @@ namespace tomware.Microwf.Engine
 
     public async Task<TriggerResult> CanTriggerAsync(TriggerParam param)
     {
-      if (param == null) throw new InvalidOperationException(nameof(param));
+      if (param == null) throw new ArgumentNullException(nameof(param));
 
       var execution = GetExecution(param.Instance.Type);
 
@@ -54,7 +54,7 @@ namespace tomware.Microwf.Engine
       Dictionary<string, WorkflowVariableBase> variables = null
     )
     {
-      if (instance == null) throw new InvalidOperationException(nameof(instance));
+      if (instance == null) throw new ArgumentNullException(nameof(instance));
 
       var execution = GetExecution(instance.Type);
 
@@ -63,7 +63,7 @@ namespace tomware.Microwf.Engine
 
     public async Task<TriggerResult> TriggerAsync(TriggerParam param)
     {
-      if (param == null) throw new InvalidOperationException(nameof(param));
+      if (param == null) throw new ArgumentNullException(nameof(param));
 
       var entity = param.Instance as IEntityWorkflow;
       if (entity == null)

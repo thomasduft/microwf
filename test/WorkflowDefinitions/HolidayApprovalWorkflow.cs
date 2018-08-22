@@ -73,6 +73,7 @@ namespace microwf.Tests.WorkflowDefinitions
     public Holiday()
     {
       this.State = "New";
+      this.Type = HolidayApprovalWorkflow.TYPE;
     }
   }
 }

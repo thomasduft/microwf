@@ -82,6 +82,7 @@ namespace microwf.Tests.WorkflowDefinitions
     public Switcher()
     {
       State = "Off";
+      Type = OnOffWorkflow.TYPE;
     }
   }
 

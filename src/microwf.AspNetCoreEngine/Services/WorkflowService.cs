@@ -17,11 +17,9 @@ namespace tomware.Microwf.Engine
   {
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
     private readonly IUserWorkflowMappingService _userWorkflowMappingService;
-    private readonly IConfiguration _configuration;
     private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
 
     public WorkflowService(
-      IConfiguration configuration,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
       IUserWorkflowMappingService userWorkflowMappingService,
       IWorkflowDefinitionViewModelCreator viewModelCreator
@@ -29,7 +27,6 @@ namespace tomware.Microwf.Engine
     {
       _workflowDefinitionProvider = workflowDefinitionProvider;
       _userWorkflowMappingService = userWorkflowMappingService;
-      _configuration = configuration;
       _viewModelCreator = viewModelCreator;
     }
 
@@ -44,7 +41,7 @@ namespace tomware.Microwf.Engine
 
     public string Dot(string type)
     {
-      if (type == null) throw new ArgumentNullException(nameof(type));
+      if (string.IsNullOrEmpty(type)) throw new ArgumentNullException(nameof(type));
 
       var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
 
