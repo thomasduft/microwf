@@ -14,26 +14,28 @@ namespace microwf.Tests.AspNetCoreEngine
   [TestClass]
   public class WorkflowEngineTest
   {
-    public EngineDbContext Context { get; set; }
+    public TestDbContext Context { get; set; }
     public IWorkflowEngine WorkflowEngine { get; set; }
 
     [TestInitialize]
     public void Initialize()
     {
       var options = TestDbContext.CreateDbContextOptions();
-      Context = new EngineDbContext(options);
+      Context = new TestDbContext(options);
 
       var diHelper = new DITestHelper();
       var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkflowEngine<EngineDbContext>> logger = loggerFactory
-        .CreateLogger<WorkflowEngine<EngineDbContext>>();
+      ILogger<WorkflowEngine<TestDbContext>> logger = loggerFactory
+        .CreateLogger<WorkflowEngine<TestDbContext>>();
 
       SimpleWorkflowDefinitionProvider.Instance
        .RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
       SimpleWorkflowDefinitionProvider.Instance
         .RegisterWorkflowDefinition(new OnOffWorkflow());
+      SimpleWorkflowDefinitionProvider.Instance
+        .RegisterWorkflowDefinition(new EntityOnOffWorkflow());
 
-      this.WorkflowEngine = new WorkflowEngine<EngineDbContext>(
+      this.WorkflowEngine = new WorkflowEngine<TestDbContext>(
         Context,
         logger,
         SimpleWorkflowDefinitionProvider.Instance
@@ -119,6 +121,28 @@ namespace microwf.Tests.AspNetCoreEngine
       // Act
       await Assert.ThrowsExceptionAsync<ArgumentNullException>(
         () => this.WorkflowEngine.TriggerAsync(null));
+    }
+
+    [TestMethod]
+    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstance_ReturnsTriggerResult()
+    {
+      // Arrange
+      var instance = new LigthtSwitcher();
+      var param = new TriggerParam("SwitchOn", instance);
+
+      TriggerResult triggerResult = null;
+
+      // Act
+      triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+
+      // Assert
+      Assert.IsNotNull(triggerResult);
+      Assert.IsFalse(triggerResult.HasErrors);
+      Assert.AreEqual(instance.State, triggerResult.CurrentState);
+      Assert.AreEqual("On", triggerResult.CurrentState);
+
+      Assert.AreEqual(1, this.Context.Workflows.Count());
+      Assert.AreEqual(0, this.Context.Workflows.First().WorkflowVariables.Count());
     }
 
     // TODO: TriggerAsync with DB context interaction scenarios!

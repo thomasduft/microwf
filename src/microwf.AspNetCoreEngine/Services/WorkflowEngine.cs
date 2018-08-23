@@ -116,6 +116,15 @@ namespace tomware.Microwf.Engine
             ex,
             $"Error in triggering: {param.Instance.Type}, EntityId: {entity.Id}"
           );
+
+          var transitionContext = new TransitionContext(param.Instance);
+          transitionContext.AddError(ex.ToString());
+
+          result = new TriggerResult(
+            param.TriggerName,
+            transitionContext,
+            false
+          );
         }
       }
 

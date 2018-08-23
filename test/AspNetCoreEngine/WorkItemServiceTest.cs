@@ -16,7 +16,7 @@ namespace microwf.Tests.AspNetCoreEngine
     {
       // Arrange
       var options = TestDbContext.CreateDbContextOptions();
-      var context = new EngineDbContext(options);
+      var context = new TestDbContext(options);
       var workItems = GetWorkItems();
 
       await context.WorkItems.AddRangeAsync(workItems);
@@ -24,10 +24,10 @@ namespace microwf.Tests.AspNetCoreEngine
 
       var diHelper = new DITestHelper();
       var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkItemService<EngineDbContext>> logger = loggerFactory
-        .CreateLogger<WorkItemService<EngineDbContext>>();
+      ILogger<WorkItemService<TestDbContext>> logger = loggerFactory
+        .CreateLogger<WorkItemService<TestDbContext>>();
 
-      var service = new WorkItemService<EngineDbContext>(context, logger);
+      var service = new WorkItemService<TestDbContext>(context, logger);
 
       // Act
       IEnumerable<WorkItem> resumedItems = await service.ResumeWorkItemsAsync();
@@ -42,13 +42,13 @@ namespace microwf.Tests.AspNetCoreEngine
       // Arrange
       var options = TestDbContext.CreateDbContextOptions();
 
-      var context = new EngineDbContext(options);
+      var context = new TestDbContext(options);
       var diHelper = new DITestHelper();
       var logger = diHelper.GetLoggerFactory()
-        .CreateLogger<WorkItemService<EngineDbContext>>();
+        .CreateLogger<WorkItemService<TestDbContext>>();
       var workItems = GetWorkItems();
 
-      var service = new WorkItemService<EngineDbContext>(context, logger);
+      var service = new WorkItemService<TestDbContext>(context, logger);
 
       // Act
       await service.PersistWorkItemsAsync(workItems);
@@ -62,7 +62,7 @@ namespace microwf.Tests.AspNetCoreEngine
     {
       // Arrange
       var options = TestDbContext.CreateDbContextOptions();
-      var context = new EngineDbContext(options);
+      var context = new TestDbContext(options);
       var workItems = GetWorkItems();
 
       var firstWorkItem = workItems.First();
@@ -75,10 +75,10 @@ namespace microwf.Tests.AspNetCoreEngine
 
       var diHelper = new DITestHelper();
       var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkItemService<EngineDbContext>> logger = loggerFactory
-        .CreateLogger<WorkItemService<EngineDbContext>>();
+      ILogger<WorkItemService<TestDbContext>> logger = loggerFactory
+        .CreateLogger<WorkItemService<TestDbContext>>();
 
-      var service = new WorkItemService<EngineDbContext>(context, logger);
+      var service = new WorkItemService<TestDbContext>(context, logger);
 
       // Act
       await service.PersistWorkItemsAsync(workItems);
@@ -93,7 +93,7 @@ namespace microwf.Tests.AspNetCoreEngine
     {
       // Arrange
       var options = TestDbContext.CreateDbContextOptions();
-      var context = new EngineDbContext(options);
+      var context = new TestDbContext(options);
       var workItems = GetWorkItems();
 
       await context.WorkItems.AddRangeAsync(workItems);
@@ -101,10 +101,10 @@ namespace microwf.Tests.AspNetCoreEngine
 
       var diHelper = new DITestHelper();
       var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkItemService<EngineDbContext>> logger = loggerFactory
-        .CreateLogger<WorkItemService<EngineDbContext>>();
+      ILogger<WorkItemService<TestDbContext>> logger = loggerFactory
+        .CreateLogger<WorkItemService<TestDbContext>>();
 
-      var service = new WorkItemService<EngineDbContext>(context, logger);
+      var service = new WorkItemService<TestDbContext>(context, logger);
 
       // Act
       var result = await service.DeleteAsync(1);
