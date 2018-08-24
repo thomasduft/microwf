@@ -12,7 +12,7 @@ namespace microwf.Tests.WorkflowDefinitions
 
     public override string Type => TYPE;
 
-    public override Type EntityType => typeof(LigthtSwitcher);
+    public override Type EntityType => typeof(LightSwitcher);
 
     public override List<Transition> Transitions
     {
@@ -23,7 +23,8 @@ namespace microwf.Tests.WorkflowDefinitions
           new Transition {
             State = "On",
             Trigger = "SwitchOff",
-            TargetState ="Off"
+            TargetState ="Off",
+            CanMakeTransition = CanSwitch
           },
           new Transition {
             State = "Off",
@@ -33,9 +34,21 @@ namespace microwf.Tests.WorkflowDefinitions
         };
       }
     }
+
+    private bool CanSwitch(TransitionContext context)
+    {
+      if (context.HasVariable<LightSwitcherWorkflowVariable>())
+      {
+        var variable = context.ReturnVariable<LightSwitcherWorkflowVariable>();
+
+        return variable.CanSwitch;
+      }
+
+      return true;
+    }
   }
 
-  public class LigthtSwitcher : IEntityWorkflow
+  public class LightSwitcher : IEntityWorkflow
   {
     [Key]
     public int Id { get; set; }
@@ -43,10 +56,15 @@ namespace microwf.Tests.WorkflowDefinitions
     public string State { get; set; }
     public string Assignee { get; set; }
 
-    public LigthtSwitcher()
+    public LightSwitcher()
     {
       State = "Off";
       Type = EntityOnOffWorkflow.TYPE;
     }
+  }
+
+  public class LightSwitcherWorkflowVariable : WorkflowVariableBase
+  {
+    public bool CanSwitch { get; set; }
   }
 }

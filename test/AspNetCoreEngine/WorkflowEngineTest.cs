@@ -127,13 +127,11 @@ namespace microwf.Tests.AspNetCoreEngine
     public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstance_ReturnsTriggerResult()
     {
       // Arrange
-      var instance = new LigthtSwitcher();
+      var instance = new LightSwitcher();
       var param = new TriggerParam("SwitchOn", instance);
 
-      TriggerResult triggerResult = null;
-
       // Act
-      triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -143,6 +141,55 @@ namespace microwf.Tests.AspNetCoreEngine
 
       Assert.AreEqual(1, this.Context.Workflows.Count());
       Assert.AreEqual(0, this.Context.Workflows.First().WorkflowVariables.Count());
+    }
+
+    [TestMethod]
+    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstanceAndNewWorkflowVariable_ReturnsTriggerResult()
+    {
+      // Arrange
+      var instance = new LightSwitcher();
+      var workfowVariable = new LightSwitcherWorkflowVariable { CanSwitch = true };
+      var param = new TriggerParam("SwitchOn", instance)
+        .AddVariableWithKey<LightSwitcherWorkflowVariable>(workfowVariable);
+
+      // Act
+      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+
+      // Assert
+      Assert.IsNotNull(triggerResult);
+      Assert.IsFalse(triggerResult.HasErrors);
+      Assert.AreEqual(instance.State, triggerResult.CurrentState);
+      Assert.AreEqual("On", triggerResult.CurrentState);
+
+      Assert.AreEqual(1, this.Context.Workflows.Count());
+      Assert.AreEqual(1, this.Context.Workflows.First().WorkflowVariables.Count());
+    }
+
+    [TestMethod]
+    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstanceAndExistingWorkflowVariable_ReturnsTriggerResult()
+    {
+      // Arrange
+      var instance = new LightSwitcher();
+      this.Context.Switchers.Add(instance);
+
+      var workflow = Workflow.Create(instance.Id, instance.Type, instance.State, "tester");
+      workflow.AddVariable(new LightSwitcherWorkflowVariable { CanSwitch = true });
+      
+      this.Context.Workflows.Add(workflow);
+      await this.Context.SaveChangesAsync();
+
+      var param = new TriggerParam("SwitchOn", instance);
+
+      // Act
+      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+
+      // Assert
+      Assert.IsNotNull(triggerResult);
+      Assert.IsFalse(triggerResult.HasErrors);
+      Assert.AreEqual(instance.State, triggerResult.CurrentState);
+      Assert.AreEqual("On", triggerResult.CurrentState);
+
+      Assert.IsTrue(param.HasVariables);
     }
 
     // TODO: TriggerAsync with DB context interaction scenarios!

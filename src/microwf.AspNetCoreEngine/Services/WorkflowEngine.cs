@@ -145,7 +145,7 @@ namespace tomware.Microwf.Engine
 
     private Workflow FindOrCreate(int id, string type, string state, string assignee)
     {
-      var workflow = _context.Workflows.Include(_ => _.WorkflowVariables)
+      var workflow = _context.Workflows.Include(v => v.WorkflowVariables)
         .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
       if (workflow == null)
       {
@@ -162,7 +162,7 @@ namespace tomware.Microwf.Engine
       {
         foreach (var workflowVariable in workflow.WorkflowVariables)
         {
-          var type = Type.GetType(workflowVariable.Type);
+          var type = KeyBuilder.FromKey(workflowVariable.Type);
           var variable = JsonConvert.DeserializeObject(workflowVariable.Content, type);
           var workflowVariableBase = variable as WorkflowVariableBase;
           if (workflowVariableBase != null)
@@ -202,12 +202,7 @@ namespace tomware.Microwf.Engine
           }
           else
           {
-            variable = new WorkflowVariable
-            {
-              Type = KeyBuilder.ToKey(v.Value.GetType()),
-              Content = JsonConvert.SerializeObject(v.Value)
-            };
-            workflow.WorkflowVariables.Add(variable);
+            workflow.AddVariable(v.Value);
           }
         }
       }

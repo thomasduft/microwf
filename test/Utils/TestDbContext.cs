@@ -12,7 +12,7 @@ namespace microwf.Tests.Utils
     {
     }
 
-    public DbSet<LigthtSwitcher> Switchers { get; set; }
+    public DbSet<LightSwitcher> Switchers { get; set; }
 
     public static DbContextOptions CreateDbContextOptions()
     {

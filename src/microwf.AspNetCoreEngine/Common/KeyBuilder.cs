@@ -11,7 +11,16 @@ namespace tomware.Microwf.Engine
 
     public static Type FromKey(string key)
     {
-      return Type.GetType(key);
+      var type = Type.GetType(key);
+      if (type != null) return type;
+
+      foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+      {
+        type = a.GetType(key);
+        if (type != null) return type;
+      }
+
+      return null;
     }
   }
 }

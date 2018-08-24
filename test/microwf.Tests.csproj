@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>tomware.Microwf.Tests</AssemblyName>
+    <RootNamespace>tomware.Microwf.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

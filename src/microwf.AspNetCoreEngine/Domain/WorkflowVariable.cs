@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
@@ -19,5 +21,21 @@ namespace tomware.Microwf.Engine
     public int WorkflowId { get; set; }
 
     public Workflow Workflow { get; set; }
+
+    public static WorkflowVariable Create(Workflow workflow, WorkflowVariableBase variable)
+    {
+      return new WorkflowVariable
+      {
+        WorkflowId = workflow.Id,
+        Workflow = workflow,
+        Type = KeyBuilder.ToKey(variable.GetType()),
+        Content = JsonConvert.SerializeObject(variable)
+      };
+    }
+
+    internal void UpdateContent(WorkflowVariableBase variable) 
+    {
+      Content = JsonConvert.SerializeObject(variable);
+    }
   }
 }
