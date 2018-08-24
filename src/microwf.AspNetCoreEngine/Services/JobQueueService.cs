@@ -35,6 +35,7 @@ namespace tomware.Microwf.Engine
           _items = new ConcurrentQueue<WorkItem>();
           ResumeWorkItems();
         }
+
         return _items;
       }
     }
