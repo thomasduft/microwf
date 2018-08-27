@@ -9,14 +9,33 @@ namespace tomware.Microwf.Engine
 {
   public interface IJobQueueService
   {
+    /// <summary>
+    /// Enqueues a work item.
+    /// </summary>
+    /// <param name="workItem"></param>
     void Enqueue(WorkItem workItem);
 
+    /// <summary>
+    /// Dequeues a work item.
+    /// </summary>
+    /// <returns></returns>
     WorkItem Dequeue();
 
-    Task TriggerAsync();
+    /// <summary>
+    /// Processes work items.
+    /// </summary>
+    /// <returns></returns>
+    Task ProcessItemsAsync();
 
+    /// <summary>
+    /// Resumes persisted work items.
+    /// </summary>
     void ResumeWorkItems();
 
+    /// <summary>
+    /// Persists running work items.
+    /// </summary>
+    /// <returns></returns>
     Task PersistWorkItemsAsync();
   }
 
@@ -26,7 +45,7 @@ namespace tomware.Microwf.Engine
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private ConcurrentQueue<WorkItem> _items;
 
-    public ConcurrentQueue<WorkItem> Items
+    private ConcurrentQueue<WorkItem> Items
     {
       get
       {
@@ -59,6 +78,8 @@ namespace tomware.Microwf.Engine
       }
 
       Items.Enqueue(item);
+
+      ProcessItemsAsync();
     }
 
     public WorkItem Dequeue()
@@ -75,7 +96,7 @@ namespace tomware.Microwf.Engine
       return null;
     }
 
-    public async Task TriggerAsync()
+    public async Task ProcessItemsAsync()
     {
       _logger.LogTrace("Triggering job queue for doing work");
 

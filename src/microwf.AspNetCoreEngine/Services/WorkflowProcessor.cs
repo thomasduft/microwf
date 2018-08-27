@@ -31,7 +31,7 @@ namespace tomware.Microwf.Engine
       {
         _logger.LogTrace($"Triggering processor...");
 
-        await _jobQueueService.TriggerAsync();
+        await _jobQueueService.ProcessItemsAsync();
 
         await Task.Delay(_options.Intervall, stoppingToken);
       }

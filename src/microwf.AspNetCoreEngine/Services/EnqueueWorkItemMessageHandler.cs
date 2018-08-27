@@ -5,7 +5,6 @@ using tomware.Microbus.Core;
 
 namespace tomware.Microwf.Engine
 {
-  // TODO introduce EnqueWorkItemMessage type
   public class EnqueueWorkItemMessageHandler : IMessageHandler<WorkItem>
   {
     private readonly ILogger<EnqueueWorkItemMessageHandler> _logger;

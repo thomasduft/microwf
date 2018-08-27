@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,17 @@ namespace tomware.Microwf.Engine
 {
   public interface IWorkflowService
   {
+    /// <summary>
+    /// Returns a list of workflow definitions that exist in the system.
+    /// </summary>
+    /// <returns></returns>
     IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions();
 
+    /// <summary>
+    /// Returns the dot -> diagraph notation for the given workflow type. 
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     string Dot(string type);
   }
 

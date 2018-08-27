@@ -7,13 +7,26 @@ using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
-  // TODO Work with DTO object -> WorkItemInfo/Dto
   public interface IWorkItemService
   {
+    /// <summary>
+    /// Returns a list of persisted WorkItems.
+    /// </summary>
+    /// <returns></returns>
     Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync();
 
+    /// <summary>
+    /// Saves the WorkItem collection.
+    /// </summary>
+    /// <param name="items"></param>
+    /// <returns></returns>
     Task PersistWorkItemsAsync(IEnumerable<WorkItem> items);
 
+    /// <summary>
+    /// Deletes a persisted WorkItem by its id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     Task<int> DeleteAsync(int id);
   }
 
