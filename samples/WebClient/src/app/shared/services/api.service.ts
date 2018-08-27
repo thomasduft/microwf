@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 import { Injectable } from '@angular/core';
 
 import { ServicesModule } from './services.module';
@@ -23,6 +21,7 @@ export class ApiService {
   }
 
   public handleError(error: Response): any {
-    return Observable.throw(error || 'Server error');
+    console.log(error || 'Server error');
+    return error;
   }
 }

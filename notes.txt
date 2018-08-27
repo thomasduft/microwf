@@ -1,3 +1,7 @@
+notes:
+
+
+----------------------------------------------------------------------------------------------------
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 

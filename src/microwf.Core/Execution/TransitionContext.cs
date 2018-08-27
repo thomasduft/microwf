@@ -42,7 +42,7 @@ namespace tomware.Microwf.Core
     /// </summary>
     public bool HasErrors 
     {
-      get { return this._errors.Count > 0; }
+      get { return _errors.Count > 0; }
     }
 
     public TransitionContext(IWorkflow instance)

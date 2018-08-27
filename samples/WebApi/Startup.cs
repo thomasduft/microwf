@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -8,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using tomware.Microbus.Core;
+using System.Collections.Generic;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
-using WebApi.Common;
 using WebApi.Domain;
 using WebApi.Identity;
 using WebApi.Workflows.Holiday;
@@ -34,16 +33,16 @@ namespace WebApi
       services.AddOptions();
 
       services.AddCors(o =>
+      {
+        o.AddPolicy("AllowAllOrigins", builder =>
         {
-          o.AddPolicy("AllowAllOrigins", builder =>
-            {
-              builder
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-            });
-        })
+          builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+        });
+      })
         .AddMvc()
         .AddJsonOptions(o =>
           o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -110,19 +109,13 @@ namespace WebApi
         });
       });
 
-      // MessageBus
-      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
-      services.AddSingleton<WorkflowProcessor>();
-
       // Custom services
       services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
 
-      services.AddTransient<UserContextService>();
-
-      var workflows = this.Configuration.GetSection("Workflows");
-      var worker = this.Configuration.GetSection("Worker");
+      var workflowConf = CreateWorkflowConfiguration(); // GetWorkflowConfiguration(services);
+      IOptions<ProcessorConfiguration> processorConf = GetProcessorConfiguration(services);
       services
-        .AddWorkflowEngineServices<DomainContext>(workflows, worker)
+        .AddWorkflowEngineServices<DomainContext>(workflowConf, processorConf.Value)
         .AddTestUserWorkflowMappings(CreateSampleUserWorkflowMappings());
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
@@ -205,6 +198,47 @@ namespace WebApi
           }
         }
       };
+    }
+
+    private WorkflowConfiguration CreateWorkflowConfiguration()
+    {
+      return new WorkflowConfiguration
+      {
+        Types = new List<WorkflowType> {
+          new WorkflowType {
+            Type = "HolidayApprovalWorkflow",
+            Title = "Holiday",
+            Description = "Simple holiday approval process.",
+            Route = "holiday"
+          },
+          new WorkflowType {
+            Type = "IssueTrackingWorkflow",
+            Title = "Issue",
+            Description = "Simple issue tracking process.",
+            Route = "issue"
+          }
+        }
+      };
+    }
+
+    private IOptions<WorkflowConfiguration> GetWorkflowConfiguration(IServiceCollection services)
+    {
+      var workflows = this.Configuration.GetSection("Workflows");
+      services.Configure<WorkflowConfiguration>(workflows);
+
+      return services
+      .BuildServiceProvider()
+      .GetRequiredService<IOptions<WorkflowConfiguration>>();
+    }
+
+    private IOptions<ProcessorConfiguration> GetProcessorConfiguration(IServiceCollection services)
+    {
+      var worker = this.Configuration.GetSection("Worker");
+      services.Configure<ProcessorConfiguration>(worker);
+
+      return services
+      .BuildServiceProvider()
+      .GetRequiredService<IOptions<ProcessorConfiguration>>();
     }
   }
 }

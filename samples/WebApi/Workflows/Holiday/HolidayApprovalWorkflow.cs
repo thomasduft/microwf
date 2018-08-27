@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
-using WebApi.Common;
 
 namespace WebApi.Workflows.Holiday
 {
   public class HolidayApprovalWorkflow : EntityWorkflowDefinitionBase
   {
     private readonly ILogger<HolidayApprovalWorkflow> _logger;
-    private readonly UserContextService _userContextService;
+    private readonly IUserContextService _userContextService;
 
     public const string TYPE = "HolidayApprovalWorkflow";
 
@@ -58,7 +57,7 @@ namespace WebApi.Workflows.Holiday
 
     public HolidayApprovalWorkflow(
       ILoggerFactory loggerFactory,
-      UserContextService userContextService
+      IUserContextService userContextService
     )
     {
       this._logger = loggerFactory.CreateLogger<HolidayApprovalWorkflow>();
@@ -69,10 +68,9 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = context.GetInstance<Holiday>();
 
-      var key = KeyBuilder.ToKey(typeof(ApplyHolidayViewModel));
-      if (context.ContainsKey(key))
+      if (context.HasVariable<ApplyHolidayViewModel>())
       {
-        var model = context.GetVariable<ApplyHolidayViewModel>(key);
+        var model = context.ReturnVariable<ApplyHolidayViewModel>();
         holiday.Assignee = holiday.Superior;
         holiday.From = model.From;
         holiday.To = model.To;
@@ -92,10 +90,9 @@ namespace WebApi.Workflows.Holiday
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
-      var key = KeyBuilder.ToKey(typeof(ApproveHolidayViewModel));
-      if (context.ContainsKey(key))
+      if (context.HasVariable<ApproveHolidayViewModel>())
       {
-        var model = context.GetVariable<ApproveHolidayViewModel>(key);
+        var model = context.ReturnVariable<ApproveHolidayViewModel>();
         if (!string.IsNullOrWhiteSpace(model.Message))
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
@@ -124,10 +121,9 @@ namespace WebApi.Workflows.Holiday
 
       holiday.Assignee = holiday.Requester;
 
-      var key = KeyBuilder.ToKey(typeof(ApproveHolidayViewModel));
-      if (context.ContainsKey(key))
+      if (context.HasVariable<ApproveHolidayViewModel>())
       {
-        var model = context.GetVariable<ApproveHolidayViewModel>(key);
+        var model = context.ReturnVariable<ApproveHolidayViewModel>();
         if (!string.IsNullOrWhiteSpace(model.Message))
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);

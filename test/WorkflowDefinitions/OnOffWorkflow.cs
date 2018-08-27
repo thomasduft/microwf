@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microwf.tests.WorkflowDefinitions
+namespace microwf.Tests.WorkflowDefinitions
 {
   public class OnOffWorkflow : WorkflowDefinitionBase
   {
@@ -82,6 +82,7 @@ namespace microwf.tests.WorkflowDefinitions
     public Switcher()
     {
       State = "Off";
+      Type = OnOffWorkflow.TYPE;
     }
   }
 

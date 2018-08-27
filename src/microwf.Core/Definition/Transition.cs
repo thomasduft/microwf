@@ -14,7 +14,7 @@ namespace tomware.Microwf.Core
 
     public Transition()
     {
-      CanMakeTransition = triggerContext => true;
+      CanMakeTransition = transitionContext => true;
     }
   }
 }

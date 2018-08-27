@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
-using WebApi.Common;
 using WebApi.Domain;
+using WebApi.Common;
 
 namespace WebApi.Workflows.Holiday
 {
@@ -30,12 +30,12 @@ namespace WebApi.Workflows.Holiday
   {
     private readonly DomainContext _context;
     private readonly IWorkflowEngine _workflowEngine;
-    private readonly UserContextService _userContext;
+    private readonly IUserContextService _userContext;
 
     public HolidayService(
       DomainContext context,
       IWorkflowEngine workflowEngine,
-      UserContextService userContext
+      IUserContextService userContext
     )
     {
       this._context = context;
@@ -73,7 +73,7 @@ namespace WebApi.Workflows.Holiday
       holiday.Superior = "alice";
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday)
-       .AddVariable(KeyBuilder.ToKey(typeof(ApplyHolidayViewModel)), model);
+       .AddVariableWithKey<ApplyHolidayViewModel>(model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
@@ -88,7 +88,7 @@ namespace WebApi.Workflows.Holiday
       var holiday = await FindOrCreate(model.Id);
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPROVE_TRIGGER, holiday)
-       .AddVariable(KeyBuilder.ToKey(typeof(ApproveHolidayViewModel)), model);
+       .AddVariableWithKey<ApproveHolidayViewModel>(model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
@@ -103,7 +103,7 @@ namespace WebApi.Workflows.Holiday
       var holiday = await FindOrCreate(model.Id);
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.REJECT_TRIGGER, holiday)
-       .AddVariable(KeyBuilder.ToKey(typeof(ApproveHolidayViewModel)), model);
+       .AddVariableWithKey<ApproveHolidayViewModel>(model);
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 

@@ -1,7 +1,7 @@
 using tomware.Microwf.Core;
 using System.Collections.Generic;
 
-namespace microwf.tests.WorkflowDefinitions
+namespace microwf.Tests.WorkflowDefinitions
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {
@@ -73,6 +73,7 @@ namespace microwf.tests.WorkflowDefinitions
     public Holiday()
     {
       this.State = "New";
+      this.Type = HolidayApprovalWorkflow.TYPE;
     }
   }
 }
