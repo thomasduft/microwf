@@ -27,14 +27,16 @@ namespace tomware.Microwf.Engine
 
     public WorkflowDefinitionViewModel CreateViewModel(string type)
     {
-      var workflowType = _workflowConfiguration.Types.FirstOrDefault(_ => _.Type == type);
+      var workflowType = _workflowConfiguration
+        .Types
+        .First(t => t.Type == type);
 
       return new WorkflowDefinitionViewModel
       {
         Type = workflowType.Type,
         Title = workflowType.Title,
-        Route = workflowType.Route,
-        Description = workflowType.Description
+        Description = workflowType.Description,
+        Route = workflowType.Route
       };
     }
   }

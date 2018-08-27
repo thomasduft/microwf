@@ -78,8 +78,6 @@ namespace tomware.Microwf.Engine
       }
 
       Items.Enqueue(item);
-
-      ProcessItemsAsync();
     }
 
     public WorkItem Dequeue()
