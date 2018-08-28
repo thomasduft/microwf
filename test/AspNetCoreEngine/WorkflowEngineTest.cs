@@ -35,10 +35,13 @@ namespace microwf.Tests.AspNetCoreEngine
       SimpleWorkflowDefinitionProvider.Instance
         .RegisterWorkflowDefinition(new EntityOnOffWorkflow());
 
+      IUserContextService userContextService = new TestUserContextService();
+
       this.WorkflowEngine = new WorkflowEngine<TestDbContext>(
         Context,
         logger,
-        SimpleWorkflowDefinitionProvider.Instance
+        SimpleWorkflowDefinitionProvider.Instance,
+        userContextService
       );
     }
 
@@ -190,6 +193,8 @@ namespace microwf.Tests.AspNetCoreEngine
       Assert.AreEqual("On", triggerResult.CurrentState);
 
       Assert.IsTrue(param.HasVariables);
+
+      Assert.AreEqual(1, workflow.WorkflowHistories.Count());
     }
 
     // TODO: TriggerAsync with DB context interaction scenarios!

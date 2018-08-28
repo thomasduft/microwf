@@ -32,6 +32,8 @@ namespace tomware.Microwf.Engine
 
     public List<WorkflowVariable> WorkflowVariables { get; set; } = new List<WorkflowVariable>();
 
+    public List<WorkflowHistory> WorkflowHistories { get; set; } = new List<WorkflowHistory>();
+
     public static Workflow Create(
       int correlationId,
       string type,
@@ -64,6 +66,19 @@ namespace tomware.Microwf.Engine
 
       var newVariable = WorkflowVariable.Create(this, variable);
       this.WorkflowVariables.Add(newVariable);
+    }
+
+    public void AddHistoryItem(string fromState, string toState, string userName)
+    {
+      this.WorkflowHistories.Add(new WorkflowHistory
+      {
+        Created = SystemTime.Now(),
+        FromState = fromState,
+        ToState = toState,
+        UserName = userName,
+        WorkflowId = this.Id,
+        Workflow = this
+      });
     }
   }
 }

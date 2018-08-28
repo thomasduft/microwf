@@ -24,13 +24,16 @@ namespace microwf.Tests.WorkflowDefinitions
             State = "On",
             Trigger = "SwitchOff",
             TargetState ="Off",
-            CanMakeTransition = CanSwitch
+            CanMakeTransition = CanSwitch,
+            AfterTransition = AfterTransition
           },
           new Transition {
             State = "Off",
             Trigger = "SwitchOn",
-            TargetState ="On"
-          },
+            TargetState ="On",
+            CanMakeTransition = CanSwitch,
+            AfterTransition = AfterTransition
+          }
         };
       }
     }
@@ -45,6 +48,16 @@ namespace microwf.Tests.WorkflowDefinitions
       }
 
       return true;
+    }
+
+    private void AfterTransition(TransitionContext context)
+    {
+      if (context.HasVariable<LightSwitcherWorkflowVariable>())
+      {
+        var variable = context.ReturnVariable<LightSwitcherWorkflowVariable>();
+
+        variable.CanSwitch = !variable.CanSwitch;
+      }
     }
   }
 
