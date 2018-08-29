@@ -22,7 +22,7 @@ namespace tomware.Microwf.Engine
 
     public Workflow Workflow { get; set; }
 
-    public static WorkflowVariable Create(Workflow workflow, WorkflowVariableBase variable)
+    internal static WorkflowVariable Create(Workflow workflow, WorkflowVariableBase variable)
     {
       return new WorkflowVariable
       {
