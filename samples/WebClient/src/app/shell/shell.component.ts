@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   template: `
   <tw-header></tw-header>
 
-  <main role="main" class="container">
-    <router-outlet></router-outlet>
+  <main role="main">
+    <router-outlet class="container"></router-outlet>
   </main>`
 })
 export class ShellComponent {
