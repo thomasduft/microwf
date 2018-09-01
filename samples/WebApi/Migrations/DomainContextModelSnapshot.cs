@@ -14,7 +14,7 @@ namespace WebApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
 
             modelBuilder.Entity("tomware.Microwf.Engine.Workflow", b =>
                 {
@@ -26,8 +26,6 @@ namespace WebApi.Migrations
                     b.Property<DateTime?>("Completed");
 
                     b.Property<int>("CorrelationId");
-
-                    b.Property<DateTime?>("DueDate");
 
                     b.Property<DateTime>("Started");
 

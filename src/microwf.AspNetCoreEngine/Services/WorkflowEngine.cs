@@ -206,11 +206,7 @@ namespace tomware.Microwf.Engine
       }
     }
 
-    private async Task PersistWorkflow(
-      Workflow workflow,
-      TriggerParam triggerParam,
-      DateTime? dueDate = null
-    )
+    private async Task PersistWorkflow(Workflow workflow, TriggerParam triggerParam)
     {
       if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
@@ -246,8 +242,6 @@ namespace tomware.Microwf.Engine
       {
         workflow.Completed = SystemTime.Now();
       }
-
-      workflow.DueDate = dueDate;
     }
 
     private async Task<bool> WorkflowIsCompleted(TriggerParam triggerParam)

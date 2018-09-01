@@ -30,8 +30,6 @@ namespace tomware.Microwf.Engine
 
     public DateTime? Completed { get; set; }
 
-    public DateTime? DueDate { get; set; }
-
     public List<WorkflowVariable> WorkflowVariables { get; set; } = new List<WorkflowVariable>();
 
     public List<WorkflowHistory> WorkflowHistories { get; set; } = new List<WorkflowHistory>();
@@ -50,8 +48,7 @@ namespace tomware.Microwf.Engine
         CorrelationId = correlationId,
         Type = type,
         State = state,
-        Assignee = assignee,
-        DueDate = dueDate
+        Assignee = assignee
       };
     }
 
