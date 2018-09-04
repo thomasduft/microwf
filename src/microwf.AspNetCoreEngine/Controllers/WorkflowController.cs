@@ -34,6 +34,33 @@ namespace tomware.Microwf.Engine
       return Ok(result);
     }
 
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
+    public async Task<IActionResult> Get(int id)
+    {
+      var result = await _service.GetAsync(id);
+
+      return Ok(result);
+    }
+
+    [HttpGet("{id}/history")]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
+    public async Task<IActionResult> GetHistory(int id)
+    {
+      var result = await _service.GetHistory(id);
+
+      return Ok(result);
+    }
+
+    [HttpGet("{id}/variables")]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
+    public async Task<IActionResult> GetVariables(int id)
+    {
+      var result = await _service.GetVariables(id);
+
+      return Ok(result);
+    }
+
     [HttpGet("definitions")]
     [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
     public IActionResult Get()

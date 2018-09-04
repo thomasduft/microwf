@@ -14,6 +14,12 @@ namespace tomware.Microwf.Engine
 
     Task<IEnumerable<WorkflowViewModel>> GetMyWorkflowsAsync();
 
+    Task<WorkflowViewModel> GetAsync(int id);
+
+    Task<IEnumerable<WorkflowHistory>> GetHistory(int id);
+
+    Task<IEnumerable<WorkflowVariable>> GetVariables(int id);
+
     /// <summary>
     /// Returns a list of workflow definitions that exist in the system.
     /// </summary>
@@ -76,20 +82,32 @@ namespace tomware.Microwf.Engine
       return instances.Select(w => ToWorkflowViewModel(w));
     }
 
-    private WorkflowViewModel ToWorkflowViewModel(Workflow w)
+    public async Task<WorkflowViewModel> GetAsync(int id)
     {
-      var title = _viewModelCreator.CreateViewModel(w.Type).Title;
+      var workflow = await _context.Workflows.FindAsync(id);
+      if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
-      return new WorkflowViewModel
-      {
-        Id = w.Id,
-        Type = w.Type,
-        State = w.State,
-        Title = title,
-        Assignee = w.Assignee,
-        Started = w.Started,
-        Completed = w.Completed
-      };
+      return ToWorkflowViewModel(workflow);
+    }
+
+    public async Task<IEnumerable<WorkflowHistory>> GetHistory(int id)
+    {
+      var workflow = await _context.Workflows
+        .Include(h => h.WorkflowHistories)
+        .Where(w => w.Id == id).FirstAsync();
+      if (workflow == null) throw new KeyNotFoundException(nameof(id));
+
+      return workflow.WorkflowHistories.OrderByDescending(h => h.Created);
+    }
+
+    public async Task<IEnumerable<WorkflowVariable>> GetVariables(int id)
+    {
+       var workflow = await _context.Workflows
+        .Include(v => v.WorkflowVariables)
+        .Where(w => w.Id == id).FirstAsync();
+      if (workflow == null) throw new KeyNotFoundException(nameof(id));
+
+      return workflow.WorkflowVariables.OrderBy(v => v.Type);
     }
 
     public IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions()
@@ -108,6 +126,23 @@ namespace tomware.Microwf.Engine
       var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return workflowDefinition.ToDot();
+    }
+
+    private WorkflowViewModel ToWorkflowViewModel(Workflow w)
+    {
+      var model = _viewModelCreator.CreateViewModel(w.Type);
+
+      return new WorkflowViewModel
+      {
+        Id = w.Id,
+        Type = w.Type,
+        State = w.State,
+        Title = model.Title,
+        Description = model.Description,
+        Assignee = w.Assignee,
+        Started = w.Started,
+        Completed = w.Completed
+      };
     }
   }
 }

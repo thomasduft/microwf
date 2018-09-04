@@ -25,6 +25,7 @@ namespace tomware.Microwf.Engine
 
     public int WorkflowId { get; set; }
 
+    [JsonIgnore]
     public Workflow Workflow { get; set; }
   }
 }
