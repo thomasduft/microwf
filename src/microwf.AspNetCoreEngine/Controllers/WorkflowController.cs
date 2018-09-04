@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
@@ -13,6 +14,24 @@ namespace tomware.Microwf.Engine
     public WorkflowController(IWorkflowService service)
     {
       _service = service;
+    }
+
+    [HttpGet()]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
+    public async Task<IActionResult> GetWorkflows()
+    {
+      IEnumerable<WorkflowViewModel> result = await _service.GetWorkflowsAsync();
+
+      return Ok(result);
+    }
+
+    [HttpGet("mywork")]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
+    public async Task<IActionResult> GetMyWorkflows()
+    {
+      IEnumerable<WorkflowViewModel> result = await _service.GetMyWorkflowsAsync();
+
+      return Ok(result);
     }
 
     [HttpGet("definitions")]
