@@ -20,6 +20,7 @@ namespace tomware.Microwf.Engine
 
     public int WorkflowId { get; set; }
 
+    [JsonIgnore]
     public Workflow Workflow { get; set; }
 
     internal static WorkflowVariable Create(Workflow workflow, WorkflowVariableBase variable)
@@ -33,7 +34,7 @@ namespace tomware.Microwf.Engine
       };
     }
 
-    internal void UpdateContent(WorkflowVariableBase variable) 
+    internal void UpdateContent(WorkflowVariableBase variable)
     {
       Content = JsonConvert.SerializeObject(variable);
     }
