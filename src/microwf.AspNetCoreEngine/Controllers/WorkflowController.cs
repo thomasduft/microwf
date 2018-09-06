@@ -17,6 +17,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet()]
+    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
     public async Task<IActionResult> GetWorkflows()
     {
@@ -25,16 +26,8 @@ namespace tomware.Microwf.Engine
       return Ok(result);
     }
 
-    [HttpGet("mywork")]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
-    public async Task<IActionResult> GetMyWorkflows()
-    {
-      IEnumerable<WorkflowViewModel> result = await _service.GetMyWorkflowsAsync();
-
-      return Ok(result);
-    }
-
     [HttpGet("{id}")]
+    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
     public async Task<IActionResult> Get(int id)
     {
@@ -44,6 +37,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("{id}/history")]
+    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
     public async Task<IActionResult> GetHistory(int id)
     {
@@ -53,10 +47,20 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("{id}/variables")]
+    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
     public async Task<IActionResult> GetVariables(int id)
     {
       var result = await _service.GetVariables(id);
+
+      return Ok(result);
+    }
+
+    [HttpGet("mywork")]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
+    public async Task<IActionResult> GetMyWorkflows()
+    {
+      IEnumerable<WorkflowViewModel> result = await _service.GetMyWorkflowsAsync();
 
       return Ok(result);
     }
