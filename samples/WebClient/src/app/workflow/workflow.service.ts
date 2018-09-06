@@ -8,12 +8,10 @@ import { ApiService } from '../shared/services/api.service';
 
 import { WorkflowDefinition } from './models';
 
-// TODO: probably move to shared/workflow directory
-
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowDefinitionService {
+export class WorkflowService {
   public constructor(
     private _http: HttpClient,
     private _api: ApiService

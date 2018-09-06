@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   WorkflowArea,
   WorkflowAreaRegistry,
-  WorkflowDefinitionService,
+  WorkflowService,
   WorkflowDefinition,
   DotInfo
 } from '../workflow/index';
@@ -51,19 +51,19 @@ export class HomeComponent implements OnInit {
   }
 
   public constructor(
-    private _workflowDefinitionService: WorkflowDefinitionService,
+    private _workflowService: WorkflowService,
     private _workflowAreaRegistry: WorkflowAreaRegistry
   ) { }
 
   public ngOnInit(): void {
-    this._workflowDefinitionService.definitions()
+    this._workflowService.definitions()
       .subscribe((definitions: Array<WorkflowDefinition>) => {
         this.init(definitions);
       });
   }
 
   public loadDot(key: string): void {
-    this._workflowDefinitionService.dot(key)
+    this._workflowService.dot(key)
       .subscribe((dot: string) => {
         this.dot = { dot: dot };
       });
