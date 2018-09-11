@@ -9,9 +9,12 @@ namespace tomware.Microwf.Engine
 
     public int PageSize { get; set; } = 10;
 
-    public int GetSkipCount()
+    internal int SkipCount
     {
-      return this.PageSize * (this.PageIndex - 1);
+      get
+      {
+        return this.PageSize * (this.PageIndex - 1);
+      }
     }
   }
 

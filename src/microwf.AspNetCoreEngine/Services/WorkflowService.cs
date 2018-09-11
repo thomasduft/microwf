@@ -68,7 +68,7 @@ namespace tomware.Microwf.Engine
 
       var instances = await _context.Workflows
         .OrderByDescending(w => w.Id)
-        .Skip(pagingParameters.GetSkipCount())
+        .Skip(pagingParameters.SkipCount)
         .Take(pagingParameters.PageSize)
         .ToListAsync();
 
@@ -96,7 +96,7 @@ namespace tomware.Microwf.Engine
 
       var instances = await baseQuery
         .OrderByDescending(w => w.Id)
-        .Skip(pagingParameters.GetSkipCount())
+        .Skip(pagingParameters.SkipCount)
         .Take(pagingParameters.PageSize)
         .ToListAsync();
 
