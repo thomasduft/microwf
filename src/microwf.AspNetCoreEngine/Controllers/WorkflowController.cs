@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,10 +19,13 @@ namespace tomware.Microwf.Engine
 
     [HttpGet()]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
-    public async Task<IActionResult> GetWorkflows()
+    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
+    public async Task<IActionResult> GetWorkflows([FromQuery] PagingParameters pagingParameters)
     {
-      IEnumerable<WorkflowViewModel> result = await _service.GetWorkflowsAsync();
+      PaginatedList<WorkflowViewModel> result
+        = await _service.GetWorkflowsAsync(pagingParameters);
+
+      AddXPagination(pagingParameters, result);
 
       return Ok(result);
     }
@@ -57,10 +61,13 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("mywork")]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowViewModel>), 200)]
-    public async Task<IActionResult> GetMyWorkflows()
+    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
+    public async Task<IActionResult> GetMyWorkflows([FromQuery] PagingParameters pagingParameters)
     {
-      IEnumerable<WorkflowViewModel> result = await _service.GetMyWorkflowsAsync();
+      PaginatedList<WorkflowViewModel> result
+        = await _service.GetMyWorkflowsAsync(pagingParameters);
+
+      AddXPagination(pagingParameters, result);
 
       return Ok(result);
     }
@@ -81,6 +88,22 @@ namespace tomware.Microwf.Engine
       var result = _service.Dot(type);
 
       return Ok(result);
+    }
+
+    private void AddXPagination(
+      PagingParameters pagingParameters,
+      PaginatedList<WorkflowViewModel> result
+    )
+    {
+      var paginationMetadata = new
+      {
+        totalCount = result.AllItemCount,
+        pageSize = pagingParameters.PageSize,
+        pageIndex = pagingParameters.PageIndex,
+        totalPages = result.TotalPages
+      };
+
+      Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
     }
   }
 }

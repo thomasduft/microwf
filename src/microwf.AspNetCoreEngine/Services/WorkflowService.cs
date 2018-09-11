@@ -10,9 +10,9 @@ namespace tomware.Microwf.Engine
 {
   public interface IWorkflowService
   {
-    Task<IEnumerable<WorkflowViewModel>> GetWorkflowsAsync();
+    Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(PagingParameters pagingParameters);
 
-    Task<IEnumerable<WorkflowViewModel>> GetMyWorkflowsAsync();
+    Task<PaginatedList<WorkflowViewModel>> GetMyWorkflowsAsync(PagingParameters pagingParameters);
 
     Task<WorkflowViewModel> GetAsync(int id);
 
@@ -60,28 +60,54 @@ namespace tomware.Microwf.Engine
       _userContext = userContext;
     }
 
-    // TODO: add paging!
-    public async Task<IEnumerable<WorkflowViewModel>> GetWorkflowsAsync()
+    public async Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(
+      PagingParameters pagingParameters
+    )
     {
+      var count = _context.Workflows.Count();
+
       var instances = await _context.Workflows
         .OrderByDescending(w => w.Id)
+        .Skip(pagingParameters.GetSkipCount())
+        .Take(pagingParameters.PageSize)
         .ToListAsync();
 
-      return instances.Select(i => ToWorkflowViewModel(i));
+      var items = instances.Select(i => ToWorkflowViewModel(i));
+
+      return new PaginatedList<WorkflowViewModel>(
+        items,
+        count,
+        pagingParameters.PageIndex,
+        pagingParameters.PageSize
+      );
     }
 
-    // TODO: add paging!
-    public async Task<IEnumerable<WorkflowViewModel>> GetMyWorkflowsAsync()
+    public async Task<PaginatedList<WorkflowViewModel>> GetMyWorkflowsAsync(
+      PagingParameters pagingParameters
+    )
     {
       var definitions = GetWorkflowDefinitions();
 
-      var instances = await _context.Workflows
+      var baseQuery = _context.Workflows
         .Where(w => definitions.Select(d => d.Type).Distinct().Contains(w.Type)
-          && w.Assignee == _userContext.UserName)
+          && w.Assignee == _userContext.UserName);
+
+      var count = baseQuery.Count();
+
+      var instances = await baseQuery
         .OrderByDescending(w => w.Id)
+        .Skip(pagingParameters.GetSkipCount())
+        .Take(pagingParameters.PageSize)
         .ToListAsync();
 
-      return instances.Select(w => ToWorkflowViewModel(w));
+      var items = instances.Select(w => ToWorkflowViewModel(w));
+
+      return new PaginatedList<WorkflowViewModel>(
+        items,
+        count,
+        pagingParameters.PageIndex,
+        pagingParameters.PageSize
+      );
     }
 
     public async Task<WorkflowViewModel> GetAsync(int id)
@@ -104,9 +130,9 @@ namespace tomware.Microwf.Engine
 
     public async Task<IEnumerable<WorkflowVariable>> GetVariables(int id)
     {
-       var workflow = await _context.Workflows
-        .Include(v => v.WorkflowVariables)
-        .Where(w => w.Id == id).FirstAsync();
+      var workflow = await _context.Workflows
+       .Include(v => v.WorkflowVariables)
+       .Where(w => w.Id == id).FirstAsync();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
       return workflow.WorkflowVariables.OrderBy(v => v.Type);
