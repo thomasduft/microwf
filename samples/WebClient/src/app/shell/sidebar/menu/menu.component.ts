@@ -6,7 +6,9 @@ import { MenuService } from './menu.service';
 @Component({
   selector: 'tw-menu',
   template: `
-  <li routerLinkActive="active" *ngFor="let item of menuItems">
+  <li routerLinkActive="active" 
+      [ngClass]="{'menu__item': item.route}" 
+      *ngFor="let item of menuItems">
     <a *ngIf="item.route" [routerLink]="item.route">
       <tw-icon *ngIf="item.icon" [name]="item.icon"></tw-icon>
       {{ item.name }}
@@ -15,7 +17,7 @@ import { MenuService } from './menu.service';
       <tw-icon *ngIf="item.icon" [name]="item.icon"></tw-icon>
       {{ item.name }}
       <ul *ngIf="item.children && item.children.length > 0">
-        <li routerLinkActive="active" *ngFor="let child of item.children">
+        <li routerLinkActive="active" class="menu__item" *ngFor="let child of item.children">
           <a *ngIf="child.route" [routerLink]="child.route">
             <tw-icon *ngIf="child.icon" [name]="child.icon"></tw-icon>
             {{ child.name }}

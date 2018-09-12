@@ -13,7 +13,11 @@
   display: flex;
   height: 4em;
   padding: 0px 20px;
-  font-size: .8em;
+  font-size: 1em;
+  color: whitesmoke;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
   img {
     object-fit: cover;
     border-radius: 50%;
@@ -41,9 +45,17 @@
         text-transform: uppercase;
         width: 100%;
       }
+      ul {
+        li:hover {
+          margin: 0px -20px;
+          padding: 0px 40px;
+        }
+      }
+    }
+    .menu__item {
       &:hover {
         cursor: pointer;
-        background: lighten(@sidebar-background, 10%)
+        background: lighten(@sidebar-background, 10%);
       }
     }
     .active {
