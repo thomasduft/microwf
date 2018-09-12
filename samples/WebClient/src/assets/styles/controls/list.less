@@ -1,0 +1,30 @@
+@import './../variables';
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list__item {
+  display: block;
+  padding: 5px 10px;
+  color: @workspace-color;
+  &:hover {
+    cursor: pointer;
+    background: lighten(@workspace-link-color, 5%)
+  }
+}
+
+.list__item--active {
+  background: lighten(@workspace-link-color, 5%)
+}
+
+.list__itemFirstRow {
+  display: block;
+  font-weight: bold;
+}
+
+.list__itemSecondRow {
+  display: block;
+  font-size: 0.8em;
+}

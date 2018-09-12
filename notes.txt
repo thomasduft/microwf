@@ -1,6 +1,9 @@
 notes:
 
-
+  removed bootstrap for the moment
+  {
+    "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
+  },
 ----------------------------------------------------------------------------------------------------
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet

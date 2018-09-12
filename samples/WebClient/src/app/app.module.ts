@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from './shared/shared.module';
+import { ShellModule } from './shell/shell.module';
 import { LoginModule } from './login/login.module';
 import { WorkflowModule } from './workflow/workflow.module';
 
@@ -49,13 +50,13 @@ const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES),
     NgbModule.forRoot(),
     SharedModule,
+    ShellModule,
     LoginModule,
     WorkflowModule
   ],
   declarations: [
     AppComponent,
     HeaderComponent,
-    ShellComponent,
     HomeComponent,
     PageNotFoundComponent
   ],

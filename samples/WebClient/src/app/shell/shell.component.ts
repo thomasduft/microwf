@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'tw-shell',
   template: `
-  <tw-header></tw-header>
-
-  <main role="main" class="container">
-    <router-outlet></router-outlet>
-  </main>`
+  <tw-sidebar></tw-sidebar>
+  <tw-workspace></tw-workspace>
+  `
 })
 export class ShellComponent {
+  @HostBinding('class')
+  public workspace = 'shell';
 }
