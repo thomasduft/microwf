@@ -7,6 +7,19 @@ export class WorkflowArea {
   ) { }
 }
 
+export interface Workflow {
+  id: number;
+  correlationId: number;
+  type: string;
+  state: string;
+  title: string;
+  description: string;
+  assignee: string;
+  route: string;
+  started: Date;
+  completed?: Date;
+}
+
 export interface WorkflowDefinition {
   type: string;
   title: string;

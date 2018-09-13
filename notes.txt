@@ -1,4 +1,8 @@
 notes:
+(-) add admin module to webclient
+  - move workflow-dashboard.component to admin module
+(-) 
+
 
   removed bootstrap for the moment
   {

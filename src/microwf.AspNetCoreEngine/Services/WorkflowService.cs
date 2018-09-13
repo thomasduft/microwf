@@ -164,13 +164,15 @@ namespace tomware.Microwf.Engine
       return new WorkflowViewModel
       {
         Id = w.Id,
+        CorrelationId = w.CorrelationId,
         Type = w.Type,
         State = w.State,
         Title = model.Title,
         Description = model.Description,
         Assignee = w.Assignee,
         Started = w.Started,
-        Completed = w.Completed
+        Completed = w.Completed,
+        Route = model.Route
       };
     }
   }

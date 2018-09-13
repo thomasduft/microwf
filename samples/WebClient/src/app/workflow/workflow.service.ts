@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { ApiService } from '../shared/services/api.service';
 
-import { WorkflowDefinition } from './models';
+import { Workflow, WorkflowDefinition } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,18 @@ export class WorkflowService {
     private _http: HttpClient,
     private _api: ApiService
   ) { }
+
+  public workflows(): Observable<Array<Workflow>> {
+    const url = this._api.createApiUrl('workflow');
+
+    return this._http.get<Array<Workflow>>(url);
+  }
+
+  public mywork(): Observable<Array<Workflow>> {
+    const url = this._api.createApiUrl('workflow/mywork');
+
+    return this._http.get<Array<Workflow>>(url);
+  }
 
   public definitions(): Observable<Array<WorkflowDefinition>> {
     const url = this._api.createApiUrl('workflow/definitions');

@@ -6,8 +6,8 @@ import { MenuService } from './menu.service';
 @Component({
   selector: 'tw-menu',
   template: `
-  <li routerLinkActive="active" 
-      [ngClass]="{'menu__item': item.route}" 
+  <li routerLinkActive="item.route ? 'active' : null"
+      [ngClass]="{'menu__item': item.route}"
       *ngFor="let item of menuItems">
     <a *ngIf="item.route" [routerLink]="item.route">
       <tw-icon *ngIf="item.icon" [name]="item.icon"></tw-icon>
@@ -40,16 +40,22 @@ export class MenuComponent implements OnInit {
   public ngOnInit(): void {
     this._menuService.register({
       id: '1',
-      name: 'Holiday',
-      route: '/holiday',
-      icon: 'plane'
-    });
-
-    this._menuService.register({
-      id: '2',
-      name: 'Issues',
-      route: '/issue',
-      icon: 'bug'
+      name: 'Tasks',
+      icon: 'tasks',
+      children: [
+        {
+          id: '2',
+          name: 'Holiday',
+          route: '/holiday',
+          icon: 'plane'
+        },
+        {
+          id: '3',
+          name: 'Issues',
+          route: '/issue',
+          icon: 'bug'
+        }
+      ]
     });
 
     // this._menuService.register({
