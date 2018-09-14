@@ -52,35 +52,27 @@ export abstract class AuthGuard implements CanActivate, CanActivateChild {
 }
 
 @Injectable({
-  providedIn: ServicesModule
+  providedIn: 'root'
 })
 export abstract class ClaimGuardBase implements CanActivate, CanActivateChild {
-  protected readonly abstract claim: string;
+  protected abstract claim: string;
 
   public constructor(
     private _authService: AuthService,
     private _router: Router
   ) { }
 
-  public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+  public canActivate(): boolean {
     const can = this._authService.hasClaim(this.claim);
 
     if (!can) {
-      this._router.navigate(['401', this.claim]);
+      this._router.navigate(['login']);
     }
 
     return can;
   }
 
-  public canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
+  public canActivateChild(): boolean {
     return this.canActivate();
   }
-}
-
-@Injectable({
-  providedIn: ServicesModule
-})
-export class AdministratorClaimGuard extends ClaimGuardBase {
-  public static CLAIM_NAME = 'Administrator';
-  protected claim = AdministratorClaimGuard.CLAIM_NAME;
 }

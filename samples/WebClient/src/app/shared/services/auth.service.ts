@@ -76,8 +76,8 @@ export class AuthService {
   }
 
   public hasClaim(claim: string): boolean {
-    if (!this.isAuthenticated) {
-      return true; // no checks for offline usage!
+    if (!this._claims || !claim) {
+      return false;
     }
 
     return this._claims.some((r => r === claim));

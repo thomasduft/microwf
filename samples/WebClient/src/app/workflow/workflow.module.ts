@@ -6,7 +6,6 @@ import { IconModule } from './../shared/icon/icon.module';
 
 import { DispatchWorkflowComponent } from './dispatch-workflow.component';
 import { TriggerInfoComponent } from './trigger-info.component';
-import { WorkflowDashboardComponent } from './workflow-dashboard.component';
 
 import { VizModule } from './viz/viz.module';
 
@@ -19,8 +18,7 @@ import { VizModule } from './viz/viz.module';
   ],
   declarations: [
     DispatchWorkflowComponent,
-    TriggerInfoComponent,
-    WorkflowDashboardComponent
+    TriggerInfoComponent
   ],
   exports: [
     VizModule,

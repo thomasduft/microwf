@@ -5,6 +5,8 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 
 import { ShellComponent } from './shell.component';
+import { ForbiddenComponent } from './forbidden.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
   imports: [
@@ -13,7 +15,9 @@ import { ShellComponent } from './shell.component';
     WorkspaceModule
   ],
   declarations: [
-    ShellComponent
+    ShellComponent,
+    ForbiddenComponent,
+    PageNotFoundComponent
   ]
 })
 export class ShellModule { }

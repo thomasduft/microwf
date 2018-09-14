@@ -1,15 +1,14 @@
 import { Observable } from 'rxjs';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 
 import { AutoUnsubscribe } from './../shared/services/autoUnsubscribe';
 
-import { WorkflowService } from './workflow.service';
-import { Workflow } from './models';
+import { WorkflowService, Workflow } from './../workflow/index';
 
 @AutoUnsubscribe
 @Component({
-  selector: 'tw-workflow-dashboard',
+  selector: 'tw-admin-dashboard',
   providers: [WorkflowService],
   template: `
   <div class="pane__left">
@@ -31,7 +30,7 @@ import { Workflow } from './models';
             <td>{{ workflow?.assignee }}</td>
             <td>{{ workflow?.started | date }}</td>
             <td>
-              <a [routerLink]="['/' + workflow?.route + '/detail/', workflow?.id]" i18n>
+              <a [routerLink]="['detail', workflow?.id]" i18n>
                 <tw-icon name="arrow-right"></tw-icon>
               </a>
             </td>
@@ -44,8 +43,11 @@ import { Workflow } from './models';
     <router-outlet></router-outlet>
   </div>`
 })
-export class WorkflowDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit {
   public workflows$: Observable<Array<Workflow>>;
+
+  @HostBinding('class')
+  public workspace = 'pane';
 
   public constructor(
     private _service: WorkflowService

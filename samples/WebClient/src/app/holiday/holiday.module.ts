@@ -12,9 +12,12 @@ import { HolidayService } from './holiday.service';
 import { ApplyHolidayDetailSlot, ApproveHolidayDetailSlot } from './models';
 
 const ROUTES: Routes = [
-  { path: '', component: HolidayDashboardComponent },
-  { path: 'detail/:id', component: HolidayComponent },
-  { path: 'detail/new', component: HolidayComponent }
+  {
+    path: '', component: HolidayDashboardComponent, children: [
+      { path: 'detail/:id', component: HolidayComponent },
+      { path: 'detail/new', component: HolidayComponent }
+    ]
+  }
 ];
 
 @NgModule({

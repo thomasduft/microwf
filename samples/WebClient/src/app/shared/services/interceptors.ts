@@ -1,19 +1,15 @@
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 import {
-  Injectable,
-  EventEmitter
-} from '@angular/core';
-import {
-  HttpClient,
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
   HttpEvent,
   HttpErrorResponse,
-  HttpHeaders,
-  HttpParams,
   HttpResponse,
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
@@ -21,7 +17,6 @@ import {
 import { ServicesModule } from './services.module';
 
 import { AuthService } from './auth.service';
-import { MessageBus } from './messageBus.service';
 
 @Injectable({
   providedIn: ServicesModule
@@ -46,7 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
   public constructor(
-    private _messageBus: MessageBus
+    private _router: Router
   ) { }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -58,8 +53,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       }, (err: any) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
-            // redirect to the login route
-            // or show a modal
+            this._router.navigate(['login']);
+          }
+          if (err.status === 403) {
+            this._router.navigate(['forbidden']);
           }
         }
       }));

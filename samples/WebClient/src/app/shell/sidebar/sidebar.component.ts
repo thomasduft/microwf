@@ -26,7 +26,7 @@ import { AuthService } from '../../shared/services/auth.service';
           Admin
           <ul>
             <li routerLinkActive="active" class="menu__item">
-              <a routerLink="/workflows">
+              <a routerLink="/admin">
                 <tw-icon name="arrow-right"></tw-icon>
                 Workflows
               </a>
