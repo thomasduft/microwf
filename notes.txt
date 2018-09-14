@@ -24,3 +24,5 @@ Docker commands:
 
 NuGet Commands:
 dotnet pack src/microwf.Core -c Release /p:PackageVersion=1.0.0 -o ./../../dist/nupkgs
+
+see: https://stackoverflow.com/questions/42797993/package-version-is-always-1-0-0-with-dotnet-pack
