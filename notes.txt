@@ -1,7 +1,8 @@
 notes:
 (-) add admin module to webclient
-  - move workflow-dashboard.component to admin module
-(-) 
+  (x) move workflow-dashboard.component to admin module
+  (-) add admin detail component 
+(-) use GetMyWorkflows instead of MyWork on concrete Workflows
 
 
   removed bootstrap for the moment
