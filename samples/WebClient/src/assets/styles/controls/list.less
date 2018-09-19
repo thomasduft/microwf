@@ -3,28 +3,39 @@
 .list {
   display: flex;
   flex-direction: column;
-}
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 100vh;
 
-.list__item {
-  display: block;
-  padding: 5px 10px;
-  color: @workspace-color;
-  &:hover {
-    cursor: pointer;
+  .list__header, .list__footer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .list__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .list__item {
+    width: 100%;
+    color: @workspace-color;
+    padding-bottom: 10px;
+    .list_item--right {
+      float: right;
+    }
+    &:hover {
+      cursor: pointer;
+      background: lighten(@workspace-link-color, 5%)
+    }
+  }
+
+  .list__itemDetail {
+    font-size: 0.8em;
+  }
+  
+  .list__item--active {
     background: lighten(@workspace-link-color, 5%)
   }
-}
-
-.list__item--active {
-  background: lighten(@workspace-link-color, 5%)
-}
-
-.list__itemFirstRow {
-  display: block;
-  font-weight: bold;
-}
-
-.list__itemSecondRow {
-  display: block;
-  font-size: 0.8em;
 }
