@@ -7,20 +7,27 @@ import {
   ContentChildren,
   QueryList,
   OnInit,
-  AfterContentInit
+  AfterContentInit,
+  HostBinding
 } from '@angular/core';
 
 @Component({
   selector: 'tw-header',
   template: '<ng-content></ng-content>'
 })
-export class HeaderComponent { }
+export class HeaderComponent {
+  @HostBinding('class')
+  public header = 'list__header';
+}
 
 @Component({
   selector: 'tw-footer',
   template: '<ng-content></ng-content>'
 })
-export class FooterComponent { }
+export class FooterComponent {
+  @HostBinding('class')
+  public footer = 'list__footer';
+}
 
 @Directive({
   selector: '[twTemplate]',
@@ -42,9 +49,7 @@ export class TwTemplateDirective {
     <div class="list--loading" *ngIf="loading">
       <tw-icon name="spinner" [spin]="true"></tw-icon>
     </div>
-    <div class="list__header">
-      <ng-content select="tw-header"></ng-content>
-    </div>
+    <ng-content select="tw-header"></ng-content>
     <div class="list__content">
       <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="rows">
         <ng-container
@@ -53,9 +58,7 @@ export class TwTemplateDirective {
       </ng-template>
       <div *ngIf="isEmpty()">No data!</div>
     </div>
-    <div class="list__footer">
-      <ng-content select="tw-footer"></ng-content>
-    </div>
+    <ng-content select="tw-footer"></ng-content>
   </div>
   `
 })

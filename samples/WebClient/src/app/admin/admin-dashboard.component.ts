@@ -14,6 +14,9 @@ import { WorkflowService, Workflow } from './../workflow/index';
   template: `
   <div class="pane__left">
     <tw-list #list [rows]="workflows$ | async">
+      <tw-header>
+        <h3>Workflow instances</h3>
+      </tw-header>
       <ng-template let-workflow twTemplate="workflow-item">
         <tw-workflow-list-item [workflow]="workflow"></tw-workflow-list-item>
       </ng-template>

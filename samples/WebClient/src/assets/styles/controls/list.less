@@ -22,12 +22,16 @@
     width: 100%;
     color: @workspace-color;
     padding-bottom: 10px;
+    border-top: 1px solid @sidebar-background;
     .list_item--right {
       float: right;
     }
+    .active {
+      background: lighten(@workspace-hover-color, 45%);
+    }
     &:hover {
       cursor: pointer;
-      background: lighten(@workspace-link-color, 5%)
+      background: lighten(@workspace-hover-color, 45%);
     }
   }
 

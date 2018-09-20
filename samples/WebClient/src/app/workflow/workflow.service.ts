@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ApiService } from '../shared/services/api.service';
 
@@ -23,10 +22,28 @@ export class WorkflowService {
     return this._http.get<Array<Workflow>>(url);
   }
 
+  public get(id: number): Observable<Workflow> {
+    const url = this._api.createApiUrl(`workflow/${id}`);
+
+    return this._http.get<Workflow>(url);
+  }
+
+  // TODO: workflow/{id}/history
+  // TODO: workflow/{id}/variables
+
   public mywork(): Observable<Array<Workflow>> {
     const url = this._api.createApiUrl('workflow/mywork');
 
     return this._http.get<Array<Workflow>>(url);
+  }
+
+  public getInstance(type: string, correlationId: number): Observable<Workflow> {
+    const url = this._api.createApiUrl(`workflow/instance`);
+    const params = new HttpParams()
+      .set('type', type)
+      .set('correlationId', correlationId.toString());
+
+    return this._http.get<Workflow>(url, { params });
   }
 
   public definitions(): Observable<Array<WorkflowDefinition>> {

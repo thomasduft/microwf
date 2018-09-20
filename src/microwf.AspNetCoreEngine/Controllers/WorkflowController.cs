@@ -72,6 +72,15 @@ namespace tomware.Microwf.Engine
       return Ok(result);
     }
 
+    [HttpGet("instance/{type}/{correlationId}")]
+    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
+    public async Task<IActionResult> GetInstance(string type, int correlationId)
+    {
+      WorkflowViewModel result = await _service.GetInstanceAsync(type, correlationId);
+
+      return Ok(result);
+    }
+
     [HttpGet("definitions")]
     [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
     public IActionResult Get()

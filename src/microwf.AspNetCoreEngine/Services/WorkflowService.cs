@@ -20,6 +20,8 @@ namespace tomware.Microwf.Engine
 
     Task<IEnumerable<WorkflowVariable>> GetVariables(int id);
 
+    Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId);
+
     /// <summary>
     /// Returns a list of workflow definitions that exist in the system.
     /// </summary>
@@ -138,7 +140,15 @@ namespace tomware.Microwf.Engine
       return workflow.WorkflowVariables.OrderBy(v => v.Type);
     }
 
-    // TODO: add paging!
+    public async Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId)
+    {
+      var workflow = await _context.Workflows
+        .FirstAsync(w => w.Type == type && w.CorrelationId == correlationId);
+      if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
+
+      return ToWorkflowViewModel(workflow);
+    }
+
     public IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions()
     {
       var workflowDefinitions = _workflowDefinitionProvider.GetWorkflowDefinitions();
