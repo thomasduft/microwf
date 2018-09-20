@@ -52,7 +52,7 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/variables")]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowVariable>), 200)]
     public async Task<IActionResult> GetVariables(int id)
     {
       var result = await _service.GetVariables(id);
