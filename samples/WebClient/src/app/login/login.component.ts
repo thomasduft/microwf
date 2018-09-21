@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { ApiService } from '../shared/services/api.service';
+import { ResponseErrorHandler } from '../shared/services/models';
 import { IToken } from '../shared/services/auth.service';
 
 import { LoginService } from './login.service';
@@ -52,8 +52,7 @@ export class LoginComponent implements OnInit {
 
   public constructor(
     private _loginService: LoginService,
-    private _fb: FormBuilder,
-    private _api: ApiService
+    private _fb: FormBuilder
   ) { }
 
   public ngOnInit(): void {
@@ -69,7 +68,7 @@ export class LoginComponent implements OnInit {
     ).subscribe((token: IToken) => {
       this._loginService.authenticate(token);
     }, (error) => {
-      this.error = this._api.handleError(error);
+      this.error = ResponseErrorHandler.handleError(error);
     });
   }
 

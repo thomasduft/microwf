@@ -25,6 +25,44 @@ export interface IdentityResult {
   errors: Array<IdentityError>;
 }
 
+export class PagingnModel {
+  public selectItemsPerPage: number[] = [5, 10, 25, 100];
+  public pageSize = this.selectItemsPerPage[0];
+  public pageIndex = 1;
+  public allItemsCount = 0;
+
+  public static create(pageIndex: number, pageSize: number): PagingnModel {
+    const model = new PagingnModel();
+    model.pageIndex = pageIndex;
+    model.pageSize = pageSize;
+
+    return model;
+  }
+
+  public static createNextPage(pageIndex: number, pageSize: number): PagingnModel {
+    const model = new PagingnModel();
+    model.pageIndex = pageIndex + 1;
+    model.pageSize = pageSize;
+
+    return model;
+  }
+
+  public static createPreviousPage(pageIndex: number, pageSize: number): PagingnModel {
+    const model = new PagingnModel();
+    model.pageIndex = pageIndex - 1;
+    model.pageSize = pageSize;
+
+    return model;
+  }
+}
+
+export class ResponseErrorHandler {
+  public static handleError(error: Response): any {
+    console.log(error || 'Server error');
+    return error;
+  }
+}
+
 @Injectable({
   providedIn: ServicesModule
 })

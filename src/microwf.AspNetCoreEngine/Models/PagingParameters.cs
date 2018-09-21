@@ -23,13 +23,13 @@ namespace tomware.Microwf.Engine
     public int PageIndex { get; private set; }
     public int TotalPages { get; private set; }
 
-    public int AllItemCount { get; private set; }
+    public int AllItemsCount { get; private set; }
 
     public PaginatedList(IEnumerable<T> items, int count, int pageIndex, int pageSize)
     {
       PageIndex = pageIndex;
       TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-      AllItemCount = count;
+      AllItemsCount = count;
 
       this.AddRange(items);
     }

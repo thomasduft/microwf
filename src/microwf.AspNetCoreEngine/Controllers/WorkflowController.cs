@@ -106,7 +106,7 @@ namespace tomware.Microwf.Engine
     {
       var paginationMetadata = new
       {
-        totalCount = result.AllItemCount,
+        totalCount = result.AllItemsCount,
         pageSize = pagingParameters.PageSize,
         pageIndex = pagingParameters.PageIndex,
         totalPages = result.TotalPages

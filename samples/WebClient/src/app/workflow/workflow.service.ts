@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
-import { ApiService } from '../shared/services/api.service';
+import { HttpWrapperService } from '../shared/services/httpWrapper.service';
 
 import { Workflow, WorkflowDefinition } from './models';
 
@@ -12,49 +12,37 @@ import { Workflow, WorkflowDefinition } from './models';
 })
 export class WorkflowService {
   public constructor(
-    private _http: HttpClient,
-    private _api: ApiService
+    private _http: HttpWrapperService,
   ) { }
 
   public workflows(): Observable<Array<Workflow>> {
-    const url = this._api.createApiUrl('workflow');
-
-    return this._http.get<Array<Workflow>>(url);
+    return this._http.get<Array<Workflow>>('workflow');
   }
 
   public get(id: number): Observable<Workflow> {
-    const url = this._api.createApiUrl(`workflow/${id}`);
-
-    return this._http.get<Workflow>(url);
+    return this._http.get<Workflow>(`workflow/${id}`);
   }
 
   // TODO: workflow/{id}/history
   // TODO: workflow/{id}/variables
 
   public mywork(): Observable<Array<Workflow>> {
-    const url = this._api.createApiUrl('workflow/mywork');
-
-    return this._http.get<Array<Workflow>>(url);
+    return this._http.get<Array<Workflow>>('workflow/mywork');
   }
 
   public getInstance(type: string, correlationId: number): Observable<Workflow> {
-    const url = this._api.createApiUrl(`workflow/instance`);
     const params = new HttpParams()
       .set('type', type)
       .set('correlationId', correlationId.toString());
 
-    return this._http.get<Workflow>(url, { params });
+    return this._http.get<Workflow>(`workflow/instance`, params);
   }
 
   public definitions(): Observable<Array<WorkflowDefinition>> {
-    const url = this._api.createApiUrl('workflow/definitions');
-
-    return this._http.get<Array<WorkflowDefinition>>(url);
+    return this._http.get<Array<WorkflowDefinition>>('workflow/definitions');
   }
 
   public dot(type: string): Observable<string> {
-    const url = this._api.createApiUrl(`workflow/dot/${type}`);
-
-    return this._http.get(url, { responseType: 'text' });
+    return this._http.getAsText(`workflow/dot/${type}`);
   }
 }

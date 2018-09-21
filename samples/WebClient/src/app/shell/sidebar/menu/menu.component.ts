@@ -5,6 +5,9 @@ import { MenuService } from './menu.service';
 
 @Component({
   selector: 'tw-menu',
+  providers: [
+    MenuService
+  ],
   template: `
   <li routerLinkActive="item.route ? 'active' : null"
       [ngClass]="{'menu__item': item.route}"
@@ -38,26 +41,6 @@ export class MenuComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._menuService.register({
-      id: '1',
-      name: 'Tasks',
-      icon: 'tasks',
-      children: [
-        {
-          id: '2',
-          name: 'Holiday',
-          route: '/holiday',
-          icon: 'plane'
-        },
-        {
-          id: '3',
-          name: 'Issues',
-          route: '/issue',
-          icon: 'bug'
-        }
-      ]
-    });
-
     // this._menuService.register({
     //   id: '2',
     //   name: 'Costs',
