@@ -83,14 +83,17 @@ import { Editor } from './models';
       <div *ngIf="control(editor.key).hasError('required')" i18n>
         {{ editor.label }} required.
       </div>
-      <div *ngIf="control(editor.key).hasError('maxlength')" i18n>
-        {{ editor.label }} must not be longer than {{ editor.size }} characters.
-      </div>
       <div *ngIf="control(editor.key).hasError('min')" i18n>
         {{ editor.label }} must not be lower than {{ editor.valueMin }}.
       </div>
       <div *ngIf="control(editor.key).hasError('max')" i18n>
         {{ editor.label }} must not be greater than {{ editor.valueMax }}.
+      </div>
+      <div *ngIf="control(editor.key).hasError('minlength')" i18n>
+        {{ editor.label }} must be at least {{ editor.minlength }} characters in length.
+      </div>
+      <div *ngIf="control(editor.key).hasError('maxlength')" i18n>
+        {{ editor.label }} must not be longer than {{ editor.maxlength }} characters.
       </div>
     </div>
   </div>`

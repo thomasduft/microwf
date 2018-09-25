@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { SharedModule } from './shared/shared.module';
 import { ShellModule } from './shell/shell.module';
 import { LoginModule } from './login/login.module';
@@ -54,7 +52,6 @@ const ROUTES: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    NgbModule.forRoot(),
     SharedModule,
     ShellModule,
     LoginModule,

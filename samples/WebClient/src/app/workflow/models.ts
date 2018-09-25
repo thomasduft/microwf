@@ -7,6 +7,13 @@ export class WorkflowArea {
   ) { }
 }
 
+export interface WorkflowDefinition {
+  type: string;
+  title: string;
+  description: string;
+  route: string;
+}
+
 export interface Workflow {
   id: number;
   correlationId: number;
@@ -20,11 +27,20 @@ export interface Workflow {
   completed?: Date;
 }
 
-export interface WorkflowDefinition {
+export interface WorkflowHistory {
+  id: number;
+  created: Date;
+  fromState: string;
+  toState; string;
+  userName: string;
+  workflowId: number;
+}
+
+export interface WorkflowVariable {
+  id: number;
   type: string;
-  title: string;
-  description: string;
-  route: string;
+  content: string;
+  workflowId: number;
 }
 
 export interface TriggerInfo {

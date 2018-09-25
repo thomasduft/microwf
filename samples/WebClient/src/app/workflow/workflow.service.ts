@@ -5,7 +5,12 @@ import { HttpParams } from '@angular/common/http';
 
 import { HttpWrapperService } from '../shared/services/httpWrapper.service';
 
-import { Workflow, WorkflowDefinition } from './models';
+import {
+  Workflow,
+  WorkflowDefinition,
+  WorkflowHistory,
+  WorkflowVariable
+} from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +28,13 @@ export class WorkflowService {
     return this._http.get<Workflow>(`workflow/${id}`);
   }
 
-  // TODO: workflow/{id}/history
-  // TODO: workflow/{id}/variables
+  public getHistory(id: number): Observable<Array<WorkflowHistory>> {
+    return this._http.get<Array<WorkflowHistory>>(`workflow/${id}/history`);
+  }
+
+  public getVariables(id: number): Observable<Array<WorkflowVariable>> {
+    return this._http.get<Array<WorkflowVariable>>(`workflow/${id}/variables`);
+  }
 
   public mywork(): Observable<Array<Workflow>> {
     return this._http.get<Array<Workflow>>('workflow/mywork');
