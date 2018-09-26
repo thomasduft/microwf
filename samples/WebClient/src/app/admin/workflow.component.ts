@@ -17,21 +17,21 @@ import {
 @Component({
   selector: 'tw-workflow',
   template: `
-  <div class="row">
-    <div class="col" *ngIf="workflow">
+  <div>
+    <div *ngIf="workflow">
       <tw-workflow-list-item [workflow]="workflow">
       </tw-workflow-list-item>
     </div>
   </div>
-  <div class="row">
-    <div class="col table-responsive-md" *ngIf="history">
-      <table class="table table-hover">
+  <div>
+    <div *ngIf="history">
+      <table>
         <thead>
           <tr>
-            <th scope="col" i18n>Created</th>
-            <th scope="col" i18n>From</th>
-            <th scope="col" i18n>To</th>
-            <th scope="col" i18n>User</th>
+            <th i18n>Created</th>
+            <th i18n>From</th>
+            <th i18n>To</th>
+            <th i18n>User</th>
           </tr>
         </thead>
         <tbody>
@@ -45,12 +45,12 @@ import {
       </table>
     </div>
   </div>
-  <div class="row">
-    <div class="col table-responsive-md" *ngIf="variables">
-      <table class="table table-hover">
+  <div>
+    <div *ngIf="variables">
+      <table>
         <thead>
           <tr>
-            <th scope="col" i18n>Content</th>
+            <th i18n>Content</th>
           </tr>
         </thead>
         <tbody>
@@ -61,8 +61,8 @@ import {
       </table>
     </div>
   </div>
-  <div class="row">
-    <div class="col" *ngIf="dot">
+  <div>
+    <div *ngIf="dot">
       <tw-dot [dot]="dot"></tw-dot>
     </div>
   </div>

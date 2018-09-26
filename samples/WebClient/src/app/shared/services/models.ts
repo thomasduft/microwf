@@ -26,12 +26,12 @@ export interface IdentityResult {
 }
 
 export class PagingnModel {
-  public selectItemsPerPage: number[] = [5, 10, 25, 100];
-  public pageSize = this.selectItemsPerPage[0];
-  public pageIndex = 1;
-  public allItemsCount = 0;
+  public pageSize;
+  public pageIndex;
+  public totalCount;
+  public totalPages;
 
-  public static create(pageIndex: number, pageSize: number): PagingnModel {
+  public static create(pageIndex = 0, pageSize = 20): PagingnModel {
     const model = new PagingnModel();
     model.pageIndex = pageIndex;
     model.pageSize = pageSize;
@@ -39,7 +39,17 @@ export class PagingnModel {
     return model;
   }
 
-  public static createNextPage(pageIndex: number, pageSize: number): PagingnModel {
+  public static fromResponse(xPaginationHeader: any): PagingnModel {
+    const model = new PagingnModel();
+    model.totalCount = xPaginationHeader.totalCount;
+    model.pageIndex = xPaginationHeader.pageIndex;
+    model.pageSize = xPaginationHeader.pageSize;
+    model.totalPages = xPaginationHeader.totalPages;
+
+    return model;
+  }
+
+  public static createNextPage(pageIndex: number, pageSize = 20): PagingnModel {
     const model = new PagingnModel();
     model.pageIndex = pageIndex + 1;
     model.pageSize = pageSize;

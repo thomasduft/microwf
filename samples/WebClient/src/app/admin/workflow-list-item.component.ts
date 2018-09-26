@@ -6,7 +6,7 @@ import { Workflow } from '../workflow';
   template: `
   <div [routerLink]="['detail', workflow?.id]" routerLinkActive="active">
     <p [attr.title]="workflow?.description">
-      <b>{{ workflow?.title }} #{{workflow?.id}}</b>
+      <b>{{ workflow?.title }} #{{workflow?.correlationId}}</b>
     </p>
     <div class="list__itemDetail">
       <p><b>State:</b> {{ workflow?.state }}</p>

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
 
@@ -6,14 +6,15 @@ import { AutoUnsubscribe } from './../shared/services/autoUnsubscribe';
 import { ListComponent } from '../shared/list/list.component';
 
 import { WorkflowService, Workflow } from './../workflow/index';
+import { PagingnModel } from '../shared/services/models';
 
 @AutoUnsubscribe
 @Component({
   selector: 'tw-admin-dashboard',
   providers: [WorkflowService],
   template: `
-  <div class="pane__left">
-    <tw-list #list [rows]="workflows$ | async">
+  <div class="pane__left" twScroller (scrollEnd)="loadNextPage()">
+    <tw-list #list [rows]="workflows">
       <tw-header>
         <h3 i18n>Instances</h3>
       </tw-header>
@@ -27,7 +28,10 @@ import { WorkflowService, Workflow } from './../workflow/index';
   </div>`
 })
 export class AdminDashboardComponent implements OnInit {
-  public workflows$: Observable<Array<Workflow>>;
+  private _workflows$: Subscription;
+  private _page: PagingnModel = PagingnModel.create();
+
+  public workflows: Array<Workflow> = [];
 
   @HostBinding('class')
   public workspace = 'pane';
@@ -40,10 +44,22 @@ export class AdminDashboardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.workflows$ = this._service.workflows();
+    this.loadPage(this._page);
   }
 
-  public reload(): void {
-    this.ngOnInit();
+  public loadNextPage(): void {
+    if (this._page.totalPages - 1 > this._page.pageIndex) {
+      this.loadPage(PagingnModel.createNextPage(this._page.pageIndex));
+    }
+  }
+
+  private loadPage(page: PagingnModel): void {
+    this._workflows$ = this._service.workflows(page)
+      .subscribe((response: any) => {
+        const xPagination = JSON.parse(response.headers.get('X-Pagination'));
+        this._page = PagingnModel.fromResponse(xPagination);
+
+        this.list.attachRows(response.body);
+      });
   }
 }

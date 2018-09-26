@@ -13,7 +13,7 @@ namespace tomware.Microwf.Engine
     {
       get
       {
-        return this.PageSize * (this.PageIndex - 1);
+        return this.PageSize * this.PageIndex;
       }
     }
   }

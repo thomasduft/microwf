@@ -56,7 +56,7 @@ export class TwTemplateDirective {
           *ngTemplateOutlet="itemTemplate; context: {$implicit: rowData, rowIndex: rowIndex}">
         </ng-container>
       </ng-template>
-      <div *ngIf="isEmpty()">No data!</div>
+      <div *ngIf="isEmpty()" i18n>No data!</div>
     </div>
     <ng-content select="tw-footer"></ng-content>
   </div>
@@ -112,7 +112,9 @@ export class ListComponent implements OnInit, AfterContentInit {
     if (this.isEmpty()) {
       this.rows = rows;
     } else {
-      this.rows.push(rows);
+      rows.forEach((r: any) => {
+        this.rows.push(r);
+      });
     }
   }
 }

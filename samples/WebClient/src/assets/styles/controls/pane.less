@@ -3,8 +3,16 @@
 .pane {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   height: 100vh;
+}
+
+.pane__left {
+  overflow-y: auto;
+}
+
+.pane__main {
+  overflow-y: auto;
+  margin-top: 2rem;
 }
 
 @media (min-width: @breakpoint-min-width) {
@@ -13,7 +21,7 @@
   }
 
   .pane__left {
-    width: 300px;
+    max-width: 300px;
     overflow-y: auto;
     max-height: 100vh;
   }
@@ -22,5 +30,6 @@
     flex: 1;
     overflow-y: auto;
     max-height: 100vh;
+    margin-top: 0;
   }
 }

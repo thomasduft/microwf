@@ -6,6 +6,7 @@ import { IconModule } from './../shared/icon/icon.module';
 import { ListModule } from './../shared/list/list.module';
 import { FormdefModule } from './../shared/formdef/index';
 import { WorkflowModule } from '../workflow/workflow.module';
+import { ScrollerModule } from '../shared/scroller/scroller.module';
 
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { WorkflowComponent } from './workflow.component';
@@ -30,7 +31,8 @@ const ROUTES: Routes = [
     FormdefModule,
     WorkflowModule,
     IconModule,
-    ListModule
+    ListModule,
+    ScrollerModule
   ],
   declarations: [
     AdminDashboardComponent,
