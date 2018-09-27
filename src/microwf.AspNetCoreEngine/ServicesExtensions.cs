@@ -35,7 +35,7 @@ namespace tomware.Microwf.Engine
       services.Configure<ProcessorConfiguration>(config =>
       {
         config.Enabled = processorConfiguration.Enabled;
-        config.Intervall = processorConfiguration.Intervall;
+        config.Interval = processorConfiguration.Interval;
       });
 
       if (processorConfiguration.Enabled)
