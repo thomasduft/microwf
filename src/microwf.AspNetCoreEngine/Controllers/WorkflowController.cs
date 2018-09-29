@@ -45,7 +45,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
     public async Task<IActionResult> GetHistory(int id)
     {
-      var result = await _service.GetHistory(id);
+      var result = await _service.GetHistoryAsync(id);
 
       return Ok(result);
     }
@@ -55,7 +55,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkflowVariable>), 200)]
     public async Task<IActionResult> GetVariables(int id)
     {
-      var result = await _service.GetVariables(id);
+      var result = await _service.GetVariablesAsync(id);
 
       return Ok(result);
     }
@@ -83,7 +83,7 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("definitions")]
     [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
-    public IActionResult Get()
+    public IActionResult GetWorkflowDefinitions()
     {
       var result = _service.GetWorkflowDefinitions();
 
@@ -95,6 +95,15 @@ namespace tomware.Microwf.Engine
     public IActionResult Dot(string type)
     {
       var result = _service.Dot(type);
+
+      return Ok(result);
+    }
+
+    [HttpGet("dotwithhistory/{type}/{correlationId}")]
+    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
+    public async Task<IActionResult> DotWithHistory(string type, int correlationId)
+    {
+      var result = await _service.DotWithHistoryAsync(type, correlationId);
 
       return Ok(result);
     }

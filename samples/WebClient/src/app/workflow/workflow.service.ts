@@ -56,4 +56,8 @@ export class WorkflowService {
   public dot(type: string): Observable<string> {
     return this._http.getAsText(`workflow/dot/${type}`);
   }
+
+  public dotWithHistory(type: string, correlationId: number): Observable<string> {
+    return this._http.getAsText(`workflow/dotwithhistory/${type}/${correlationId}`);
+  }
 }

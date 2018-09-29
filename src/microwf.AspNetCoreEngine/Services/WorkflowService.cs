@@ -16,9 +16,9 @@ namespace tomware.Microwf.Engine
 
     Task<WorkflowViewModel> GetAsync(int id);
 
-    Task<IEnumerable<WorkflowHistory>> GetHistory(int id);
+    Task<IEnumerable<WorkflowHistory>> GetHistoryAsync(int id);
 
-    Task<IEnumerable<WorkflowVariable>> GetVariables(int id);
+    Task<IEnumerable<WorkflowVariable>> GetVariablesAsync(int id);
 
     Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId);
 
@@ -34,6 +34,8 @@ namespace tomware.Microwf.Engine
     /// <param name="type"></param>
     /// <returns></returns>
     string Dot(string type);
+
+    Task<string> DotWithHistoryAsync(string type, int correlationId);
   }
 
   public class WorkflowService<TContext> : IWorkflowService where TContext : EngineDbContext
@@ -120,7 +122,7 @@ namespace tomware.Microwf.Engine
       return ToWorkflowViewModel(workflow);
     }
 
-    public async Task<IEnumerable<WorkflowHistory>> GetHistory(int id)
+    public async Task<IEnumerable<WorkflowHistory>> GetHistoryAsync(int id)
     {
       var workflow = await _context.Workflows
         .Include(h => h.WorkflowHistories)
@@ -130,7 +132,7 @@ namespace tomware.Microwf.Engine
       return workflow.WorkflowHistories.OrderByDescending(h => h.Created);
     }
 
-    public async Task<IEnumerable<WorkflowVariable>> GetVariables(int id)
+    public async Task<IEnumerable<WorkflowVariable>> GetVariablesAsync(int id)
     {
       var workflow = await _context.Workflows
        .Include(v => v.WorkflowVariables)
@@ -165,6 +167,20 @@ namespace tomware.Microwf.Engine
       var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return workflowDefinition.ToDot();
+    }
+
+    public async Task<string> DotWithHistoryAsync(string type, int correlationId)
+    {
+      if (string.IsNullOrEmpty(type)) throw new ArgumentNullException(nameof(type));
+
+      var workflow = await _context.Workflows
+        .Include(h => h.WorkflowHistories)
+        .FirstAsync(w => w.Type == type && w.CorrelationId == correlationId);
+      if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
+
+      var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
+
+      return workflowDefinition.ToDotWithHistory(workflow);
     }
 
     private WorkflowViewModel ToWorkflowViewModel(Workflow w)

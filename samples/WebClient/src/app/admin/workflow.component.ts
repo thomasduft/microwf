@@ -24,6 +24,11 @@ import {
     </div>
   </div>
   <div>
+    <div *ngIf="dot">
+      <tw-dot [dot]="dot"></tw-dot>
+    </div>
+  </div>
+  <div>
     <div *ngIf="history">
       <table>
         <thead>
@@ -61,19 +66,14 @@ import {
       </table>
     </div>
   </div>
-  <div>
-    <div *ngIf="dot">
-      <tw-dot [dot]="dot"></tw-dot>
-    </div>
-  </div>
   `
 })
 export class WorkflowComponent implements OnInit {
-  private _routeParams$: Subscription;
-  private _workflow$: Subscription;
-  private _dot$: Subscription;
-  private _history$: Subscription;
-  private _variables$: Subscription;
+  private routeParams$: Subscription;
+  private workflow$: Subscription;
+  private dot$: Subscription;
+  private history$: Subscription;
+  private variables$: Subscription;
 
   public workflow: Workflow;
   public dot: DotInfo;
@@ -89,7 +89,7 @@ export class WorkflowComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._routeParams$ = this._route.params
+    this.routeParams$ = this._route.params
       .subscribe((params: Params) => {
         if (params.id) {
           this.init(params.id);
@@ -98,33 +98,33 @@ export class WorkflowComponent implements OnInit {
   }
 
   private init(id: string): void {
-    this._workflow$ = this._workflowService.get(Number(id))
+    this.workflow$ = this._workflowService.get(Number(id))
       .subscribe((workflow: Workflow) => {
         this.workflow = workflow;
 
         // TODO: make use of forkJoin!
-        this.loadDot(this.workflow.type);
+        this.loadDot(this.workflow.type, this.workflow.correlationId);
         this.loadHistory(this.workflow.id);
         this.loadVariables(this.workflow.id);
       });
   }
 
-  private loadDot(key: string): void {
-    this._dot$ = this._workflowService.dot(key)
+  private loadDot(key: string, correlationId: number): void {
+    this.dot$ = this._workflowService.dotWithHistory(key, correlationId)
       .subscribe((dot: string) => {
         this.dot = { dot: dot };
       });
   }
 
   private loadHistory(id: number): void {
-    this._history$ = this._workflowService.getHistory(id)
+    this.history$ = this._workflowService.getHistory(id)
       .subscribe((history: WorkflowHistory[]) => {
         this.history = history;
       });
   }
 
   private loadVariables(id: number): void {
-    this._history$ = this._workflowService.getVariables(id)
+    this.history$ = this._workflowService.getVariables(id)
       .subscribe((variables: WorkflowVariable[]) => {
         this.variables = variables;
       });
