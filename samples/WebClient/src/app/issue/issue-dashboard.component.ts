@@ -14,38 +14,36 @@ import { Issue } from './models';
   providers: [IssueService],
   template: `
   <div class="pane__left">
-    <div class="btn-group float-right">
-      <a class="btn btn-primary" [routerLink]="['detail/new']">
-        <tw-icon name="plus"></tw-icon>
-      </a>
-      <button type="button" class="btn btn-secondary" (click)="reload()">
-        <tw-icon name="refresh"></tw-icon>
-      </button>
-    </div>
-    <div class="table-responsive-md">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col" i18n>State</th>
-            <th scope="col" i18n>Assignee</th>
-            <th scope="col" i18n>Title</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let issue of myWork$ | async">
-            <td>{{ issue?.state }}</td>
-            <td>{{ issue?.assignee }}</td>
-            <td>{{ issue?.title }}</td>
-            <td>
-              <a [routerLink]="['detail', issue?.id]" i18n>
-                <tw-icon name="arrow-right"></tw-icon>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <tw-list #list [rows]="myWork$ | async">
+      <tw-header>
+        <h3 i18n>Issues</h3>
+        <div>
+          <a class="btn" [routerLink]="['detail/new']">
+            <tw-icon name="plus"></tw-icon>
+          </a>
+          <button type="button" class="btn" (click)="reload()">
+            <tw-icon name="refresh"></tw-icon>
+          </button>
+        </div>
+      </tw-header>
+      <ng-template let-issue twTemplate="issue-item">
+        <div class="list__item">
+          <div [routerLink]="['detail', issue?.id]" routerLinkActive="active">
+            <p>
+              <b i18n>Title:</b><span> {{ issue?.title }}</span>
+            </p>
+            <div class="list__itemDetail">
+              <p>
+                <b i18n>State:</b><span> {{ issue?.state }}</span>
+              </p>
+              <p>
+                <b i18n>Assignee:</b><span> {{ issue?.assignee }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </tw-list>
   </div>
   <div class="pane__main">
     <router-outlet></router-outlet>

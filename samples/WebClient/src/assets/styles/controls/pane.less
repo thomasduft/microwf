@@ -6,11 +6,17 @@
   height: 100vh;
 }
 
+.pane--space {
+  padding: 5px;
+}
+
 .pane__left {
+  flex: 1;
   overflow-y: auto;
 }
 
 .pane__main {
+  flex: 1;
   overflow-y: auto;
   margin-top: 2rem;
 }
@@ -23,13 +29,13 @@
   .pane__left {
     max-width: 300px;
     overflow-y: auto;
-    max-height: 100vh;
+    height: 100vh;
   }
 
   .pane__main {
     flex: 1;
     overflow-y: auto;
-    max-height: 100vh;
     margin-top: 0;
+    height: 100vh;
   }
 }

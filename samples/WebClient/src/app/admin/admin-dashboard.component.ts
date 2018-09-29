@@ -17,6 +17,11 @@ import { PagingnModel } from '../shared/services/models';
     <tw-list #list [rows]="workflows">
       <tw-header>
         <h3 i18n>Instances</h3>
+        <div>
+          <button type="button" class="btn" (click)="reload()">
+            <tw-icon name="refresh"></tw-icon>
+          </button>
+        </div>
       </tw-header>
       <ng-template let-workflow twTemplate="workflow-item">
         <tw-workflow-list-item [workflow]="workflow"></tw-workflow-list-item>
@@ -28,8 +33,8 @@ import { PagingnModel } from '../shared/services/models';
   </div>`
 })
 export class AdminDashboardComponent implements OnInit {
-  private _workflows$: Subscription;
-  private _page: PagingnModel = PagingnModel.create();
+  private workflows$: Subscription;
+  private page: PagingnModel = PagingnModel.create();
 
   public workflows: Array<Workflow> = [];
 
@@ -44,20 +49,27 @@ export class AdminDashboardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.loadPage(this._page);
+    this.loadPage(this.page);
+  }
+
+  public reload(): void {
+    this.list.rows = [];
+    this.page = PagingnModel.create();
+
+    this.ngOnInit();
   }
 
   public loadNextPage(): void {
-    if (this._page.totalPages - 1 > this._page.pageIndex) {
-      this.loadPage(PagingnModel.createNextPage(this._page.pageIndex));
+    if (this.page.totalPages - 1 > this.page.pageIndex) {
+      this.loadPage(PagingnModel.createNextPage(this.page.pageIndex));
     }
   }
 
   private loadPage(page: PagingnModel): void {
-    this._workflows$ = this._service.workflows(page)
+    this.workflows$ = this._service.workflows(page)
       .subscribe((response: any) => {
         const xPagination = JSON.parse(response.headers.get('X-Pagination'));
-        this._page = PagingnModel.fromResponse(xPagination);
+        this.page = PagingnModel.fromResponse(xPagination);
 
         this.list.attachRows(response.body);
       });

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IconModule } from '../shared/icon/icon.module';
-import { PaneModule } from '../shared/pane/pane.module';
+import { ListModule } from './../shared/list/list.module';
 import { FormdefModule, FormdefRegistry } from '../shared/formdef/index';
 import { WorkflowModule } from '../workflow/workflow.module';
 
@@ -27,8 +27,8 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     FormdefModule,
     WorkflowModule,
-    PaneModule,
-    IconModule
+    IconModule,
+    ListModule
   ],
   declarations: [
     IssueDashboardComponent,
