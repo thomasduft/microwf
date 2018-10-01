@@ -10,16 +10,47 @@ namespace tomware.Microwf.Engine
 {
   public interface IWorkflowService
   {
+    /// <summary>
+    /// Returns a list of workflow instances.
+    /// </summary>
+    /// <param name="pagingParameters"></param>
+    /// <returns></returns>
     Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(PagingParameters pagingParameters);
 
+    /// <summary>
+    /// Returns a list of workflow instances that the current user has to work on.
+    /// </summary>
+    /// <param name="pagingParameters"></param>
+    /// <returns></returns>
     Task<PaginatedList<WorkflowViewModel>> GetMyWorkflowsAsync(PagingParameters pagingParameters);
 
+    /// <summary>
+    /// Returns a workflow instance.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     Task<WorkflowViewModel> GetAsync(int id);
 
+    /// <summary>
+    /// Returns the workflow history for a workflow instance.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     Task<IEnumerable<WorkflowHistory>> GetHistoryAsync(int id);
 
+    /// <summary>
+    /// Returns the workflow variables for a workflow instance.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     Task<IEnumerable<WorkflowVariable>> GetVariablesAsync(int id);
 
+    /// <summary>
+    /// Returns a workflow instance.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="correlationId"></param>
+    /// <returns></returns>
     Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId);
 
     /// <summary>
@@ -35,6 +66,12 @@ namespace tomware.Microwf.Engine
     /// <returns></returns>
     string Dot(string type);
 
+    /// <summary>
+    /// Returns the dot -> diagraph notation for the given workflow type with history information.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="correlationId"></param>
+    /// <returns></returns>
     Task<string> DotWithHistoryAsync(string type, int correlationId);
   }
 

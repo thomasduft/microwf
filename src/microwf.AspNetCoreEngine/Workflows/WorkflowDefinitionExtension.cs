@@ -22,21 +22,21 @@ namespace tomware.Microwf.Core
       sb.AppendLine($"digraph {workflow.Type} {{");
       if (!string.IsNullOrEmpty(rankDir)) sb.AppendLine($"  rankdir = {rankDir};");
 
-      // current
       sb.AppendLine($"  {currentState} [ style=\"filled\", color=\"#e95420\" ];");
 
       foreach (var t in workflow.Transitions)
       {
-        var triggered = Exists(t, history);
-        if (triggered)
+        if (Exists(t, history))
         {
-          sb.AppendLine($"  {t.State} -> {t.TargetState} [ label = {t.Trigger}, color =\"#e95420\", penwidth=2 ];");
+          sb.AppendLine($"  {t.State} -> {t.TargetState} " +
+            $"[ label = {t.Trigger}, color =\"#e95420\", penwidth=2 ];");
         }
         else
         {
           sb.AppendLine($"  {t.State} -> {t.TargetState} [ label = {t.Trigger} ];");
         }
       }
+
       sb.AppendLine("}");
 
       return sb.ToString();
@@ -47,5 +47,4 @@ namespace tomware.Microwf.Core
       return history.Any(h => h.FromState == t.State && h.ToState == t.TargetState);
     }
   }
-
 }
