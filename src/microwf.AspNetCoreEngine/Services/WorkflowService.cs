@@ -18,13 +18,6 @@ namespace tomware.Microwf.Engine
     Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(PagingParameters pagingParameters);
 
     /// <summary>
-    /// Returns a list of workflow instances that the current user has to work on.
-    /// </summary>
-    /// <param name="pagingParameters"></param>
-    /// <returns></returns>
-    Task<PaginatedList<WorkflowViewModel>> GetMyWorkflowsAsync(PagingParameters pagingParameters);
-
-    /// <summary>
     /// Returns a workflow instance.
     /// </summary>
     /// <param name="id"></param>
@@ -114,34 +107,6 @@ namespace tomware.Microwf.Engine
         .ToListAsync();
 
       var items = instances.Select(i => ToWorkflowViewModel(i));
-
-      return new PaginatedList<WorkflowViewModel>(
-        items,
-        count,
-        pagingParameters.PageIndex,
-        pagingParameters.PageSize
-      );
-    }
-
-    public async Task<PaginatedList<WorkflowViewModel>> GetMyWorkflowsAsync(
-      PagingParameters pagingParameters
-    )
-    {
-      var definitions = GetWorkflowDefinitions();
-
-      var baseQuery = _context.Workflows
-        .Where(w => definitions.Select(d => d.Type).Distinct().Contains(w.Type)
-          && w.Assignee == _userContext.UserName);
-
-      var count = baseQuery.Count();
-
-      var instances = await baseQuery
-        .OrderByDescending(w => w.Id)
-        .Skip(pagingParameters.SkipCount)
-        .Take(pagingParameters.PageSize)
-        .ToListAsync();
-
-      var items = instances.Select(w => ToWorkflowViewModel(w));
 
       return new PaginatedList<WorkflowViewModel>(
         items,

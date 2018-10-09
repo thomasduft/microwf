@@ -60,18 +60,6 @@ namespace tomware.Microwf.Engine
       return Ok(result);
     }
 
-    [HttpGet("mywork")]
-    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
-    public async Task<IActionResult> GetMyWorkflows([FromQuery] PagingParameters pagingParameters)
-    {
-      PaginatedList<WorkflowViewModel> result
-        = await _service.GetMyWorkflowsAsync(pagingParameters);
-
-      AddXPagination(pagingParameters, result);
-
-      return Ok(result);
-    }
-
     [HttpGet("instance/{type}/{correlationId}")]
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
     public async Task<IActionResult> GetInstance(string type, int correlationId)

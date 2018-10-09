@@ -37,10 +37,6 @@ export class WorkflowService {
     return this._http.get<Array<WorkflowVariable>>(`workflow/${id}/variables`);
   }
 
-  public mywork(): Observable<Array<Workflow>> {
-    return this._http.get<Array<Workflow>>('workflow/mywork');
-  }
-
   public getInstance(type: string, correlationId: number): Observable<Workflow> {
     const params = new HttpParams()
       .set('type', type)
