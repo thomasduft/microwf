@@ -18,7 +18,7 @@ import { PagingnModel } from '../shared/services/models';
       <tw-header>
         <h3 i18n>Instances</h3>
         <div>
-          <button type="button" class="btn" (click)="reload()">
+          <button type="button" (click)="reload()">
             <tw-icon name="refresh"></tw-icon>
           </button>
         </div>

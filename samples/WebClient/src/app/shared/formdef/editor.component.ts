@@ -17,7 +17,6 @@ import { Editor } from './models';
        [ngClass]="{ 'has-danger': control(editor.key).invalid,
                     'form-group': editor.type !== 'checkbox',
                     'checkbox': editor.type === 'checkbox' }">
-
     <label class="form-control-label"
            *ngIf="(!hideLabel && editor.type !== 'checkbox' && editor.type !== 'hidden')"
            [attr.for]="editor.key">
@@ -90,10 +89,10 @@ import { Editor } from './models';
         {{ editor.label }} must not be greater than {{ editor.valueMax }}.
       </div>
       <div *ngIf="control(editor.key).hasError('minlength')" i18n>
-        {{ editor.label }} must be at least {{ editor.minlength }} characters in length.
+        {{ editor.label }} must be at least {{ editor.minLength }} characters in length.
       </div>
       <div *ngIf="control(editor.key).hasError('maxlength')" i18n>
-        {{ editor.label }} must not be longer than {{ editor.maxlength }} characters.
+        {{ editor.label }} must not be longer than {{ editor.maxLength }} characters.
       </div>
     </div>
   </div>`

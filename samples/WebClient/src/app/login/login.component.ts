@@ -38,8 +38,7 @@ import { LoginService } from './login.service';
       Username or password is wrong!
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block"
-            type="submit"
+    <button type="submit"
             [disabled]="!formGroup.valid">Sign in</button>
   </form>`,
   providers: [

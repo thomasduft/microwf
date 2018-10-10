@@ -1,12 +1,20 @@
-@import "variables.less";
+// shared
+@import "./shared/variables.less";
+@import "./shared/base.less";
+// @import "./shared/mixins.less";
 
-@import "base.less";
-@import "grid.less";
-@import "table.less";
+// layout: reusable styles that change the layout of a page.
+@import "./layout/grid.less";
+@import "./layout/pane.less";
+@import "./layout/shell.less";
+@import "./layout/sidebar.less";
+@import "./layout/workspace.less";
 
-@import "shell.less";
-@import "sidebar.less";
-@import "workspace.less";
+// blocks: stand alone elements, able to be used by themselves as well as by components. 
+// Usually created by a single DOM element
+@import "./blocks/button.less";
+@import "./blocks/table.less";
+@import "./blocks/list.less";
 
-@import "controls/list.less";
-@import "controls/pane.less";
+// components: reusable, but contain multiple blocks
+

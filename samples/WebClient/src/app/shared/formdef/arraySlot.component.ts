@@ -14,7 +14,7 @@ import { SlotComponent } from './slot.component';
   template: `
   <h3>{{ slot.title }}</h3>
   <button type="button"
-          class="btn btn-secondary"
+          class="button--secondary"
           (click)="add()">+</button>
   <div class="table-responsive-md">
     <table class="table table-hover" [formGroup]="parentForm">
@@ -29,7 +29,7 @@ import { SlotComponent } from './slot.component';
           </td>
           <td>
             <button type="button"
-                    class="btn btn-secondary"
+                    class="button--secondary"
                     (click)="remove(idx)">-</button>
           </td>
         </tr>

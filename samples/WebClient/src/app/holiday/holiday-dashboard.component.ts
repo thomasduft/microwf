@@ -18,10 +18,10 @@ import { Holiday } from './models';
       <tw-header>
         <h3 i18n>Holidays</h3>
         <div>
-          <a class="btn" [routerLink]="['detail/new']">
+          <a class="button" [routerLink]="['detail/new']">
             <tw-icon name="plus"></tw-icon>
           </a>
-          <button type="button" class="btn" (click)="reload()">
+          <button type="button" (click)="reload()">
             <tw-icon name="refresh"></tw-icon>
           </button>
         </div>
