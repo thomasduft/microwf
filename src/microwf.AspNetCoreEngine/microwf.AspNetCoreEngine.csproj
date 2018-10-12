@@ -5,7 +5,9 @@
     <AssemblyName>tomware.Microwf.AspNetCoreEngine</AssemblyName>
     <RootNamespace>tomware.Microwf.AspNetCoreEngine</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>A default ASP.NET Core with EF implementation for tomware.Microwf.Core</Description>
+    <Description>
+      An ASP.NET Core with EF Core way of leveraging tomware.Microwf.Core in a Web Api.
+    </Description>
     <RepositoryUrl>https://github.com/thomasduft/microwf</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/thomasduft/microwf/blob/master/LICENSE.md</PackageLicenseUrl>
     <Authors>Thomas Duft</Authors>
