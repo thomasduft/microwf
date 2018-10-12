@@ -104,6 +104,7 @@ namespace tomware.Microwf.Engine
         .OrderByDescending(w => w.Id)
         .Skip(pagingParameters.SkipCount)
         .Take(pagingParameters.PageSize)
+        .AsNoTracking()
         .ToListAsync();
 
       var items = instances.Select(i => ToWorkflowViewModel(i));
@@ -128,7 +129,9 @@ namespace tomware.Microwf.Engine
     {
       var workflow = await _context.Workflows
         .Include(h => h.WorkflowHistories)
-        .Where(w => w.Id == id).FirstAsync();
+        .Where(w => w.Id == id)
+        .AsNoTracking()
+        .FirstAsync();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
       return workflow.WorkflowHistories.OrderByDescending(h => h.Created);
@@ -137,8 +140,10 @@ namespace tomware.Microwf.Engine
     public async Task<IEnumerable<WorkflowVariable>> GetVariablesAsync(int id)
     {
       var workflow = await _context.Workflows
-       .Include(v => v.WorkflowVariables)
-       .Where(w => w.Id == id).FirstAsync();
+        .Include(v => v.WorkflowVariables)
+        .Where(w => w.Id == id)
+        .AsNoTracking()
+        .FirstAsync();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
       return workflow.WorkflowVariables.OrderBy(v => v.Type);
@@ -147,6 +152,7 @@ namespace tomware.Microwf.Engine
     public async Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId)
     {
       var workflow = await _context.Workflows
+        .AsNoTracking()
         .FirstAsync(w => w.Type == type && w.CorrelationId == correlationId);
       if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
 
@@ -177,6 +183,7 @@ namespace tomware.Microwf.Engine
 
       var workflow = await _context.Workflows
         .Include(h => h.WorkflowHistories)
+        .AsNoTracking()
         .FirstAsync(w => w.Type == type && w.CorrelationId == correlationId);
       if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
 
