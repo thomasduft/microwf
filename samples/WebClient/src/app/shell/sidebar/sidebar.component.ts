@@ -35,7 +35,7 @@ import { AuthService } from '../../shared/services/auth.service';
         </span>
       </li>
       <li routerLinkActive="active" class="menu__item">
-        <a (click)="logout()">
+        <a href="javascript:void(0)" (click)="logout()">
           <tw-icon name="sign-out"></tw-icon>
           Log out
         </a>

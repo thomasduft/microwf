@@ -28,7 +28,7 @@ export class IssueDetailSlot implements Slot {
 
   public key = IssueDetailSlot.KEY;
   public type = SINGLE_SLOT;
-  public title = 'Issue';
+  public title = '';
   public editors: Editor[];
 
   public constructor() {

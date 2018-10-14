@@ -17,21 +17,18 @@ import { Editor } from './models';
        [ngClass]="{ 'has-danger': control(editor.key).invalid,
                     'form-group': editor.type !== 'checkbox',
                     'checkbox': editor.type === 'checkbox' }">
-    <label class="form-control-label"
-           *ngIf="(!hideLabel && editor.type !== 'checkbox' && editor.type !== 'hidden')"
+    <label *ngIf="(!hideLabel && editor.type !== 'checkbox' && editor.type !== 'hidden')"
            [attr.for]="editor.key">
       {{ editor.label }}
     </label>
 
    <input *ngSwitchCase="'hidden'"
           type="hidden"
-          class="form-control"
           [attr.id]="editor.key"
           [formControlName]="editor.key" />
 
    <input *ngSwitchCase="'number'"
           type="number"
-          class="form-control"
           pattern="[0-9.,]*"
           inputmode="numeric"
           [attr.id]="editor.key"
@@ -39,7 +36,6 @@ import { Editor } from './models';
 
    <input *ngSwitchCase="'password'"
           type="password"
-          class="form-control"
           [attr.id]="editor.key"
           [formControlName]="editor.key" />
 
@@ -51,7 +47,6 @@ import { Editor } from './models';
    </label>
 
    <select *ngSwitchCase="'select'"
-           class="form-control"
            [formControlName]="editor.key">
      <option *ngIf="!editor.required" [value]=""></option>
      <option *ngFor="let opt of editor.options" [ngValue]="opt.key">
@@ -61,20 +56,17 @@ import { Editor } from './models';
 
    <input *ngSwitchCase="'date'"
           type="date"
-          class="form-control"
           [attr.id]="editor.key"
           [formControlName]="editor.key"
           twUseValueAsDate />
 
     <textarea *ngSwitchCase="'textarea'"
-              class="form-control"
               [attr.id]="editor.key"
               [formControlName]="editor.key">
     </textarea>
 
    <input *ngSwitchDefault
           type="text"
-          class="form-control"
           [attr.id]="editor.key"
           [formControlName]="editor.key" />
 

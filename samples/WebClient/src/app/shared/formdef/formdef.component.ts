@@ -1,11 +1,10 @@
-import { Observable } from 'rxjs';
-
 import {
   Component,
   OnInit,
   Input,
   EventEmitter,
-  Output
+  Output,
+  HostBinding
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -76,6 +75,9 @@ export class FormdefComponent implements OnInit {
 
   @Output()
   public deleted: EventEmitter<any> = new EventEmitter<any>();
+
+  @HostBinding('class')
+  public class = 'form';
 
   public form: FormGroup = new FormGroup({});
   public slot: Slot;

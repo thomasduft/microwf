@@ -10,36 +10,30 @@ import { LoginService } from './login.service';
   selector: 'tw-login',
   styleUrls: ['./login.component.css'],
   template: `
-  <form class="form-signin"
+  <form class="form form--signin"
         [formGroup]="formGroup"
         (ngSubmit)="login()"
         novalidate>
-    <div class="form-label-group"
-         [ngClass]="{ 'has-error': formGroup.controls['username'].invalid }">
+    <div [ngClass]="{ 'has-error': formGroup.controls['username'].invalid }">
       <input type="email"
              id="inputEmail"
-             class="form-control"
              placeholder="Username"
              formControlName="username"
-             required autofocus>
+             autofocus>
     </div>
 
-    <div class="form-label-group"
-         [ngClass]="{ 'has-error': formGroup.controls['password'].invalid }">
+    <div [ngClass]="{ 'has-error': formGroup.controls['password'].invalid }">
       <input type="password"
              id="inputPassword"
-             class="form-control"
              placeholder="Password"
-             formControlName="password"
-             required>
+             formControlName="password">
     </div>
 
     <div *ngIf="error" class="alert alert-danger">
       Username or password is wrong!
     </div>
 
-    <button type="submit"
-            [disabled]="!formGroup.valid">Sign in</button>
+    <button type="submit"[disabled]="!formGroup.valid">Sign in</button>
   </form>`,
   providers: [
     LoginService

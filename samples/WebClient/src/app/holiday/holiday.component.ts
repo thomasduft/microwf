@@ -21,50 +21,42 @@ import {
   selector: 'tw-holiday',
   providers: [HolidayService],
   template: `
-  <div class="row">
-    <div class="col-sm">
-      <tw-trigger-info *ngIf="formDef"
-        [canTrigger]="formDef.formIsValid"
-        [triggerInfo]="triggerInfo"
-        (trigger)="triggerClicked($event)">
-      </tw-trigger-info>
-    </div>
+  <div>
+    <tw-trigger-info *ngIf="formDef"
+      [canTrigger]="formDef.formIsValid"
+      [triggerInfo]="triggerInfo"
+      (trigger)="triggerClicked($event)">
+    </tw-trigger-info>
   </div>
-
-  <div class="row">
-    <div class="col-sm">
-      <tw-formdef
-        #formDef
-        [key]="key"
-        [viewModel]="viewModel"
-        (submitted)="submitted($event)">
-      </tw-formdef>
-    </div>
+  <div>
+    <tw-formdef
+      #formDef
+      [key]="key"
+      [viewModel]="viewModel"
+      (submitted)="submitted($event)">
+    </tw-formdef>
   </div>
-
-  <div class="row" *ngIf="entity && entity.id">
-    <div class="col-sm">
-      <p>
-        <b>{{ entity.requester }}</b> applied for holiday between
-        <b>{{ entity.from | date }}</b> and <b>{{ entity.to | date }}</b>.
-      </p>
-      <div class="table-responsive-md" *ngIf="entity.messages && entity.messages.length > 0">
-        <h5 i18n>Messages</h5>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col" i18n>Author</th>
-              <th scope="col" i18n>Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let message of entity.messages">
-              <td>{{ message.author }}</td>
-              <td>{{ message.message }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div *ngIf="entity && entity.id">
+    <p>
+      <b>{{ entity.requester }}</b> applied for holiday between
+      <b>{{ entity.from | date }}</b> and <b>{{ entity.to | date }}</b>.
+    </p>
+    <div class="table-responsive-md" *ngIf="entity.messages && entity.messages.length > 0">
+      <h5 i18n>Messages</h5>
+      <table>
+        <thead>
+          <tr>
+            <th i18n>Author</th>
+            <th i18n>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let message of entity.messages">
+            <td>{{ message.author }}</td>
+            <td>{{ message.message }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   `
