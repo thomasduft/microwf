@@ -5,7 +5,7 @@ using tomware.Microbus.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public class EnqueueWorkItemMessageHandler : IMessageHandler<WorkItem>
+  public class EnqueueWorkItemMessageHandler : IMessageHandler<WorkItemMessage>
   {
     private readonly ILogger<EnqueueWorkItemMessageHandler> _logger;
 
@@ -21,13 +21,14 @@ namespace tomware.Microwf.Engine
     }
 
     public async Task Handle(
-      WorkItem item,
+      WorkItemMessage item,
       CancellationToken token = default(CancellationToken)
     )
     {
       _logger.LogTrace($"Enqueue work item", item);
 
-      _jobQueueService.Enqueue(item);
+      WorkItem workItem = WorkItem.Create(item.TriggerName, item.EntityId, item.WorkflowType);
+      _jobQueueService.Enqueue(workItem);
 
       await Task.CompletedTask;
     }

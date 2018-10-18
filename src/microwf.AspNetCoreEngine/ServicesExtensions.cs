@@ -95,7 +95,7 @@ namespace tomware.Microwf.Engine
       var messageBus = app.ApplicationServices.GetRequiredService<IMessageBus>();
       if (messageBus != null)
       {
-        messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItem>();
+        messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItemMessage>();
       }
 
       return app;

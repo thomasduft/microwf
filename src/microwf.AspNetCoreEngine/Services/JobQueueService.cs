@@ -103,25 +103,18 @@ namespace tomware.Microwf.Engine
         var item = Dequeue();
         if (item == null) continue;
 
-        TriggerResult triggerResult = await ProcessItemAsync(item);
-        if (triggerResult.HasErrors || triggerResult.IsAborted)
+        try
         {
-          _logger.LogError(
-            "ProcessingWorkItemFailed",
-            string.Join("-", triggerResult.Errors),
-            triggerResult
-          );
-
-          item.Retries++;
-          Enqueue(item);
+          TriggerResult triggerResult = await ProcessItemAsync(item);
+          await this.HandleTriggerResult(triggerResult, item);
         }
-        else
+        catch (Exception ex)
         {
-          if (item.Id > 0)
-          {
-            // Delete it from db if it was once persisted!
-            await DeleteWorkItem(item);
-          }
+          _logger.LogError("ProcessingWorkItemFailed", ex);
+          item.Error = $"{ex.Message} - {ex.StackTrace}";
+          item.Retries++;
+
+          Enqueue(item);
         }
       }
 
@@ -194,6 +187,26 @@ namespace tomware.Microwf.Engine
         TriggerParam triggerParam = new TriggerParam(item.TriggerName, workflow);
 
         return await engine.TriggerAsync(triggerParam);
+      }
+    }
+
+    private async Task HandleTriggerResult(TriggerResult triggerResult, WorkItem item)
+    {
+      if (triggerResult.HasErrors || triggerResult.IsAborted)
+      {
+        item.Error = string.Join(" - ", triggerResult.Errors);
+        _logger.LogError("ProcessingWorkItemFailed", item.Error, triggerResult);
+
+        item.Retries++;
+        Enqueue(item);
+      }
+      else
+      {
+        if (item.Id > 0)
+        {
+          // Delete it from db if it was once persisted!
+          await DeleteWorkItem(item);
+        }
       }
     }
   }

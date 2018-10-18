@@ -61,8 +61,7 @@ namespace WebApi.Workflows.Issue
 
     public async Task<int> CreateAsync(IssueViewModel model)
     {
-      if (model == null)
-        throw new ArgumentNullException("model");
+      if (model == null) throw new ArgumentNullException("model");
 
       var issue = Issue.Create(_userContext.UserName);
       issue.Title = model.Title;
@@ -72,8 +71,11 @@ namespace WebApi.Workflows.Issue
 
       await this._context.SaveChangesAsync();
 
-      // WorkItem wi = WorkItem.Create(IssueTrackingWorkflow.ASSIGN_TRIGGER, issue.Id, issue.Type);
-      // await this._messageBus.PublishAsync(wi);
+      // await this._messageBus.PublishAsync(WorkItemMessage.Create(
+      //   IssueTrackingWorkflow.ASSIGN_TRIGGER,
+      //   issue.Id,
+      //   issue.Type
+      // ));
 
       return issue.Id;
     }
