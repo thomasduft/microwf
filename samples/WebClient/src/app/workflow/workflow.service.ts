@@ -11,7 +11,7 @@ import {
   WorkflowHistory,
   WorkflowVariable
 } from './models';
-import { PagingnModel } from '../shared/services/models';
+import { PagingModel } from '../shared/services/models';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class WorkflowService {
     private _http: HttpWrapperService,
   ) { }
 
-  public workflows(page: PagingnModel): Observable<Array<Workflow>> {
+  public workflows(page: PagingModel): Observable<Array<Workflow>> {
     return this._http.getList<Array<Workflow>>('workflow', page);
   }
 

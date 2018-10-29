@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { PagingnModel } from './models';
+import { PagingModel } from './models';
 import { ApiService } from './api.service';
 
 import { ServicesModule } from './services.module';
@@ -26,7 +26,7 @@ export class HttpWrapperService {
   //     });
   // }
 
-  public getList<T>(endpoint: string, pagingModel: PagingnModel): Observable<any> {
+  public getList<T>(endpoint: string, pagingModel: PagingModel): Observable<any> {
     const url = this._api.createApiUrl(endpoint);
 
     const params = new HttpParams()

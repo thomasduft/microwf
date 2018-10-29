@@ -6,7 +6,8 @@ import { AutoUnsubscribe } from './../shared/services/autoUnsubscribe';
 import { ListComponent } from '../shared/list/list.component';
 
 import { WorkflowService, Workflow } from './../workflow/index';
-import { PagingnModel } from '../shared/services/models';
+import { PagingModel } from '../shared/services/models';
+import { WorkflowSearchModel } from './models';
 
 @AutoUnsubscribe
 @Component({
@@ -21,6 +22,9 @@ import { PagingnModel } from '../shared/services/models';
           <button type="button" (click)="reload()">
             <tw-icon name="refresh"></tw-icon>
           </button>
+          <tw-workflow-search
+            (searchClicked)="searchClicked($event)">
+          </tw-workflow-search>
         </div>
       </tw-header>
       <ng-template let-workflow twTemplate="workflow-item">
@@ -34,7 +38,7 @@ import { PagingnModel } from '../shared/services/models';
 })
 export class AdminDashboardComponent implements OnInit {
   private workflows$: Subscription;
-  private page: PagingnModel = PagingnModel.create();
+  private page: PagingModel = PagingModel.create();
 
   public workflows: Array<Workflow> = [];
 
@@ -54,22 +58,32 @@ export class AdminDashboardComponent implements OnInit {
 
   public reload(): void {
     this.list.rows = [];
-    this.page = PagingnModel.create();
+    this.page = PagingModel.create();
 
     this.ngOnInit();
   }
 
   public loadNextPage(): void {
     if (this.page.totalPages - 1 > this.page.pageIndex) {
-      this.loadPage(PagingnModel.createNextPage(this.page.pageIndex));
+      this.loadPage(PagingModel.createNextPage(this.page.pageIndex));
     }
   }
 
-  private loadPage(page: PagingnModel): void {
+  public searchClicked(searchModel: WorkflowSearchModel): void {
+    console.log(searchModel);
+    this.page = PagingModel.create();
+
+    // TODO: apply searchModel criterias
+    // keep criteria while paging!!
+    this.list.rows = [];
+    this.loadPage(this.page);
+  }
+
+  private loadPage(page: PagingModel): void {
     this.workflows$ = this._service.workflows(page)
       .subscribe((response: any) => {
         const xPagination = JSON.parse(response.headers.get('X-Pagination'));
-        this.page = PagingnModel.fromResponse(xPagination);
+        this.page = PagingModel.fromResponse(xPagination);
 
         this.list.attachRows(response.body);
       });

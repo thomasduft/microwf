@@ -24,7 +24,7 @@ import { FormdefService } from './formdef.service';
       <button *ngIf="showSave"
               type="submit"
               [disabled]="!form.valid"
-              i18n>Save</button>
+              i18n>{{ getSaveLabel }}</button>
       <button *ngIf="showCancel"
               type="button"
               class="button--secondary"
@@ -60,6 +60,13 @@ export class FormdefComponent implements OnInit {
 
   @Input()
   public showSave = false;
+
+  @Input()
+  public saveTitle;
+
+  public get getSaveLabel(): string {
+    return this.saveTitle ? this.saveTitle : 'Save';
+  }
 
   @Input()
   public showCancel = false;

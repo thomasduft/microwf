@@ -25,22 +25,22 @@ export interface IdentityResult {
   errors: Array<IdentityError>;
 }
 
-export class PagingnModel {
+export class PagingModel {
   public pageSize;
   public pageIndex;
   public totalCount;
   public totalPages;
 
-  public static create(pageIndex = 0, pageSize = 20): PagingnModel {
-    const model = new PagingnModel();
+  public static create(pageIndex = 0, pageSize = 20): PagingModel {
+    const model = new PagingModel();
     model.pageIndex = pageIndex;
     model.pageSize = pageSize;
 
     return model;
   }
 
-  public static fromResponse(xPaginationHeader: any): PagingnModel {
-    const model = new PagingnModel();
+  public static fromResponse(xPaginationHeader: any): PagingModel {
+    const model = new PagingModel();
     model.totalCount = xPaginationHeader.totalCount;
     model.pageIndex = xPaginationHeader.pageIndex;
     model.pageSize = xPaginationHeader.pageSize;
@@ -49,16 +49,16 @@ export class PagingnModel {
     return model;
   }
 
-  public static createNextPage(pageIndex: number, pageSize = 20): PagingnModel {
-    const model = new PagingnModel();
+  public static createNextPage(pageIndex: number, pageSize = 20): PagingModel {
+    const model = new PagingModel();
     model.pageIndex = pageIndex + 1;
     model.pageSize = pageSize;
 
     return model;
   }
 
-  public static createPreviousPage(pageIndex: number, pageSize: number): PagingnModel {
-    const model = new PagingnModel();
+  public static createPreviousPage(pageIndex: number, pageSize: number): PagingModel {
+    const model = new PagingModel();
     model.pageIndex = pageIndex - 1;
     model.pageSize = pageSize;
 
