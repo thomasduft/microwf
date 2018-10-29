@@ -18,6 +18,50 @@ namespace tomware.Microwf.Engine
     }
   }
 
+
+  public class WorkflowSearchPagingParameters : PagingParameters
+  {
+    public bool HasType
+    {
+      get
+      {
+        return !string.IsNullOrEmpty(this.Type);
+      }
+    }
+
+    public string Type { get; set; }
+
+    public bool HasCorrelationId
+    {
+      get
+      {
+        return this.CorrelationId.HasValue;
+      }
+    }
+
+    public int? CorrelationId { get; set; }
+
+    public bool HasAssignee
+    {
+      get
+      {
+        return !string.IsNullOrEmpty(this.Assignee);
+      }
+    }
+
+    public string Assignee { get; set; }
+
+    public bool HasValues
+    {
+      get
+      {
+        return this.HasType
+          || this.HasCorrelationId
+          || this.HasAssignee;
+      }
+    }
+  }
+
   public class PaginatedList<T> : List<T>
   {
     public int PageIndex { get; private set; }

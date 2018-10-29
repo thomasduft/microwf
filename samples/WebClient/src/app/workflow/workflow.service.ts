@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { ApiService } from '../shared/services/api.service';
 import { HttpWrapperService } from '../shared/services/httpWrapper.service';
 
 import {
@@ -11,18 +12,39 @@ import {
   WorkflowHistory,
   WorkflowVariable
 } from './models';
-import { PagingModel } from '../shared/services/models';
+import { WorkflowPagingModel } from './models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkflowService {
   public constructor(
+    private _api: ApiService,
     private _http: HttpWrapperService,
+    private _client: HttpClient
   ) { }
 
-  public workflows(page: PagingModel): Observable<Array<Workflow>> {
-    return this._http.getList<Array<Workflow>>('workflow', page);
+  public workflows(page: WorkflowPagingModel): Observable<any> {
+    const url = this._api.createApiUrl('workflow');
+
+    let params = new HttpParams()
+      .set('pageIndex', page.pageIndex.toString())
+      .set('pageSize', page.pageSize.toString());
+
+    if (page.type) {
+      params = params.append('type', page.type);
+    }
+    if (page.correlationId) {
+      params = params.append('correlationId', page.correlationId.toString());
+    }
+    if (page.assignee) {
+      params = params.append('assignee', page.assignee);
+    }
+
+    return this._client.get<Array<Workflow>>(url, {
+      params: params,
+      observe: 'response'
+    });
   }
 
   public get(id: number): Observable<Workflow> {

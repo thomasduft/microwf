@@ -6,11 +6,7 @@ import {
   NUMBER_EDITOR
 } from '../shared/formdef/index';
 
-export interface WorkflowSearchModel {
-  type: string;
-  correlationId: number;
-  assignee: string;
-}
+import { PagingModel } from '../shared/services/models';
 
 export class WorkflowSearchSlot implements Slot {
   public static KEY = 'workflowsearchslot';

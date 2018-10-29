@@ -15,7 +15,7 @@ namespace tomware.Microwf.Engine
     /// </summary>
     /// <param name="pagingParameters"></param>
     /// <returns></returns>
-    Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(PagingParameters pagingParameters);
+    Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(WorkflowSearchPagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a workflow instance.
@@ -95,17 +95,35 @@ namespace tomware.Microwf.Engine
     }
 
     public async Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(
-      PagingParameters pagingParameters
+      WorkflowSearchPagingParameters pagingParameters
     )
     {
       var count = _context.Workflows.Count();
 
-      var instances = await _context.Workflows
-        .OrderByDescending(w => w.Id)
-        .Skip(pagingParameters.SkipCount)
-        .Take(pagingParameters.PageSize)
-        .AsNoTracking()
-        .ToListAsync();
+      List<Workflow> instances = null;
+      if (pagingParameters.HasValues)
+      {
+        // TODO: to be improved!!!
+        instances = await _context.Workflows
+          .Where(w => w.Type.ToLowerInvariant()
+            .StartsWith(pagingParameters.Type.ToLowerInvariant()))
+          .OrderByDescending(w => w.Id)
+          .Skip(pagingParameters.SkipCount)
+          .Take(pagingParameters.PageSize)
+          .AsNoTracking()
+          .ToListAsync();
+      }
+      else
+      {
+        instances = await _context.Workflows
+          .OrderByDescending(w => w.Id)
+          .Skip(pagingParameters.SkipCount)
+          .Take(pagingParameters.PageSize)
+          .AsNoTracking()
+          .ToListAsync();
+      }
+
+
 
       var items = instances.Select(i => ToWorkflowViewModel(i));
 

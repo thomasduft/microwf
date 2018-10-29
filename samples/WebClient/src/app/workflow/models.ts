@@ -1,3 +1,5 @@
+import { PagingModel } from '../shared/services/models';
+
 export class WorkflowArea {
   public constructor(
     public key: string,
@@ -58,4 +60,44 @@ export interface WorkflowResult<TEntity, TViewModel> {
 export interface AssigneeWorkflowResult {
   assignee: string;
   message: string;
+}
+
+export interface WorkflowSearchModel {
+  type: string;
+  correlationId: number;
+  assignee: string;
+}
+
+export class WorkflowPagingModel extends PagingModel {
+  public type: string;
+  public correlationId: number;
+  public assignee: string;
+
+  public static createWorkflowPagingModel(
+    page: PagingModel,
+    searchModel?: WorkflowSearchModel
+  ): WorkflowPagingModel {
+    const model = new WorkflowPagingModel();
+    model.pageIndex = page.pageIndex;
+    model.pageSize = page.pageSize;
+
+    if (!searchModel) {
+      searchModel = {
+        type: null,
+        correlationId: null,
+        assignee: null
+      };
+    }
+    if (searchModel.type) {
+      model.type = searchModel.type;
+    }
+    if (searchModel.correlationId) {
+      model.correlationId = searchModel.correlationId;
+    }
+    if (searchModel.assignee) {
+      model.assignee = searchModel.assignee;
+    }
+
+    return model;
+  }
 }

@@ -5,9 +5,13 @@ import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
 import { AutoUnsubscribe } from './../shared/services/autoUnsubscribe';
 import { ListComponent } from '../shared/list/list.component';
 
-import { WorkflowService, Workflow } from './../workflow/index';
+import {
+  WorkflowService,
+  Workflow,
+  WorkflowSearchModel,
+  WorkflowPagingModel
+} from './../workflow/index';
 import { PagingModel } from '../shared/services/models';
-import { WorkflowSearchModel } from './models';
 
 @AutoUnsubscribe
 @Component({
@@ -39,6 +43,7 @@ import { WorkflowSearchModel } from './models';
 export class AdminDashboardComponent implements OnInit {
   private workflows$: Subscription;
   private page: PagingModel = PagingModel.create();
+  private searchModel: WorkflowSearchModel;
 
   public workflows: Array<Workflow> = [];
 
@@ -53,39 +58,47 @@ export class AdminDashboardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.loadPage(this.page);
+    const model = this.createModel(this.page, this.searchModel);
+    this.loadPage(model);
   }
 
   public reload(): void {
     this.list.rows = [];
-    this.page = PagingModel.create();
 
     this.ngOnInit();
   }
 
   public loadNextPage(): void {
     if (this.page.totalPages - 1 > this.page.pageIndex) {
-      this.loadPage(PagingModel.createNextPage(this.page.pageIndex));
+      const model = this.createModel(PagingModel.createNextPage(this.page.pageIndex));
+      this.loadPage(model);
     }
   }
 
   public searchClicked(searchModel: WorkflowSearchModel): void {
-    console.log(searchModel);
-    this.page = PagingModel.create();
-
-    // TODO: apply searchModel criterias
-    // keep criteria while paging!!
+    this.searchModel = searchModel;
     this.list.rows = [];
-    this.loadPage(this.page);
+
+    this.page = PagingModel.create();
+    const model = this.createModel(this.page, this.searchModel);
+    this.loadPage(model);
   }
 
-  private loadPage(page: PagingModel): void {
-    this.workflows$ = this._service.workflows(page)
+  private loadPage(workflowPagingModel: WorkflowPagingModel): void {
+    this.workflows$ = this._service.workflows(workflowPagingModel)
       .subscribe((response: any) => {
         const xPagination = JSON.parse(response.headers.get('X-Pagination'));
         this.page = PagingModel.fromResponse(xPagination);
 
         this.list.attachRows(response.body);
       });
+  }
+
+  private createModel(
+    page: PagingModel,
+    searchModel?: WorkflowSearchModel
+  ): WorkflowPagingModel {
+    const model = WorkflowPagingModel.createWorkflowPagingModel(page, searchModel);
+    return model;
   }
 }

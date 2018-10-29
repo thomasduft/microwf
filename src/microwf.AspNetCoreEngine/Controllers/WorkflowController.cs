@@ -20,7 +20,9 @@ namespace tomware.Microwf.Engine
     [HttpGet()]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
-    public async Task<IActionResult> GetWorkflows([FromQuery] PagingParameters pagingParameters)
+    public async Task<IActionResult> GetWorkflows(
+      [FromQuery] WorkflowSearchPagingParameters pagingParameters
+    )
     {
       PaginatedList<WorkflowViewModel> result
         = await _service.GetWorkflowsAsync(pagingParameters);

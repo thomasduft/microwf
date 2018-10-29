@@ -6,10 +6,8 @@ import {
   HostBinding
 } from '@angular/core';
 
-import {
-  WorkflowSearchModel,
-  WorkflowSearchSlot
-} from './models';
+import { WorkflowSearchModel } from '../workflow/models';
+import { WorkflowSearchSlot } from './models';
 
 @Component({
   selector: 'tw-workflow-search',
@@ -30,10 +28,17 @@ import {
   `
 })
 export class WorkflowSearchComponent implements OnInit {
+  private empty: WorkflowSearchModel = {
+    type: null,
+    correlationId: null,
+    assignee: null
+  };
+
   public showFilter = false;
 
   public key = WorkflowSearchSlot.KEY;
   public viewModel: WorkflowSearchModel;
+
 
   @HostBinding('class')
   public class = 'workflow__search';
@@ -43,15 +48,15 @@ export class WorkflowSearchComponent implements OnInit {
     = new EventEmitter<WorkflowSearchModel>();
 
   public ngOnInit(): void {
-    this.viewModel = {
-      type: null,
-      correlationId: null,
-      assignee: null
-    };
+    this.viewModel = this.empty;
   }
 
   public toggle(): void {
     this.showFilter = !this.showFilter;
+
+    if (!this.showFilter) {
+      this.search(this.empty);
+    }
   }
 
   public search(vm: WorkflowSearchModel): void {
