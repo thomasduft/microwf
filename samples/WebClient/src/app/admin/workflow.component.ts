@@ -36,10 +36,10 @@ import {
         <table>
           <thead>
             <tr>
-              <th i18n>Created</th>
-              <th i18n>From</th>
-              <th i18n>To</th>
-              <th i18n>User</th>
+              <th>Created</th>
+              <th>From</th>
+              <th>To</th>
+              <th>User</th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +57,11 @@ import {
       <div *ngIf="variables">
         <h3>Variables</h3>
         <table>
+          <thead>
+            <tr>
+              <th>Content</th>
+            </tr>
+          </thead>
           <tbody>
             <tr *ngFor="let v of variables">
               <td>{{ v.content }}</td>
