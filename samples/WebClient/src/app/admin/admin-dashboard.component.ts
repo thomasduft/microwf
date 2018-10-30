@@ -70,7 +70,10 @@ export class AdminDashboardComponent implements OnInit {
 
   public loadNextPage(): void {
     if (this.page.totalPages - 1 > this.page.pageIndex) {
-      const model = this.createModel(PagingModel.createNextPage(this.page.pageIndex));
+      const model = this.createModel(
+        PagingModel.createNextPage(this.page.pageIndex),
+        this.searchModel
+      );
       this.loadPage(model);
     }
   }

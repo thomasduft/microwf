@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -104,9 +105,10 @@ namespace tomware.Microwf.Engine
       if (pagingParameters.HasValues)
       {
         // TODO: to be improved!!!
+        // Specification Pattern
+        // see: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implemenation-entity-framework-core#implementing-the-specification-pattern
         instances = await _context.Workflows
-          .Where(w => w.Type.ToLowerInvariant()
-            .StartsWith(pagingParameters.Type.ToLowerInvariant()))
+          .Where(this.GetWhereClause(pagingParameters))
           .OrderByDescending(w => w.Id)
           .Skip(pagingParameters.SkipCount)
           .Take(pagingParameters.PageSize)
@@ -122,8 +124,6 @@ namespace tomware.Microwf.Engine
           .AsNoTracking()
           .ToListAsync();
       }
-
-
 
       var items = instances.Select(i => ToWorkflowViewModel(i));
 
@@ -208,6 +208,31 @@ namespace tomware.Microwf.Engine
       var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return workflowDefinition.ToDotWithHistory(workflow);
+    }
+
+    private Expression<Func<Workflow, bool>> GetWhereClause(
+      WorkflowSearchPagingParameters pagingParameters
+    )
+    {
+      var predicate = PredicateBuilder.True<Workflow>();
+      if (pagingParameters.HasType)
+      {
+        predicate = predicate
+          .And(w => w.Type.ToLowerInvariant()
+            .StartsWith(pagingParameters.Type.ToLowerInvariant()));
+      }
+      if (pagingParameters.HasCorrelationId)
+      {
+        predicate = predicate.And(w => w.CorrelationId == pagingParameters.CorrelationId);
+      }
+      if (pagingParameters.HasAssignee)
+      {
+        predicate = predicate
+          .And(w => w.Assignee.ToLowerInvariant()
+            .StartsWith(pagingParameters.Assignee.ToLowerInvariant()));
+      }
+
+      return predicate;
     }
 
     private WorkflowViewModel ToWorkflowViewModel(Workflow w)
