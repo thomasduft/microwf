@@ -1,8 +1,4 @@
 notes:
-(-) add admin module to webclient
-  (x) move workflow-dashboard.component to admin module
-  (-) add admin detail component 
-(-) use GetMyWorkflows instead of MyWork on concrete Workflows
 
 
 ----------------------------------------------------------------------------------------------------

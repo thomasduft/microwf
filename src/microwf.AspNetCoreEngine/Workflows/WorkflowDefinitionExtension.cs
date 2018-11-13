@@ -6,9 +6,9 @@ using tomware.Microwf.Engine;
 
 namespace tomware.Microwf.Core
 {
-  public static class WorkflowDefinitionExtension
+  internal static class WorkflowDefinitionExtension
   {
-    public static string ToDotWithHistory(
+    internal static string ToDotWithHistory(
       this IWorkflowDefinition workflow,
       Workflow instance,
       string rankDir = ""

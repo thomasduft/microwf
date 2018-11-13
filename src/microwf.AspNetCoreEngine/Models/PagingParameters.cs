@@ -18,7 +18,6 @@ namespace tomware.Microwf.Engine
     }
   }
 
-
   public class WorkflowSearchPagingParameters : PagingParameters
   {
     public bool HasType
@@ -65,6 +64,7 @@ namespace tomware.Microwf.Engine
   public class PaginatedList<T> : List<T>
   {
     public int PageIndex { get; private set; }
+
     public int TotalPages { get; private set; }
 
     public int AllItemsCount { get; private set; }
