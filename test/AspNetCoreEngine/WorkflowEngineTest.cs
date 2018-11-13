@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
 using microwf.Tests.WorkflowDefinitions;
+using Newtonsoft.Json;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 
@@ -177,7 +178,7 @@ namespace microwf.Tests.AspNetCoreEngine
 
       var workflow = Workflow.Create(instance.Id, instance.Type, instance.State, "tester");
       workflow.AddVariable(new LightSwitcherWorkflowVariable { CanSwitch = true });
-      
+
       this.Context.Workflows.Add(workflow);
       await this.Context.SaveChangesAsync();
 
@@ -197,6 +198,69 @@ namespace microwf.Tests.AspNetCoreEngine
       Assert.AreEqual(1, workflow.WorkflowHistories.Count());
     }
 
-    // TODO: TriggerAsync with DB context interaction scenarios!
+    [TestMethod]
+    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstanceAndSameWorkflowVariable_ReturnsTriggerResult()
+    {
+      // Arrange
+      var instance = new LightSwitcher();
+      this.Context.Switchers.Add(instance);
+
+      var workflow = Workflow.Create(instance.Id, instance.Type, instance.State, "tester");
+      var variable = new LightSwitcherWorkflowVariable { CanSwitch = true };
+      workflow.AddVariable(variable);
+
+      this.Context.Workflows.Add(workflow);
+      await this.Context.SaveChangesAsync();
+
+      variable.CanSwitch = false;
+      var param = new TriggerParam("SwitchOn", instance)
+        .AddVariableWithKey<LightSwitcherWorkflowVariable>(variable); ;
+
+      // Act
+      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+
+      // Assert
+      Assert.IsNotNull(triggerResult);
+      Assert.IsFalse(triggerResult.HasErrors);
+      Assert.AreEqual(instance.State, triggerResult.CurrentState);
+      Assert.AreEqual("On", triggerResult.CurrentState);
+
+      Assert.IsTrue(param.HasVariables);
+
+      Assert.AreEqual(1, workflow.WorkflowHistories.Count());
+
+      var workflowVariable = workflow.WorkflowVariables.First();
+      var type = KeyBuilder.FromKey(workflowVariable.Type);
+      var myDeserializedVariable = JsonConvert.DeserializeObject(workflowVariable.Content, type);
+      Assert.IsInstanceOfType(myDeserializedVariable, typeof(LightSwitcherWorkflowVariable));
+
+      var variableInstance = myDeserializedVariable as LightSwitcherWorkflowVariable;
+      Assert.IsFalse(variableInstance.CanSwitch);
+    }
+
+    [TestMethod]
+    public async Task WorkflowEngine_Find_ReturnsTheDesiredIWorkflowInstance()
+    {
+      // Arrange
+      var instance = new LightSwitcher();
+      this.Context.Switchers.Add(instance);
+
+      var workflow = Workflow.Create(instance.Id, instance.Type, instance.State, "tester");
+      this.Context.Workflows.Add(workflow);
+      await this.Context.SaveChangesAsync();
+
+      // Act
+      var result = this.WorkflowEngine.Find(instance.Id, typeof(LightSwitcher));
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.IsInstanceOfType(result, typeof(LightSwitcher));
+      
+      var resultInstance = result as LightSwitcher;
+      Assert.AreEqual(resultInstance.Id, instance.Id);
+      Assert.AreEqual(resultInstance.Type, instance.Type);
+      Assert.AreEqual(resultInstance.State, instance.State);
+      Assert.AreEqual(resultInstance.Assignee, instance.Assignee);
+    }
   }
 }
