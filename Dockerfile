@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1.2-aspnetcore-runtime-alpine3.7
+FROM microsoft/dotnet:2.1.6-aspnetcore-runtime-alpine3.7
 ARG source
 WORKDIR /app
 EXPOSE 80
