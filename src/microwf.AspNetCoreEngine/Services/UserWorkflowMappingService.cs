@@ -6,19 +6,11 @@ namespace tomware.Microwf.Engine
 {
   public class UserWorkflowMappingsStore
   {
-    private readonly IEnumerable<UserWorkflowMapping> _workflows;
-
-    public IEnumerable<UserWorkflowMapping> Workflows
-    {
-      get
-      {
-        return _workflows;
-      }
-    }
+    public IEnumerable<UserWorkflowMapping> Workflows { get; }
 
     public UserWorkflowMappingsStore(IEnumerable<UserWorkflowMapping> workflows)
     {
-      _workflows = workflows;
+      Workflows = workflows;
     }
   }
 

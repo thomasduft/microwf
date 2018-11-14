@@ -30,7 +30,7 @@ namespace tomware.Microwf.Core
     /// <returns></returns>
     public static bool HasVariable<TVariable>(
       this TransitionContext transitionContext
-    ) 
+    )
     {
       return transitionContext.ContainsKey(KeyBuilder.ToKey(typeof(TVariable)));
     }

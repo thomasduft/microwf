@@ -25,6 +25,54 @@ export interface IdentityResult {
   errors: Array<IdentityError>;
 }
 
+export class PagingModel {
+  public pageSize;
+  public pageIndex;
+  public totalCount;
+  public totalPages;
+
+  public static create(pageIndex = 0, pageSize = 20): PagingModel {
+    const model = new PagingModel();
+    model.pageIndex = pageIndex;
+    model.pageSize = pageSize;
+
+    return model;
+  }
+
+  public static fromResponse(xPaginationHeader: any): PagingModel {
+    const model = new PagingModel();
+    model.totalCount = xPaginationHeader.totalCount;
+    model.pageIndex = xPaginationHeader.pageIndex;
+    model.pageSize = xPaginationHeader.pageSize;
+    model.totalPages = xPaginationHeader.totalPages;
+
+    return model;
+  }
+
+  public static createNextPage(pageIndex: number, pageSize = 20): PagingModel {
+    const model = new PagingModel();
+    model.pageIndex = pageIndex + 1;
+    model.pageSize = pageSize;
+
+    return model;
+  }
+
+  public static createPreviousPage(pageIndex: number, pageSize: number): PagingModel {
+    const model = new PagingModel();
+    model.pageIndex = pageIndex - 1;
+    model.pageSize = pageSize;
+
+    return model;
+  }
+}
+
+export class ResponseErrorHandler {
+  public static handleError(error: Response): any {
+    console.log(error || 'Server error');
+    return error;
+  }
+}
+
 @Injectable({
   providedIn: ServicesModule
 })
@@ -52,35 +100,27 @@ export abstract class AuthGuard implements CanActivate, CanActivateChild {
 }
 
 @Injectable({
-  providedIn: ServicesModule
+  providedIn: 'root'
 })
 export abstract class ClaimGuardBase implements CanActivate, CanActivateChild {
-  protected readonly abstract claim: string;
+  protected abstract claim: string;
 
   public constructor(
     private _authService: AuthService,
     private _router: Router
   ) { }
 
-  public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+  public canActivate(): boolean {
     const can = this._authService.hasClaim(this.claim);
 
     if (!can) {
-      this._router.navigate(['401', this.claim]);
+      this._router.navigate(['login']);
     }
 
     return can;
   }
 
-  public canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
+  public canActivateChild(): boolean {
     return this.canActivate();
   }
-}
-
-@Injectable({
-  providedIn: ServicesModule
-})
-export class AdministratorClaimGuard extends ClaimGuardBase {
-  public static CLAIM_NAME = 'Administrator';
-  protected claim = AdministratorClaimGuard.CLAIM_NAME;
 }

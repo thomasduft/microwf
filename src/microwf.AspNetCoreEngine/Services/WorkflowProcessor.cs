@@ -33,7 +33,7 @@ namespace tomware.Microwf.Engine
 
         await _jobQueueService.ProcessItemsAsync();
 
-        await Task.Delay(_options.Intervall, stoppingToken);
+        await Task.Delay(_options.Interval, stoppingToken);
       }
     }
 

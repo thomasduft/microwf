@@ -5,7 +5,9 @@
     <AssemblyName>tomware.Microwf.AspNetCoreEngine</AssemblyName>
     <RootNamespace>tomware.Microwf.AspNetCoreEngine</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>A default ASP.NET Core with EF implementation for tomware.Microwf.Core</Description>
+    <Description>
+      An ASP.NET Core with EF Core way of leveraging tomware.Microwf.Core in a Web Api.
+    </Description>
     <RepositoryUrl>https://github.com/thomasduft/microwf</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/thomasduft/microwf/blob/master/LICENSE.md</PackageLicenseUrl>
     <Authors>Thomas Duft</Authors>
@@ -14,19 +16,21 @@
     <PackageTags>StateMachine Workflow micro</PackageTags>
     <RepositoryType>git</RepositoryType>
     <Copyright>2018 tomWare SOLUTIONS</Copyright>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="tomware.Microbus.Core" Version="1.1.0" />
   </ItemGroup>

@@ -22,9 +22,10 @@ export interface Editor {
   value?: any;
   options?: Array<{ key: string | number, value: string }>;
   required?: boolean;
-  size?: number;
-  valueMin?: number;
-  valueMax?: number;
+  min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
 }
 
 export const SINGLE_SLOT = 'single';
@@ -45,14 +46,17 @@ export class FormdefValidator {
     if (editor.required) {
       validators.push(Validators.required);
     }
-    if (editor.size) {
-      validators.push(Validators.maxLength(editor.size));
+    if (editor.min) {
+      validators.push(Validators.min(editor.min));
     }
-    if (editor.valueMin) {
-      validators.push(Validators.min(editor.valueMin));
+    if (editor.max) {
+      validators.push(Validators.max(editor.max));
     }
-    if (editor.valueMax) {
-      validators.push(Validators.max(editor.valueMax));
+    if (editor.minLength) {
+      validators.push(Validators.minLength(editor.minLength));
+    }
+    if (editor.maxLength) {
+      validators.push(Validators.maxLength(editor.maxLength));
     }
 
     return Validators.compose(validators);

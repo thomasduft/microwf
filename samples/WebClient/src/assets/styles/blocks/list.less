@@ -1,0 +1,53 @@
+@import './../shared/variables';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 100vh;
+
+  .list__header, .list__footer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .list__header {
+    text-transform: uppercase;
+    padding-top: 5px;
+  }
+
+  .list__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .list__item {
+    width: 100%;
+    color: @workspace-color;
+    padding-bottom: 10px;
+    border-top: 1px solid @sidebar-background;
+    .list_item--right {
+      float: right;
+    }
+    .active {
+      background: lighten(@workspace-hover-color, 45%);
+    }
+    &:hover {
+      cursor: pointer;
+      background: lighten(@workspace-hover-color, 45%);
+    }
+    div:focus {
+      outline: none;
+    }
+  }
+
+  .list__itemDetail {
+    font-size: 0.8em;
+  }
+  
+  .list__item--active {
+    background: lighten(@workspace-link-color, 5%)
+  }
+}

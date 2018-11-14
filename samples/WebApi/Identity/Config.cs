@@ -4,6 +4,7 @@ using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using tomware.Microwf.Engine;
 
 namespace WebApi.Identity
 {
@@ -66,7 +67,8 @@ namespace WebApi.Identity
           Username = "admin",
           Password = "password",
           Claims = {
-            new Claim(JwtClaimTypes.Name, "admin")
+            new Claim(JwtClaimTypes.Name, "admin"),
+            new Claim(JwtClaimTypes.Role, Constants.WORKFLOW_ADMIN_ROLE)
           }
         },
         new TestUser

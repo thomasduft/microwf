@@ -9,11 +9,12 @@ import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
 @Component({
   selector: 'tw-dispatch-workflow',
   template: `
-  <p i18n>This workflow has beeing dispatched to <b>{{ assignee }}</b>!</p>
-  <button type="button"
-          class="btn btn-primary"
-          (click)="goTo()"
-          i18n>back</button>`
+  <div class="pane__main pane--space">
+    <p i18n>This workflow has beeing dispatched to <b>{{ assignee }}</b>!</p>
+    <button type="button"
+            (click)="goTo()"
+            i18n>back</button>
+  </div>`
 })
 export class DispatchWorkflowComponent implements OnInit {
   private _routeParams$: Subscription;

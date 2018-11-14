@@ -2,9 +2,7 @@ import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
-
-import { ApiService } from '../shared/services/api.service';
+import { HttpWrapperService } from '../shared/services/httpWrapper.service';
 import { WorkflowResult, AssigneeWorkflowResult } from '../workflow/index';
 
 import { Holiday, ApplyHoliday, ApproveHoliday } from './models';
@@ -12,43 +10,39 @@ import { Holiday, ApplyHoliday, ApproveHoliday } from './models';
 @Injectable()
 export class HolidayService {
   public constructor(
-    private _http: HttpClient,
-    private _api: ApiService
+    private _http: HttpWrapperService
   ) { }
 
   public myWork(): Observable<Array<Holiday>> {
-    const url = this._api.createApiUrl('holiday/mywork');
-
-    return this._http.get<Array<Holiday>>(url);
+    return this._http.get<Array<Holiday>>('holiday/mywork');
   }
 
   public get(id: string): Observable<WorkflowResult<null, Holiday>> {
-    const url = this._api.createApiUrl(`holiday/${id}`);
-
-    return this._http.get<WorkflowResult<null, Holiday>>(url);
+    return this._http.get<WorkflowResult<null, Holiday>>(`holiday/${id}`);
   }
 
   public create(): Observable<WorkflowResult<Holiday, ApplyHoliday>> {
-    const url = this._api.createApiUrl(`holiday/new`);
-
-    return this._http.post<WorkflowResult<Holiday, ApplyHoliday>>(url, null);
+    return this._http.post<WorkflowResult<Holiday, ApplyHoliday>>(`holiday/new`, null);
   }
 
-  public apply(model: ApplyHoliday): Observable<WorkflowResult<Holiday, AssigneeWorkflowResult>> {
-    const url = this._api.createApiUrl(`holiday/apply`);
-
-    return this._http.post<WorkflowResult<Holiday, AssigneeWorkflowResult>>(url, model);
+  public apply(
+    model: ApplyHoliday
+  ): Observable<WorkflowResult<Holiday, AssigneeWorkflowResult>> {
+    return this._http
+      .post<WorkflowResult<Holiday, AssigneeWorkflowResult>>(`holiday/apply`, model);
   }
 
-  public approve(model: ApproveHoliday): Observable<WorkflowResult<Holiday, AssigneeWorkflowResult>> {
-    const url = this._api.createApiUrl(`holiday/approve`);
-
-    return this._http.post<WorkflowResult<Holiday, AssigneeWorkflowResult>>(url, model);
+  public approve(
+    model: ApproveHoliday
+  ): Observable<WorkflowResult<Holiday, AssigneeWorkflowResult>> {
+    return this._http
+      .post<WorkflowResult<Holiday, AssigneeWorkflowResult>>(`holiday/approve`, model);
   }
 
-  public reject(model: ApproveHoliday): Observable<WorkflowResult<Holiday, AssigneeWorkflowResult>> {
-    const url = this._api.createApiUrl(`holiday/reject`);
-
-    return this._http.post<WorkflowResult<Holiday, AssigneeWorkflowResult>>(url, model);
+  public reject(
+    model: ApproveHoliday
+  ): Observable<WorkflowResult<Holiday, AssigneeWorkflowResult>> {
+    return this._http
+      .post<WorkflowResult<Holiday, AssigneeWorkflowResult>>(`holiday/reject`, model);
   }
 }

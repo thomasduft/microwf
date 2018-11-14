@@ -16,28 +16,23 @@ import { IssueDetailSlot, Issue, IssueViewmodel } from './models';
   selector: 'tw-issue',
   providers: [IssueService],
   template: `
-  <div class="row">
-    <div class="col-sm">
-      <tw-trigger-info *ngIf="!isNew && formDef"
-        [canTrigger]="formDef.formIsValid"
-        [triggerInfo]="triggerInfo"
-        (trigger)="triggerClicked($event)">
-      </tw-trigger-info>
-    </div>
+  <div>
+    <tw-trigger-info *ngIf="!isNew && formDef"
+      [canTrigger]="formDef.formIsValid"
+      [triggerInfo]="triggerInfo"
+      (trigger)="triggerClicked($event)">
+    </tw-trigger-info>
   </div>
-
-  <div class="row">
-    <div class="col-sm">
-      <tw-formdef
-        #formDef
-        [showSave]="isNew"
-        [showCancel]="isNew"
-        [key]="key"
-        [viewModel]="viewModel"
-        (submitted)="submitted($event)"
-        (resetted)="cancel()">
-      </tw-formdef>
-    </div>
+  <div>
+    <tw-formdef
+      #formDef
+      [showSave]="isNew"
+      [showCancel]="isNew"
+      [key]="key"
+      [viewModel]="viewModel"
+      (submitted)="submitted($event)"
+      (resetted)="cancel()">
+    </tw-formdef>
   </div>
   `
 })

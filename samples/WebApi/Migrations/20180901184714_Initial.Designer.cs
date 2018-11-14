@@ -9,14 +9,14 @@ using WebApi.Domain;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20180807081928_WorkItems")]
-    partial class WorkItems
+    [Migration("20180901184714_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
 
             modelBuilder.Entity("tomware.Microwf.Engine.Workflow", b =>
                 {
@@ -29,8 +29,6 @@ namespace WebApi.Migrations
 
                     b.Property<int>("CorrelationId");
 
-                    b.Property<DateTime?>("DueDate");
-
                     b.Property<DateTime>("Started");
 
                     b.Property<string>("State")
@@ -42,6 +40,30 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Workflow");
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("FromState")
+                        .IsRequired();
+
+                    b.Property<string>("ToState")
+                        .IsRequired();
+
+                    b.Property<string>("UserName");
+
+                    b.Property<int>("WorkflowId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkflowId");
+
+                    b.ToTable("WorkflowHistory");
                 });
 
             modelBuilder.Entity("tomware.Microwf.Engine.WorkflowVariable", b =>
@@ -159,6 +181,14 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Issue");
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowHistory", b =>
+                {
+                    b.HasOne("tomware.Microwf.Engine.Workflow", "Workflow")
+                        .WithMany("WorkflowHistories")
+                        .HasForeignKey("WorkflowId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("tomware.Microwf.Engine.WorkflowVariable", b =>

@@ -28,7 +28,7 @@ export class IssueDetailSlot implements Slot {
 
   public key = IssueDetailSlot.KEY;
   public type = SINGLE_SLOT;
-  public title = 'Issue';
+  public title = '';
   public editors: Editor[];
 
   public constructor() {
@@ -43,13 +43,16 @@ export class IssueDetailSlot implements Slot {
         key: 'title',
         type: TEXT_EDITOR,
         label: 'Message',
-        required: true
+        required: true,
+        minLength: 3,
+        maxLength: 140
       },
       {
         key: 'description',
         type: TEXT_AREA_EDITOR,
         label: 'Description',
-        required: false
+        required: false,
+        maxLength: 500
       }
     ];
   }

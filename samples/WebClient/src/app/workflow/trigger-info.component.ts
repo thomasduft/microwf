@@ -11,11 +11,10 @@ import { TriggerInfo } from './models';
   selector: 'tw-trigger-info',
   template: `
   <div *ngIf="triggerInfo">
-    <div class="btn-group float-right"
-         role="group"
+    <div class="float-right"
          *ngIf="triggerInfo.triggers">
       <button type="button"
-              class="btn btn-secondary"
+              class="button--secondary"
               *ngFor="let trigger of triggerInfo.triggers"
               [disabled]="!canTrigger"
               (click)="triggerClick(trigger)">{{ trigger }}

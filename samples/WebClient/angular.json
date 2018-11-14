@@ -34,9 +34,7 @@
             ],
             "styles": [
               "src/styles.css",
-              {
-                "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
-              },
+              "src/assets/styles/app.less",
               {
                 "input": "./node_modules/font-awesome/css/font-awesome.css"
               }

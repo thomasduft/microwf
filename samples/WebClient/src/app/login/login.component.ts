@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { ApiService } from '../shared/services/api.service';
+import { ResponseErrorHandler } from '../shared/services/models';
 import { IToken } from '../shared/services/auth.service';
 
 import { LoginService } from './login.service';
@@ -10,37 +10,30 @@ import { LoginService } from './login.service';
   selector: 'tw-login',
   styleUrls: ['./login.component.css'],
   template: `
-  <form class="form-signin"
+  <form class="form form--signin"
         [formGroup]="formGroup"
         (ngSubmit)="login()"
         novalidate>
-    <div class="form-label-group"
-         [ngClass]="{ 'has-error': formGroup.controls['username'].invalid }">
+    <div [ngClass]="{ 'has-error': formGroup.controls['username'].invalid }">
       <input type="email"
              id="inputEmail"
-             class="form-control"
              placeholder="Username"
              formControlName="username"
-             required autofocus>
+             autofocus>
     </div>
 
-    <div class="form-label-group"
-         [ngClass]="{ 'has-error': formGroup.controls['password'].invalid }">
+    <div [ngClass]="{ 'has-error': formGroup.controls['password'].invalid }">
       <input type="password"
              id="inputPassword"
-             class="form-control"
              placeholder="Password"
-             formControlName="password"
-             required>
+             formControlName="password">
     </div>
 
     <div *ngIf="error" class="alert alert-danger">
       Username or password is wrong!
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block"
-            type="submit"
-            [disabled]="!formGroup.valid">Sign in</button>
+    <button type="submit"[disabled]="!formGroup.valid">Sign in</button>
   </form>`,
   providers: [
     LoginService
@@ -52,8 +45,7 @@ export class LoginComponent implements OnInit {
 
   public constructor(
     private _loginService: LoginService,
-    private _fb: FormBuilder,
-    private _api: ApiService
+    private _fb: FormBuilder
   ) { }
 
   public ngOnInit(): void {
@@ -69,7 +61,7 @@ export class LoginComponent implements OnInit {
     ).subscribe((token: IToken) => {
       this._loginService.authenticate(token);
     }, (error) => {
-      this.error = this._api.handleError(error);
+      this.error = ResponseErrorHandler.handleError(error);
     });
   }
 

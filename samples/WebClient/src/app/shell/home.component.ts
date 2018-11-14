@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   WorkflowArea,
   WorkflowAreaRegistry,
-  WorkflowDefinitionService,
-  WorkflowDefinition,
+  WorkflowService,
   DotInfo
 } from '../workflow/index';
 
@@ -43,7 +42,7 @@ import {
   </div>
   `
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   public dot: DotInfo;
 
   public get areas(): Array<WorkflowArea> {
@@ -51,28 +50,14 @@ export class HomeComponent implements OnInit {
   }
 
   public constructor(
-    private _workflowDefinitionService: WorkflowDefinitionService,
+    private _workflowService: WorkflowService,
     private _workflowAreaRegistry: WorkflowAreaRegistry
   ) { }
 
-  public ngOnInit(): void {
-    this._workflowDefinitionService.definitions()
-      .subscribe((definitions: Array<WorkflowDefinition>) => {
-        this.init(definitions);
-      });
-  }
-
   public loadDot(key: string): void {
-    this._workflowDefinitionService.dot(key)
+    this._workflowService.dot(key)
       .subscribe((dot: string) => {
         this.dot = { dot: dot };
       });
-  }
-
-  private init(definitions: Array<WorkflowDefinition>): void {
-    definitions.forEach((d: WorkflowDefinition) => {
-      this._workflowAreaRegistry
-        .register(new WorkflowArea(d.type, d.title, d.description, d.route));
-    });
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IconModule } from './../shared/icon/icon.module';
+import { ListModule } from './../shared/list/list.module';
 import { FormdefModule, FormdefRegistry } from './../shared/formdef/index';
 import { WorkflowModule } from '../workflow/workflow.module';
 
@@ -12,9 +13,12 @@ import { HolidayService } from './holiday.service';
 import { ApplyHolidayDetailSlot, ApproveHolidayDetailSlot } from './models';
 
 const ROUTES: Routes = [
-  { path: '', component: HolidayDashboardComponent },
-  { path: 'detail/:id', component: HolidayComponent },
-  { path: 'detail/new', component: HolidayComponent }
+  {
+    path: '', component: HolidayDashboardComponent, children: [
+      { path: 'detail/:id', component: HolidayComponent },
+      { path: 'detail/new', component: HolidayComponent }
+    ]
+  }
 ];
 
 @NgModule({
@@ -23,7 +27,8 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     FormdefModule,
     WorkflowModule,
-    IconModule
+    IconModule,
+    ListModule
   ],
   declarations: [
     HolidayDashboardComponent,

@@ -35,7 +35,7 @@ namespace tomware.Microwf.Engine
       services.Configure<ProcessorConfiguration>(config =>
       {
         config.Enabled = processorConfiguration.Enabled;
-        config.Intervall = processorConfiguration.Intervall;
+        config.Interval = processorConfiguration.Interval;
       });
 
       if (processorConfiguration.Enabled)
@@ -49,13 +49,22 @@ namespace tomware.Microwf.Engine
       services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
-      services.AddTransient<IWorkflowService, WorkflowService>();
+      services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
       services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
       services.AddTransient<IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
 
       // MessageBus
       services.AddSingleton<IMessageBus, InMemoryMessageBus>();
+
+      // Policies
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy(
+          Constants.MANAGE_WORKFLOWS_POLICY,
+          policy => policy.RequireRole(Constants.WORKFLOW_ADMIN_ROLE)
+        );
+      });
 
       return services;
     }
@@ -86,7 +95,7 @@ namespace tomware.Microwf.Engine
       var messageBus = app.ApplicationServices.GetRequiredService<IMessageBus>();
       if (messageBus != null)
       {
-        messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItem>();
+        messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItemMessage>();
       }
 
       return app;

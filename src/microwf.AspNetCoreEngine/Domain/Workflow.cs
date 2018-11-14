@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using tomware.Microwf.Core;
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("tomware.Microwf.Tests")]
 
 namespace tomware.Microwf.Engine
 {
@@ -28,11 +30,11 @@ namespace tomware.Microwf.Engine
 
     public DateTime? Completed { get; set; }
 
-    public DateTime? DueDate { get; set; }
-
     public List<WorkflowVariable> WorkflowVariables { get; set; } = new List<WorkflowVariable>();
 
-    public static Workflow Create(
+    public List<WorkflowHistory> WorkflowHistories { get; set; } = new List<WorkflowHistory>();
+
+    internal static Workflow Create(
       int correlationId,
       string type,
       string state,
@@ -46,12 +48,11 @@ namespace tomware.Microwf.Engine
         CorrelationId = correlationId,
         Type = type,
         State = state,
-        Assignee = assignee,
-        DueDate = dueDate
+        Assignee = assignee
       };
     }
 
-    public void AddVariable(WorkflowVariableBase variable)
+    internal void AddVariable(WorkflowVariableBase variable)
     {
       var type = KeyBuilder.ToKey(variable.GetType());
       var existing = this.WorkflowVariables.FirstOrDefault(v => v.Type == type);
@@ -64,6 +65,19 @@ namespace tomware.Microwf.Engine
 
       var newVariable = WorkflowVariable.Create(this, variable);
       this.WorkflowVariables.Add(newVariable);
+    }
+
+    internal void AddHistoryItem(string fromState, string toState, string userName)
+    {
+      this.WorkflowHistories.Add(new WorkflowHistory
+      {
+        Created = SystemTime.Now(),
+        FromState = fromState,
+        ToState = toState,
+        UserName = userName,
+        WorkflowId = this.Id,
+        Workflow = this
+      });
     }
   }
 }

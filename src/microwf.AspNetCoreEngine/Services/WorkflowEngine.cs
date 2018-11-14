@@ -50,16 +50,19 @@ namespace tomware.Microwf.Engine
     private readonly EngineDbContext _context;
     private readonly ILogger<WorkflowEngine<TContext>> _logger;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
+    private readonly IUserContextService _userContext;
 
     public WorkflowEngine(
       TContext context,
       ILogger<WorkflowEngine<TContext>> logger,
-      IWorkflowDefinitionProvider workflowDefinitionProvider
+      IWorkflowDefinitionProvider workflowDefinitionProvider,
+      IUserContextService userContext
     )
     {
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _logger = logger;
       _workflowDefinitionProvider = workflowDefinitionProvider;
+      _userContext = userContext;
     }
 
     public async Task<TriggerResult> CanTriggerAsync(TriggerParam param)
@@ -203,11 +206,7 @@ namespace tomware.Microwf.Engine
       }
     }
 
-    private async Task PersistWorkflow(
-      Workflow workflow,
-      TriggerParam triggerParam,
-      DateTime? dueDate = null
-    )
+    private async Task PersistWorkflow(Workflow workflow, TriggerParam triggerParam)
     {
       if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
@@ -233,16 +232,16 @@ namespace tomware.Microwf.Engine
       if (entityWorkflow != null)
       {
         workflow.Type = entityWorkflow.Type;
-        workflow.State = entityWorkflow.State;
         workflow.Assignee = entityWorkflow.Assignee;
+
+        workflow.AddHistoryItem(workflow.State, entityWorkflow.State, _userContext.UserName);
+        workflow.State = entityWorkflow.State;
       }
 
       if (await WorkflowIsCompleted(triggerParam))
       {
         workflow.Completed = SystemTime.Now();
       }
-
-      workflow.DueDate = dueDate;
     }
 
     private async Task<bool> WorkflowIsCompleted(TriggerParam triggerParam)
@@ -250,7 +249,7 @@ namespace tomware.Microwf.Engine
       var triggerResults
         = await GetTriggersAsync(triggerParam.Instance, triggerParam.Variables);
 
-      return triggerResults.Count() == 0;
+      return triggerResults.All(r => !r.CanTrigger);
     }
   }
 }
