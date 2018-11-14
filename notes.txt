@@ -1,5 +1,9 @@
 notes:
-
+- make it dockarizable on a Raspberry PI 3
+  - https://www.hanselman.com/blog/BuildingRunningAndTestingNETCoreAndASPNETCore21InDockerOnARaspberryPiARM32.aspx
+  - https://github.com/dotnet/announcements/issues/29
+    - https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md
+  - microsoft/dotnet:2.1-aspnetcore-runtime
 
 ----------------------------------------------------------------------------------------------------
 EF commands:
