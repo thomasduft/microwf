@@ -1,13 +1,23 @@
 @import './../shared/variables';
+@import './../shared/mixins';
 
 .sidebar {
   background: @sidebar-background;
-  min-width: 268px;
+  width: 268px;
   overflow-y: auto;
 }
 
 .sidebar--collapsed {
   width: 50px;
+  .sidebar__header {
+    .rotate(-90);
+    height: 25%;
+    font-weight: bold;
+    letter-spacing: 0.5em;
+  }
+  .sidebar__content {
+    display: none;
+  }
 }
 
 .sidebar__header {
@@ -15,10 +25,13 @@
   height: 4em;
   padding: 0px 20px;
   font-size: 1em;
+  font-weight: bold;
+  letter-spacing: 0.5em;
   color: whitesmoke;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  cursor: pointer;
   img {
     object-fit: cover;
     border-radius: 50%;

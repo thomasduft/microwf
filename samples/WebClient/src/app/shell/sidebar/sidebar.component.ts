@@ -9,7 +9,7 @@ import { AuthService } from '../../shared/services/auth.service';
   selector: 'tw-sidebar',
   template: `
   <div class="sidebar__header">
-    {{ userName }}
+    <div (click)="toggle()">{{ userName }}</div>
   </div>
   <div class="sidebar__content">
     <ul>
@@ -46,8 +46,10 @@ import { AuthService } from '../../shared/services/auth.service';
   `
 })
 export class SidebarComponent {
+  public collapsed = false;
+
   @HostBinding('class')
-  public sidebar = 'sidebar';
+  public classlist = this.getClassList();
 
   public get userName(): string {
     return this._authService.username;
@@ -63,5 +65,18 @@ export class SidebarComponent {
 
   public logout(): void {
     this._authService.logout();
+  }
+
+  public toggle(): void {
+    this.collapsed = !this.collapsed;
+    this.classlist = this.getClassList();
+  }
+
+  private getClassList(): string {
+    if (this.collapsed) {
+      return 'sidebar sidebar--collapsed';
+    }
+
+    return 'sidebar';
   }
 }
