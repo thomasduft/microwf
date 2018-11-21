@@ -129,7 +129,6 @@ namespace WebApi
     public void Configure(
       IApplicationBuilder app,
       IHostingEnvironment env,
-      IApplicationLifetime appLifetime,
       ILoggerFactory loggerFactory
     )
     {
