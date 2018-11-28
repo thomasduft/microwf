@@ -260,6 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 
+dist/
 samples/WebApi/microwf.sqlite
 lcov.info
 test/coverage.json
