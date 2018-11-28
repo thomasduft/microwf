@@ -13,8 +13,7 @@ namespace tomware.Microwf.Engine
   {
     public static IServiceCollection AddWorkflowEngineServices<TContext>(
       this IServiceCollection services,
-      WorkflowConfiguration workflowConfiguration,
-      ProcessorConfiguration processorConfiguration
+      WorkflowConfiguration workflowConfiguration
     ) where TContext : EngineDbContext
     {
       if (workflowConfiguration == null)
@@ -22,15 +21,41 @@ namespace tomware.Microwf.Engine
         throw new ArgumentNullException(nameof(workflowConfiguration));
       }
 
-      if (processorConfiguration == null)
-      {
-        throw new ArgumentNullException(nameof(processorConfiguration));
-      }
-
       services.Configure<WorkflowConfiguration>(config =>
       {
         config.Types = workflowConfiguration.Types;
       });
+
+      services.AddTransient<IUserContextService, UserContextService>();
+      services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
+      services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
+      services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
+      services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
+      services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
+      services.AddTransient<IWorkflowDefinitionViewModelCreator,
+        ConfigurationWorkflowDefinitionViewModelCreator>();
+
+      // Policies
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy(
+          Constants.MANAGE_WORKFLOWS_POLICY,
+          policy => policy.RequireRole(Constants.WORKFLOW_ADMIN_ROLE)
+        );
+      });
+
+      return services;
+    }
+
+    public static IServiceCollection AddJobQueueServices<TContext>(
+      this IServiceCollection services,
+      ProcessorConfiguration processorConfiguration
+    ) where TContext : EngineDbContext
+    {
+      if (processorConfiguration == null)
+      {
+        throw new ArgumentNullException(nameof(processorConfiguration));
+      }
 
       services.Configure<ProcessorConfiguration>(config =>
       {
@@ -42,29 +67,13 @@ namespace tomware.Microwf.Engine
       {
         services.AddSingleton<IHostedService, WorkflowProcessor>();
         services.AddSingleton<IJobQueueService, JobQueueService>();
+
+        services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
+
+        // Setting up messaging infrastructure
+        services.AddSingleton<IMessageBus, InMemoryMessageBus>();
         services.AddTransient<EnqueueWorkItemMessageHandler>();
       }
-
-      services.AddTransient<IUserContextService, UserContextService>();
-      services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
-      services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
-      services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
-      services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
-      services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
-      services.AddTransient<IWorkflowDefinitionViewModelCreator,
-        ConfigurationWorkflowDefinitionViewModelCreator>();
-
-      // MessageBus
-      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
-
-      // Policies
-      services.AddAuthorization(options =>
-      {
-        options.AddPolicy(
-          Constants.MANAGE_WORKFLOWS_POLICY,
-          policy => policy.RequireRole(Constants.WORKFLOW_ADMIN_ROLE)
-        );
-      });
 
       return services;
     }

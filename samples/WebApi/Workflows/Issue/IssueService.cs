@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Domain;
@@ -29,19 +28,16 @@ namespace WebApi.Workflows.Issue
     private readonly DomainContext _context;
     private readonly IWorkflowEngine _workflowEngine;
     private readonly IUserContextService _userContext;
-    private readonly IMessageBus _messageBus;
 
     public IssueService(
       DomainContext context,
       IWorkflowEngine workflowEngine,
-      IUserContextService userContext,
-      IMessageBus messageBus
+      IUserContextService userContext
     )
     {
       this._context = context;
       this._workflowEngine = workflowEngine;
       this._userContext = userContext;
-      this._messageBus = messageBus;
     }
 
     public async Task<IWorkflowResult<IssueViewModel>> NewAsync()

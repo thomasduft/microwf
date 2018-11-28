@@ -116,7 +116,8 @@ namespace WebApi
       var workflowConf = CreateWorkflowConfiguration(); // GetWorkflowConfiguration(services);
       IOptions<ProcessorConfiguration> processorConf = GetProcessorConfiguration(services);
       services
-        .AddWorkflowEngineServices<DomainContext>(workflowConf, processorConf.Value)
+        .AddWorkflowEngineServices<DomainContext>(workflowConf)
+        .AddJobQueueServices<DomainContext>(processorConf.Value)
         .AddTestUserWorkflowMappings(CreateSampleUserWorkflowMappings());
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
