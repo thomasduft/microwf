@@ -55,9 +55,9 @@ namespace tomware.Microwf.Engine
     public IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> definitions)
     {
       var userWorkflow = _userWorkflowsStore.Workflows
-        .FirstOrDefault(_ => _.UserName == _userContext.UserName);
+        .FirstOrDefault(w => w.UserName == _userContext.UserName);
 
-      return definitions.Where(_ => userWorkflow.WorkflowDefinitions.Contains(_.Type));
+      return definitions.Where(d => userWorkflow.WorkflowDefinitions.Contains(d.Type));
     }
   }
 }

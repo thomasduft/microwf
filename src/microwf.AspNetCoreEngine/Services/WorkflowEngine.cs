@@ -215,7 +215,7 @@ namespace tomware.Microwf.Engine
         foreach (var v in triggerParam.Variables)
         {
           var variable = workflow.WorkflowVariables
-            .FirstOrDefault(_ => _.Type == v.Key);
+            .FirstOrDefault(variables => variables.Type == v.Key);
 
           if (variable != null)
           {

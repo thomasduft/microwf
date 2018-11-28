@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
@@ -25,6 +26,10 @@ namespace WebApi
 
     public Startup(IConfiguration configuration)
     {
+      Log.Logger = new LoggerConfiguration().ReadFrom
+        .Configuration(configuration)
+        .CreateLogger();
+
       this.Configuration = configuration;
     }
 
@@ -133,6 +138,8 @@ namespace WebApi
       ILoggerFactory loggerFactory
     )
     {
+      loggerFactory.AddSerilog();
+
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();

@@ -23,6 +23,11 @@ namespace tomware.Microwf.Engine
 
     public string Error { get; set; }
 
+    public override string ToString()
+    {
+      return $"Id: ${Id}, TriggerName: ${TriggerName}, EntityId: ${EntityId}, WorkflowType: ${WorkflowType}";
+    }
+
     public static WorkItem Create(string triggerName, int entityId, string workflowType)
     {
       return new WorkItem

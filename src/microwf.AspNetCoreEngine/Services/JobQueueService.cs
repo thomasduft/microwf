@@ -10,6 +10,12 @@ namespace tomware.Microwf.Engine
   public interface IJobQueueService
   {
     /// <summary>
+    /// Indicates whether the queue still has items to process.
+    /// </summary>
+    /// <param name="workItem"></param>
+    bool HasItemsInQueue { get; }
+
+    /// <summary>
     /// Enqueues a work item.
     /// </summary>
     /// <param name="workItem"></param>
@@ -59,6 +65,14 @@ namespace tomware.Microwf.Engine
       }
     }
 
+    public bool HasItemsInQueue
+    {
+      get
+      {
+        return this.Items.Count > 0;
+      }
+    }
+
     public JobQueueService(
       ILogger<JobQueueService> logger,
       IServiceScopeFactory serviceScopeFactory
@@ -96,8 +110,6 @@ namespace tomware.Microwf.Engine
 
     public async Task ProcessItemsAsync()
     {
-      _logger.LogTrace("Triggering job queue for doing work");
-
       while (Items.Count > 0)
       {
         var item = Dequeue();
@@ -105,6 +117,8 @@ namespace tomware.Microwf.Engine
 
         try
         {
+          _logger.LogTrace($"Processing work item {item.ToString()}");
+
           TriggerResult triggerResult = await ProcessItemAsync(item);
           await this.HandleTriggerResult(triggerResult, item);
         }

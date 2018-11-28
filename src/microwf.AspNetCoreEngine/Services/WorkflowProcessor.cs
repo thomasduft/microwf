@@ -29,9 +29,12 @@ namespace tomware.Microwf.Engine
     {
       while (!stoppingToken.IsCancellationRequested)
       {
-        _logger.LogTrace($"Triggering processor...");
+        if (!_jobQueueService.HasItemsInQueue)
+        {
+          _logger.LogTrace($"Triggering JobQueueService.ProcessItemsAsync...");
 
-        await _jobQueueService.ProcessItemsAsync();
+          await _jobQueueService.ProcessItemsAsync();
+        }
 
         await Task.Delay(_options.Interval, stoppingToken);
       }

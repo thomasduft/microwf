@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using WebApi.Domain;
 
@@ -43,20 +44,10 @@ namespace WebApi
             .AddJsonFile(
               "appsettings.json",
               optional: true,
-              reloadOnChange: true)
-            .AddJsonFile(
-              $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
-              optional: true,
-              reloadOnChange: true
-            );
-        })
-        .ConfigureLogging((hostingContext, logging) =>
-        {
-          logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-          logging.AddConsole();
-          logging.AddDebug();
+              reloadOnChange: true);
         })
         .UseStartup<Startup>()
+        .UseSerilog()
         .Build();
   }
 }
