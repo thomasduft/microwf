@@ -31,7 +31,7 @@ namespace tomware.Microwf.Engine
       {
         if (!_jobQueueService.HasItemsInQueue)
         {
-          _logger.LogTrace($"Triggering JobQueueService.ProcessItemsAsync...");
+          _logger.LogTrace($"Triggering JobQueueService.ProcessItemsAsync");
 
           await _jobQueueService.ProcessItemsAsync();
         }
@@ -42,7 +42,7 @@ namespace tomware.Microwf.Engine
 
     public override async Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger.LogTrace($"Stopping processor...");
+      _logger.LogTrace($"Stopping processor");
 
       await _jobQueueService.PersistWorkItemsAsync();
     }
