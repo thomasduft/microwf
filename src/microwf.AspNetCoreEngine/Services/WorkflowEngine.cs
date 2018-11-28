@@ -90,13 +90,19 @@ namespace tomware.Microwf.Engine
     {
       if (param == null) throw new ArgumentNullException(nameof(param));
 
+      _logger.LogTrace("TriggerAsync {Instance}", JsonConvert.SerializeObject(
+         param.Instance,
+         new JsonSerializerSettings
+         {
+           Formatting = Formatting.Indented,
+           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+         })
+       );
+
       var entity = param.Instance as IEntityWorkflow;
       if (entity == null)
       {
         // going the non EF way!
-        _logger.LogTrace($@"Processing a non '${param.Instance.Type}' 
-            entity instance.");
-
         var execution = GetExecution(param.Instance.Type);
 
         return execution.Trigger(param);
@@ -108,9 +114,6 @@ namespace tomware.Microwf.Engine
         try
         {
           Workflow workflow = null;
-          _logger.LogTrace($@"Processing an '${param.Instance.Type}' 
-            entity instance with Id = ${entity.Id}.");
-
           var execution = GetExecution(param.Instance.Type);
 
           await _context.SaveChangesAsync(); // so entity id gets resolved!
@@ -138,8 +141,14 @@ namespace tomware.Microwf.Engine
           transaction.Rollback();
 
           _logger.LogError(
+            "TriggerAsync",
             ex,
-            $"Error in triggering: {param.Instance.Type}, EntityId: {entity.Id}"
+            "TriggerAsync failed: {Param}",
+            JsonConvert.SerializeObject(param, new JsonSerializerSettings
+            {
+              Formatting = Formatting.Indented,
+              ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            })
           );
 
           var transitionContext = new TransitionContext(param.Instance);

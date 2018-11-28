@@ -21,13 +21,17 @@ namespace tomware.Microwf.Engine
     }
 
     public async Task Handle(
-      WorkItemMessage item,
+      WorkItemMessage message,
       CancellationToken token = default(CancellationToken)
     )
     {
-      _logger.LogTrace($"Enqueue work item", item);
+      _logger.LogTrace($"Handle WorkItemMessage", message);
 
-      WorkItem workItem = WorkItem.Create(item.TriggerName, item.EntityId, item.WorkflowType);
+      WorkItem workItem = WorkItem.Create(
+        message.TriggerName,
+        message.EntityId,
+        message.WorkflowType
+      );
       _jobQueueService.Enqueue(workItem);
 
       await Task.CompletedTask;
