@@ -85,6 +85,7 @@ namespace tomware.Microwf.Engine
     public void Enqueue(WorkItem item)
     {
       _logger.LogTrace("Enqueue work item", item);
+
       if (item.Retries > 3)
       {
         _logger.LogInformation($"Amount of retries for work item ${item.Id} exceeded");
@@ -124,7 +125,7 @@ namespace tomware.Microwf.Engine
         }
         catch (Exception ex)
         {
-          _logger.LogError("ProcessingWorkItemFailed", ex);
+          _logger.LogError("Processing work item failed", ex, item);
           item.Error = $"{ex.Message} - {ex.StackTrace}";
           item.Retries++;
 
@@ -168,7 +169,7 @@ namespace tomware.Microwf.Engine
 
     public async Task DeleteWorkItem(WorkItem item)
     {
-      _logger.LogTrace("Deleting work item");
+      _logger.LogTrace("Deleting work item", item);
 
       using (var scope = _serviceScopeFactory.CreateScope())
       {
@@ -185,14 +186,10 @@ namespace tomware.Microwf.Engine
       using (var scope = _serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
-
-        _logger.LogTrace($"Aquire instance of IWorkflowEngine.");
         var engine = serviceProvider.GetRequiredService<IWorkflowEngine>();
         var workflowDefinitionProvider
           = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
-        _logger.LogTrace($"WorkflowProcessor task is doing background work.");
 
-        // process list of WorkflowProcessorItem's
         EntityWorkflowDefinitionBase workflowDefinition
          = (EntityWorkflowDefinitionBase)workflowDefinitionProvider
                                            .GetWorkflowDefinition(item.WorkflowType);
@@ -209,7 +206,7 @@ namespace tomware.Microwf.Engine
       if (triggerResult.HasErrors || triggerResult.IsAborted)
       {
         item.Error = string.Join(" - ", triggerResult.Errors);
-        _logger.LogError("ProcessingWorkItemFailed", item.Error, triggerResult);
+        _logger.LogError("HandleTriggerResult", item.Error, triggerResult);
 
         item.Retries++;
         Enqueue(item);
