@@ -95,9 +95,9 @@ namespace tomware.Microwf.Engine
       return false;
     }
 
-    public int GetHashCode(WorkItem obj)
+    public int GetHashCode(WorkItem workItem)
     {
-      return obj.Id.GetHashCode();
+      return workItem.Id.GetHashCode();
     }
   }
 }
