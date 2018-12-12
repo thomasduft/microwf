@@ -85,9 +85,9 @@ namespace tomware.Microwf.Engine
 
   public class WorkItemComparer : IEqualityComparer<WorkItem>
   {
-    public bool Equals(WorkItem emp1, WorkItem emp2)
+    public bool Equals(WorkItem wm1, WorkItem wm2)
     {
-      if (emp1.Id == emp2.Id)
+      if (wm1.Id == wm2.Id)
       {
         return true;
       }
