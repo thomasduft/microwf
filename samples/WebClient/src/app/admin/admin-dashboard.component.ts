@@ -22,14 +22,20 @@ import { PagingModel } from '../shared/services/models';
     <tw-list #list [rows]="workflows">
       <tw-header>
         <h3 i18n>Instances</h3>
-        <div>
+        <div class="button__bar">
           <button type="button" (click)="reload()">
             <tw-icon name="refresh"></tw-icon>
           </button>
-          <tw-workflow-search
-            (searchClicked)="searchClicked($event)">
-          </tw-workflow-search>
+          <button type="button" (click)="toggle()"
+            [ngClass]="{'button--secondary': hasFilter}">
+            <tw-icon name="filter"></tw-icon>
+            Filter
+          </button>
         </div>
+        <tw-workflow-search *ngIf="showFilter"
+          (searchClicked)="searchClicked($event)"
+          (resettedClicked)="resettedClicked()">
+        </tw-workflow-search>
       </tw-header>
       <ng-template let-workflow twTemplate="workflow-item">
         <tw-workflow-list-item [workflow]="workflow"></tw-workflow-list-item>
@@ -45,6 +51,8 @@ export class AdminDashboardComponent implements OnInit {
   private page: PagingModel = PagingModel.create();
   private searchModel: WorkflowSearchModel;
 
+  public hasFilter = false;
+  public showFilter = false;
   public workflows: Array<Workflow> = [];
 
   @HostBinding('class')
@@ -60,6 +68,10 @@ export class AdminDashboardComponent implements OnInit {
   public ngOnInit(): void {
     const model = this.createModel(this.page, this.searchModel);
     this.loadPage(model);
+  }
+
+  public toggle(): void {
+    this.showFilter = !this.showFilter;
   }
 
   public reload(): void {
@@ -79,12 +91,22 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   public searchClicked(searchModel: WorkflowSearchModel): void {
+    this.hasFilter = true;
     this.searchModel = searchModel;
     this.list.rows = [];
 
     this.page = PagingModel.create();
     const model = this.createModel(this.page, this.searchModel);
     this.loadPage(model);
+  }
+
+  public resettedClicked(): void {
+    this.hasFilter = false;
+    this.searchClicked({
+      type: null,
+      correlationId: null,
+      assignee: null
+    });
   }
 
   private loadPage(workflowPagingModel: WorkflowPagingModel): void {

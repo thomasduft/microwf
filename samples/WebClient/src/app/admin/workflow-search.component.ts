@@ -12,18 +12,15 @@ import { WorkflowSearchSlot } from './models';
 @Component({
   selector: 'tw-workflow-search',
   template: `
-  <button type="button" (click)="toggle()">
-    <tw-icon name="filter"></tw-icon>
-    Filter
-  </button>
-  <tw-formdef *ngIf="showFilter"
+  <tw-formdef
     #formDef
     [showSave]="true"
+    [showCancel]="true"
     [saveTitle]="'Apply'"
     [key]="key"
     [viewModel]="viewModel"
     (submitted)="search($event)"
-    (resetted)="cancel()">
+    (resetted)="reset()">
   </tw-formdef>
   `
 })
@@ -34,11 +31,8 @@ export class WorkflowSearchComponent implements OnInit {
     assignee: null
   };
 
-  public showFilter = false;
-
   public key = WorkflowSearchSlot.KEY;
   public viewModel: WorkflowSearchModel;
-
 
   @HostBinding('class')
   public class = 'workflow__search';
@@ -47,19 +41,19 @@ export class WorkflowSearchComponent implements OnInit {
   public searchClicked: EventEmitter<WorkflowSearchModel>
     = new EventEmitter<WorkflowSearchModel>();
 
+  @Output()
+  public resettedClicked: EventEmitter<any>
+    = new EventEmitter<any>();
+
   public ngOnInit(): void {
     this.viewModel = this.empty;
   }
 
-  public toggle(): void {
-    this.showFilter = !this.showFilter;
-
-    if (!this.showFilter) {
-      this.search(this.empty);
-    }
-  }
-
   public search(vm: WorkflowSearchModel): void {
     this.searchClicked.emit(vm);
+  }
+
+  public reset(): void {
+    this.resettedClicked.emit();
   }
 }

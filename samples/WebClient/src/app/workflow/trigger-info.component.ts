@@ -11,7 +11,7 @@ import { TriggerInfo } from './models';
   selector: 'tw-trigger-info',
   template: `
   <div *ngIf="triggerInfo">
-    <div class="float-right"
+    <div class="button__bar"
          *ngIf="triggerInfo.triggers">
       <button type="button"
               class="button--secondary"

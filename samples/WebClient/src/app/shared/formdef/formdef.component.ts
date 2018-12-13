@@ -20,7 +20,7 @@ import { FormdefService } from './formdef.service';
              [slot]="slot"
              [parentForm]="form">
     </tw-slot>
-    <div>
+    <div class="button__bar">
       <button *ngIf="showSave"
               type="submit"
               [disabled]="!form.valid"

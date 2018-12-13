@@ -17,7 +17,7 @@ import { Issue } from './models';
     <tw-list #list [rows]="myWork$ | async">
       <tw-header>
         <h3 i18n>Issues</h3>
-        <div>
+        <div class="button__bar">
           <a class="button" [routerLink]="['detail/new']">
             <tw-icon name="plus"></tw-icon>
           </a>
