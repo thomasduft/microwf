@@ -142,6 +142,8 @@ namespace WebApi
 
       if (env.IsDevelopment())
       {
+        app.UseCors("AllowAllOrigins");
+
         app.UseDeveloperExceptionPage();
       }
       else
@@ -163,8 +165,6 @@ namespace WebApi
           });
         });
       }
-
-      app.UseCors("AllowAllOrigins");
 
       app.UseIdentityServer();
       // app.UseAuthentication();

@@ -44,7 +44,12 @@ namespace WebApi
             .AddJsonFile(
               "appsettings.json",
               optional: true,
-              reloadOnChange: true);
+              reloadOnChange: true)
+            .AddJsonFile(
+              $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
+              optional: true,
+              reloadOnChange: true
+            );
         })
         .UseStartup<Startup>()
         .UseSerilog()
