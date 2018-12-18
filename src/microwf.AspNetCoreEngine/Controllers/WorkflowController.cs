@@ -20,7 +20,7 @@ namespace tomware.Microwf.Engine
     [HttpGet()]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
-    public async Task<IActionResult> GetWorkflows(
+    public async Task<ActionResult<PaginatedList<WorkflowViewModel>>> GetWorkflows(
       [FromQuery] WorkflowSearchPagingParameters pagingParameters
     )
     {
@@ -35,7 +35,7 @@ namespace tomware.Microwf.Engine
     [HttpGet("{id}")]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
-    public async Task<IActionResult> Get(int id)
+    public async Task<ActionResult<WorkflowViewModel>> Get(int id)
     {
       var result = await _service.GetAsync(id);
 
@@ -45,7 +45,7 @@ namespace tomware.Microwf.Engine
     [HttpGet("{id}/history")]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
-    public async Task<IActionResult> GetHistory(int id)
+    public async Task<ActionResult<IEnumerable<WorkflowHistory>>> GetHistory(int id)
     {
       var result = await _service.GetHistoryAsync(id);
 
@@ -55,7 +55,7 @@ namespace tomware.Microwf.Engine
     [HttpGet("{id}/variables")]
     [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowVariable>), 200)]
-    public async Task<IActionResult> GetVariables(int id)
+    public async Task<ActionResult<IEnumerable<WorkflowVariable>>> GetVariables(int id)
     {
       var result = await _service.GetVariablesAsync(id);
 
@@ -64,7 +64,7 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("instance/{type}/{correlationId}")]
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
-    public async Task<IActionResult> GetInstance(string type, int correlationId)
+    public async Task<ActionResult<WorkflowViewModel>> GetInstance(string type, int correlationId)
     {
       WorkflowViewModel result = await _service.GetInstanceAsync(type, correlationId);
 
@@ -73,7 +73,7 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("definitions")]
     [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
-    public IActionResult GetWorkflowDefinitions()
+    public ActionResult<IEnumerable<WorkflowDefinitionViewModel>> GetWorkflowDefinitions()
     {
       var result = _service.GetWorkflowDefinitions();
 
@@ -82,7 +82,7 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("dot/{type}")]
     [ProducesResponseType(typeof(string), 200)]
-    public IActionResult Dot(string type)
+    public ActionResult<string> Dot(string type)
     {
       var result = _service.Dot(type);
 
@@ -91,7 +91,7 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("dotwithhistory/{type}/{correlationId}")]
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
-    public async Task<IActionResult> DotWithHistory(string type, int correlationId)
+    public async Task<ActionResult<WorkflowViewModel>> DotWithHistory(string type, int correlationId)
     {
       var result = await _service.DotWithHistoryAsync(type, correlationId);
 
