@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 
@@ -7,6 +8,8 @@ namespace WebApi.Workflows.Stepper
 {
   public class StepperWorkflow : EntityWorkflowDefinitionBase
   {
+    private readonly IMessageBus _messageBus;
+
     public const string TYPE = "StepperWorkflow";
 
     public const string GOTO1_TRIGGER = "goto1";
@@ -25,7 +28,6 @@ namespace WebApi.Workflows.Stepper
     public const string STEP5_STATE = "step5";
     public const string CANCELED_STATE = "canceled";
 
-
     public override string Type => TYPE;
 
     public override Type EntityType => typeof(Stepper);
@@ -42,14 +44,15 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO1_TRIGGER,
             TargetState = STEP1_STATE,
             CanMakeTransition = IsCreator,
-            AfterTransition = AssignToSystem
+            AfterTransition = GoToStep2
           },
           new Transition
           {
             State = STEP1_STATE,
             Trigger = GOTO2_TRIGGER,
             TargetState = STEP2_STATE,
-            CanMakeTransition = IsAssignedToSystem
+            CanMakeTransition = IsAssignedToSystem,
+            AfterTransition = GoToStep3
           },
           new Transition
           {
@@ -63,7 +66,7 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO3_TRIGGER,
             TargetState = STEP3_STATE,
             CanMakeTransition = IsAssignedToSystem,
-            AfterTransition = AssignToCreator
+            AfterTransition = GoToStep4
           },
           new Transition
           {
@@ -77,7 +80,7 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO4_TRIGGER,
             TargetState = STEP4_STATE,
             CanMakeTransition = IsCreator,
-            AfterTransition = AssignToSystem
+            AfterTransition = GoTo5
           },
           new Transition
           {
@@ -101,6 +104,63 @@ namespace WebApi.Workflows.Stepper
           }
         };
       }
+    }
+
+    public StepperWorkflow(IMessageBus messageBus)
+    {
+      _messageBus = messageBus;
+    }
+
+    private void GoToStep2(TransitionContext context)
+    {
+      this.AssignToSystem(context);
+
+      var stepper = context.GetInstance<Stepper>();
+
+      _messageBus.PublishAsync(WorkItemMessage.Create(
+        GOTO2_TRIGGER,
+        stepper.Id,
+        stepper.Type
+        ));
+    }
+
+    private void GoToStep3(TransitionContext context)
+    {
+      this.AssignToSystem(context);
+
+      var stepper = context.GetInstance<Stepper>();
+
+      _messageBus.PublishAsync(WorkItemMessage.Create(
+        GOTO3_TRIGGER,
+        stepper.Id,
+        stepper.Type
+        ));
+    }
+
+    private void GoToStep4(TransitionContext context)
+    {
+      this.AssignToCreator(context);
+
+      var stepper = context.GetInstance<Stepper>();
+
+      _messageBus.PublishAsync(WorkItemMessage.Create(
+        GOTO4_TRIGGER,
+        stepper.Id,
+        stepper.Type
+        ));
+    }
+
+    private void GoTo5(TransitionContext context)
+    {
+      this.AssignToSystem(context);
+
+      var stepper = context.GetInstance<Stepper>();
+
+      _messageBus.PublishAsync(WorkItemMessage.Create(
+        GOTO5_TRIGGER,
+        stepper.Id,
+        stepper.Type
+        ));
     }
 
     private bool IsCreator(TransitionContext context)

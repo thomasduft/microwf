@@ -235,7 +235,7 @@ namespace WebApi
             Type = "StepperWorkflow",
             Title = "Stepper",
             Description = "Dummy workflow to test workflow processor.",
-            Route = "stepper"
+            Route = ""
           }
         }
       };

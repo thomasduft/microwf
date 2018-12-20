@@ -7,6 +7,7 @@ import {
   WorkflowService,
   WorkflowAreaRegistry
 } from '../../../workflow';
+import { isNgTemplate } from '@angular/compiler';
 
 @Injectable()
 export class MenuService implements OnDestroy {
@@ -42,8 +43,10 @@ export class MenuService implements OnDestroy {
 
   private init(definitions: Array<WorkflowDefinition>): void {
     definitions.forEach((d: WorkflowDefinition) => {
-      this._workflowAreaRegistry
-        .register(new WorkflowArea(d.type, d.title, d.description, d.route));
+      if (d.route) {
+        this._workflowAreaRegistry
+          .register(new WorkflowArea(d.type, d.title, d.description, d.route));
+      }
     });
   }
 
