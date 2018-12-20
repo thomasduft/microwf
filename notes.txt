@@ -1,9 +1,16 @@
 notes:
-- make it dockarizable on a Raspberry PI 3
-  - https://www.hanselman.com/blog/BuildingRunningAndTestingNETCoreAndASPNETCore21InDockerOnARaspberryPiARM32.aspx
-  - https://github.com/dotnet/announcements/issues/29
-    - https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md
-  - microsoft/dotnet:2.1-aspnetcore-runtime
+
+digraph stepper {
+  "new" -> "step1" [label=goto1]
+  "step1" -> "step2" [label=goto2]
+  "step1" -> "canceled" [label=cancel]
+  "step2" -> "step3" [label=goto3]
+  "step2" -> "canceled" [label=cancel]
+  "step3" -> "step4" [label=goto4]
+  "step3" -> "canceled" [label=cancel]
+  "step4" -> "step5" [label=goto5]
+  "step4" -> "canceled"
+}
 
 ----------------------------------------------------------------------------------------------------
 EF commands:
@@ -23,3 +30,5 @@ NuGet Commands:
 dotnet pack src/microwf.Core -c Release /p:PackageVersion=1.0.0 -o ./../../dist/nupkgs
 
 see: https://stackoverflow.com/questions/42797993/package-version-is-always-1-0-0-with-dotnet-pack
+
+----------------------------------------------------------------------------------------------------

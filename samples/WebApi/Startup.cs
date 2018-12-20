@@ -17,6 +17,7 @@ using WebApi.Domain;
 using WebApi.Identity;
 using WebApi.Workflows.Holiday;
 using WebApi.Workflows.Issue;
+using WebApi.Workflows.Stepper;
 
 namespace WebApi
 {
@@ -127,6 +128,7 @@ namespace WebApi
 
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
+      services.AddTransient<IWorkflowDefinition, StepperWorkflow>();
 
       services.AddTransient<IHolidayService, HolidayService>();
       services.AddTransient<IIssueService, IssueService>();
@@ -189,20 +191,23 @@ namespace WebApi
           UserName = "admin",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
-            IssueTrackingWorkflow.TYPE
+            IssueTrackingWorkflow.TYPE,
+            StepperWorkflow.TYPE
           }
         },
         new UserWorkflowMapping {
           UserName = "alice",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
-            IssueTrackingWorkflow.TYPE
+            IssueTrackingWorkflow.TYPE,
+            StepperWorkflow.TYPE
           }
         },
         new UserWorkflowMapping {
           UserName = "bob",
           WorkflowDefinitions = new List<string> {
-            HolidayApprovalWorkflow.TYPE
+            HolidayApprovalWorkflow.TYPE,
+            StepperWorkflow.TYPE
           }
         }
       };
@@ -224,6 +229,12 @@ namespace WebApi
             Title = "Issue",
             Description = "Simple issue tracking process.",
             Route = "issue"
+          },
+          new WorkflowType {
+            Type = "StepperWorkflow",
+            Title = "Stepper",
+            Description = "Dummy workflow to test workflow processor.",
+            Route = "stepper"
           }
         }
       };
