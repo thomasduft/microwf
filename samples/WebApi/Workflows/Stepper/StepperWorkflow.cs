@@ -6,6 +6,14 @@ using tomware.Microwf.Engine;
 
 namespace WebApi.Workflows.Stepper
 {
+  /**
+   * Showcase for JobQueueService.
+   *
+   * Once triggered a Stepper instance with 'goto1' the workflow automatically finishes itself
+   * without any further user interaction!
+   *
+   * trigger goto1 => step1 --> step2 --> step3 --> step4 --> step5
+   */
   public class StepperWorkflow : EntityWorkflowDefinitionBase
   {
     private readonly IMessageBus _messageBus;
