@@ -9,10 +9,17 @@ import { Workflow } from '../workflow';
       <b>{{ workflow?.title }} #{{workflow?.correlationId}}</b>
     </p>
     <div class="list__itemDetail">
-      <p><b>State:</b> {{ workflow?.state }}</p>
       <p>
-        <b>Assignee:</b> {{ workflow?.assignee }}
-        <span class="list_item--right"><b>Started:</b> {{ workflow?.started | date }}</span>
+        <b>State:</b> {{ workflow?.state }}
+        <span class="list_item--right">
+          <b>Assignee:</b> {{ workflow?.assignee }}
+        </span>
+      </p>
+      <p>
+        <b>Start:</b> {{ workflow?.started | date }}
+        <span *ngIf="workflow?.completed" class="list_item--right">
+          <b>End:</b> {{ workflow?.completed | date }}
+        </span>
       </p>
     </div>
   </div>`

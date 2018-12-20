@@ -44,7 +44,7 @@ import {
           </thead>
           <tbody>
             <tr *ngFor="let h of history">
-              <td>{{ h.created | date }}</td>
+              <td>{{ h.created | date:'MM/dd/yyyy HH:mm:ss' }}</td>
               <td>{{ h.fromState }}</td>
               <td>{{ h.toState }}</td>
               <td>{{ h.userName }}</td>
