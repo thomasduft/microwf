@@ -1,16 +1,6 @@
 notes:
-
-digraph stepper {
-  "new" -> "step1" [label=goto1]
-  "step1" -> "step2" [label=goto2]
-  "step1" -> "canceled" [label=cancel]
-  "step2" -> "step3" [label=goto3]
-  "step2" -> "canceled" [label=cancel]
-  "step3" -> "step4" [label=goto4]
-  "step3" -> "canceled" [label=cancel]
-  "step4" -> "step5" [label=goto5]
-  "step4" -> "canceled"
-}
+- rescedule a workflow instance in JobQueue again
+- api for JobQueue?!
 
 ----------------------------------------------------------------------------------------------------
 EF commands:
