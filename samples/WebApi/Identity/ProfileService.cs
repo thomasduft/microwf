@@ -14,7 +14,7 @@ namespace WebApi.Identity
       var sub = context.Subject?.GetSubjectId();
       if (sub == null) throw new Exception("No sub claim present");
 
-      var user = Config.GetUsers().First(_ => _.SubjectId == sub);
+      var user = Config.GetUsers().First(u => u.SubjectId == sub);
       if (user != null)
       {
         context.AddRequestedClaims(user.Claims);
@@ -28,7 +28,7 @@ namespace WebApi.Identity
       var sub = context.Subject?.GetSubjectId();
       if (sub == null) throw new Exception("No subject Id claim present");
 
-      var user = Config.GetUsers().First(_ => _.SubjectId == sub);
+      var user = Config.GetUsers().First(u => u.SubjectId == sub);
 
       context.IsActive = user != null;
 

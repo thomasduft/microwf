@@ -115,7 +115,7 @@ namespace WebApi.Workflows.Issue
       if (id.HasValue)
       {
         issue = await this._context.Issues
-          .SingleAsync(_ => _.Id == id.Value);
+          .SingleAsync(i => i.Id == id.Value);
       }
       else
       {

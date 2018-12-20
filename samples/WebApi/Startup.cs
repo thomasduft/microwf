@@ -132,6 +132,7 @@ namespace WebApi
 
       services.AddTransient<IHolidayService, HolidayService>();
       services.AddTransient<IIssueService, IssueService>();
+      services.AddTransient<IStepperService, StepperService>();
     }
 
     public void Configure(

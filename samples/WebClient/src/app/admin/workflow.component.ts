@@ -31,7 +31,7 @@ import {
       </div>
     </div>
     <div>
-      <div *ngIf="history">
+      <div *ngIf="history.length > 0">
         <h3>History</h3>
         <table>
           <thead>
@@ -54,7 +54,7 @@ import {
       </div>
     </div>
     <div>
-      <div *ngIf="variables">
+      <div *ngIf="variables.length > 0">
         <h3>Variables</h3>
         <table>
           <thead>

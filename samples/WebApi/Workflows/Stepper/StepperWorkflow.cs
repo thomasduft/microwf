@@ -40,13 +40,16 @@ namespace WebApi.Workflows.Stepper
           {
             State = NEW_STATE,
             Trigger = GOTO1_TRIGGER,
-            TargetState = STEP1_STATE
+            TargetState = STEP1_STATE,
+            CanMakeTransition = IsCreator,
+            AfterTransition = AssignToSystem
           },
           new Transition
           {
             State = STEP1_STATE,
             Trigger = GOTO2_TRIGGER,
-            TargetState = STEP2_STATE
+            TargetState = STEP2_STATE,
+            CanMakeTransition = IsAssignedToSystem
           },
           new Transition
           {
@@ -58,7 +61,9 @@ namespace WebApi.Workflows.Stepper
           {
             State = STEP2_STATE,
             Trigger = GOTO3_TRIGGER,
-            TargetState = STEP3_STATE
+            TargetState = STEP3_STATE,
+            CanMakeTransition = IsAssignedToSystem,
+            AfterTransition = AssignToCreator
           },
           new Transition
           {
@@ -70,7 +75,9 @@ namespace WebApi.Workflows.Stepper
           {
             State = STEP3_STATE,
             Trigger = GOTO4_TRIGGER,
-            TargetState = STEP4_STATE
+            TargetState = STEP4_STATE,
+            CanMakeTransition = IsCreator,
+            AfterTransition = AssignToSystem
           },
           new Transition
           {
@@ -82,7 +89,9 @@ namespace WebApi.Workflows.Stepper
           {
             State = STEP4_STATE,
             Trigger = GOTO5_TRIGGER,
-            TargetState = STEP5_STATE
+            TargetState = STEP5_STATE,
+            CanMakeTransition = IsAssignedToSystem,
+            AfterTransition = AssignToCreator
           },
           new Transition
           {
@@ -92,6 +101,35 @@ namespace WebApi.Workflows.Stepper
           }
         };
       }
+    }
+
+    private bool IsCreator(TransitionContext context)
+    {
+      var stepper = context.GetInstance<Stepper>();
+
+      return stepper.Assignee == stepper.Creator
+        && stepper.Assignee != UserContextService.SYSTEM_USER;
+    }
+
+    private bool IsAssignedToSystem(TransitionContext context)
+    {
+      var stepper = context.GetInstance<Stepper>();
+
+      return stepper.Assignee == UserContextService.SYSTEM_USER;
+    }
+
+    private void AssignToSystem(TransitionContext context)
+    {
+      var stepper = context.GetInstance<Stepper>();
+
+      stepper.Assignee = UserContextService.SYSTEM_USER;
+    }
+
+    private void AssignToCreator(TransitionContext context)
+    {
+      var stepper = context.GetInstance<Stepper>();
+
+      stepper.Assignee = stepper.Creator;
     }
   }
 }

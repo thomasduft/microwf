@@ -10,12 +10,6 @@ namespace tomware.Microwf.Engine
   public interface IJobQueueService
   {
     /// <summary>
-    /// Indicates whether the queue still has items to process.
-    /// </summary>
-    /// <param name="workItem"></param>
-    bool HasItemsInQueue { get; }
-
-    /// <summary>
     /// Enqueues a work item.
     /// </summary>
     /// <param name="workItem"></param>
@@ -62,14 +56,6 @@ namespace tomware.Microwf.Engine
         }
 
         return _items;
-      }
-    }
-
-    public bool HasItemsInQueue
-    {
-      get
-      {
-        return this.Items.Count > 0;
       }
     }
 

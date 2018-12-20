@@ -20,6 +20,9 @@ namespace WebApi.Workflows.Stepper
     public string Assignee { get; set; }
 
     [Required]
+    public string Creator { get; set; }
+
+    [Required]
     public string Name { get; set; }
 
     public static Stepper Create(string creator, string name)
@@ -28,6 +31,7 @@ namespace WebApi.Workflows.Stepper
       {
         Type = StepperWorkflow.TYPE,
         State = StepperWorkflow.NEW_STATE,
+        Creator = creator,
         Assignee = creator,
         Name = name
       };
