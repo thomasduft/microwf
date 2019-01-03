@@ -74,6 +74,7 @@ Assuming you downloaded the sources and opened the directory with [VS Code](http
 > dotnet build
 
 That ensures you are able to build the dotnet related stuff!
+
 2. Hit "F5" and VS Code will do its magic! There are some VS Code tasks defined which will run the WebApi and open your default browser.
 
 #### Running the Angular WebClient frontend
