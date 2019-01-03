@@ -65,3 +65,27 @@ public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   }
 }
 ```
+
+### Running the samples
+Assuming you downloaded the sources and opened the directory with [VS Code](https://code.visualstudio.com/) you should be good to go! Ahh and of course you need [dot.net core](https://dotnet.microsoft.com/download) and [node.js](https://nodejs.org/en/) installed on your development environment.
+
+#### Running the WebApi backend
+1. Within the directory open the terminal and type
+> dotnet build
+
+That ensures you are able to build the dotnet related stuff!
+2. Hit "F5" and VS Code will do its magic! There are some VS Code tasks defined which will run the WebApi and open your default browser.
+
+#### Running the Angular WebClient frontend
+1. In the terminal change to the directory
+> cd samples/WebClient
+
+2. Install all npm deps
+> npm install
+
+3. Run the application
+> npm run start
+
+You should see now the login screen. 
+
+Happy poking!!

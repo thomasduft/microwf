@@ -19,56 +19,48 @@ import {
   template: `
   <div class="workflow">
     <h3>Overview</h3>
-    <div>
-      <div *ngIf="workflow">
-        <tw-workflow-list-item [workflow]="workflow">
-        </tw-workflow-list-item>
-      </div>
+    <div *ngIf="workflow">
+      <tw-workflow-list-item [workflow]="workflow">
+      </tw-workflow-list-item>
     </div>
-    <div>
-      <div *ngIf="dot">
-        <tw-dot [dot]="dot"></tw-dot>
-      </div>
+    <div *ngIf="dot">
+      <tw-dot [dot]="dot"></tw-dot>
     </div>
-    <div>
-      <div *ngIf="history.length > 0">
-        <h3>History</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Created</th>
-              <th>From</th>
-              <th>To</th>
-              <th>User</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let h of history">
-              <td>{{ h.created | date:'MM/dd/yyyy HH:mm:ss' }}</td>
-              <td>{{ h.fromState }}</td>
-              <td>{{ h.toState }}</td>
-              <td>{{ h.userName }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div *ngIf="history && history.length > 0">
+      <h3>History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Created</th>
+            <th>From</th>
+            <th>To</th>
+            <th>User</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of history">
+            <td>{{ h.created | date:'MM/dd/yyyy HH:mm:ss' }}</td>
+            <td>{{ h.fromState }}</td>
+            <td>{{ h.toState }}</td>
+            <td>{{ h.userName }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div>
-      <div *ngIf="variables.length > 0">
-        <h3>Variables</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Content</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let v of variables">
-              <td>{{ v.content }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div *ngIf="variables && variables.length > 0">
+      <h3>Variables</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of variables">
+            <td>{{ v.content }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   `

@@ -1,11 +1,11 @@
 const PROXY_CONFIG = [
   {
-      context: [
-          "/connect",
-          "/api"
-      ],
-      target: "http://localhost:5000",
-      secure: false
+    context: [
+      "/connect",
+      "/api"
+    ],
+    target: "http://localhost:5000",
+    secure: false
   }
 ]
 
