@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>A simple finite state machine (FSM) with workflow character where you define your workflows in code.</Description>
     <RepositoryUrl>https://github.com/thomasduft/microwf</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/thomasduft/microwf/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Authors>Thomas Duft</Authors>
     <Company>tomWare SOLUTIONS</Company>
     <PackageProjectUrl>https://github.com/thomasduft/microwf</PackageProjectUrl>
@@ -18,4 +18,7 @@
     <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
 </Project>
