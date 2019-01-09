@@ -47,7 +47,8 @@ namespace tomware.Microwf.Engine
     public async Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync()
     {
       return await _context.WorkItems
-        .Where(wi => wi.Retries <= 3)
+        .Where(wi => wi.Retries <= 3
+          && wi.DueDate == null || wi.DueDate.Value <= SystemTime.Now())
         .ToListAsync<WorkItem>();
     }
 

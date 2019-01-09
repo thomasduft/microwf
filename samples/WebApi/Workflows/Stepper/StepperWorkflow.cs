@@ -142,7 +142,8 @@ namespace WebApi.Workflows.Stepper
     {
       return new AutoTrigger
       {
-        Trigger = GOTO3_TRIGGER
+        Trigger = GOTO3_TRIGGER,
+        DueDate = SystemTime.Now().AddMinutes(2)
       };
     }
 

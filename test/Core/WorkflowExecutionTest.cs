@@ -93,6 +93,7 @@ namespace microwf.Tests.Core
       Assert.AreEqual("SwitchOn", result.TriggerName);
       Assert.IsTrue(result.HasAutoTrigger);
       Assert.AreEqual("SwitchOff", result.AutoTrigger.Trigger);
+      Assert.IsTrue(result.AutoTrigger.DueDate.HasValue);
     }
 
     [TestMethod]

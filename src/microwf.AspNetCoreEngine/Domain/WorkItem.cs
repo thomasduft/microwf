@@ -23,19 +23,27 @@ namespace tomware.Microwf.Engine
 
     public string Error { get; set; }
 
+    public DateTime? DueDate { get; set; }
+
     public override string ToString()
     {
       return $"Id: ${Id}, TriggerName: {TriggerName}, EntityId: {EntityId}, WorkflowType: {WorkflowType}";
     }
 
-    public static WorkItem Create(string triggerName, int entityId, string workflowType)
+    public static WorkItem Create(
+      string triggerName,
+      int entityId,
+      string workflowType,
+      DateTime? dueDate = null
+    )
     {
       return new WorkItem
       {
         TriggerName = triggerName,
         EntityId = entityId,
         WorkflowType = workflowType,
-        Retries = 0
+        Retries = 0,
+        DueDate = dueDate
       };
     }
   }

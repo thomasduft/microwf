@@ -259,7 +259,12 @@ namespace tomware.Microwf.Engine
 
     private void CreateWorkItemEntry(AutoTrigger autoTrigger, IEntityWorkflow entity)
     {
-      var workItem = WorkItem.Create(autoTrigger.Trigger, entity.Id, entity.Type);
+      var workItem = WorkItem.Create(
+        autoTrigger.Trigger,
+        entity.Id,
+        entity.Type,
+        autoTrigger.DueDate
+      );
 
       this._context.WorkItems.Add(workItem);
     }

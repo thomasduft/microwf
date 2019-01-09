@@ -1,7 +1,8 @@
-using tomware.Microwf.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using tomware.Microwf.Core;
+using tomware.Microwf.Engine;
 
 namespace microwf.Tests.WorkflowDefinitions
 {
@@ -72,7 +73,7 @@ namespace microwf.Tests.WorkflowDefinitions
 
     private AutoTrigger SwitchOffAfter5Minutes(TransitionContext context)
     {
-      return new AutoTrigger { Trigger = "SwitchOff" };
+      return new AutoTrigger { Trigger = "SwitchOff", DueDate = SystemTime.Now() };
     }
   }
 

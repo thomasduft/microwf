@@ -16,12 +16,6 @@ namespace tomware.Microwf.Engine
     void Enqueue(WorkItem workItem);
 
     /// <summary>
-    /// Dequeues a work item.
-    /// </summary>
-    /// <returns></returns>
-    WorkItem Dequeue();
-
-    /// <summary>
     /// Processes work items.
     /// </summary>
     /// <returns></returns>
@@ -74,24 +68,11 @@ namespace tomware.Microwf.Engine
       if (item.Retries > 3)
       {
         _logger.LogInformation($"Amount of retries for work item ${item.Id} exceeded");
+        // TODO: Save the failed WorkItem! => mark as failed?!
         return;
       }
 
       Items.Enqueue(item);
-    }
-
-    public WorkItem Dequeue()
-    {
-      _logger.LogTrace("Dequeued work item");
-
-      if (Items.TryDequeue(out WorkItem item))
-      {
-        item.Error = string.Empty;
-
-        return item;
-      }
-
-      return null;
     }
 
     public async Task ProcessItemsAsync()
@@ -148,6 +129,18 @@ namespace tomware.Microwf.Engine
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
         await service.PersistWorkItemsAsync(Items.ToArray());
       }
+    }
+
+    private WorkItem Dequeue()
+    {
+      if (Items.TryDequeue(out WorkItem item))
+      {
+        item.Error = string.Empty;
+
+        return item;
+      }
+
+      return null;
     }
 
     private async Task DeleteWorkItem(WorkItem item)
