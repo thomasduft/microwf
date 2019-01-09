@@ -131,6 +131,8 @@ namespace tomware.Microwf.Engine
           if (!result.IsAborted)
           {
             await PersistWorkflow(workflow, param);
+            if (result.HasAutoTrigger) CreateWorkItemEntry(result.AutoTrigger, entity);
+
             await _context.SaveChangesAsync();
 
             transaction.Commit();
@@ -219,6 +221,7 @@ namespace tomware.Microwf.Engine
     {
       if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
+      // persisting workflow variables
       if (triggerParam.Variables != null && triggerParam.HasVariables)
       {
         foreach (var v in triggerParam.Variables)
@@ -237,6 +240,7 @@ namespace tomware.Microwf.Engine
         }
       }
 
+      // keeping workflow entity nsync
       var entityWorkflow = triggerParam.Instance as IEntityWorkflow;
       if (entityWorkflow != null)
       {
@@ -251,6 +255,13 @@ namespace tomware.Microwf.Engine
       {
         workflow.Completed = SystemTime.Now();
       }
+    }
+
+    private void CreateWorkItemEntry(AutoTrigger autoTrigger, IEntityWorkflow entity)
+    {
+      var workItem = WorkItem.Create(autoTrigger.Trigger, entity.Id, entity.Type);
+
+      this._context.WorkItems.Add(workItem);
     }
 
     private async Task<bool> WorkflowIsCompleted(TriggerParam triggerParam)

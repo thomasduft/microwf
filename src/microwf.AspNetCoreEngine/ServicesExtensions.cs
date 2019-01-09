@@ -31,6 +31,7 @@ namespace tomware.Microwf.Engine
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
       services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
+      services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
       services.AddTransient<IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
@@ -68,11 +69,9 @@ namespace tomware.Microwf.Engine
         services.AddSingleton<IHostedService, WorkflowProcessor>();
         services.AddSingleton<IJobQueueService, JobQueueService>();
 
-        services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
-
         // Setting up messaging infrastructure
         services.AddSingleton<IMessageBus, InMemoryMessageBus>();
-        services.AddTransient<EnqueueWorkItemMessageHandler>();
+        services.AddSingleton<EnqueueWorkItemMessageHandler>();
       }
 
       return services;

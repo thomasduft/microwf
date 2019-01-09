@@ -31,6 +31,7 @@ namespace tomware.Microwf.Engine
       {
         _logger.LogTrace($"Triggering JobQueueService.ProcessItemsAsync");
 
+        await _jobQueueService.ResumeWorkItems();
         await _jobQueueService.ProcessItemsAsync();
 
         await Task.Delay(_options.Interval, stoppingToken);

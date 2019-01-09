@@ -44,13 +44,13 @@ namespace tomware.Microwf.Core
       get { return _triggerContext.Instance.State; }
     }
 
-    public string AutoTrigger { get; private set; }
+    public AutoTrigger AutoTrigger { get; private set; }
 
     public bool HasAutoTrigger
     {
       get
       {
-        return !string.IsNullOrEmpty(this.AutoTrigger);
+        return this.AutoTrigger != null;
       }
     }
 
@@ -70,7 +70,7 @@ namespace tomware.Microwf.Core
       return _triggerContext.GetVariable<T>(key);
     }
 
-    internal void setAutoTrigger(string autoTrigger)
+    internal void setAutoTrigger(AutoTrigger autoTrigger)
     {
       this.AutoTrigger = autoTrigger;
     }

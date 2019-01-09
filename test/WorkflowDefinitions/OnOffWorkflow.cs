@@ -70,9 +70,9 @@ namespace microwf.Tests.WorkflowDefinitions
       Console.WriteLine("Current state is: '{0}'", switcher.State);
     }
 
-    private string SwitchOffAfter5Minutes(TransitionContext context)
+    private AutoTrigger SwitchOffAfter5Minutes(TransitionContext context)
     {
-      return "SwitchOff";
+      return new AutoTrigger { Trigger = "SwitchOff" };
     }
   }
 

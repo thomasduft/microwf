@@ -60,7 +60,8 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO2_TRIGGER,
             TargetState = STEP2_STATE,
             CanMakeTransition = IsAssignedToSystem,
-            AfterTransition = GoToStep3
+            AfterTransition = AssignForStep3,
+            AutoTrigger = GoToStep3
           },
           new Transition
           {
@@ -132,17 +133,17 @@ namespace WebApi.Workflows.Stepper
         ));
     }
 
-    private void GoToStep3(TransitionContext context)
+    private void AssignForStep3(TransitionContext context)
     {
       this.AssignToSystem(context);
+    }
 
-      var stepper = context.GetInstance<Stepper>();
-
-      _messageBus.PublishAsync(WorkItemMessage.Create(
-        GOTO3_TRIGGER,
-        stepper.Id,
-        stepper.Type
-        ));
+    private AutoTrigger GoToStep3(TransitionContext arg)
+    {
+      return new AutoTrigger
+      {
+        Trigger = GOTO3_TRIGGER
+      };
     }
 
     private void GoToStep4(TransitionContext context)

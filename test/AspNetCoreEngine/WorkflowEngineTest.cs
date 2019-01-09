@@ -255,7 +255,7 @@ namespace microwf.Tests.AspNetCoreEngine
       // Assert
       Assert.IsNotNull(result);
       Assert.IsInstanceOfType(result, typeof(LightSwitcher));
-      
+
       var resultInstance = result as LightSwitcher;
       Assert.AreEqual(resultInstance.Id, instance.Id);
       Assert.AreEqual(resultInstance.Type, instance.Type);

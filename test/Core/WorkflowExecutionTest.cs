@@ -92,7 +92,7 @@ namespace microwf.Tests.Core
       Assert.IsNotNull(result);
       Assert.AreEqual("SwitchOn", result.TriggerName);
       Assert.IsTrue(result.HasAutoTrigger);
-      Assert.AreEqual("SwitchOff", result.AutoTrigger);
+      Assert.AreEqual("SwitchOff", result.AutoTrigger.Trigger);
     }
 
     [TestMethod]

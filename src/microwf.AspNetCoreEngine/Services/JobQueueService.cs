@@ -30,7 +30,7 @@ namespace tomware.Microwf.Engine
     /// <summary>
     /// Resumes persisted work items.
     /// </summary>
-    void ResumeWorkItems();
+    Task ResumeWorkItems();
 
     /// <summary>
     /// Persists running work items.
@@ -52,7 +52,6 @@ namespace tomware.Microwf.Engine
         if (_items == null)
         {
           _items = new ConcurrentQueue<WorkItem>();
-          ResumeWorkItems();
         }
 
         return _items;
@@ -122,7 +121,7 @@ namespace tomware.Microwf.Engine
       await Task.CompletedTask;
     }
 
-    public void ResumeWorkItems()
+    public async Task ResumeWorkItems()
     {
       _logger.LogTrace("Resuming work items");
 
@@ -130,9 +129,7 @@ namespace tomware.Microwf.Engine
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
-        var items = service.ResumeWorkItemsAsync()
-          .GetAwaiter()
-          .GetResult();
+        var items = await service.ResumeWorkItemsAsync();
 
         foreach (var item in items)
         {
@@ -153,7 +150,7 @@ namespace tomware.Microwf.Engine
       }
     }
 
-    public async Task DeleteWorkItem(WorkItem item)
+    private async Task DeleteWorkItem(WorkItem item)
     {
       _logger.LogTrace("Deleting work item", item);
 
