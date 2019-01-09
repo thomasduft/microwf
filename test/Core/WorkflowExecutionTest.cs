@@ -91,6 +91,31 @@ namespace microwf.Tests.Core
 
       Assert.IsNotNull(result);
       Assert.AreEqual("SwitchOn", result.TriggerName);
+      Assert.IsTrue(result.HasAutoTrigger);
+      Assert.AreEqual("SwitchOff", result.AutoTrigger);
+    }
+
+    [TestMethod]
+    public void Trigger_InitialStateIsOn_StateIsOff()
+    {
+      // Arrange
+      Switcher switcher = new Switcher
+      {
+        Type = OnOffWorkflow.TYPE,
+        State = "On"
+      };
+      WorkflowExecution execution = new WorkflowExecution(new OnOffWorkflow());
+
+      // Act
+      TriggerResult result = execution.Trigger(new TriggerParam("SwitchOff", switcher));
+
+      // Assert
+      Assert.IsNotNull(switcher);
+      Assert.AreEqual("Off", result.CurrentState);
+
+      Assert.IsNotNull(result);
+      Assert.AreEqual("SwitchOff", result.TriggerName);
+      Assert.IsFalse(result.HasAutoTrigger);
     }
   }
 }

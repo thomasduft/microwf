@@ -64,6 +64,8 @@ namespace tomware.Microwf.Core
 
       transition.AfterTransition?.Invoke(context);
 
+      result.setAutoTrigger(transition.AutoTrigger?.Invoke(context));
+
       return result;
     }
 

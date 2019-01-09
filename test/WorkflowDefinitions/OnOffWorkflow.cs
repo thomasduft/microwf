@@ -34,7 +34,8 @@ namespace microwf.Tests.WorkflowDefinitions
             TargetState ="On",
             CanMakeTransition = CanSwitch,
             BeforeTransition = BeforeTransition,
-            AfterTransition = AfterTransition
+            AfterTransition = AfterTransition,
+            AutoTrigger = SwitchOffAfter5Minutes
           },
         };
       }
@@ -67,6 +68,11 @@ namespace microwf.Tests.WorkflowDefinitions
       var switcher = context.GetInstance<Switcher>();
 
       Console.WriteLine("Current state is: '{0}'", switcher.State);
+    }
+
+    private string SwitchOffAfter5Minutes(TransitionContext context)
+    {
+      return "SwitchOff";
     }
   }
 

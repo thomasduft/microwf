@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,6 +44,16 @@ namespace tomware.Microwf.Core
       get { return _triggerContext.Instance.State; }
     }
 
+    public string AutoTrigger { get; private set; }
+
+    public bool HasAutoTrigger
+    {
+      get
+      {
+        return !string.IsNullOrEmpty(this.AutoTrigger);
+      }
+    }
+
     public TriggerResult(string triggerName, TransitionContext context, bool canTrigger)
     {
       TriggerName = triggerName;
@@ -57,6 +68,11 @@ namespace tomware.Microwf.Core
       if (_triggerContext == null) return null;
 
       return _triggerContext.GetVariable<T>(key);
+    }
+
+    internal void setAutoTrigger(string autoTrigger)
+    {
+      this.AutoTrigger = autoTrigger;
     }
   }
 }

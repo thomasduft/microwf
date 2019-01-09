@@ -29,6 +29,7 @@ namespace microwf.Tests.Core
       Assert.AreSame(result.TriggerName, trigger);
       Assert.IsFalse(result.HasErrors);
       Assert.AreSame(result.CurrentState, switcher.State);
+      Assert.IsFalse(result.HasAutoTrigger);
     }
 
     [TestMethod]
@@ -57,6 +58,7 @@ namespace microwf.Tests.Core
       Assert.AreSame(result.TriggerName, trigger);
       Assert.IsFalse(result.HasErrors);
       Assert.AreSame(result.CurrentState, switcher.State);
+      Assert.IsFalse(result.HasAutoTrigger);
 
       var v = result.GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY);
       Assert.IsNotNull(v);
