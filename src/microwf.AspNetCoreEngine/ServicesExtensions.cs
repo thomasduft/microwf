@@ -36,6 +36,9 @@ namespace tomware.Microwf.Engine
       services.AddTransient<IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
 
+      // Setting up messaging infrastructure
+      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
+
       // Policies
       services.AddAuthorization(options =>
       {
@@ -69,8 +72,6 @@ namespace tomware.Microwf.Engine
         services.AddSingleton<IHostedService, WorkflowProcessor>();
         services.AddSingleton<IJobQueueService, JobQueueService>();
 
-        // Setting up messaging infrastructure
-        services.AddSingleton<IMessageBus, InMemoryMessageBus>();
         services.AddSingleton<EnqueueWorkItemMessageHandler>();
       }
 
