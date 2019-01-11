@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
 
@@ -31,6 +32,12 @@ namespace tomware.Microwf.Engine
     /// </summary>
     /// <returns></returns>
     Task PersistWorkItemsAsync();
+
+    /// <summary>
+    /// Returns a snapshot of the current queued work items.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<WorkItem> GetSnapshot();
   }
 
   public class JobQueueService : IJobQueueService
@@ -129,6 +136,11 @@ namespace tomware.Microwf.Engine
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
         await service.PersistWorkItemsAsync(Items.ToArray());
       }
+    }
+
+    public IEnumerable<WorkItem> GetSnapshot()
+    {
+      return this.Items.ToArray();
     }
 
     private WorkItem Dequeue()

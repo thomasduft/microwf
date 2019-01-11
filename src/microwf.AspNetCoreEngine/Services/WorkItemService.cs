@@ -10,6 +10,12 @@ namespace tomware.Microwf.Engine
   public interface IWorkItemService
   {
     /// <summary>
+    /// Returns a list of upcomming work items.
+    /// </summary>
+    /// <returns></returns>
+    Task<IEnumerable<WorkItem>> GetUpCommingsAync();
+
+    /// <summary>
     /// Returns a list of persisted WorkItems.
     /// </summary>
     /// <returns></returns>
@@ -44,11 +50,17 @@ namespace tomware.Microwf.Engine
       _logger = logger;
     }
 
+    public async Task<IEnumerable<WorkItem>> GetUpCommingsAync()
+    {
+      return await _context.WorkItems
+       .Where(wi => wi.DueDate == null || wi.DueDate.Value > SystemTime.Now())
+       .ToListAsync<WorkItem>();
+    }
+
     public async Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync()
     {
       return await _context.WorkItems
-        .Where(wi => wi.Retries <= 3
-          && wi.DueDate == null || wi.DueDate.Value <= SystemTime.Now())
+        .Where(wi => wi.Retries <= 3 || wi.DueDate.Value <= SystemTime.Now())
         .ToListAsync<WorkItem>();
     }
 
