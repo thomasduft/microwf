@@ -23,7 +23,8 @@ namespace tomware.Microwf.Engine
 
     public string Error { get; set; }
 
-    public DateTime? DueDate { get; set; }
+    [Required]
+    public DateTime DueDate { get; set; }
 
     public override string ToString()
     {
@@ -43,7 +44,9 @@ namespace tomware.Microwf.Engine
         EntityId = entityId,
         WorkflowType = workflowType,
         Retries = 0,
-        DueDate = dueDate
+        DueDate = dueDate.HasValue
+          ? dueDate.Value
+          : SystemTime.Now()
       };
     }
   }

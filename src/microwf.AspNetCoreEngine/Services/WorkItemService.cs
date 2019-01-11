@@ -53,14 +53,15 @@ namespace tomware.Microwf.Engine
     public async Task<IEnumerable<WorkItem>> GetUpCommingsAync()
     {
       return await _context.WorkItems
-       .Where(wi => wi.DueDate == null || wi.DueDate.Value > SystemTime.Now())
+       .Where(wi => wi.DueDate > SystemTime.Now())
+       .OrderByDescending(wi => wi.DueDate)
        .ToListAsync<WorkItem>();
     }
 
     public async Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync()
     {
       return await _context.WorkItems
-        .Where(wi => wi.Retries <= 3 || wi.DueDate.Value <= SystemTime.Now())
+        .Where(wi => wi.Retries <= 3 && wi.DueDate <= SystemTime.Now())
         .ToListAsync<WorkItem>();
     }
 
