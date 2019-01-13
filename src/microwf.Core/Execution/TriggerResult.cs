@@ -70,7 +70,7 @@ namespace tomware.Microwf.Core
       return _triggerContext.GetVariable<T>(key);
     }
 
-    internal void setAutoTrigger(AutoTrigger autoTrigger)
+    internal void SetAutoTrigger(AutoTrigger autoTrigger)
     {
       this.AutoTrigger = autoTrigger;
     }
