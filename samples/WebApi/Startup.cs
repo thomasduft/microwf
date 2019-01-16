@@ -67,7 +67,10 @@ namespace WebApi
       // Identity
       var authority = this.Configuration["IdentityServer:Authority"];
       services
-        .AddIdentityServer(o => o.IssuerUri = authority)
+        .AddIdentityServer(o => {
+          o.IssuerUri = authority;
+          o.Authentication.CookieAuthenticationScheme = "dummy";
+        })
         .AddDeveloperSigningCredential()
         .AddInMemoryPersistedGrants()
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
@@ -83,6 +86,7 @@ namespace WebApi
           o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
           o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
         })
+        .AddCookie("dummy")
         .AddIdentityServerAuthentication(o =>
         {
           o.Authority = authority;
