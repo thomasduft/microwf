@@ -18,7 +18,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet()]
-    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
     public async Task<ActionResult<PaginatedList<WorkflowViewModel>>> GetWorkflows(
       [FromQuery] WorkflowSearchPagingParameters pagingParameters
@@ -33,7 +33,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("{id}")]
-    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
     public async Task<ActionResult<WorkflowViewModel>> Get(int id)
     {
@@ -43,7 +43,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("{id}/history")]
-    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
     public async Task<ActionResult<IEnumerable<WorkflowHistory>>> GetHistory(int id)
     {
@@ -53,7 +53,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("{id}/variables")]
-    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowVariable>), 200)]
     public async Task<ActionResult<IEnumerable<WorkflowVariable>>> GetVariables(int id)
     {

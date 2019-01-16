@@ -23,7 +23,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("snapshot")]
-    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkItem>), 200)]
     public ActionResult<IEnumerable<WorkItem>> GetSnapshot()
     {
@@ -33,7 +33,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("upcommings")]
-    [Authorize(Policy = Constants.MANAGE_WORKFLOWS_POLICY)]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkItem>), 200)]
     public async Task<ActionResult<IEnumerable<WorkItem>>> GetUpcommings()
     {
