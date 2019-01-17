@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using tomware.Microbus.Core;
 
 namespace tomware.Microwf.Engine
 {
@@ -11,10 +12,15 @@ namespace tomware.Microwf.Engine
   public class WorkflowController : Controller
   {
     private readonly IWorkflowService _service;
+    private readonly IMessageBus _messageBus;
 
-    public WorkflowController(IWorkflowService service)
+    public WorkflowController(
+      IWorkflowService service,
+      IMessageBus messageBus
+    )
     {
       _service = service;
+      _messageBus = messageBus;
     }
 
     [HttpGet()]
@@ -40,6 +46,28 @@ namespace tomware.Microwf.Engine
       var result = await _service.GetAsync(id);
 
       return Ok(result);
+    }
+
+    [HttpPost("trigger")]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    public async Task<ActionResult> Trigger([FromBody]WorkflowTriggerViewModel model)
+    {
+      if (model == null) return BadRequest();
+      if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
+
+      var workflow = await this._service.GetAsync(model.Id);
+      if (workflow == null) return NotFound();
+
+      await _messageBus.PublishAsync(WorkItemMessage.Create(
+         model.Trigger,
+         workflow.CorrelationId,
+         workflow.Type
+       ));
+
+      return NoContent();
     }
 
     [HttpGet("{id}/history")]

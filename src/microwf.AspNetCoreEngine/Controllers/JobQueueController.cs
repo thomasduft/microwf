@@ -53,12 +53,12 @@ namespace tomware.Microwf.Engine
 
     [HttpPost("reschedule")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
+    [ProducesResponseType(204)]
     [ProducesResponseType(400)]
-    [ProducesResponseType(200)]
     public async Task<ActionResult> Reschedule([FromBody]WorkItemViewModel model)
     {
-      if (model == null) BadRequest();
-      if (!this.ModelState.IsValid) BadRequest(this.ModelState);
+      if (model == null) return BadRequest();
+      if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
 
       await this._workItemService.Update(model);
 
