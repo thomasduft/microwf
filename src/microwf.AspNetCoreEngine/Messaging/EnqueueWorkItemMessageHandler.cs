@@ -27,14 +27,11 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace($"Handle WorkItemMessage", message);
 
-      WorkItem workItem = WorkItem.Create(
+      await _jobQueueService.Enqueue(WorkItem.Create(
         message.TriggerName,
         message.EntityId,
         message.WorkflowType
-      );
-      _jobQueueService.Enqueue(workItem);
-
-      await Task.CompletedTask;
+      ));
     }
   }
 }

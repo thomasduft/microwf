@@ -14,7 +14,7 @@ namespace tomware.Microwf.Engine
     /// Enqueues a work item.
     /// </summary>
     /// <param name="workItem"></param>
-    void Enqueue(WorkItem workItem);
+    Task Enqueue(WorkItem workItem);
 
     /// <summary>
     /// Processes work items.
@@ -68,7 +68,7 @@ namespace tomware.Microwf.Engine
       _serviceScopeFactory = serviceScopeFactory;
     }
 
-    public void Enqueue(WorkItem item)
+    public async Task Enqueue(WorkItem item)
     {
       _logger.LogTrace("Enqueue work item", item);
 
@@ -76,10 +76,13 @@ namespace tomware.Microwf.Engine
       {
         _logger.LogInformation($"Amount of retries for work item ${item.Id} exceeded");
         // TODO: Save the failed WorkItem! => mark as failed?!
-        return;
+      }
+      else
+      {
+        Items.Enqueue(item);
       }
 
-      Items.Enqueue(item);
+      await Task.CompletedTask;
     }
 
     public async Task ProcessItemsAsync()
@@ -102,7 +105,7 @@ namespace tomware.Microwf.Engine
           item.Error = $"{ex.Message} - {ex.StackTrace}";
           item.Retries++;
 
-          Enqueue(item);
+          await Enqueue(item);
         }
       }
 
@@ -121,7 +124,7 @@ namespace tomware.Microwf.Engine
 
         foreach (var item in items)
         {
-          Enqueue(item);
+          await Enqueue(item);
         }
       }
     }
@@ -197,7 +200,7 @@ namespace tomware.Microwf.Engine
         _logger.LogError("HandleTriggerResult", item.Error, triggerResult);
 
         item.Retries++;
-        Enqueue(item);
+        await Enqueue(item);
       }
       else
       {

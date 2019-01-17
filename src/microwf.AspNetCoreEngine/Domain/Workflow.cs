@@ -63,8 +63,7 @@ namespace tomware.Microwf.Engine
         return;
       }
 
-      var newVariable = WorkflowVariable.Create(this, variable);
-      this.WorkflowVariables.Add(newVariable);
+      this.WorkflowVariables.Add(WorkflowVariable.Create(this, variable));
     }
 
     internal void AddHistoryItem(string fromState, string toState, string userName)
