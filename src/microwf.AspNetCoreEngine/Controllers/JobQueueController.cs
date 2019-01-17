@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -37,9 +36,33 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkItem>), 200)]
     public async Task<ActionResult<IEnumerable<WorkItem>>> GetUpcommings()
     {
-      var result = await _workItemService.GetUpCommingsAync();
+      var result = await _workItemService.GetUpCommingsAsync();
 
       return Ok(result);
+    }
+
+    [HttpGet("failed")]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
+    [ProducesResponseType(typeof(IEnumerable<WorkItem>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkItem>>> GetFailed()
+    {
+      var result = await _workItemService.GetFailedAsync();
+
+      return Ok(result);
+    }
+
+    [HttpPost("reschedule")]
+    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(200)]
+    public async Task<ActionResult> Reschedule([FromBody]WorkItemViewModel model)
+    {
+      if (model == null) BadRequest();
+      if (!this.ModelState.IsValid) BadRequest(this.ModelState);
+
+      await this._workItemService.Update(model);
+
+      return NoContent();
     }
   }
 }

@@ -13,7 +13,13 @@ namespace tomware.Microwf.Engine
     /// Returns a list of upcomming work items.
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<WorkItem>> GetUpCommingsAync();
+    Task<IEnumerable<WorkItem>> GetUpCommingsAsync();
+
+    /// <summary>
+    /// Returns a list of failed work items.
+    /// </summary>
+    /// <returns></returns>
+    Task<IEnumerable<WorkItem>> GetFailedAsync();
 
     /// <summary>
     /// Returns a list of persisted WorkItems.
@@ -34,6 +40,12 @@ namespace tomware.Microwf.Engine
     /// <param name="id"></param>
     /// <returns></returns>
     Task<int> DeleteAsync(int id);
+
+    /// <summary>
+    /// Updates an existing WorkItem.
+    /// </summary>
+    /// <returns></returns>
+    Task<int> Update(WorkItemViewModel model);
   }
 
   public class WorkItemService<TContext> : IWorkItemService where TContext : EngineDbContext
@@ -50,18 +62,31 @@ namespace tomware.Microwf.Engine
       _logger = logger;
     }
 
-    public async Task<IEnumerable<WorkItem>> GetUpCommingsAync()
+    // TODO: paging?
+    public async Task<IEnumerable<WorkItem>> GetUpCommingsAsync()
     {
       return await _context.WorkItems
        .Where(wi => wi.DueDate > SystemTime.Now())
-       .OrderByDescending(wi => wi.DueDate)
+       .OrderBy(wi => wi.DueDate)
+       .AsNoTracking()
        .ToListAsync<WorkItem>();
+    }
+
+    // TODO: paging?
+    public async Task<IEnumerable<WorkItem>> GetFailedAsync()
+    {
+      return await _context.WorkItems
+        .Where(wi => wi.Retries > Constants.WORKITEM_RETRIES)
+        .OrderBy(wi => wi.DueDate)
+        .AsNoTracking()
+        .ToListAsync<WorkItem>();
     }
 
     public async Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync()
     {
       return await _context.WorkItems
-        .Where(wi => wi.Retries <= 3 && wi.DueDate <= SystemTime.Now())
+        .Where(wi => wi.Retries <= Constants.WORKITEM_RETRIES
+        && wi.DueDate <= SystemTime.Now())
         .ToListAsync<WorkItem>();
     }
 
@@ -83,6 +108,21 @@ namespace tomware.Microwf.Engine
       _context.WorkItems.AddRange(inserts);
 
       await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> Update(WorkItemViewModel model)
+    {
+      var item = await _context.WorkItems.FindAsync(model.Id);
+
+      item.Retries = Constants.WORKITEM_RETRIES; // so it reschedules only once!
+      if (model.DueDate.HasValue)
+      {
+        item.DueDate = model.DueDate.Value;
+      }
+
+      _context.WorkItems.Update(item);
+
+      return await _context.SaveChangesAsync();
     }
 
     public async Task<int> DeleteAsync(int id)

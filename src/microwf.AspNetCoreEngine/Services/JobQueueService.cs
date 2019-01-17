@@ -72,7 +72,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Enqueue work item", item);
 
-      if (item.Retries > 3)
+      if (item.Retries > Constants.WORKITEM_RETRIES)
       {
         _logger.LogInformation($"Amount of retries for work item ${item.Id} exceeded");
         // TODO: Save the failed WorkItem! => mark as failed?!
