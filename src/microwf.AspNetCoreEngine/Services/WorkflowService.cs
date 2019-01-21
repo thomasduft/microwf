@@ -104,8 +104,7 @@ namespace tomware.Microwf.Engine
       List<Workflow> instances = null;
       if (pagingParameters.HasValues)
       {
-        // TODO: to be improved!!!
-        // Specification Pattern
+        // Specification Pattern ?!
         // see: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implemenation-entity-framework-core#implementing-the-specification-pattern
         instances = await _context.Workflows
           .Where(this.GetWhereClause(pagingParameters))

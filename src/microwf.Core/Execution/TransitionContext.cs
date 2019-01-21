@@ -118,7 +118,7 @@ namespace tomware.Microwf.Core
 
     /// <summary>
     /// Stops the current transition to be done.
-    /// Note: this can only be called before the transition is done.
+    /// Note: Can only be called before the transition is done.
     /// </summary>
     public void AbortTransition(string reason)
     {
