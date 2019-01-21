@@ -13,13 +13,13 @@ namespace tomware.Microwf.Engine
     /// Returns a list of upcomming work items.
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<WorkItem>> GetUpCommingsAsync();
+    Task<PaginatedList<WorkItem>> GetUpCommingsAsync(PagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a list of failed work items.
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<WorkItem>> GetFailedAsync();
+    Task<PaginatedList<WorkItem>> GetFailedAsync(PagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a list of persisted WorkItems.
@@ -62,24 +62,46 @@ namespace tomware.Microwf.Engine
       _logger = logger;
     }
 
-    // TODO: paging?
-    public async Task<IEnumerable<WorkItem>> GetUpCommingsAsync()
+    public async Task<PaginatedList<WorkItem>> GetUpCommingsAsync(PagingParameters pagingParameters)
     {
-      return await _context.WorkItems
-       .Where(wi => wi.DueDate > SystemTime.Now())
-       .OrderBy(wi => wi.DueDate)
-       .AsNoTracking()
-       .ToListAsync<WorkItem>();
+      var count = _context.WorkItems
+        .Where(wi => wi.DueDate > SystemTime.Now())
+        .Count();
+
+      var items = await _context.WorkItems
+        .Where(wi => wi.DueDate > SystemTime.Now())
+        .OrderBy(wi => wi.DueDate)
+        .Skip(pagingParameters.SkipCount)
+        .Take(pagingParameters.PageSize)
+        .AsNoTracking()
+        .ToListAsync<WorkItem>();
+
+      return new PaginatedList<WorkItem>(
+        items,
+        count,
+        pagingParameters.PageIndex,
+        pagingParameters.PageSize
+      );
     }
 
-    // TODO: paging?
-    public async Task<IEnumerable<WorkItem>> GetFailedAsync()
+    public async Task<PaginatedList<WorkItem>> GetFailedAsync(PagingParameters pagingParameters)
     {
-      return await _context.WorkItems
+      var count = _context.WorkItems
+        .Where(wi => wi.Retries > Constants.WORKITEM_RETRIES)
+        .Count();
+
+      var items = await _context.WorkItems
         .Where(wi => wi.Retries > Constants.WORKITEM_RETRIES)
         .OrderBy(wi => wi.DueDate)
         .AsNoTracking()
         .ToListAsync<WorkItem>();
+
+      return new PaginatedList<WorkItem>(
+        items,
+        count,
+        pagingParameters.PageIndex,
+        pagingParameters.PageSize
+      );
     }
 
     public async Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync()
