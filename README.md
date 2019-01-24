@@ -70,7 +70,7 @@ public class HolidayApprovalWorkflow : WorkflowDefinitionBase
 Assuming you downloaded the sources and opened the directory with [VS Code](https://code.visualstudio.com/) you should be good to go! Ahh and of course you need [dot.net core](https://dotnet.microsoft.com/download) and [node.js](https://nodejs.org/en/) installed on your development environment.
 
 #### Running the WebApi backend
-1. Within the directory open the terminal and type
+1. Open the integrated terminal in VS Code and type
 > dotnet build
 
 That ensures you are able to build the dotnet related stuff!
