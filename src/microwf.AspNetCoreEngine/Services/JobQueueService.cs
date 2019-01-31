@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -74,15 +75,19 @@ namespace tomware.Microwf.Engine
 
       if (item.Retries > Constants.WORKITEM_RETRIES)
       {
-        _logger.LogInformation($"Amount of retries for work item ${item.Id} exceeded");
-        // TODO: Save the failed WorkItem! => mark as failed?!
+        _logger.LogInformation(
+          "Amount of retries for work item {WorkItem} exceeded!",
+          LogHelper.SerializeObject(item)
+        );
+
+        await this.PersistWorkItemsAsync(new List<WorkItem> { item });
       }
       else
       {
         Items.Enqueue(item);
-      }
 
-      await Task.CompletedTask;
+        await Task.CompletedTask;
+      }
     }
 
     public async Task ProcessItemsAsync()
@@ -133,12 +138,7 @@ namespace tomware.Microwf.Engine
     {
       _logger.LogTrace("Persisting work items");
 
-      using (var scope = _serviceScopeFactory.CreateScope())
-      {
-        IServiceProvider serviceProvider = scope.ServiceProvider;
-        var service = serviceProvider.GetRequiredService<IWorkItemService>();
-        await service.PersistWorkItemsAsync(Items.ToArray());
-      }
+      await this.PersistWorkItemsAsync(Items.ToArray());
     }
 
     public IEnumerable<WorkItem> GetSnapshot()
@@ -156,6 +156,18 @@ namespace tomware.Microwf.Engine
       }
 
       return null;
+    }
+
+    private async Task PersistWorkItemsAsync(IEnumerable<WorkItem> items)
+    {
+      _logger.LogTrace("Persisting work items");
+
+      using (var scope = _serviceScopeFactory.CreateScope())
+      {
+        IServiceProvider serviceProvider = scope.ServiceProvider;
+        var service = serviceProvider.GetRequiredService<IWorkItemService>();
+        await service.PersistWorkItemsAsync(items);
+      }
     }
 
     private async Task DeleteWorkItem(WorkItem item)
@@ -197,7 +209,10 @@ namespace tomware.Microwf.Engine
       if (triggerResult.HasErrors || triggerResult.IsAborted)
       {
         item.Error = string.Join(" - ", triggerResult.Errors);
-        _logger.LogError("HandleTriggerResult", item.Error, triggerResult);
+        _logger.LogError(
+          "Bad TriggerResult: {TriggerResult}",
+          LogHelper.SerializeObject(triggerResult)
+        );
 
         item.Retries++;
         await Enqueue(item);

@@ -103,6 +103,7 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO5_TRIGGER,
             TargetState = STEP5_STATE,
             CanMakeTransition = IsAssignedToSystem,
+            BeforeTransition = FailForFinish,
             AfterTransition = AssignToCreator
           },
           new Transition
@@ -143,7 +144,7 @@ namespace WebApi.Workflows.Stepper
       return new AutoTrigger
       {
         Trigger = GOTO3_TRIGGER,
-        DueDate = SystemTime.Now().AddMinutes(5)
+        DueDate = SystemTime.Now().AddMinutes(2)
       };
     }
 
@@ -171,6 +172,11 @@ namespace WebApi.Workflows.Stepper
         stepper.Id,
         stepper.Type
         ));
+    }
+
+    private void FailForFinish(TransitionContext context)
+    {
+      throw new NotImplementedException();
     }
 
     private bool IsCreator(TransitionContext context)

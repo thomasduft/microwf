@@ -90,13 +90,9 @@ namespace tomware.Microwf.Engine
     {
       if (param == null) throw new ArgumentNullException(nameof(param));
 
-      _logger.LogTrace("TriggerAsync {Instance}", JsonConvert.SerializeObject(
-         param.Instance,
-         new JsonSerializerSettings
-         {
-           Formatting = Formatting.Indented,
-           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-         })
+      _logger.LogTrace(
+        "Trigger instance: {Instance}",
+        LogHelper.SerializeObject(param.Instance)
        );
 
       var entity = param.Instance as IEntityWorkflow;
@@ -143,14 +139,9 @@ namespace tomware.Microwf.Engine
           transaction.Rollback();
 
           _logger.LogError(
-            "TriggerAsync",
-            ex,
-            "TriggerAsync failed: {Param}",
-            JsonConvert.SerializeObject(param, new JsonSerializerSettings
-            {
-              Formatting = Formatting.Indented,
-              ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            })
+            "Trigger with TriggerParameter: {TriggerParameter} failed! {Exception}",
+            LogHelper.SerializeObject(param),
+            ex
           );
 
           var transitionContext = new TransitionContext(param.Instance);
