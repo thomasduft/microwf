@@ -5,7 +5,7 @@ namespace tomware.Microwf.Engine
 {
   public class PagingParameters
   {
-    public int PageIndex { get; set; } = 1;
+    public int PageIndex { get; set; } = 0;
 
     public int PageSize { get; set; } = 20;
 
