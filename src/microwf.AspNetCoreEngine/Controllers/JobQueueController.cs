@@ -71,7 +71,7 @@ namespace tomware.Microwf.Engine
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
 
-      await this._workItemService.Update(model);
+      await this._workItemService.Reschedule(model);
 
       return NoContent();
     }

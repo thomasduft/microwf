@@ -42,10 +42,10 @@ namespace tomware.Microwf.Engine
     Task<int> DeleteAsync(int id);
 
     /// <summary>
-    /// Updates an existing WorkItem.
+    /// Reschedules an existing WorkItem.
     /// </summary>
     /// <returns></returns>
-    Task<int> Update(WorkItemViewModel model);
+    Task<int> Reschedule(WorkItemViewModel model);
   }
 
   public class WorkItemService<TContext> : IWorkItemService where TContext : EngineDbContext
@@ -132,7 +132,7 @@ namespace tomware.Microwf.Engine
       await _context.SaveChangesAsync();
     }
 
-    public async Task<int> Update(WorkItemViewModel model)
+    public async Task<int> Reschedule(WorkItemViewModel model)
     {
       var item = await _context.WorkItems.FindAsync(model.Id);
 
