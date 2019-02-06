@@ -9,14 +9,14 @@ import { AuthService } from '../../shared/services/auth.service';
   selector: 'tw-sidebar',
   template: `
   <div class="sidebar__header">
-    <div (click)="toggle()">{{ userName }}</div>
+    <div (click)="toggle()">MicroWF</div>
   </div>
   <div class="sidebar__content">
     <ul>
       <li routerLinkActive="active" class="menu__item">
         <a routerLink="/home">
           <tw-icon name="home"></tw-icon>
-          Home
+          {{ userName }}
         </a>
       </li>
       <tw-menu></tw-menu>
@@ -34,7 +34,11 @@ import { AuthService } from '../../shared/services/auth.service';
           </ul>
         </span>
       </li>
-      <li routerLinkActive="active" class="menu__item">
+    </ul>
+  </div>
+  <div class="sidebar__footer">
+    <ul>
+      <li routerLinkActive="active">
         <a href="javascript:void(0)" (click)="logout()">
           <tw-icon name="sign-out"></tw-icon>
           Log out
@@ -42,7 +46,6 @@ import { AuthService } from '../../shared/services/auth.service';
       </li>
     </ul>
   </div>
-  <div class="sidebar__footer"></div>
   `
 })
 export class SidebarComponent {

@@ -32,13 +32,17 @@ import { PagingModel } from '../shared/services/models';
             Filter
           </button>
         </div>
-        <tw-workflow-search *ngIf="showFilter"
+        <tw-workflow-search
+          *ngIf="showFilter"
+          [viewModel]="searchModel"
           (searchClicked)="searchClicked($event)"
           (resettedClicked)="resettedClicked()">
         </tw-workflow-search>
       </tw-header>
       <ng-template let-workflow twTemplate="workflow-item">
-        <tw-workflow-list-item [workflow]="workflow"></tw-workflow-list-item>
+        <tw-workflow-list-item
+          [workflow]="workflow">
+        </tw-workflow-list-item>
       </ng-template>
     </tw-list>
   </div>
@@ -49,8 +53,8 @@ import { PagingModel } from '../shared/services/models';
 export class AdminDashboardComponent implements OnInit {
   private workflows$: Subscription;
   private page: PagingModel = PagingModel.create();
-  private searchModel: WorkflowSearchModel;
 
+  public searchModel: WorkflowSearchModel;
   public hasFilter = false;
   public showFilter = false;
   public workflows: Array<Workflow> = [];
@@ -76,6 +80,7 @@ export class AdminDashboardComponent implements OnInit {
 
   public reload(): void {
     this.list.rows = [];
+    this.page = PagingModel.create();
 
     this.ngOnInit();
   }
@@ -101,12 +106,12 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   public resettedClicked(): void {
-    this.hasFilter = false;
     this.searchClicked({
       type: null,
       correlationId: null,
       assignee: null
     });
+    this.hasFilter = false;
   }
 
   private loadPage(workflowPagingModel: WorkflowPagingModel): void {

@@ -3,7 +3,8 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  HostBinding
+  HostBinding,
+  Input
 } from '@angular/core';
 
 import { WorkflowSearchModel } from '../workflow/models';
@@ -13,7 +14,6 @@ import { WorkflowSearchSlot } from './models';
   selector: 'tw-workflow-search',
   template: `
   <tw-formdef
-    #formDef
     [showSave]="true"
     [showCancel]="true"
     [saveTitle]="'Apply'"
@@ -32,10 +32,9 @@ export class WorkflowSearchComponent implements OnInit {
   };
 
   public key = WorkflowSearchSlot.KEY;
-  public viewModel: WorkflowSearchModel;
 
-  @HostBinding('class')
-  public class = 'workflow__search';
+  @Input()
+  public viewModel: WorkflowSearchModel;
 
   @Output()
   public searchClicked: EventEmitter<WorkflowSearchModel>
@@ -45,8 +44,13 @@ export class WorkflowSearchComponent implements OnInit {
   public resettedClicked: EventEmitter<any>
     = new EventEmitter<any>();
 
+  @HostBinding('class')
+  public class = 'workflow__search';
+
   public ngOnInit(): void {
-    this.viewModel = this.empty;
+    if (this.viewModel === undefined) {
+      this.viewModel = this.empty;
+    }
   }
 
   public search(vm: WorkflowSearchModel): void {

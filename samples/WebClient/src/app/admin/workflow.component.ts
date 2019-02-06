@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
@@ -76,9 +76,6 @@ export class WorkflowComponent implements OnInit {
   public dot: DotInfo;
   public history: WorkflowHistory[];
   public variables: WorkflowVariable[];
-
-  @HostBinding('class')
-  public class = 'grid';
 
   public constructor(
     private _route: ActivatedRoute,
