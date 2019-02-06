@@ -222,7 +222,8 @@ namespace tomware.Microwf.Engine
       }
       if (pagingParameters.HasCorrelationId)
       {
-        predicate = predicate.And(w => w.CorrelationId == pagingParameters.CorrelationId);
+        predicate = predicate
+          .And(w => w.CorrelationId == pagingParameters.CorrelationId);
       }
       if (pagingParameters.HasAssignee)
       {
