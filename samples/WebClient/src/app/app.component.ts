@@ -5,7 +5,6 @@ import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'tw-root',
-  styleUrls: ['./app.component.css'],
   template: `
   <router-outlet></router-outlet>
   `

@@ -8,8 +8,12 @@ import { AuthService } from '../../shared/services/auth.service';
 @Component({
   selector: 'tw-sidebar',
   template: `
-  <div class="sidebar__header">
-    <div (click)="toggle()">MicroWF</div>
+  <div class="sidebar__header" (click)="toggle()">
+    <div>MicroWF</div>
+    <button type="button" >
+      <tw-icon *ngIf="collapsed" name="arrow-right"></tw-icon>
+      <tw-icon *ngIf="!collapsed" name="arrow-left"></tw-icon>
+    </button>
   </div>
   <div class="sidebar__content">
     <ul>
