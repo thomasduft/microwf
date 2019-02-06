@@ -24,4 +24,4 @@
 - templates
 - pages 
 
-> (Atomic Design Pattern)
+> Atomic Design Pattern
