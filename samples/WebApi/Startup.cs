@@ -43,7 +43,7 @@ namespace WebApi
         o.AddPolicy("AllowAllOrigins", builder =>
         {
           builder
-            .AllowAnyOrigin()
+            .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
