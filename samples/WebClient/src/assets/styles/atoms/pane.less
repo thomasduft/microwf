@@ -20,19 +20,15 @@
     margin-top: 2rem;
     padding: 0px 5px;
   }
-}
 
-@media (min-width: @breakpoint-min-width) {
-  .pane {
+  @media (min-width: @breakpoint-min-width) {
     flex-direction: row;
-
     &__left {
       max-width: 300px;
       overflow-y: auto;
       height: 100vh;
     }
-
-    &__main {
+     &__main {
       flex: 1;
       overflow-y: auto;
       margin-top: 0;
