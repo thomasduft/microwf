@@ -5,14 +5,10 @@
 .grid {
   display: flex;
   flex-direction: column;
-  
   @media (min-width: @breakpoint-min-width) {
-    flex-direction: column;
+    flex-direction: row;
     .grid__cell {
       overflow-y: auto;
-    }
-    .grid__cell--list {
-      max-width: 300px;
     }
     .lg-grid--fit > .grid__cell {
       flex: 1;
@@ -34,10 +30,6 @@
 
 .grid__cell {
   flex: 1;
-}
-
-.grid__cell--list {
-  max-width: 100%;
 }
 
 /* With gutters */

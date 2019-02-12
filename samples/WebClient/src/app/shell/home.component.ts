@@ -10,10 +10,10 @@ import {
 @Component({
   selector: 'tw-home',
   template: `
-  <h1 i18n>Workflows</h1>
-  <div class="row">
-    <div class="col table-responsive-md">
-      <table class="table table-hover" *ngIf="areas.length > 0">
+  <div class="pane__main">
+    <h1 i18n>Workflows</h1>
+    <div>
+      <table *ngIf="areas.length > 0">
         <thead>
           <tr>
             <th scope="col" i18n>Title</th>
@@ -34,10 +34,10 @@ import {
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="row" *ngIf="dot">
-    <div class="col">
-      <tw-dot [dot]="dot"></tw-dot>
+    <div *ngIf="dot">
+      <div class="col">
+        <tw-dot [dot]="dot"></tw-dot>
+      </div>
     </div>
   </div>
   `
