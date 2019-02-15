@@ -26,8 +26,8 @@ namespace tomware.Microwf.Engine
         config.Types = workflowConfiguration.Types;
       });
 
+      services.AddScoped<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IUserContextService, UserContextService>();
-      services.AddSingleton<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
       services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
