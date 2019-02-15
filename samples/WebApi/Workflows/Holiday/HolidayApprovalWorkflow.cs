@@ -43,6 +43,7 @@ namespace WebApi.Workflows.Holiday
             Trigger = APPROVE_TRIGGER,
             TargetState = APPROVED_STATE,
             CanMakeTransition = BossIsApproving,
+            BeforeTransition = AddAprovalMessage,
             AfterTransition = ThankBossForApproving
           },
           new Transition {
@@ -90,6 +91,13 @@ namespace WebApi.Workflows.Holiday
 
       this._logger.LogInformation($"Holiday entity in BossIsApproving: {holiday.Superior}");
 
+      return holiday.Superior == this._userContextService.UserName;
+    }
+
+    private void AddAprovalMessage(TransitionContext context)
+    {
+      var holiday = context.GetInstance<Holiday>();
+
       if (context.HasVariable<ApproveHolidayViewModel>())
       {
         var model = context.ReturnVariable<ApproveHolidayViewModel>();
@@ -97,11 +105,7 @@ namespace WebApi.Workflows.Holiday
         {
           holiday.AddMessage(this._userContextService.UserName, model.Message);
         }
-
-        return holiday.Superior == this._userContextService.UserName;
       }
-
-      return false;
     }
 
     private void ThankBossForApproving(TransitionContext context)
