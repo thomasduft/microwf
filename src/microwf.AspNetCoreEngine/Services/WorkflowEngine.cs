@@ -95,16 +95,46 @@ namespace tomware.Microwf.Engine
         LogHelper.SerializeObject(param.Instance)
        );
 
-      var entity = param.Instance as IEntityWorkflow;
-      if (entity == null)
-      {
-        // going the non EF way!
-        var execution = GetExecution(param.Instance.Type);
+      var result = param.Instance is IEntityWorkflow
+        ? await this.TriggerForPersistingInstance(param)
+        : this.TriggerForNonPersistingInstance(param);
 
-        return execution.Trigger(param);
+      if (result.IsAborted)
+      {
+        _logger.LogInformation(
+          "Trigger instance: {Instance} aborted! Aborting reasons: {Reasons}",
+          LogHelper.SerializeObject(param.Instance),
+          LogHelper.SerializeObject(result.Errors)
+        );
       }
 
-      TriggerResult result = null;
+      return result;
+    }
+
+    public IWorkflow Find(int id, Type type)
+    {
+      return (IWorkflow)_context.Find(type, id);
+    }
+
+    private WorkflowExecution GetExecution(string type)
+    {
+      var definition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
+
+      return new WorkflowExecution(definition);
+    }
+
+    private TriggerResult TriggerForNonPersistingInstance(TriggerParam param)
+    {
+      var execution = GetExecution(param.Instance.Type);
+
+      return execution.Trigger(param);
+    }
+
+    private async Task<TriggerResult> TriggerForPersistingInstance(TriggerParam param)
+    {
+      TriggerResult result;
+
+      var entity = param.Instance as IEntityWorkflow;
       using (var transaction = _context.Database.BeginTransaction())
       {
         try
@@ -158,21 +188,10 @@ namespace tomware.Microwf.Engine
       return result;
     }
 
-    public IWorkflow Find(int id, Type type)
-    {
-      return (IWorkflow)_context.Find(type, id);
-    }
-
-    private WorkflowExecution GetExecution(string type)
-    {
-      var definition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
-
-      return new WorkflowExecution(definition);
-    }
-
     private Workflow FindOrCreate(int id, string type, string state, string assignee)
     {
-      var workflow = _context.Workflows.Include(v => v.WorkflowVariables)
+      var workflow = _context.Workflows
+        .Include(v => v.WorkflowVariables)
         .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
       if (workflow == null)
       {
@@ -185,24 +204,24 @@ namespace tomware.Microwf.Engine
 
     private void EnsureWorkflowVariables(Workflow workflow, TriggerParam param)
     {
-      if (workflow.WorkflowVariables.Count > 0)
+      if (workflow.WorkflowVariables.Count == 0) return;
+
+      foreach (var workflowVariable in workflow.WorkflowVariables)
       {
-        foreach (var workflowVariable in workflow.WorkflowVariables)
+        var variable = JsonConvert.DeserializeObject(
+          workflowVariable.Content,
+          KeyBuilder.FromKey(workflowVariable.Type)
+        );
+        if (variable is WorkflowVariableBase)
         {
-          var type = KeyBuilder.FromKey(workflowVariable.Type);
-          var variable = JsonConvert.DeserializeObject(workflowVariable.Content, type);
-          var workflowVariableBase = variable as WorkflowVariableBase;
-          if (workflowVariableBase != null)
+          var key = workflowVariable.Type;
+          if (param.Variables.ContainsKey(key))
           {
-            var key = KeyBuilder.ToKey(type);
-            if (param.Variables.ContainsKey(key))
-            {
-              param.Variables[key] = variable as WorkflowVariableBase;
-            }
-            else
-            {
-              param.Variables.Add(key, variable as WorkflowVariableBase);
-            }
+            param.Variables[key] = variable as WorkflowVariableBase;
+          }
+          else
+          {
+            param.Variables.Add(key, variable as WorkflowVariableBase);
           }
         }
       }
@@ -213,7 +232,7 @@ namespace tomware.Microwf.Engine
       if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
       // persisting workflow variables
-      if (triggerParam.Variables != null && triggerParam.HasVariables)
+      if (triggerParam.HasVariables)
       {
         foreach (var v in triggerParam.Variables)
         {
