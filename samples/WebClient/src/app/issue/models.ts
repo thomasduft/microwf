@@ -4,8 +4,11 @@ import {
   Editor,
   HIDDEN_EDITOR,
   TEXT_EDITOR,
-  TEXT_AREA_EDITOR
+  TEXT_AREA_EDITOR,
+  MULTI_SELECT_EDITOR
 } from '../shared/formdef/index';
+
+import { VALUE_BINDING_BEHAVIOR } from '../shared/formdef/multi-select';
 
 export interface Issue {
   id: number;
@@ -31,7 +34,11 @@ export class IssueDetailSlot implements Slot {
   public title = '';
   public editors: Editor[];
 
-  public constructor() {
+  public constructor(assigness: Array<string>) {
+    const options = assigness.map((a: string) => {
+      return { key: a, value: a };
+    });
+
     this.editors = [
       {
         key: 'id',
@@ -54,6 +61,15 @@ export class IssueDetailSlot implements Slot {
         required: false,
         maxLength: 500
       }
+      // {
+      //   key: 'assignee',
+      //   type: MULTI_SELECT_EDITOR,
+      //   label: 'Assignee',
+      //   required: false,
+      //   options: options,
+      //   singleSelection: true,
+      //   bindingBehaviour: VALUE_BINDING_BEHAVIOR
+      // }
     ];
   }
 }

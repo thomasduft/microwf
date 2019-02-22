@@ -13,6 +13,10 @@ export class IssueService {
     private _http: HttpWrapperService
   ) { }
 
+  public assignees(): Observable<Array<string>> {
+    return this._http.get<Array<string>>('issue/assignees');
+  }
+
   public myWork(): Observable<Array<Issue>> {
     return this._http.get<Array<Issue>>('issue/mywork');
   }

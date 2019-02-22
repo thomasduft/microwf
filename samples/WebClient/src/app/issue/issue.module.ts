@@ -42,10 +42,5 @@ const ROUTES: Routes = [
   ]
 })
 export class IssueModule {
-  public constructor(
-    private _slotRegistry: FormdefRegistry
-  ) {
-    this._slotRegistry.register(new IssueDetailSlot());
-  }
 }
 

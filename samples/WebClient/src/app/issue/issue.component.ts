@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
 import { AuthService } from '../shared/services/auth.service';
-import { FormdefComponent } from '../shared/formdef/index';
+import { FormdefComponent, FormdefRegistry } from '../shared/formdef/index';
 import { WorkflowResult, TriggerInfo, AssigneeWorkflowResult } from '../workflow/index';
 
 import { IssueService } from './issue.service';
@@ -39,6 +39,7 @@ import { IssueDetailSlot, Issue, IssueViewmodel } from './models';
 export class IssueComponent implements OnInit {
   private _routeParams$: Subscription;
   private _issue$: Subscription;
+  private _assignees$: Subscription;
 
   public key = IssueDetailSlot.KEY;
   public viewModel: any;
@@ -55,7 +56,8 @@ export class IssueComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _auth: AuthService,
-    private _service: IssueService
+    private _service: IssueService,
+    private _slotRegistry: FormdefRegistry
   ) { }
 
   public ngOnInit(): void {
@@ -71,13 +73,13 @@ export class IssueComponent implements OnInit {
     this._issue$ = this._service.save(viewModel)
       .subscribe((id: number) => {
         if (id > 0) {
-          this._router.navigate(['issue']);
+          this.back();
         }
       });
   }
 
   public cancel(): void {
-    this._router.navigate(['issue']);
+    this.back();
   }
 
   public triggerClicked(trigger: string): void {
@@ -102,12 +104,21 @@ export class IssueComponent implements OnInit {
       });
   }
 
+  private back() {
+    this._router.navigate(['issue']);
+  }
+
   private init(id?: string): void {
-    if (id !== 'new') {
-      this.load(id.toString());
-    } else {
-      this.create();
-    }
+    this._assignees$ = this._service.assignees()
+      .subscribe((assignees: Array<string>) => {
+        this._slotRegistry.register(new IssueDetailSlot(assignees));
+
+        if (id !== 'new') {
+          this.load(id.toString());
+        } else {
+          this.create();
+        }
+      });
   }
 
   private load(id: string): void {

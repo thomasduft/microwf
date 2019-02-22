@@ -37,16 +37,16 @@ export class FormdefService {
   private toGroupRecursive(slot: Slot, viewModel: any): FormGroup | FormArray {
     const fg = this._fb.group({});
 
-    if (slot.type === SINGLE_SLOT) {
+    const isArray = Array.isArray(viewModel);
+
+    if (!isArray) {
       slot.editors.forEach((e: Editor) => {
         fg.addControl(e.key, new FormControl(
           viewModel[e.key],
           FormdefValidator.getValidators(e)
         ));
       });
-    }
-
-    if (slot.type === ARRAY_SLOT && Array.isArray(viewModel)) {
+    } else {
       const fa = this._fb.array([]);
 
       for (let i = 0; i < viewModel.length; i++) {

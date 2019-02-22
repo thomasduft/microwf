@@ -54,6 +54,13 @@ import { Editor } from './models';
      </option>
    </select>
 
+   <tw-multi-select *ngSwitchCase="'multi-select'"
+                    [formControlName]="editor.key"
+                    [singleSelection]="editor.singleSelection"
+                    [bindingBehavior]="editor.bindingBehaviour"
+                    [data]="editor.options">
+   </tw-multi-select>
+
    <input *ngSwitchCase="'date'"
           type="date"
           [attr.id]="editor.key"
@@ -75,10 +82,10 @@ import { Editor } from './models';
         {{ editor.label }} required.
       </div>
       <div *ngIf="control(editor.key).hasError('min')" i18n>
-        {{ editor.label }} must not be lower than {{ editor.valueMin }}.
+        {{ editor.label }} must not be lower than {{ editor.min }}.
       </div>
       <div *ngIf="control(editor.key).hasError('max')" i18n>
-        {{ editor.label }} must not be greater than {{ editor.valueMax }}.
+        {{ editor.label }} must not be greater than {{ editor.max }}.
       </div>
       <div *ngIf="control(editor.key).hasError('minlength')" i18n>
         {{ editor.label }} must be at least {{ editor.minLength }} characters in length.

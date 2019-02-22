@@ -12,6 +12,8 @@ namespace WebApi.Workflows.Issue
 {
   public interface IIssueService
   {
+    Task<IEnumerable<string>> GetAssigneesAsync();
+
     Task<IWorkflowResult<IssueViewModel>> NewAsync();
 
     Task<int> CreateAsync(IssueViewModel model);
@@ -40,6 +42,15 @@ namespace WebApi.Workflows.Issue
       this._userContext = userContext;
     }
 
+    public Task<IEnumerable<string>> GetAssigneesAsync()
+    {
+      var assignees = WebApi.Identity.Config.GetUsers()
+        .Where(u => u.Username != "bob")
+        .Select(u => u.Username);
+
+      return Task.FromResult(assignees);
+    }
+
     public async Task<IWorkflowResult<IssueViewModel>> NewAsync()
     {
       var issue = Issue.Create(_userContext.UserName);
@@ -49,6 +60,7 @@ namespace WebApi.Workflows.Issue
 
       var info = await this._workflowEngine.ToWorkflowTriggerInfo(issue, triggerResult);
       var viewModel = new IssueViewModel();
+      viewModel.Assignee = _userContext.UserName;
 
       var result = new WorkflowResult<Issue, IssueViewModel>(info, issue, viewModel);
 
@@ -62,6 +74,7 @@ namespace WebApi.Workflows.Issue
       var issue = Issue.Create(_userContext.UserName);
       issue.Title = model.Title;
       issue.Description = model.Description;
+      if (!string.IsNullOrWhiteSpace(model.Assignee)) issue.Assignee = model.Assignee;
 
       this._context.Issues.Add(issue);
 

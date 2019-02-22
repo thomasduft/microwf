@@ -6,7 +6,7 @@ import {
   FormGroup
 } from '@angular/forms';
 
-import { Slot } from './models';
+import { Slot, BaseSlotComponent } from './models';
 
 @Component({
   selector: 'tw-slot',
@@ -24,25 +24,13 @@ import { Slot } from './models';
   </ng-container>
   <ng-container *ngIf="slot.children && slot.children.length > 0">
     <ng-container *ngFor="let child of slot.children">
-      <tw-slot *ngIf="child.type === 'single'"
-               [slot]="child"
-               [parentForm]="parentForm.get(child.key)">
-      </tw-slot>
-      <tw-arrayslot *ngIf="child.type === 'array'"
-                    [slot]="child"
-                    [parentForm]="parentForm">
-      </tw-arrayslot>
+      <tw-slothost [slot]="child" [parentForm]="parentForm">
+      </tw-slothost>
     </ng-container>
   </ng-container>`
 })
-export class SlotComponent {
+export class SlotComponent extends BaseSlotComponent {
   private collapsed = false;
-
-  @Input()
-  public slot: Slot;
-
-  @Input()
-  public parentForm: FormGroup;
 
   public toggle(): void {
     this.collapsed = !this.collapsed;

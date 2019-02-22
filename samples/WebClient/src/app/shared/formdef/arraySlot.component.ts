@@ -22,14 +22,6 @@ import { SlotComponent } from './slot.component';
       </div>
       <div>
         <table [formGroup]="parentForm">
-          <thead>
-            <tr>
-              <td *ngFor="let editor of headers">
-                {{ editor.label }}
-              </td>
-              <td>&nbsp;</td>
-            </tr>
-          </thead>
           <tbody>
             <tr *ngFor="let row of rows.controls; let idx = index">
               <td *ngFor="let editor of slot.editors">
@@ -56,10 +48,6 @@ export class ArraySlotComponent extends SlotComponent {
     return this.parentForm.get(this.slot.key) as FormArray;
   }
 
-  public get headers(): Array<Editor> {
-    return this.slot.editors;
-  }
-
   public constructor(
     private _fb: FormBuilder
   ) {
@@ -75,7 +63,7 @@ export class ArraySlotComponent extends SlotComponent {
     this.rows.removeAt(idx);
   }
 
-  private createRow(arraySlot: Slot): FormGroup {
+  protected createRow(arraySlot: Slot): FormGroup {
     const row = this._fb.group({});
 
     arraySlot.editors.forEach((e: Editor) => {

@@ -17,6 +17,15 @@ namespace WebApi.Workflows.Issue
       this._service = service;
     }
 
+    [HttpGet("assignees")]
+    [ProducesResponseType(typeof(IEnumerable<string>), 200)]
+    public async Task<IActionResult> GetAssignees()
+    {
+      var result = await this._service.GetAssigneesAsync();
+
+      return Ok(result);
+    }
+
     [HttpPost("new")]
     [ProducesResponseType(typeof(IWorkflowResult<IssueViewModel>), 200)]
     public async Task<IActionResult> New()

@@ -1,7 +1,11 @@
+import { Input } from '@angular/core';
 import {
   ValidatorFn,
-  Validators
+  Validators,
+  FormGroup
 } from '@angular/forms';
+
+import { KEY_BINDING_BEHAVIOR } from './multi-select';
 
 export const HIDDEN_EDITOR = 'hidden';
 export const TEXT_EDITOR = 'text';
@@ -14,6 +18,7 @@ export const NUMBER_EDITOR = 'number';
 export const RANGE_EDITOR = 'range';
 export const TIME_EDITOR = 'time';
 export const SELECT_EDITOR = 'select';
+export const MULTI_SELECT_EDITOR = 'multi-select';
 
 export interface Editor {
   key: string;
@@ -21,6 +26,8 @@ export interface Editor {
   label: string;
   value?: any;
   options?: Array<{ key: string | number, value: string }>;
+  singleSelection?: boolean;
+  bindingBehaviour?: 'key' | 'value';
   required?: boolean;
   min?: number;
   max?: number;
@@ -61,4 +68,12 @@ export class FormdefValidator {
 
     return Validators.compose(validators);
   }
+}
+
+export class BaseSlotComponent {
+  @Input()
+  public slot: Slot;
+
+  @Input()
+  public parentForm: FormGroup;
 }
