@@ -176,7 +176,7 @@ namespace WebApi.Workflows.Stepper
 
     private void FailForFinish(TransitionContext context)
     {
-      throw new NotImplementedException();
+      // throw new NotImplementedException();
     }
 
     private bool IsCreator(TransitionContext context)
