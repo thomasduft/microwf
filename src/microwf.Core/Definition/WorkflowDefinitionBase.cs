@@ -8,8 +8,14 @@ namespace tomware.Microwf.Core
     private List<string> _states;
     private List<string> _triggers;
 
+    /// <summary>
+    /// The unique name for the workflow definition.
+    /// </summary>
     public abstract string Type { get; }
 
+    /// <summary>
+    /// Returns a list of states for the workflow.
+    /// </summary>
     public virtual List<string> States
     {
       get
@@ -34,6 +40,9 @@ namespace tomware.Microwf.Core
       }
     }
 
+    /// <summary>
+    /// Returns a list of triggers for the workflow.
+    /// </summary>
     public virtual List<string> Triggers
     {
       get
@@ -51,6 +60,9 @@ namespace tomware.Microwf.Core
       }
     }
 
+    /// <summary>
+    /// Returns a list of transitions for the workflow.
+    /// </summary>
     public abstract List<Transition> Transitions { get; }
   }
 }

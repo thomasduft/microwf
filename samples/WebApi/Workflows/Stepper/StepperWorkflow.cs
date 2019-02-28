@@ -131,7 +131,7 @@ namespace WebApi.Workflows.Stepper
         GOTO2_TRIGGER,
         stepper.Id,
         stepper.Type
-        ));
+      ));
     }
 
     private void AssignForStep3(TransitionContext context)
@@ -139,7 +139,7 @@ namespace WebApi.Workflows.Stepper
       this.AssignToSystem(context);
     }
 
-    private AutoTrigger GoToStep3(TransitionContext arg)
+    private AutoTrigger GoToStep3(TransitionContext context)
     {
       return new AutoTrigger
       {
@@ -158,7 +158,7 @@ namespace WebApi.Workflows.Stepper
         GOTO4_TRIGGER,
         stepper.Id,
         stepper.Type
-        ));
+      ));
     }
 
     private void GoTo5(TransitionContext context)
@@ -171,7 +171,7 @@ namespace WebApi.Workflows.Stepper
         GOTO5_TRIGGER,
         stepper.Id,
         stepper.Type
-        ));
+      ));
     }
 
     private void FailForFinish(TransitionContext context)
