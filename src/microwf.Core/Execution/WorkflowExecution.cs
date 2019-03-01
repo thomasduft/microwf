@@ -54,10 +54,14 @@ namespace tomware.Microwf.Core
       if (!result.CanTrigger) return result;
 
       var transition = GetTransition(param.TriggerName, param.Instance);
+
       if (context.TransitionAborted)
         return CreateTriggerResult(param.TriggerName, context, transition);
 
       transition.BeforeTransition?.Invoke(context);
+
+      if (context.TransitionAborted)
+        return CreateTriggerResult(param.TriggerName, context, transition);
 
       var state = _definition.States.Single(s => s == transition.TargetState);
       param.Instance.State = state;
@@ -81,7 +85,7 @@ namespace tomware.Microwf.Core
           context.SetVariable(variable.Key, variable.Value);
         }
       }
-      
+
       return context;
     }
 
@@ -102,8 +106,8 @@ namespace tomware.Microwf.Core
     }
 
     private TriggerResult CanMakeTransition(
-      TransitionContext context, 
-      string triggerName, 
+      TransitionContext context,
+      string triggerName,
       IWorkflow instance)
     {
       var transition = GetTransition(triggerName, instance);
