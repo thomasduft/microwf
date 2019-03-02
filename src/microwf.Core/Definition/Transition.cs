@@ -26,8 +26,6 @@ namespace tomware.Microwf.Core
 
     /// <summary>
     /// Extension hook before the TargetState is beeing set.
-    ///
-    /// Note: Use it to also abort a transition based on some business functionality.
     /// </summary>
     public Action<TransitionContext> BeforeTransition { get; set; }
 

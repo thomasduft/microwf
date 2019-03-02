@@ -117,9 +117,13 @@ namespace tomware.Microwf.Core
     }
 
     /// <summary>
-    /// Stops the current transition to be done.
-    /// Note: Can only be called before the transition is done.
+    /// Stops the current transition to be made.
     /// </summary>
+    /// <remarks>
+    /// Should only be called before the transition is done. See:
+    /// <see cref="Transition.CanMakeTransition"/> and 
+    /// <see cref="Transition.BeforeTransition"/>
+    /// </remarks>
     public void AbortTransition(string reason)
     {
       TransitionAborted = true;
