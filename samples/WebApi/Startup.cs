@@ -67,7 +67,8 @@ namespace WebApi
       // Identity
       var authority = this.Configuration["IdentityServer:Authority"];
       services
-        .AddIdentityServer(o => {
+        .AddIdentityServer(o =>
+        {
           o.IssuerUri = authority;
           o.Authentication.CookieAuthenticationScheme = "dummy";
         })
@@ -173,10 +174,10 @@ namespace WebApi
         });
       }
 
+      app.UseFileServer();
+
       app.UseIdentityServer();
       // app.UseAuthentication();
-
-      app.UseFileServer();
 
       app.SubscribeMessageHandlers();
 
