@@ -64,12 +64,14 @@ namespace tomware.Microwf.Engine
 
     public async Task<PaginatedList<WorkItem>> GetUpCommingsAsync(PagingParameters pagingParameters)
     {
+      var now = SystemTime.Now();
+
       var count = _context.WorkItems
-        .Where(wi => wi.DueDate > SystemTime.Now())
+        .Where(wi => wi.DueDate > now)
         .Count();
 
       var items = await _context.WorkItems
-        .Where(wi => wi.DueDate > SystemTime.Now())
+        .Where(wi => wi.DueDate > now)
         .OrderBy(wi => wi.DueDate)
         .Skip(pagingParameters.SkipCount)
         .Take(pagingParameters.PageSize)
@@ -106,9 +108,11 @@ namespace tomware.Microwf.Engine
 
     public async Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync()
     {
+      var now = SystemTime.Now();
+
       return await _context.WorkItems
         .Where(wi => wi.Retries <= Constants.WORKITEM_RETRIES
-        && wi.DueDate <= SystemTime.Now())
+        && wi.DueDate <= now)
         .ToListAsync<WorkItem>();
     }
 
