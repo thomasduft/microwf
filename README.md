@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/thomasduft/microwf.svg?branch=master)](https://travis-ci.org/thomasduft/microwf)
-
-# microwf
+# microwf [![Build Status](https://travis-ci.org/thomasduft/microwf.svg?branch=master)](https://travis-ci.org/thomasduft/microwf) [![NuGet Release](https://img.shields.io/nuget/vpre/tomware.Microwf.AspNetCoreEngine.svg)](https://www.nuget.org/packages/tomware.Microwf.AspNetCoreEngine)
 A simple finite state machine (FSM) with workflow character where you define your workflows in code.
 
 ### Holiday approval sample
