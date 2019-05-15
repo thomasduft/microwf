@@ -121,7 +121,7 @@ namespace WebApi.Workflows.Holiday
     {
       var holiday = context.GetInstance<Holiday>();
 
-      this._logger.LogInformation($"Reassign Holiday entity to requostor: {holiday.Requester}");
+      this._logger.LogInformation($"Reassign Holiday entity to requestor: {holiday.Requester}");
 
       holiday.Assignee = holiday.Requester;
 
