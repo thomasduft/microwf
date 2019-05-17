@@ -65,7 +65,7 @@ namespace WebApi
         .AddDbContext<DomainContext>(o => o.UseSqlite(connection));
 
       // Identity
-      var authority = this.Configuration["IdentityServer:Authority"];
+      var authority = this.Configuration["IdentityServer.Authority"];
       services
         .AddIdentityServer(o =>
         {

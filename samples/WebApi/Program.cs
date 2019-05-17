@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using System.IO;
 using WebApi.Domain;
 
 namespace WebApi
@@ -35,22 +36,17 @@ namespace WebApi
     }
 
     public static IWebHost BuildWebHost(string[] args) =>
-      WebHost
-        .CreateDefaultBuilder(args)
+      new WebHostBuilder()
+        .UseConfiguration(new ConfigurationBuilder()
+          .SetBasePath(Directory.GetCurrentDirectory())
+          .AddJsonFile(
+            "appsettings.json",
+            optional: true,
+            reloadOnChange: true)
+          .Build())
+        .UseContentRoot(Directory.GetCurrentDirectory())
+        .UseKestrel()
         .UseShutdownTimeout(TimeSpan.FromSeconds(10))
-        .ConfigureAppConfiguration((context, config) =>
-        {
-          config
-            .AddJsonFile(
-              "appsettings.json",
-              optional: true,
-              reloadOnChange: true)
-            .AddJsonFile(
-              $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
-              optional: true,
-              reloadOnChange: true
-            );
-        })
         .UseStartup<Startup>()
         .UseSerilog()
         .Build();
