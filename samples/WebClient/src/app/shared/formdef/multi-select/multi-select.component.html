@@ -1,9 +1,9 @@
-<div tabindex="=0" class="multiselect-dropdown"
+<div tabindex="0" class="multiselect-dropdown"
   (blur)="onTouched()"
   tw-clickoutside (clickOutside)="closeDropdown()">
   <div [class.disabled]="disabled">
     <span tabindex="-1" class="dropdown-btn" (click)="toggleDropdown($event)">
-      <span *ngIf="selectedItems.length == 0" i18n>Select items</span>
+      <span class="no-item-selected" *ngIf="selectedItems.length == 0" i18n>select items</span>
       <span class="selected-item" *ngFor="let item of selectedItems; trackBy: trackByFn;">
         {{ item.value }}
         <a style="padding-top:2px;padding-left:2px;color:white" 
@@ -18,14 +18,15 @@
     <ul>
       <li *ngIf="!singleSelection"
           class="multiselect-item-checkbox"
-          style="border-bottom: 1px solid #ccc;padding:10px"
-          (click)="toggleSelectAll()">
+          style="border-bottom: 1px solid #ccc"
+          (click)="toggleSelectAll()"
+          tabindex="0">
         <input type="checkbox"
                aria-label="multiselect-select-all"
                [checked]="isAllItemsSelected()"
                [disabled]="disabled" />
-        <div *ngIf="!isAllItemsSelected()" i18n>Select all</div>
-        <div *ngIf="isAllItemsSelected()" i18n>Unselect all</div>
+        <div *ngIf="!isAllItemsSelected()" i18n>select all</div>
+        <div *ngIf="isAllItemsSelected()" i18n>unselect all</div>
       </li>
       <li class="filter-textbox" *ngIf="_data.length > 0">
         <input type="text" 
@@ -38,7 +39,9 @@
     </ul>
     <ul>
       <li *ngFor="let item of _data | tw2ListFilter:filter" 
-        (click)="onItemClick(item)" class="multiselect-item-checkbox">
+        (click)="onItemClick(item)" class="multiselect-item-checkbox"
+        (keydown)="onKeyDown($event, item)"
+        tabindex="0">
         <input type="checkbox" 
                aria-label="multiselect-item" 
                [checked]="isSelected(item)" 

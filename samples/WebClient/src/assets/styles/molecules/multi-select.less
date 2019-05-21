@@ -5,18 +5,21 @@
 
 .multiselect-dropdown {
   position: relative;
+
   .dropdown-btn {
     display: inline-block;
     border: 1px solid #adadad;
     width: 100%;
     // padding: 6px 6px;
     margin-bottom: 0;
+    font-size: 0.9em;
     font-weight: normal;
     text-align: left;
     vertical-align: middle;
     background-color: @form-control-background-color;
     border-radius: 4px;
     cursor: pointer;
+
     .selected-item {
       border: 1px solid @base-color;
       margin-right: 4px;
@@ -27,13 +30,23 @@
       padding: 0px 5px;
       color: #fff;
       float: left;
+
       a {
         text-decoration: none;
       }
+
+      &:hover {
+        box-shadow: 1px 1px #959595;
+      }
     }
-    .selected-item:hover {
-      box-shadow: 1px 1px #959595;
+
+    .no-item-selected {
+      margin-top: 2px;
+      margin-bottom: 2px;
+      padding: 1px 5px;
+      float: left;
     }
+
     .dropdown-down {
       display: inline-block;
       top: 5px;
@@ -43,6 +56,7 @@
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
     }
+
     .dropdown-up {
       display: inline-block;
       width: 0;
@@ -52,6 +66,7 @@
       border-right: 5px solid transparent;
     }
   }
+
   .disabled {
     & > span {
       background-color: @disable-background-color;
@@ -66,26 +81,30 @@
   border: 1px solid #ccc;
   background: #fff;
   box-shadow: 0px 1px 5px #959595;
+
   ul {
     padding: 0px;
     list-style: none;
     overflow: none;
     margin: 0px;
   }
+
   li {
     padding: 5px;
     cursor: pointer;
     text-align: left;
   }
+
   .filter-textbox {
     border-bottom: 1px solid #ccc;
     position: relative;
+
     input {
-      border: 0px;
+      border: 0;
       margin: 0;
-    }
-    input:focus {
-      outline: none;
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
@@ -106,11 +125,6 @@
   border-color: @base-color;
   background-color: #f2f2f2;
 }
-
-.multiselect-item-checkbox input[type='checkbox']:active + div:before {
-  transition-duration: 0s;
-}
-
 .multiselect-item-checkbox input[type='checkbox'] + div {
   position: relative;
   padding-left: 2em;
@@ -118,7 +132,6 @@
   user-select: none;
   cursor: pointer;
   margin: 0px;
-  color: #000;
 }
 
 .multiselect-item-checkbox input[type='checkbox'] + div:before {
@@ -133,14 +146,14 @@
   margin-top: -9px;
   border: 2px solid @base-color;
   text-align: center;
-  transition: all 0.4s ease;
+  transition: all 0.1s ease;
 }
 
 .multiselect-item-checkbox input[type='checkbox'] + div:after {
-  box-sizing: content-box;
-  content: '';
   background-color: @base-color;
+  content: '';
   position: absolute;
+  box-sizing: content-box;
   top: 50%;
   left: 4px;
   width: 10px;
@@ -148,26 +161,7 @@
   margin-top: -5px;
   transform: scale(0);
   transform-origin: 50%;
-  transition: transform 200ms ease-out;
-}
-
-.multiselect-item-checkbox input[type='checkbox']:disabled + div:before {
-  border-color: #cccccc;
-}
-
-.multiselect-item-checkbox
-  input[type='checkbox']:disabled:focus
-  + div:before
-  .multiselect-item-checkbox
-  input[type='checkbox']:disabled:hover
-  + div:before {
-  background-color: inherit;
-}
-
-.multiselect-item-checkbox
-  input[type='checkbox']:disabled:checked
-  + div:before {
-  background-color: #cccccc;
+  transition: transform 100ms ease-out;
 }
 
 .multiselect-item-checkbox input[type='checkbox'] + div:after {
@@ -178,7 +172,7 @@
   height: 3px;
   margin-top: -4px;
   border-style: solid;
-  border-color: #ffffff;
+  border-color: #fff;
   border-width: 0 0 3px 3px;
   border-image: none;
   transform: rotate(-45deg) scale(0);
@@ -187,16 +181,12 @@
 .multiselect-item-checkbox input[type='checkbox']:checked + div:after {
   content: '';
   transform: rotate(-45deg) scale(1);
-  transition: transform 200ms ease-out;
+  transition: transform 100ms ease-out;
 }
 
 .multiselect-item-checkbox input[type='checkbox']:checked + div:before {
-  animation: borderscale 200ms ease-in;
   background: @base-color;
-}
-
-.multiselect-item-checkbox input[type='checkbox']:checked + div:after {
-  transform: rotate(-45deg) scale(1);
+  animation: borderscale 100ms ease-in;
 }
 
 @keyframes borderscale {

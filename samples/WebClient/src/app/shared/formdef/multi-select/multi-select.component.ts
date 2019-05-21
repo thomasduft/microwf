@@ -77,9 +77,18 @@ export class MultiSelectComponent implements ControlValueAccessor {
     this.filterChange.emit($event);
   }
 
-  public onItemClick(item: ListItem) {
+  public onKeyDown(event: KeyboardEvent, item: ListItem): void {
+    if (event.keyCode === 32) {
+      // space bar
+      event.preventDefault();
+
+      this.onItemClick(item);
+    }
+  }
+
+  public onItemClick(item: ListItem): void {
     if (this.disabled) {
-      return false;
+      return;
     }
 
     const found = this.isSelected(item);
@@ -129,6 +138,16 @@ export class MultiSelectComponent implements ControlValueAccessor {
   public onTouched() {
     this.closeDropdown();
     this.onTouchedCallback();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  public shortCuts(event: KeyboardEvent): void {
+    if(event.keyCode === 13) {
+      // return
+      event.preventDefault();
+      
+      this.toggleDropdown(event);
+    }
   }
 
   public trackByFn(_index, item: ListItem): any {
