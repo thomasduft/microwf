@@ -35,14 +35,10 @@ export class SlotHostComponent implements OnInit, OnDestroy {
 
   @Input()
   public set parentForm(form: FormGroup) {
-    // if (this._componentRef) {
-    //   this._componentRef.instance.myForm = form;
-    // }
-
     this._parentForm = form;
   }
 
-  @ViewChild('slotContent', { read: ViewContainerRef })
+  @ViewChild('slotContent', { static: false })
   protected slotContent: ViewContainerRef;
 
   public constructor(

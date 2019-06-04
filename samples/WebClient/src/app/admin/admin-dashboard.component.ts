@@ -62,7 +62,7 @@ export class AdminDashboardComponent implements OnInit {
   @HostBinding('class')
   public workspace = 'pane';
 
-  @ViewChild(ListComponent)
+  @ViewChild(ListComponent, {static: false})
   public list: ListComponent;
 
   public constructor(
