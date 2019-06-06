@@ -1,4 +1,3 @@
-﻿using IdentityModel;
 using IdentityModel.Client;
 using Newtonsoft.Json;
 using System;
@@ -17,6 +16,7 @@ namespace ConsoleClient
   class Program
   {
     static readonly string HOST = "http://localhost:5000";
+    static readonly int AMOUNT_OF_STEPPERS = 1000;
 
     static void Main(string[] args)
     {
@@ -29,62 +29,82 @@ namespace ConsoleClient
       var httpClient = new HttpClient();
       // Just a sample call with an invalid access token.
       // The expected response from this call is 401 Unauthorized
-      var apiResponse = await httpClient.GetAsync($"{HOST}/api/workflows");
+      var apiResponse = await httpClient.GetAsync($"{HOST}/api/workflow");
       httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-        "Bearer", 
+        "Bearer",
         "invalid_access_token"
       );
-      
+
       // The API is protected, let's ask the user for credentials and exchanged them 
       // with an access token
-      if (apiResponse.StatusCode == HttpStatusCode.Unauthorized 
+      if (apiResponse.StatusCode == HttpStatusCode.Unauthorized
         || apiResponse.StatusCode == HttpStatusCode.Forbidden)
       {
-          //Ask User
-          var username = "admin";
-          var password = "password";
-          
-          // Make the call and get the access token back
-          var response = await httpClient
-            .RequestPasswordTokenAsync(new PasswordTokenRequest
+        httpClient.DefaultRequestHeaders.Clear();
+
+        //Ask User
+        var username = "admin";
+        var password = "password";
+
+        // Make the call and get the access token back
+        var response = await httpClient
+          .RequestPasswordTokenAsync(new PasswordTokenRequest
+          {
+            Address = $"{HOST}/connect/token",
+            GrantType = "password",
+            ClientId = "ro.client",
+            // ClientSecret = "client_secret",
+            Scope = "api1",
+            UserName = username,
+            Password = password
+          });
+
+        // all good?
+        if (!response.IsError)
+        {
+          Console.ForegroundColor = ConsoleColor.Green;
+          Console.WriteLine();
+          Console.WriteLine("SUCCESS!!");
+          Console.WriteLine();
+          Console.WriteLine("Access Token: ");
+          Console.WriteLine(response.AccessToken);
+
+          // Call the API with the correct access token
+          httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            response.AccessToken
+          );
+
+          var steppers = GetSteppers(AMOUNT_OF_STEPPERS);
+          foreach (var stepper in steppers)
+          {
+            var createStepperResponse = await CreateStepper(httpClient, stepper);
+            if (createStepperResponse.IsSuccessStatusCode)
             {
-              Address = $"{HOST}/connect/token",
-              GrantType = "password",
-              ClientId = "ro.client",
-              // ClientSecret = "client_secret",
-              Scope = "api1",
-              UserName = username,
-              Password = password
-            });
+              var content = await createStepperResponse.Content.ReadAsStringAsync();
 
-          // all good?
-          if (!response.IsError)
-          {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine();
-            Console.WriteLine("SUCCESS!!");
-            Console.WriteLine();
-            Console.WriteLine("Access Token: ");
-            Console.WriteLine(response.AccessToken);
-
-            // Call the API with the correct access token
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-              "Bearer", 
-              response.AccessToken
-            );
-
-            apiResponse = await httpClient.GetAsync($"{HOST}/api/workflow");
-            Console.WriteLine();
-            Console.WriteLine("API response:");
-            Console.WriteLine(await apiResponse.Content.ReadAsStringAsync());
+              var stepperId = int.Parse(content);
+              var processStepperResponse = await ProcessStepper(httpClient, stepperId);
+              if (processStepperResponse.IsSuccessStatusCode)
+              {
+                Console.WriteLine($"Workflow for stepper id ${stepperId} started...");
+              }
+            }
           }
-          else
+
+          var workflowResponse = await httpClient.GetAsync($"{HOST}/api/workflow");
+          if (workflowResponse.IsSuccessStatusCode)
           {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine();
-            Console.WriteLine("Failed to login with error:");
-            Console.WriteLine(response.ErrorDescription);                    
+            Console.WriteLine(await workflowResponse.Content.ReadAsStringAsync());
           }
+        }
+        else
+        {
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine();
+          Console.WriteLine("Failed to login with error:");
+          Console.WriteLine(response.ErrorDescription);
+        }
       }
       else
       {
@@ -98,7 +118,7 @@ namespace ConsoleClient
     {
       List<string> steppers = new List<string>();
 
-      for (int i = 0; i < amount; i++)
+      for (int i = 1; i <= amount; i++)
       {
         steppers.Add($"stepper{i}");
       }
@@ -111,24 +131,29 @@ namespace ConsoleClient
       var uri = $"{HOST}/api/stepper";
 
       return await client.PostAsync(
-        uri, 
-        new StringContent(stepper)
+        uri,
+        new StringContent(
+          JsonConvert.SerializeObject(stepper),
+          Encoding.UTF8,
+          "application/json"
+         )
       );
     }
 
     static async Task<HttpResponseMessage> ProcessStepper(HttpClient client, int stepperId)
     {
       var uri = $"{HOST}/api/stepper/process";
-      var jsonString = JsonConvert.SerializeObject(new { 
-        Id = stepperId, 
-        Trigger = "goto1" 
+      var jsonString = JsonConvert.SerializeObject(new
+      {
+        Id = stepperId,
+        Trigger = "goto1"
       });
-      
+
       return await client.PostAsync(
-        uri, 
+        uri,
         new StringContent(
-          jsonString, 
-          Encoding.UTF8, 
+          jsonString,
+          Encoding.UTF8,
           "application/json"
         )
       );
