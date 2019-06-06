@@ -34,6 +34,18 @@
       }
     },
     {
+      "name": ".NET Core Launch (ConsoleClient)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-ConsoleClient",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/netcoreapp2.2/ConsoleClient.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/samples/ConsoleClient",
+      // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+      "stopAtEntry": false
+    },
+    {
       "name": ".NET Core Attach",
       "type": "coreclr",
       "request": "attach",

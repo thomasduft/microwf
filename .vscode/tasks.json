@@ -16,6 +16,20 @@
       }
     },
     {
+      "label": "build-ConsoleClient",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceRoot}/samples/ConsoleClient/ConsoleClient.csproj"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
       "label": "test",
       "command": "dotnet",
       "type": "process",
