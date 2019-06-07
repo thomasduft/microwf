@@ -6,13 +6,14 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using WebApi.Domain;
 
 namespace WebApi
 {
   public class Program
   {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
       var host = BuildWebHost(args);
 
@@ -22,8 +23,8 @@ namespace WebApi
         var services = scope.ServiceProvider;
         try
         {
-          var db = services.GetRequiredService<IEnsureDatabaseService>();
-          db.EnsureSeedData();
+          var migrator = services.GetRequiredService<IMigrationService>();
+          await migrator.EnsureMigrationAsync();
         }
         catch (Exception ex)
         {
@@ -32,7 +33,7 @@ namespace WebApi
         }
       }
 
-      host.Run();
+      await host.RunAsync();
     }
 
     public static IWebHost BuildWebHost(string[] args) =>

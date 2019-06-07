@@ -122,7 +122,7 @@ namespace WebApi
       });
 
       // Custom services
-      services.AddScoped<IEnsureDatabaseService, EnsureDatabaseService>();
+      services.AddScoped<IMigrationService, MigrationService>();
 
       var workflowConf = CreateWorkflowConfiguration(); // GetWorkflowConfiguration(services);
       IOptions<ProcessorConfiguration> processorConf = GetProcessorConfiguration(services);

@@ -4,18 +4,18 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApi.Domain
 {
-  public interface IEnsureDatabaseService
+  public interface IMigrationService
   {
-    Task EnsureSeedData();
+    Task EnsureMigrationAsync();
   }
 
-  public class EnsureDatabaseService : IEnsureDatabaseService
+  public class MigrationService : IMigrationService
   {
     private readonly ILogger _logger;
     private readonly DomainContext _context;
 
-    public EnsureDatabaseService(
-      ILogger<EnsureDatabaseService> logger,
+    public MigrationService(
+      ILogger<MigrationService> logger,
       DomainContext context
     )
     {
@@ -23,11 +23,9 @@ namespace WebApi.Domain
       _context = context;
     }
 
-    public async Task EnsureSeedData()
+    public async Task EnsureMigrationAsync()
     {
-      _context.Database.Migrate();
-
-      await Task.CompletedTask;
+      await _context.Database.MigrateAsync();
     }
   }
 }
