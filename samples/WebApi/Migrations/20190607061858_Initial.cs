@@ -45,6 +45,23 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Stepper",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Type = table.Column<string>(nullable: false),
+                    State = table.Column<string>(nullable: false),
+                    Assignee = table.Column<string>(nullable: false),
+                    Creator = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stepper", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Workflow",
                 columns: table => new
                 {
@@ -72,7 +89,8 @@ namespace WebApi.Migrations
                     EntityId = table.Column<int>(nullable: false),
                     WorkflowType = table.Column<string>(nullable: false),
                     Retries = table.Column<int>(nullable: false),
-                    Error = table.Column<string>(nullable: true)
+                    Error = table.Column<string>(nullable: true),
+                    DueDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,6 +185,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Issue");
+
+            migrationBuilder.DropTable(
+                name: "Stepper");
 
             migrationBuilder.DropTable(
                 name: "WorkflowHistory");

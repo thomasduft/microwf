@@ -9,14 +9,14 @@ using WebApi.Domain;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20190109080317_WorkItemDueDate")]
-    partial class WorkItemDueDate
+    [Migration("20190607061858_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("WebApi.Workflows.Holiday.Holiday", b =>
                 {
@@ -123,7 +123,7 @@ namespace WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime?>("DueDate");
+                    b.Property<DateTime>("DueDate");
 
                     b.Property<int>("EntityId");
 
