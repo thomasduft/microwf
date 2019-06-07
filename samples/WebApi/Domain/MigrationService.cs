@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace WebApi.Domain
 {
@@ -11,15 +10,10 @@ namespace WebApi.Domain
 
   public class MigrationService : IMigrationService
   {
-    private readonly ILogger _logger;
     private readonly DomainContext _context;
 
-    public MigrationService(
-      ILogger<MigrationService> logger,
-      DomainContext context
-    )
+    public MigrationService(DomainContext context)
     {
-      _logger = logger;
       _context = context;
     }
 
