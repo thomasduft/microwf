@@ -17,6 +17,7 @@ namespace ConsoleClient
   {
     static readonly string HOST = "http://localhost:5000";
     static readonly int AMOUNT_OF_STEPPERS = 1;
+    static readonly bool USE_CLIENT_CREDENTIALS = true;
 
     static void Main(string[] args)
     {
@@ -35,7 +36,7 @@ namespace ConsoleClient
         "invalid_access_token"
       );
 
-      // The API is protected, let's ask the user for credentials and exchanged them 
+      // The API is protected, let's ask the user for credentials and exchanged them
       // with an access token
       if (apiResponse.StatusCode == HttpStatusCode.Unauthorized
         || apiResponse.StatusCode == HttpStatusCode.Forbidden)
@@ -47,29 +48,32 @@ namespace ConsoleClient
         var password = "password";
 
         // Make the call and get the access token back
-        TokenResponse response = null;
+        TokenResponse response;
+        if (!USE_CLIENT_CREDENTIALS)
+        {
+          response = await httpClient
+            .RequestPasswordTokenAsync(new PasswordTokenRequest
+            {
+              Address = $"{HOST}/connect/token",
+              GrantType = "password",
+              ClientId = "ro.client",
+              Scope = "api1",
+              UserName = username,
+              Password = password
+            });
+        }
+        else
+        {
+          response = await httpClient
+            .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+              Address = $"{HOST}/connect/token",
 
-        response = await httpClient
-          .RequestPasswordTokenAsync(new PasswordTokenRequest
-          {
-            Address = $"{HOST}/connect/token",
-            GrantType = "password",
-            ClientId = "ro.client",
-            // ClientSecret = "client_secret",
-            Scope = "api1",
-            UserName = username,
-            Password = password
-          });
-
-        // response = await httpClient
-        //   .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-        //   {
-        //     Address = $"{HOST}/connect/token",
-
-        //     ClientId = "console.client",
-        //     ClientSecret = "00000000-0000-0000-0000-000000000001",
-        //     Scope = "api1"
-        //   });
+              ClientId = "console.client",
+              ClientSecret = "00000000-0000-0000-0000-000000000001",
+              Scope = "api1"
+            });
+        }
 
         // all good?
         if (!response.IsError)

@@ -131,6 +131,8 @@ namespace WebApi
         .AddJobQueueServices<DomainContext>(processorConf.Value)
         .AddTestUserWorkflowMappings(CreateSampleUserWorkflowMappings());
 
+      services.AddTransient<IUserContextService, IdentityUserContextService>();
+
       services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
       services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
       services.AddTransient<IWorkflowDefinition, StepperWorkflow>();

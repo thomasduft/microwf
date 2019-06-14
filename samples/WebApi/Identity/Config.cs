@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using System.Collections.Generic;
+using System.Security.Claims;
 using tomware.Microwf.Engine;
 
 namespace WebApi.Identity
@@ -41,16 +41,13 @@ namespace WebApi.Identity
         // client credentials
         new Client
         {
-            ClientId = "console.client",
-            // no interactive user, use the clientid/secret for authentication
-            AllowedGrantTypes = GrantTypes.ClientCredentials,
-            // secret for authentication
-            ClientSecrets =
-            {
-              new Secret("00000000-0000-0000-0000-000000000001".Sha256())
-            },
-            // scopes that client has access to
-            AllowedScopes = { "api1" }
+          ClientId = "console.client",
+          AllowedGrantTypes = GrantTypes.ClientCredentials,
+          ClientSecrets =
+          {
+            new Secret("00000000-0000-0000-0000-000000000001".Sha256())
+          },
+          AllowedScopes = { "api1" }
         },
 
         // resource owner password
