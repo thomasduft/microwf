@@ -16,7 +16,7 @@ namespace ConsoleClient
   class Program
   {
     static readonly string HOST = "http://localhost:5000";
-    static readonly int AMOUNT_OF_STEPPERS = 1000;
+    static readonly int AMOUNT_OF_STEPPERS = 1;
 
     static void Main(string[] args)
     {
@@ -47,7 +47,9 @@ namespace ConsoleClient
         var password = "password";
 
         // Make the call and get the access token back
-        var response = await httpClient
+        TokenResponse response = null;
+
+        response = await httpClient
           .RequestPasswordTokenAsync(new PasswordTokenRequest
           {
             Address = $"{HOST}/connect/token",
@@ -58,6 +60,16 @@ namespace ConsoleClient
             UserName = username,
             Password = password
           });
+
+        // response = await httpClient
+        //   .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+        //   {
+        //     Address = $"{HOST}/connect/token",
+
+        //     ClientId = "console.client",
+        //     ClientSecret = "00000000-0000-0000-0000-000000000001",
+        //     Scope = "api1"
+        //   });
 
         // all good?
         if (!response.IsError)
@@ -70,10 +82,11 @@ namespace ConsoleClient
           Console.WriteLine(response.AccessToken);
 
           // Call the API with the correct access token
-          httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-            "Bearer",
-            response.AccessToken
-          );
+          // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+          //   "Bearer",
+          //   response.AccessToken
+          // );
+          httpClient.SetBearerToken(response.AccessToken);
 
           var steppers = GetSteppers(AMOUNT_OF_STEPPERS);
           foreach (var stepper in steppers)

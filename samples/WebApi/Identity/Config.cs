@@ -38,7 +38,22 @@ namespace WebApi.Identity
       // client credentials client
       return new List<Client>
       {
-        // resource owner password grant client
+        // client credentials
+        new Client
+        {
+            ClientId = "console.client",
+            // no interactive user, use the clientid/secret for authentication
+            AllowedGrantTypes = GrantTypes.ClientCredentials,
+            // secret for authentication
+            ClientSecrets =
+            {
+              new Secret("00000000-0000-0000-0000-000000000001".Sha256())
+            },
+            // scopes that client has access to
+            AllowedScopes = { "api1" }
+        },
+
+        // resource owner password
         new Client
         {
           ClientId = "ro.client",
