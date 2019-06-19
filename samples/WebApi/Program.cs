@@ -15,7 +15,7 @@ namespace WebApi
   {
     public static async Task Main(string[] args)
     {
-      var host = BuildWebHost(args);
+      var host = CreateWebHostBuilder(args).Build();
 
       // ensure database will be migrated
       using (var scope = host.Services.CreateScope())
@@ -36,20 +36,28 @@ namespace WebApi
       await host.RunAsync();
     }
 
-    public static IWebHost BuildWebHost(string[] args) =>
-      new WebHostBuilder()
-        .UseConfiguration(new ConfigurationBuilder()
-          .SetBasePath(Directory.GetCurrentDirectory())
-          .AddJsonFile(
-            "appsettings.json",
-            optional: true,
-            reloadOnChange: true)
-          .Build())
-        .UseContentRoot(Directory.GetCurrentDirectory())
-        .UseKestrel()
-        .UseShutdownTimeout(TimeSpan.FromSeconds(10))
-        .UseStartup<Startup>()
-        .UseSerilog()
-        .Build();
+     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+       WebHost
+         .CreateDefaultBuilder(args)
+         .UseKestrel()
+         .UseShutdownTimeout(TimeSpan.FromSeconds(10))
+         .UseStartup<Startup>()
+         .UseSerilog();
+
+    // public static IWebHost BuildWebHost(string[] args) =>
+    //   new WebHostBuilder()
+    //     .UseConfiguration(new ConfigurationBuilder()
+    //       .SetBasePath(Directory.GetCurrentDirectory())
+    //       .AddJsonFile(
+    //         "appsettings.json",
+    //         optional: true,
+    //         reloadOnChange: true)
+    //       .Build())
+    //     .UseContentRoot(Directory.GetCurrentDirectory())
+    //     .UseKestrel()
+    //     .UseShutdownTimeout(TimeSpan.FromSeconds(10))
+    //     .UseStartup<Startup>()
+    //     .UseSerilog()
+    //     .Build();
   }
 }
