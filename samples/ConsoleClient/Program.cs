@@ -16,7 +16,7 @@ namespace ConsoleClient
   class Program
   {
     static readonly string HOST = "http://localhost:5000";
-    static readonly int AMOUNT_OF_STEPPERS = 1;
+    static readonly int AMOUNT_OF_STEPPERS = 100;
     static readonly bool USE_CLIENT_CREDENTIALS = true;
 
     static void Main(string[] args)
