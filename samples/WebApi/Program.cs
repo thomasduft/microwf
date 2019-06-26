@@ -43,7 +43,6 @@ namespace WebApi
           .SetBasePath(Directory.GetCurrentDirectory())
           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
           .Build())
-        .UseKestrel()
         .UseShutdownTimeout(TimeSpan.FromSeconds(10))
         .UseStartup<Startup>()
         .UseSerilog();
