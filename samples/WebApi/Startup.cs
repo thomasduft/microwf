@@ -1,4 +1,3 @@
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -7,17 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Serilog;
-using Swashbuckle.AspNetCore.Swagger;
-using System.Collections.Generic;
-using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Domain;
+using WebApi.Extensions;
 using WebApi.Identity;
-using WebApi.Workflows.Holiday;
-using WebApi.Workflows.Issue;
-using WebApi.Workflows.Stepper;
 
 namespace WebApi
 {
@@ -54,7 +47,6 @@ namespace WebApi
         .AddJsonOptions(o =>
           o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
-
       services.AddRouting(o => o.LowercaseUrls = true);
 
       services.AddAuthorization();
@@ -66,80 +58,13 @@ namespace WebApi
 
       // Identity
       var authority = this.Configuration["IdentityServer.Authority"];
-      services
-        .AddIdentityServer(o =>
-        {
-          o.IssuerUri = authority;
-          o.Authentication.CookieAuthenticationScheme = "dummy";
-        })
-        .AddDeveloperSigningCredential()
-        .AddInMemoryPersistedGrants()
-        .AddInMemoryIdentityResources(Config.GetIdentityResources())
-        .AddInMemoryApiResources(Config.GetApiResources())
-        .AddInMemoryClients(Config.GetClients())
-        .AddTestUsers(Config.GetUsers())
-        .AddJwtBearerClientAuthentication()
-        .AddProfileService<ProfileService>();
-
-      services
-        .AddAuthentication(o =>
-        {
-          o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-          o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
-        })
-        .AddCookie("dummy")
-        .AddIdentityServerAuthentication(o =>
-        {
-          o.Authority = authority;
-          o.RequireHttpsMetadata = false;
-          o.ApiName = "api1";
-        });
+      services.AddIdentityServices(authority);
 
       // Swagger
-      services.AddSwaggerGen(c =>
-      {
-        c.SwaggerDoc("v1", new Info
-        {
-          Version = "v1",
-          Title = "WebAPI Documentation",
-          Description = "WebAPI Documentation"
-        });
-      });
+      services.AddSwaggerDocumentation();
 
-      services.ConfigureSwaggerGen(options =>
-      {
-        options.AddSecurityDefinition("Bearer", new ApiKeyScheme
-        {
-          In = "header",
-          Description = "Please insert JWT with Bearer into field",
-          Name = "Authorization",
-          Type = "apiKey"
-        });
-        options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-        {
-          { "Bearer", new string[] { } }
-        });
-      });
-
-      // Custom services
-      services.AddScoped<IMigrationService, MigrationService>();
-
-      var workflowConf = CreateWorkflowConfiguration(); // GetWorkflowConfiguration(services);
-      IOptions<ProcessorConfiguration> processorConf = GetProcessorConfiguration(services);
-      services
-        .AddWorkflowEngineServices<DomainContext>(workflowConf)
-        .AddJobQueueServices<DomainContext>(processorConf.Value)
-        .AddTestUserWorkflowMappings(CreateSampleUserWorkflowMappings());
-
-      services.AddTransient<IUserContextService, IdentityUserContextService>();
-
-      services.AddTransient<IWorkflowDefinition, HolidayApprovalWorkflow>();
-      services.AddTransient<IWorkflowDefinition, IssueTrackingWorkflow>();
-      services.AddTransient<IWorkflowDefinition, StepperWorkflow>();
-
-      services.AddTransient<IHolidayService, HolidayService>();
-      services.AddTransient<IIssueService, IssueService>();
-      services.AddTransient<IStepperService, StepperService>();
+      // Api services
+      services.AddApiServices<DomainContext>(this.Configuration);
     }
 
     public void Configure(
@@ -153,6 +78,7 @@ namespace WebApi
       if (env.IsDevelopment())
       {
         app.UseCors("AllowAllOrigins");
+        app.UseSwaggerDocumentation();
 
         app.UseDeveloperExceptionPage();
       }
@@ -179,93 +105,10 @@ namespace WebApi
       app.UseFileServer();
 
       app.UseIdentityServer();
-      // app.UseAuthentication();
 
       app.SubscribeMessageHandlers();
 
-      app.UseSwagger();
-      app.UseSwaggerUI(c =>
-      {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI V1");
-      });
-
       app.UseMvcWithDefaultRoute();
-    }
-
-    private List<UserWorkflowMapping> CreateSampleUserWorkflowMappings()
-    {
-      return new List<UserWorkflowMapping> {
-        new UserWorkflowMapping {
-          UserName = "admin",
-          WorkflowDefinitions = new List<string> {
-            HolidayApprovalWorkflow.TYPE,
-            IssueTrackingWorkflow.TYPE,
-            StepperWorkflow.TYPE
-          }
-        },
-        new UserWorkflowMapping {
-          UserName = "alice",
-          WorkflowDefinitions = new List<string> {
-            HolidayApprovalWorkflow.TYPE,
-            IssueTrackingWorkflow.TYPE,
-            StepperWorkflow.TYPE
-          }
-        },
-        new UserWorkflowMapping {
-          UserName = "bob",
-          WorkflowDefinitions = new List<string> {
-            HolidayApprovalWorkflow.TYPE,
-            StepperWorkflow.TYPE
-          }
-        }
-      };
-    }
-
-    private WorkflowConfiguration CreateWorkflowConfiguration()
-    {
-      return new WorkflowConfiguration
-      {
-        Types = new List<WorkflowType> {
-          new WorkflowType {
-            Type = "HolidayApprovalWorkflow",
-            Title = "Holiday",
-            Description = "Simple holiday approval process.",
-            Route = "holiday"
-          },
-          new WorkflowType {
-            Type = "IssueTrackingWorkflow",
-            Title = "Issue",
-            Description = "Simple issue tracking process.",
-            Route = "issue"
-          },
-          new WorkflowType {
-            Type = "StepperWorkflow",
-            Title = "Stepper",
-            Description = "Dummy workflow to test workflow processor.",
-            Route = ""
-          }
-        }
-      };
-    }
-
-    private IOptions<WorkflowConfiguration> GetWorkflowConfiguration(IServiceCollection services)
-    {
-      var workflows = this.Configuration.GetSection("Workflows");
-      services.Configure<WorkflowConfiguration>(workflows);
-
-      return services
-      .BuildServiceProvider()
-      .GetRequiredService<IOptions<WorkflowConfiguration>>();
-    }
-
-    private IOptions<ProcessorConfiguration> GetProcessorConfiguration(IServiceCollection services)
-    {
-      var worker = this.Configuration.GetSection("Worker");
-      services.Configure<ProcessorConfiguration>(worker);
-
-      return services
-      .BuildServiceProvider()
-      .GetRequiredService<IOptions<ProcessorConfiguration>>();
     }
   }
 }

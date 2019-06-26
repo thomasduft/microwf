@@ -36,28 +36,16 @@ namespace WebApi
       await host.RunAsync();
     }
 
-     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-       WebHost
-         .CreateDefaultBuilder(args)
-         .UseKestrel()
-         .UseShutdownTimeout(TimeSpan.FromSeconds(10))
-         .UseStartup<Startup>()
-         .UseSerilog();
-
-    // public static IWebHost BuildWebHost(string[] args) =>
-    //   new WebHostBuilder()
-    //     .UseConfiguration(new ConfigurationBuilder()
-    //       .SetBasePath(Directory.GetCurrentDirectory())
-    //       .AddJsonFile(
-    //         "appsettings.json",
-    //         optional: true,
-    //         reloadOnChange: true)
-    //       .Build())
-    //     .UseContentRoot(Directory.GetCurrentDirectory())
-    //     .UseKestrel()
-    //     .UseShutdownTimeout(TimeSpan.FromSeconds(10))
-    //     .UseStartup<Startup>()
-    //     .UseSerilog()
-    //     .Build();
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+      WebHost
+        .CreateDefaultBuilder(args)
+        .UseConfiguration(new ConfigurationBuilder()
+          .SetBasePath(Directory.GetCurrentDirectory())
+          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+          .Build())
+        .UseKestrel()
+        .UseShutdownTimeout(TimeSpan.FromSeconds(10))
+        .UseStartup<Startup>()
+        .UseSerilog();
   }
 }
