@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2.0-aspnetcore-runtime-bionic
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 ARG source
 WORKDIR /app
 EXPOSE 5000
