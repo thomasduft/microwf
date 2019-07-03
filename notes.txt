@@ -2,6 +2,9 @@ notes:
 - rescedule a workflow instance in JobQueue again
 - api for JobQueue?!
 
+self signed dev certificate:
+- https://www.humankode.com/asp-net-core/develop-locally-with-https-self-signed-certificates-and-asp-net-core
+
 ----------------------------------------------------------------------------------------------------
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet

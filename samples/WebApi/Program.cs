@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.IO;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebApi.Domain;
 
@@ -15,7 +17,9 @@ namespace WebApi
   {
     public static async Task Main(string[] args)
     {
-      var host = CreateWebHostBuilder(args).Build();
+      var certificate = GetCertificate();
+
+      var host = CreateWebHostBuilder(args, certificate).Build();
 
       // ensure database will be migrated
       using (var scope = host.Services.CreateScope())
@@ -36,7 +40,30 @@ namespace WebApi
       await host.RunAsync();
     }
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+    public static X509Certificate2 GetCertificate()
+    {
+      var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddEnvironmentVariables()
+        .AddJsonFile(
+          "appsettings.json",
+          optional: false,
+          reloadOnChange: true
+        )
+        .AddJsonFile(
+          $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+          optional: true,
+          reloadOnChange: true
+        ).Build();
+
+      var certificateSettings = config.GetSection("certificateSettings");
+      string certificateFileName = certificateSettings.GetValue<string>("filename");
+      string certificatePassword = certificateSettings.GetValue<string>("password");
+
+      return new X509Certificate2(certificateFileName, certificatePassword);
+    }
+
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args, X509Certificate2 certificate) =>
       WebHost
         .CreateDefaultBuilder(args)
         .UseConfiguration(new ConfigurationBuilder()
@@ -52,6 +79,15 @@ namespace WebApi
             reloadOnChange: true
           )
           .Build())
+        .ConfigureKestrel(
+         options =>
+         {
+           options.AddServerHeader = false;
+           options.Listen(IPAddress.Loopback, 5028, listenOptions =>
+           {
+             listenOptions.UseHttps(certificate);
+           });
+         })
         .UseShutdownTimeout(TimeSpan.FromSeconds(10))
         .UseStartup<Startup>()
         .UseSerilog();
