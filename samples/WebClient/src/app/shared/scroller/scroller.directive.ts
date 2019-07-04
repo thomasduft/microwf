@@ -32,23 +32,27 @@ export class ScrollerDirective implements AfterViewInit, OnDestroy {
    * An offset from the bottom of the element to trigger
    * `scrollEnd` event
    */
-  @Input() public offset = 0;
+  @Input()
+  public offset = 0;
 
   /**
    * Specify debounce duration in ms
    */
-  @Input() public debounce = 100;
+  @Input()
+  public debounce = 100;
 
   /**
    * If true then `scrollEnd` event should NOT be emitted
    */
-  @Input() public disabled = false;
+  @Input()
+  public disabled = false;
 
   /**
    * Event that will be triggered when user has scrolled to
    * bottom of the element
    */
-  @Output() public scrollEnd = new EventEmitter<void>();
+  @Output()
+  public scrollEnd = new EventEmitter<void>();
 
   /**
    * Emits a new value on element scroll event
