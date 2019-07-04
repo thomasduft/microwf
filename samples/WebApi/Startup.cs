@@ -20,10 +20,6 @@ namespace WebApi
 
     public Startup(IConfiguration configuration)
     {
-      Log.Logger = new LoggerConfiguration().ReadFrom
-        .Configuration(configuration)
-        .CreateLogger();
-
       this.Configuration = configuration;
     }
 
@@ -57,8 +53,9 @@ namespace WebApi
         .AddDbContext<DomainContext>(o => o.UseSqlite(connection));
 
       // Identity
-      var authority = this.Configuration["IdentityServer.Authority"];
-      services.AddIdentityServices(authority);
+      var authority = this.GetAuthority();
+      var cert = Program.GetCertificate(this.Configuration);
+      services.AddIdentityServices(authority, cert);
 
       // Swagger
       services.AddSwaggerDocumentation();
@@ -109,6 +106,15 @@ namespace WebApi
       app.SubscribeMessageHandlers();
 
       app.UseMvcWithDefaultRoute();
+    }
+
+    private string GetAuthority()
+    {
+      var domainSettings = this.Configuration.GetSection("DomainSettings");
+      string schema = domainSettings.GetValue<string>("schema");
+      int port = domainSettings.GetValue<int>("port");
+
+      return $"{schema}://localhost:{port}";
     }
   }
 }
