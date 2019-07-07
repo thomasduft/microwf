@@ -2,6 +2,7 @@ notes:
 - rescedule a workflow instance in JobQueue again
 - api for JobQueue?!
 
+----------------------------------------------------------------------------------------------------
 self signed dev certificate:
 - https://www.humankode.com/asp-net-core/develop-locally-with-https-self-signed-certificates-and-asp-net-core
 
@@ -13,6 +14,8 @@ certutil -L -d sql:${HOME}/.pki/nssdb
 delete cert
   - certutil -D -d sql:${HOME}/.pki/nssdb -n "localhost"
 
+Import existing pfx cert in ubuntu:
+- https://www.helloitsliam.com/2016/03/30/installing-certificate-pfx-into-debian-linux/
 
 ----------------------------------------------------------------------------------------------------
 EF commands:
