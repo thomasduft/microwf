@@ -1,6 +1,7 @@
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Security.Cryptography.X509Certificates;
 
 namespace WebApi.Identity
@@ -40,6 +41,7 @@ namespace WebApi.Identity
           o.Authority = authority;
           o.RequireHttpsMetadata = false;
           o.ApiName = "api1";
+          o.JwtValidationClockSkew = TimeSpan.Zero;
         });
 
       return services;
