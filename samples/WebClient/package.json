@@ -4,22 +4,22 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config local.proxy.conf.js",
-    "build": "ng build",
+    "build": "ng build --prod",
     "build-webclient": "ng build --output-path=../../publish/wwwroot",
     "test": "ng test --watch=false",
     "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^8.0.3",
-    "@angular/common": "^8.0.3",
-    "@angular/compiler": "^8.0.3",
-    "@angular/core": "^8.0.3",
-    "@angular/forms": "^8.0.3",
+    "@angular/animations": "^8.2.2",
+    "@angular/common": "^8.2.2",
+    "@angular/compiler": "^8.2.2",
+    "@angular/core": "^8.2.2",
+    "@angular/forms": "^8.2.2",
     "@angular/http": "^7.2.15",
-    "@angular/platform-browser": "^8.0.3",
-    "@angular/platform-browser-dynamic": "^8.0.3",
-    "@angular/router": "^8.0.3",
+    "@angular/platform-browser": "^8.2.2",
+    "@angular/platform-browser-dynamic": "^8.2.2",
+    "@angular/router": "^8.2.2",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1",
@@ -27,10 +27,10 @@
     "font-awesome": "4.7.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.6",
-    "@angular/cli": "~8.0.6",
-    "@angular/compiler-cli": "~8.0.3",
-    "@angular/language-service": "~8.0.3",
+    "@angular-devkit/build-angular": "~0.802.2",
+    "@angular/cli": "~8.2.2",
+    "@angular/compiler-cli": "~8.2.2",
+    "@angular/language-service": "~8.2.2",
     "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
@@ -45,6 +45,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.3"
+    "typescript": "~3.5.3"
   }
 }

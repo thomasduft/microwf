@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -61,7 +62,8 @@ const ROUTES: Routes = [
     HomeComponent
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

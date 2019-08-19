@@ -3,6 +3,21 @@ notes:
 - api for JobQueue?!
 
 ----------------------------------------------------------------------------------------------------
+self signed dev certificate:
+- https://www.humankode.com/asp-net-core/develop-locally-with-https-self-signed-certificates-and-asp-net-core
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf -passin pass:MyDevCert
+sudo openssl pkcs12 -export -out ubuntu_localhost.pfx -inkey localhost.key -in localhost.crt
+
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "localhost" -i localhost.crt
+certutil -L -d sql:${HOME}/.pki/nssdb
+delete cert
+  - certutil -D -d sql:${HOME}/.pki/nssdb -n "localhost"
+
+Import existing pfx cert in ubuntu:
+- https://www.helloitsliam.com/2016/03/30/installing-certificate-pfx-into-debian-linux/
+
+----------------------------------------------------------------------------------------------------
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 

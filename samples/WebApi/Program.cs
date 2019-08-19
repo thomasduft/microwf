@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.IO;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebApi.Domain;
 
@@ -15,7 +19,7 @@ namespace WebApi
   {
     public static async Task Main(string[] args)
     {
-      var host = CreateWebHostBuilder(args).Build();
+      var host = CreateWebHostBuilder(args, GetConfig()).Build();
 
       // ensure database will be migrated
       using (var scope = host.Services.CreateScope())
@@ -36,24 +40,78 @@ namespace WebApi
       await host.RunAsync();
     }
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-      WebHost
+    public static X509Certificate2 GetCertificate(IConfiguration config)
+    {
+      var certificateSettings = config.GetSection("CertificateSettings");
+      string certificateFileName = certificateSettings.GetValue<string>("filename");
+      string certificatePassword = certificateSettings.GetValue<string>("password");
+
+      return new X509Certificate2(certificateFileName, certificatePassword);
+    }
+
+    private static IWebHostBuilder CreateWebHostBuilder(
+      string[] args,
+      IConfigurationRoot config
+    )
+    {
+      return WebHost
         .CreateDefaultBuilder(args)
-        .UseConfiguration(new ConfigurationBuilder()
-          .SetBasePath(Directory.GetCurrentDirectory())
-          .AddJsonFile(
-            "appsettings.json",
-            optional: false,
-            reloadOnChange: true
-          )
-          .AddJsonFile(
-            $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-            optional: true,
-            reloadOnChange: true
-          )
-          .Build())
+        .UseConfiguration(config)
+        .ConfigureKestrel(GetKestrelServerOptions(config))
         .UseShutdownTimeout(TimeSpan.FromSeconds(10))
         .UseStartup<Startup>()
-        .UseSerilog();
+        .UseSerilog((hostingContext, loggerConfiguration) =>
+          loggerConfiguration
+            .ReadFrom.Configuration(hostingContext.Configuration)
+            .Enrich.FromLogContext()
+            .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+        );
+    }
+
+    private static IConfigurationRoot GetConfig()
+    {
+      return new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddEnvironmentVariables()
+        .AddJsonFile(
+          "appsettings.json",
+          optional: false,
+          reloadOnChange: true
+        )
+        .AddJsonFile(
+          $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+          optional: true,
+          reloadOnChange: true
+        ).Build();
+    }
+
+    private static Action<KestrelServerOptions> GetKestrelServerOptions(IConfiguration config)
+    {
+      var isLinuxHosting = config.GetValue<bool>("IsLinuxHosting");
+      var domainSettings = config.GetSection("DomainSettings");
+      var unixSocket = domainSettings.GetValue<string>("unixSocket");
+      var port = domainSettings.GetValue<int>("port");
+
+      if (isLinuxHosting)
+      {
+        return options =>
+        {
+          options.AddServerHeader = false;
+          options.ListenUnixSocket(unixSocket, listenOptions =>
+          {
+            listenOptions.UseHttps(GetCertificate(config));
+          });
+        };
+      }
+
+      return options =>
+      {
+        options.AddServerHeader = false;
+        options.Listen(IPAddress.Any, port, listenOptions =>
+        {
+          listenOptions.UseHttps(GetCertificate(config));
+        });
+      };
+    }
   }
 }

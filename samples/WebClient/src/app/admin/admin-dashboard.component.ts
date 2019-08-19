@@ -18,7 +18,10 @@ import { PagingModel } from '../shared/services/models';
   selector: 'tw-admin-dashboard',
   providers: [WorkflowService],
   template: `
-  <div class="pane__left" twScroller (scrollEnd)="loadNextPage()">
+  <div class="pane__left"
+       twScroller
+       [offset]="50"
+       (scrollEnd)="loadNextPage()">
     <tw-list #list [rows]="workflows">
       <tw-header>
         <h3 i18n>Instances</h3>
