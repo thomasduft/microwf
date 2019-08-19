@@ -1,13 +1,29 @@
+# --------------------------------------------------------------------------------------------------
+# Creates a self signed certificate
+#
+# Call ps script with admin rights
+# Samples:
+# - .\create_cert.ps1
+# - .\create_cert.ps1 -issuer $env:computername
+# - .\create_cert.ps1 -issuer localhost -validityInYears 5
+# --------------------------------------------------------------------------------------------------
+param(
+  [string]$issuer = "localhost",
+  [int]$validityInYears = 21
+)
+
+$secret = "MicroWFApi"
+
 # setup certificate properties including the commonName (DNSName) property for Chrome 58+
 $certificate = New-SelfSignedCertificate `
-  -Subject localhost `
-  -DnsName localhost `
+  -Subject $issuer `
+  -DnsName $issuer `
   -KeyAlgorithm RSA `
   -KeyLength 2048 `
   -NotBefore (Get-Date) `
-  -NotAfter (Get-Date).AddYears(2) `
+  -NotAfter (Get-Date).AddYears($validityInYears) `
   -CertStoreLocation "cert:CurrentUser\My" `
-  -FriendlyName "Localhost Certificate for .NET Core" `
+  -FriendlyName "MicroWF Api" `
   -HashAlgorithm SHA256 `
   -KeyUsage DigitalSignature, KeyEncipherment, DataEncipherment `
   -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.1")
@@ -20,9 +36,9 @@ If (!(test-path $tmpPath)) {
 }
 
 # set certificate password here
-$pfxPassword = ConvertTo-SecureString -String "MyDevCert" -Force -AsPlainText
-$pfxFilePath = "c:\temp\localhost.pfx"
-$cerFilePath = "c:\temp\localhost.cer"
+$pfxPassword = ConvertTo-SecureString -String $secret -Force -AsPlainText
+$pfxFilePath = 'c:\temp\' + ($issuer) + '.pfx'
+$cerFilePath = 'c:\temp\' + ($issuer) + '.cer'
 
 # create pfx certificate
 Export-PfxCertificate -Cert $certificatePath -FilePath $pfxFilePath -Password $pfxPassword

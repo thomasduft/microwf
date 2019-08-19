@@ -87,12 +87,11 @@ namespace WebApi
 
     private static Action<KestrelServerOptions> GetKestrelServerOptions(IConfiguration config)
     {
-      var isLinuxHosting = config.GetValue<bool>("IsLinuxHosting");
       var domainSettings = config.GetSection("DomainSettings");
       var unixSocket = domainSettings.GetValue<string>("unixSocket");
       var port = domainSettings.GetValue<int>("port");
 
-      if (isLinuxHosting)
+      if (unixSocket != null)
       {
         return options =>
         {

@@ -97,7 +97,11 @@ namespace WebApi
             await context.Response.WriteAsync("There was an error");
           });
         });
+
+        app.UseHsts();
       }
+
+      app.UseHttpsRedirection();
 
       app.UseFileServer();
 
