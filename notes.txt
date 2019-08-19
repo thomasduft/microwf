@@ -4,6 +4,7 @@ notes:
 
 ----------------------------------------------------------------------------------------------------
 self signed dev certificate:
+- http://www.waynethompson.com.au/blog/dotnet-dev-certs-https/
 - https://www.humankode.com/asp-net-core/develop-locally-with-https-self-signed-certificates-and-asp-net-core
 
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf -passin pass:MyDevCert

@@ -36,7 +36,7 @@ namespace WebApi
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
-            .WithExposedHeaders("X-Pagination"); // see https://offering.solutions/blog/articles/2017/11/21/using-the-angular-material-paginator-with-aspnetcore-angular/#customercontroller
+            .WithExposedHeaders("X-Pagination");
         });
       })
         .AddMvc()
@@ -54,8 +54,9 @@ namespace WebApi
 
       // Identity
       var authority = this.GetAuthority();
-      var cert = Program.GetCertificate(this.Configuration);
-      services.AddIdentityServices(authority, cert);
+      // var cert = Program.GetCertificate(this.Configuration);
+      // services.AddIdentityServices(authority, cert);
+      services.AddIdentityServices(authority);
 
       // Swagger
       services.AddSwaggerDocumentation();

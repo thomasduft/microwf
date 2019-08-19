@@ -43,10 +43,16 @@ namespace WebApi
     public static X509Certificate2 GetCertificate(IConfiguration config)
     {
       var certificateSettings = config.GetSection("CertificateSettings");
+      if (certificateSettings == null) return null;
+
       string certificateFileName = certificateSettings.GetValue<string>("filename");
       string certificatePassword = certificateSettings.GetValue<string>("password");
+      if (!string.IsNullOrEmpty(certificateFileName) && !string.IsNullOrEmpty(certificatePassword))
+      {
+        return new X509Certificate2(certificateFileName, certificatePassword);
+      }
 
-      return new X509Certificate2(certificateFileName, certificatePassword);
+      return null;
     }
 
     private static IWebHostBuilder CreateWebHostBuilder(
@@ -90,26 +96,47 @@ namespace WebApi
       var domainSettings = config.GetSection("DomainSettings");
       var unixSocket = domainSettings.GetValue<string>("unixSocket");
       var port = domainSettings.GetValue<int>("port");
+      var cert = GetCertificate(config);
 
       if (unixSocket != null)
       {
         return options =>
         {
           options.AddServerHeader = false;
-          options.ListenUnixSocket(unixSocket, listenOptions =>
+          if (cert != null)
           {
-            listenOptions.UseHttps(GetCertificate(config));
-          });
+            options.ListenUnixSocket(unixSocket, listenOptions =>
+            {
+              listenOptions.UseHttps(GetCertificate(config));
+            });
+          }
+          else
+          {
+            options.Listen(IPAddress.Any, port, listenOptions =>
+            {
+              listenOptions.UseHttps();
+            });
+          }
         };
       }
 
       return options =>
       {
         options.AddServerHeader = false;
-        options.Listen(IPAddress.Any, port, listenOptions =>
+        if (cert != null)
         {
-          listenOptions.UseHttps(GetCertificate(config));
-        });
+          options.Listen(IPAddress.Any, port, listenOptions =>
+          {
+            listenOptions.UseHttps(cert);
+          });
+        }
+        else
+        {
+          options.Listen(IPAddress.Any, port, listenOptions =>
+          {
+            listenOptions.UseHttps();
+          });
+        }
       };
     }
   }
