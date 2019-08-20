@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -104,8 +103,9 @@ namespace tomware.Microwf.Engine
             LogHelper.SerializeObject(item)
           );
 
-          TriggerResult triggerResult = await ProcessItemAsync(item);
-          await this.HandleTriggerResult(triggerResult, item);
+          // Process item async, do not await it.
+          // Task.Run(() => this.ProcessItemInternal(item)).ConfigureAwait(false);
+          await this.ProcessItemInternal(item);
         }
         catch (Exception ex)
         {
@@ -187,6 +187,12 @@ namespace tomware.Microwf.Engine
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
         await service.DeleteAsync(item.Id);
       }
+    }
+
+    private async Task ProcessItemInternal(WorkItem item)
+    {
+      TriggerResult triggerResult = await ProcessItemAsync(item);
+      await this.HandleTriggerResult(triggerResult, item);
     }
 
     private async Task<TriggerResult> ProcessItemAsync(WorkItem item)
