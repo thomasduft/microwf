@@ -99,14 +99,21 @@ namespace tomware.Microwf.Engine
 
         try
         {
-          _logger.LogTrace($"Processing work item {item.ToString()}");
+          _logger.LogTrace(
+            "Processing work item {WorkItem}",
+            LogHelper.SerializeObject(item)
+          );
 
           TriggerResult triggerResult = await ProcessItemAsync(item);
           await this.HandleTriggerResult(triggerResult, item);
         }
         catch (Exception ex)
         {
-          _logger.LogError("Processing work item failed", ex, item);
+          _logger.LogError(
+            ex,
+            "Processing of work item {WorkItem} failed",
+            LogHelper.SerializeObject(item)
+          );
           item.Error = $"{ex.Message} - {ex.StackTrace}";
           item.Retries++;
 
@@ -172,7 +179,7 @@ namespace tomware.Microwf.Engine
 
     private async Task DeleteWorkItem(WorkItem item)
     {
-      _logger.LogTrace("Deleting work item", item);
+      _logger.LogTrace("Deleting work item {WorkItem}", item);
 
       using (var scope = _serviceScopeFactory.CreateScope())
       {
@@ -184,7 +191,7 @@ namespace tomware.Microwf.Engine
 
     private async Task<TriggerResult> ProcessItemAsync(WorkItem item)
     {
-      _logger.LogTrace("Processing work item", item);
+      _logger.LogTrace("Processing work item {WorkItem}", item);
 
       using (var scope = _serviceScopeFactory.CreateScope())
       {
