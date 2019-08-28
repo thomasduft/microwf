@@ -22,23 +22,19 @@ import { SlotComponentRegistry } from './slotComponentRegistry.service';
 export class SlotHostComponent implements OnInit, OnDestroy {
   private _componentRef: ComponentRef<any>;
   private _slot: Slot;
-  private _parentForm: FormGroup;
+  private _form: FormGroup;
 
   @Input()
   public set slot(slot: Slot) {
-    // if (this._componentRef) {
-    //   this._componentRef.instance.slot = slot;
-    // }
-
     this._slot = slot;
   }
 
   @Input()
-  public set parentForm(form: FormGroup) {
-    this._parentForm = form;
+  public set form(form: FormGroup) {
+    this._form = form;
   }
 
-  @ViewChild('slotContent', { static: false })
+  @ViewChild('slotContent', { read: ViewContainerRef, static: true })
   protected slotContent: ViewContainerRef;
 
   public constructor(
@@ -55,11 +51,14 @@ export class SlotHostComponent implements OnInit, OnDestroy {
           .get(ComponentFactoryResolver)
           .resolveComponentFactory(context.component);
 
-        this._componentRef = this.slotContent.createComponent(factory, this.slotContent.length);
+        this._componentRef = this.slotContent.createComponent(
+          factory,
+          this.slotContent.length
+        );
 
         // @Input bindings
         this._componentRef.instance.slot = this._slot;
-        this._componentRef.instance.parentForm = this._parentForm;
+        this._componentRef.instance.form = this._form;
       }
     }
   }
@@ -67,7 +66,7 @@ export class SlotHostComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     if (this._componentRef) {
       delete this._componentRef.instance.slot;
-      delete this._componentRef.instance.parentForm;
+      delete this._componentRef.instance.form;
 
       this._componentRef.destroy();
     }

@@ -21,14 +21,14 @@ import { SlotComponent } from './slot.component';
                 (click)="add()">+</button>
       </div>
       <div>
-        <table [formGroup]="parentForm">
+        <table [formGroup]="form">
           <tbody>
             <tr *ngFor="let row of rows.controls; let idx = index">
               <td *ngFor="let editor of slot.editors">
                 <tw-editor
                   [hideLabel]="true"
                   [editor]="editor"
-                  [parentForm]="rows.at(idx)">
+                  [form]="rows.at(idx)">
                 </tw-editor>
               </td>
               <td>
@@ -45,7 +45,7 @@ import { SlotComponent } from './slot.component';
 })
 export class ArraySlotComponent extends SlotComponent {
   public get rows(): FormArray {
-    return this.parentForm.get(this.slot.key) as FormArray;
+    return this.form as FormArray;
   }
 
   public constructor(

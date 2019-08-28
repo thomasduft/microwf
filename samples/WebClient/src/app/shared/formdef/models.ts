@@ -2,7 +2,7 @@ import { Input } from '@angular/core';
 import {
   ValidatorFn,
   Validators,
-  FormGroup
+  AbstractControl
 } from '@angular/forms';
 
 import { KEY_BINDING_BEHAVIOR } from './multi-select';
@@ -75,5 +75,5 @@ export class BaseSlotComponent {
   public slot: Slot;
 
   @Input()
-  public parentForm: FormGroup;
+  public form: AbstractControl;
 }

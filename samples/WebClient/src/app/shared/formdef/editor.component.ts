@@ -13,7 +13,7 @@ import { Editor } from './models';
   selector: 'tw-editor',
   template: `
   <div [ngSwitch]="editor.type"
-       [formGroup]="parentForm"
+       [formGroup]="form"
        [ngClass]="{ 'has-danger': control(editor.key).invalid,
                     'form-group': editor.type !== 'checkbox',
                     'checkbox': editor.type === 'checkbox' }">
@@ -104,9 +104,9 @@ export class EditorComponent {
   public editor: Editor;
 
   @Input()
-  public parentForm: FormGroup;
+  public form: FormGroup;
 
   public control(name: string): AbstractControl {
-    return this.parentForm.get(name);
+    return this.form.get(name);
   }
 }

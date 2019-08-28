@@ -18,7 +18,7 @@ import { FormdefService } from './formdef.service';
         (ngSubmit)="onSubmit()">
     <tw-slot *ngIf="slot"
              [slot]="slot"
-             [parentForm]="form">
+             [form]="form">
     </tw-slot>
     <div class="button__bar">
       <button *ngIf="showSave"

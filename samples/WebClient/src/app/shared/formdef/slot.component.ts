@@ -12,7 +12,7 @@ import { BaseSlotComponent } from './models';
         <tw-editor
           *ngFor="let editor of slot.editors"
           [editor]="editor"
-          [parentForm]="parentForm">
+          [form]="form">
         </tw-editor>
       </ng-container>
     </fieldset>
@@ -21,7 +21,7 @@ import { BaseSlotComponent } from './models';
     <ng-container *ngFor="let child of slot.children">
       <tw-slothost
         [slot]="child"
-        [parentForm]="parentForm">
+        [form]="form.get(child.key)">
       </tw-slothost>
     </ng-container>
   </ng-container>`
