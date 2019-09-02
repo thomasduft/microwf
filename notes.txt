@@ -1,6 +1,9 @@
 notes:
-- rescedule a workflow instance in JobQueue again
-- api for JobQueue?!
+- new samples
+  - docker compose based
+    - microwf server
+    - wicrowf frontend
+      - consider nginx angular reverse proxy
 
 ----------------------------------------------------------------------------------------------------
 self signed dev certificate:
@@ -26,12 +29,12 @@ dotnet ef migrations add <somename> -c DomainContext
 dotnet ef database update -c DomainContext
 dotnet ef database drop
 
-
+----------------------------------------------------------------------------------------------------
 Docker commands:
 - docker run -it --rm -p 5000:80 --name microwf tomware/microwf-playground:1.0.3
 - docker push <image>
 
-
+----------------------------------------------------------------------------------------------------
 NuGet Commands:
 dotnet pack src/microwf.Core -c Release /p:PackageVersion=1.0.0 -o ./../../dist/nupkgs
 
