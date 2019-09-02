@@ -2,7 +2,7 @@ notes:
 - new samples
   - docker compose based
     - microwf server
-    - wicrowf frontend
+    - microwf frontend
       - consider nginx angular reverse proxy
 
 ----------------------------------------------------------------------------------------------------
