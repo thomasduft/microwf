@@ -132,10 +132,7 @@ namespace WebApi
         }
         else
         {
-          options.Listen(IPAddress.Any, port, listenOptions =>
-          {
-            listenOptions.UseHttps();
-          });
+          options.Listen(IPAddress.Any, port);
         }
       };
     }
