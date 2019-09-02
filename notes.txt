@@ -4,6 +4,7 @@ notes:
     - microwf server
     - microwf frontend
       - consider nginx angular reverse proxy
+    - STS
 
 ----------------------------------------------------------------------------------------------------
 self signed dev certificate:
