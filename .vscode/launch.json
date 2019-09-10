@@ -37,6 +37,7 @@
       "name": ".NET Core Launch (ConsoleClient)",
       "type": "coreclr",
       "request": "launch",
+      "console":"externalTerminal",
       "preLaunchTask": "build-ConsoleClient",
       // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/netcoreapp2.2/ConsoleClient.dll",
