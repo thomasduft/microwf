@@ -15,7 +15,7 @@ namespace ConsoleClient
   //  - https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/console-webapiclient
   class Program
   {
-    static readonly string HOST = "http://localhost:5000";
+    static readonly string HOST = "https://localhost:5002";
     static readonly int AMOUNT_OF_STEPPERS = 100;
     static readonly bool USE_CLIENT_CREDENTIALS = true;
 

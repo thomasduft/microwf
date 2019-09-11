@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "samples\WebApi\We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "samples\ConsoleClient\ConsoleClient.csproj", "{362BB25A-E54E-484A-8A66-99F6BE0AC4F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{09798C40-0E34-46B7-A2BA-DFFB0CCCC1EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StepperApi", "samples\StepperApi\StepperApi.csproj", "{E76C0A23-954B-44B6-9560-07D9C32E255B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,18 @@ Global
 		{362BB25A-E54E-484A-8A66-99F6BE0AC4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362BB25A-E54E-484A-8A66-99F6BE0AC4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{362BB25A-E54E-484A-8A66-99F6BE0AC4F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E76C0A23-954B-44B6-9560-07D9C32E255B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E76C0A23-954B-44B6-9560-07D9C32E255B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E76C0A23-954B-44B6-9560-07D9C32E255B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E76C0A23-954B-44B6-9560-07D9C32E255B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DFF441D4-2EAB-47E1-8DF0-0DC2BECE05AB} = {09798C40-0E34-46B7-A2BA-DFFB0CCCC1EE}
+		{362BB25A-E54E-484A-8A66-99F6BE0AC4F0} = {09798C40-0E34-46B7-A2BA-DFFB0CCCC1EE}
+		{E76C0A23-954B-44B6-9560-07D9C32E255B} = {09798C40-0E34-46B7-A2BA-DFFB0CCCC1EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E5EA939-10CC-40AF-82EF-6C990F76C953}

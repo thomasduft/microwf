@@ -263,3 +263,4 @@ dist/
 samples/WebApi/microwf.sqlite
 lcov.info
 test/coverage.json
+samples/StepperApi/stepper.sqlite
