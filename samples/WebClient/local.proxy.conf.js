@@ -4,7 +4,7 @@ const PROXY_CONFIG = [
       "/connect",
       "/api"
     ],
-    target: "http://localhost:5000",
+    target: "https://localhost:5001",
     secure: false
   }
 ]
