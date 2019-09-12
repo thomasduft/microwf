@@ -58,7 +58,7 @@ namespace WebApi
           reloadOnChange: true
         )
         .AddJsonFile(
-          $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+          $"appsettings.Docker.json",
           optional: true,
           reloadOnChange: true
         )
