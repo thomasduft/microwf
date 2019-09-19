@@ -17,7 +17,8 @@ namespace StepperApi.Migrations
                     State = table.Column<string>(nullable: false),
                     Assignee = table.Column<string>(nullable: false),
                     Creator = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    Timestamp = table.Column<string>(rowVersion: true, nullable: true, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -103,6 +104,17 @@ namespace StepperApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.Sql(
+              @"
+              CREATE TRIGGER SetStepperTimestampOnUpdate
+              AFTER UPDATE ON Stepper
+              BEGIN
+                  UPDATE Stepper
+                  SET Timestamp = CURRENT_TIMESTAMP
+                  WHERE rowid = NEW.rowid;
+              END"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkflowHistory_WorkflowId",

@@ -9,7 +9,7 @@ using StepperApi.Domain;
 namespace StepperApi.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20190911065907_Initial")]
+    [Migration("20190919143737_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,11 @@ namespace StepperApi.Migrations
 
                     b.Property<string>("State")
                         .IsRequired();
+
+                    b.Property<string>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Type")
                         .IsRequired();

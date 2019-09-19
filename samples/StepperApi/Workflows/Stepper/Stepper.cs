@@ -25,6 +25,9 @@ namespace StepperApi.Workflows.Stepper
     [Required]
     public string Name { get; set; }
 
+    [Timestamp]
+    public byte[] Timestamp { get; set; }
+
     public static Stepper Create(string creator, string name)
     {
       return new Stepper

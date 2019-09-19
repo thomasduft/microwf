@@ -33,6 +33,11 @@ namespace StepperApi.Migrations
                     b.Property<string>("State")
                         .IsRequired();
 
+                    b.Property<string>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
                     b.Property<string>("Type")
                         .IsRequired();
 
