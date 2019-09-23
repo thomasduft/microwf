@@ -9,6 +9,8 @@ namespace StepperApi.Domain
 {
   public class DomainContext : EngineDbContext
   {
+    public DbSet<Stepper> Steppers { get; set; }
+
     public DomainContext(DbContextOptions<DomainContext> options) : base(options)
     { }
 
@@ -31,8 +33,6 @@ namespace StepperApi.Domain
         }
       }
     }
-
-    public DbSet<Stepper> Steppers { get; set; }
   }
 
   public class SqliteTimestampConverter : ValueConverter<byte[], string>
@@ -41,9 +41,10 @@ namespace StepperApi.Domain
         v => v == null ? null : ToDb(v),
         v => v == null ? null : FromDb(v))
     { }
-    static byte[] FromDb(string v) =>
+    public static byte[] FromDb(string v) =>
         v.Select(c => (byte)c).ToArray(); // Encoding.ASCII.GetString(v)
-    static string ToDb(byte[] v) =>
+
+    public static string ToDb(byte[] v) =>
         new string(v.Select(b => (char)b).ToArray()); // Encoding.ASCII.GetBytes(v))
   }
 }

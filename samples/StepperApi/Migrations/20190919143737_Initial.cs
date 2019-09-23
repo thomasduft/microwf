@@ -129,6 +129,10 @@ namespace StepperApi.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(
+              @"DROP TRIGGER SetStepperTimestampOnUpdate"
+            );
+
             migrationBuilder.DropTable(
                 name: "Stepper");
 
