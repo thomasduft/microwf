@@ -13,13 +13,13 @@ namespace tomware.Microwf.Engine
     /// Returns a list of upcomming work items.
     /// </summary>
     /// <returns></returns>
-    Task<PaginatedList<WorkItem>> GetUpCommingsAsync(PagingParameters pagingParameters);
+    Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(PagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a list of failed work items.
     /// </summary>
     /// <returns></returns>
-    Task<PaginatedList<WorkItem>> GetFailedAsync(PagingParameters pagingParameters);
+    Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(PagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a list of persisted WorkItems.
@@ -45,7 +45,7 @@ namespace tomware.Microwf.Engine
     /// Reschedules an existing WorkItem.
     /// </summary>
     /// <returns></returns>
-    Task<int> Reschedule(WorkItemViewModel model);
+    Task<int> Reschedule(WorkItemInfoViewModel model);
   }
 
   public class WorkItemService<TContext> : IWorkItemService where TContext : EngineDbContext
@@ -62,7 +62,7 @@ namespace tomware.Microwf.Engine
       _logger = logger;
     }
 
-    public async Task<PaginatedList<WorkItem>> GetUpCommingsAsync(PagingParameters pagingParameters)
+    public async Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(PagingParameters pagingParameters)
     {
       var now = SystemTime.Now();
 
@@ -78,15 +78,15 @@ namespace tomware.Microwf.Engine
         .AsNoTracking()
         .ToListAsync<WorkItem>();
 
-      return new PaginatedList<WorkItem>(
-        items,
+      return new PaginatedList<WorkItemViewModel>(
+        ViewModelMapper.ToWorkItemViewModelList(items),
         count,
         pagingParameters.PageIndex,
         pagingParameters.PageSize
       );
     }
 
-    public async Task<PaginatedList<WorkItem>> GetFailedAsync(PagingParameters pagingParameters)
+    public async Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(PagingParameters pagingParameters)
     {
       var count = _context.WorkItems
         .Where(wi => wi.Retries > Constants.WORKITEM_RETRIES)
@@ -98,8 +98,8 @@ namespace tomware.Microwf.Engine
         .AsNoTracking()
         .ToListAsync<WorkItem>();
 
-      return new PaginatedList<WorkItem>(
-        items,
+      return new PaginatedList<WorkItemViewModel>(
+        ViewModelMapper.ToWorkItemViewModelList(items),
         count,
         pagingParameters.PageIndex,
         pagingParameters.PageSize
@@ -136,7 +136,7 @@ namespace tomware.Microwf.Engine
       await _context.SaveChangesAsync();
     }
 
-    public async Task<int> Reschedule(WorkItemViewModel model)
+    public async Task<int> Reschedule(WorkItemInfoViewModel model)
     {
       var item = await _context.WorkItems.FindAsync(model.Id);
 

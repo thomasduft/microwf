@@ -37,7 +37,7 @@ namespace tomware.Microwf.Engine
     /// Returns a snapshot of the current queued work items.
     /// </summary>
     /// <returns></returns>
-    IEnumerable<WorkItem> GetSnapshot();
+    IEnumerable<WorkItemViewModel> GetSnapshot();
   }
 
   public class JobQueueService : IJobQueueService
@@ -148,9 +148,9 @@ namespace tomware.Microwf.Engine
       await this.PersistWorkItemsAsync(Items.ToArray());
     }
 
-    public IEnumerable<WorkItem> GetSnapshot()
+    public IEnumerable<WorkItemViewModel> GetSnapshot()
     {
-      return this.Items.ToArray();
+      return ViewModelMapper.ToWorkItemViewModelList(this.Items.ToArray());
     }
 
     private WorkItem Dequeue()
