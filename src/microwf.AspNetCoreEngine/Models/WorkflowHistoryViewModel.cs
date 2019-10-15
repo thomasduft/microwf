@@ -1,14 +1,11 @@
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace tomware.Microwf.Engine
 {
-  [Table("WorkflowHistory")]
-  public partial class WorkflowHistory
+  public class WorkflowHistoryViewModel
   {
-    [Key]
+    [Required]
     public int Id { get; set; }
 
     [Required]
@@ -23,8 +20,5 @@ namespace tomware.Microwf.Engine
     public string UserName { get; set; }
 
     public int WorkflowId { get; set; }
-
-    [JsonIgnore]
-    public Workflow Workflow { get; set; }
   }
 }

@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
+  public class ProcessorConfiguration
+  {
+    public bool Enabled { get; set; }
+    public int Interval { get; set; }
+  }
+
   public class WorkflowProcessor : BackgroundService
   {
     private readonly ILogger<WorkflowProcessor> _logger;

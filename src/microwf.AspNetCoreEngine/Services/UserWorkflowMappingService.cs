@@ -17,6 +17,7 @@ namespace tomware.Microwf.Engine
   public class UserWorkflowMapping
   {
     public string UserName { get; set; }
+
     public IList<string> WorkflowDefinitions { get; set; }
   }
 

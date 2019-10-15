@@ -99,10 +99,10 @@ namespace WebApi
           });
         });
 
-        app.UseHsts();
+        // app.UseHsts();
       }
 
-      app.UseHttpsRedirection();
+      // app.UseHttpsRedirection();
 
       app.UseFileServer();
 

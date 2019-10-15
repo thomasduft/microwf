@@ -30,14 +30,14 @@ namespace tomware.Microwf.Engine
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<IEnumerable<WorkflowHistory>> GetHistoryAsync(int id);
+    Task<IEnumerable<WorkflowHistoryViewModel>> GetHistoryAsync(int id);
 
     /// <summary>
     /// Returns the workflow variables for a workflow instance.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<IEnumerable<WorkflowVariable>> GetVariablesAsync(int id);
+    Task<IEnumerable<WorkflowVariableViewModel>> GetVariablesAsync(int id);
 
     /// <summary>
     /// Returns a workflow instance.
@@ -142,7 +142,7 @@ namespace tomware.Microwf.Engine
       return ToWorkflowViewModel(workflow);
     }
 
-    public async Task<IEnumerable<WorkflowHistory>> GetHistoryAsync(int id)
+    public async Task<IEnumerable<WorkflowHistoryViewModel>> GetHistoryAsync(int id)
     {
       var workflow = await _context.Workflows
         .Include(h => h.WorkflowHistories)
@@ -151,10 +151,12 @@ namespace tomware.Microwf.Engine
         .FirstAsync();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
-      return workflow.WorkflowHistories.OrderByDescending(h => h.Created);
+      var viewModels = workflow.WorkflowHistories.OrderByDescending(h => h.Created);
+
+      return ViewModelMapper.ToWorkflowHistoryViewModelList(viewModels);
     }
 
-    public async Task<IEnumerable<WorkflowVariable>> GetVariablesAsync(int id)
+    public async Task<IEnumerable<WorkflowVariableViewModel>> GetVariablesAsync(int id)
     {
       var workflow = await _context.Workflows
         .Include(v => v.WorkflowVariables)
@@ -163,7 +165,9 @@ namespace tomware.Microwf.Engine
         .FirstAsync();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
-      return workflow.WorkflowVariables.OrderBy(v => v.Type);
+      var viewModels = workflow.WorkflowVariables.OrderBy(v => v.Type);
+
+      return ViewModelMapper.ToWorkflowVariableViewModelList(viewModels);
     }
 
     public async Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId)

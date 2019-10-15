@@ -1,8 +1,22 @@
-using System.Linq;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace tomware.Microwf.Engine
 {
+  public class WorkflowConfiguration
+  {
+    public List<WorkflowType> Types { get; set; }
+  }
+
+  public class WorkflowType
+  {
+    public string Type { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Route { get; set; }
+  }
+
   public interface IWorkflowDefinitionViewModelCreator
   {
     /// <summary>

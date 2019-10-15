@@ -72,8 +72,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/history")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowHistory>), 200)]
-    public async Task<ActionResult<IEnumerable<WorkflowHistory>>> GetHistory(int id)
+    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowHistoryViewModel>>> GetHistory(int id)
     {
       var result = await _service.GetHistoryAsync(id);
 
@@ -82,8 +82,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/variables")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowVariable>), 200)]
-    public async Task<ActionResult<IEnumerable<WorkflowVariable>>> GetVariables(int id)
+    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableViewModel>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowVariableViewModel>>> GetVariables(int id)
     {
       var result = await _service.GetVariablesAsync(id);
 
