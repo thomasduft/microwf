@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,30 +8,25 @@ using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkflowService<TContext> : IWorkflowService where TContext : EngineDbContext
+  public class WorkflowService<TContext> : IWorkflowService
+    where TContext : EngineDbContext
   {
     private readonly EngineDbContext _context;
-    private readonly ILogger<WorkflowService<TContext>> _logger;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
     private readonly IUserWorkflowMappingService _userWorkflowMappingService;
     private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
-    private readonly IUserContextService _userContext;
 
     public WorkflowService(
       TContext context,
-      ILogger<WorkflowService<TContext>> logger,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
       IUserWorkflowMappingService userWorkflowMappingService,
-      IWorkflowDefinitionViewModelCreator viewModelCreator,
-      IUserContextService userContext
+      IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {
       _context = context ?? throw new ArgumentNullException(nameof(context));
-      _logger = logger;
       _workflowDefinitionProvider = workflowDefinitionProvider;
       _userWorkflowMappingService = userWorkflowMappingService;
       _viewModelCreator = viewModelCreator;
-      _userContext = userContext;
     }
 
     public async Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(
