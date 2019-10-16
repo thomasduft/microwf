@@ -28,7 +28,7 @@ namespace tomware.Microwf.Engine
 
     public override string ToString()
     {
-      return $"Id: ${Id}, TriggerName: {TriggerName}, EntityId: {EntityId}, WorkflowType: {WorkflowType}";
+      return $@"Id: ${this.Id}, TriggerName: {this.TriggerName}, EntityId: {this.EntityId}, WorkflowType: {this.WorkflowType}";
     }
 
     public static WorkItem Create(
@@ -44,9 +44,7 @@ namespace tomware.Microwf.Engine
         EntityId = entityId,
         WorkflowType = workflowType,
         Retries = 0,
-        DueDate = dueDate.HasValue
-          ? dueDate.Value
-          : SystemTime.Now()
+        DueDate = dueDate ?? SystemTime.Now()
       };
     }
   }

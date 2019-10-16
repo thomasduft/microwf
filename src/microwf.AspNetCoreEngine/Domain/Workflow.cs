@@ -38,8 +38,7 @@ namespace tomware.Microwf.Engine
       int correlationId,
       string type,
       string state,
-      string assignee,
-      DateTime? dueDate = null
+      string assignee
     )
     {
       return new Workflow

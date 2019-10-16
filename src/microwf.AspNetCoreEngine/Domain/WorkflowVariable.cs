@@ -35,7 +35,7 @@ namespace tomware.Microwf.Engine
 
     internal void UpdateContent(WorkflowVariableBase variable)
     {
-      Content = JsonConvert.SerializeObject(variable);
+      this.Content = JsonConvert.SerializeObject(variable);
     }
   }
 }
