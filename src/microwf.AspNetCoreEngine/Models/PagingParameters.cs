@@ -71,9 +71,9 @@ namespace tomware.Microwf.Engine
 
     public PaginatedList(IEnumerable<T> items, int count, int pageIndex, int pageSize)
     {
-      PageIndex = pageIndex;
-      TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-      AllItemsCount = count;
+      this.PageIndex = pageIndex;
+      this.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+      this.AllItemsCount = count;
 
       this.AddRange(items);
     }
@@ -82,7 +82,7 @@ namespace tomware.Microwf.Engine
     {
       get
       {
-        return PageIndex > 1;
+        return this.PageIndex > 1;
       }
     }
 
@@ -90,7 +90,7 @@ namespace tomware.Microwf.Engine
     {
       get
       {
-        return PageIndex < TotalPages;
+        return this.PageIndex < this.TotalPages;
       }
     }
   }

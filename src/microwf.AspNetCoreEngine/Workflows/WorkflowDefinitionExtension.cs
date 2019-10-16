@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,6 @@ namespace tomware.Microwf.Core
       string rankDir = ""
     )
     {
-      var currentState = instance.State;
       var history = instance.WorkflowHistories;
 
       var sb = new StringBuilder();
@@ -22,7 +20,7 @@ namespace tomware.Microwf.Core
       sb.AppendLine($"digraph {workflow.Type} {{");
       if (!string.IsNullOrEmpty(rankDir)) sb.AppendLine($"  rankdir = {rankDir};");
 
-      // sb.AppendLine($"  {currentState} [ style=\"filled\", color=\"#e95420\" ];");
+      // sb.AppendLine($"  {instance.State} [ style=\"filled\", color=\"#e95420\" ];");
 
       foreach (var t in workflow.Transitions)
       {
