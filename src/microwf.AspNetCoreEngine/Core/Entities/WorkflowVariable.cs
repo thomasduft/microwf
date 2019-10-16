@@ -6,11 +6,8 @@ using tomware.Microwf.Core;
 namespace tomware.Microwf.Engine
 {
   [Table("WorkflowVariable")]
-  public partial class WorkflowVariable
+  public partial class WorkflowVariable : EngineEntity
   {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public string Type { get; set; }
 

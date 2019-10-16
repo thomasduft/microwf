@@ -1,13 +1,11 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using tomware.Microwf.Engine;
-using WebApi.Workflows.Issue;
 
 namespace WebApi.Workflows.Issue
 {
   [Table("Issue")]
-  public partial class Issue : IEntityWorkflow
+  public partial class Issue : IAssignableWorkflow
   {
     [Key]
     public int Id { get; set; }

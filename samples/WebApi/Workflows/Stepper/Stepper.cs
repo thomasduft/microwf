@@ -5,7 +5,7 @@ using tomware.Microwf.Engine;
 namespace WebApi.Workflows.Stepper
 {
   [Table("Stepper")]
-  public partial class Stepper : IEntityWorkflow
+  public partial class Stepper : IAssignableWorkflow
   {
     [Key]
     public int Id { get; set; }

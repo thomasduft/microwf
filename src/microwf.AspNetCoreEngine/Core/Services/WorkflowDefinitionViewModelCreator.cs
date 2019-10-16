@@ -17,16 +17,6 @@ namespace tomware.Microwf.Engine
     public string Route { get; set; }
   }
 
-  public interface IWorkflowDefinitionViewModelCreator
-  {
-    /// <summary>
-    /// Creates the WorkflowDefinitionViewModel based on the workflow type.
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    WorkflowDefinitionViewModel CreateViewModel(string type);
-  }
-
   public class ConfigurationWorkflowDefinitionViewModelCreator
     : IWorkflowDefinitionViewModelCreator
   {

@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 namespace tomware.Microwf.Engine
 {
   [Table("Workflow")]
-  public partial class Workflow
+  public partial class Workflow : EngineEntity
   {
     [Key]
     public int Id { get; set; }

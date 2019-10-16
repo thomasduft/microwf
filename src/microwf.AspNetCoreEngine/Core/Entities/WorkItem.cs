@@ -5,11 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace tomware.Microwf.Engine
 {
   [Table("WorkItem")]
-  public partial class WorkItem
+  public partial class WorkItem : EngineEntity
   {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public string TriggerName { get; set; }
 

@@ -7,47 +7,6 @@ using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
-  public interface IWorkItemService
-  {
-    /// <summary>
-    /// Returns a list of upcomming work items.
-    /// </summary>
-    /// <returns></returns>
-    Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(PagingParameters pagingParameters);
-
-    /// <summary>
-    /// Returns a list of failed work items.
-    /// </summary>
-    /// <returns></returns>
-    Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(PagingParameters pagingParameters);
-
-    /// <summary>
-    /// Returns a list of persisted WorkItems.
-    /// </summary>
-    /// <returns></returns>
-    Task<IEnumerable<WorkItem>> ResumeWorkItemsAsync();
-
-    /// <summary>
-    /// Saves the WorkItem collection.
-    /// </summary>
-    /// <param name="items"></param>
-    /// <returns></returns>
-    Task PersistWorkItemsAsync(IEnumerable<WorkItem> items);
-
-    /// <summary>
-    /// Deletes a persisted WorkItem by its id.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    Task<int> DeleteAsync(int id);
-
-    /// <summary>
-    /// Reschedules an existing WorkItem.
-    /// </summary>
-    /// <returns></returns>
-    Task<int> Reschedule(WorkItemInfoViewModel model);
-  }
-
   public class WorkItemService<TContext> : IWorkItemService where TContext : EngineDbContext
   {
     private readonly EngineDbContext _context;
@@ -136,7 +95,7 @@ namespace tomware.Microwf.Engine
       await _context.SaveChangesAsync();
     }
 
-    public async Task<int> Reschedule(WorkItemInfoViewModel model)
+    public async Task Reschedule(WorkItemInfoViewModel model)
     {
       var item = await _context.WorkItems.FindAsync(model.Id);
 
@@ -148,18 +107,16 @@ namespace tomware.Microwf.Engine
 
       _context.WorkItems.Update(item);
 
-      return await _context.SaveChangesAsync();
+      await _context.SaveChangesAsync();
     }
 
-    public async Task<int> DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
       var item = await _context.WorkItems.FindAsync(id);
-      if (item == null) return -1;
+      if (item == null) return;
 
       _context.WorkItems.Remove(item);
       await _context.SaveChangesAsync();
-
-      return item.Id;
     }
   }
 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>tomware.Microwf.AspNetCoreEngine</AssemblyName>
-    <RootNamespace>tomware.Microwf.AspNetCoreEngine</RootNamespace>
+    <RootNamespace>tomware.Microwf.Engine</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>
       An ASP.NET Core with EF Core way of leveraging tomware.Microwf.Core in a Web Api.

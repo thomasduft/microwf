@@ -21,16 +21,6 @@ namespace tomware.Microwf.Engine
     public IList<string> WorkflowDefinitions { get; set; }
   }
 
-  public interface IUserWorkflowMappingService
-  {
-    /// <summary>
-    /// Returns only those workflow definitions for which the current user has permissions. 
-    /// </summary>
-    /// <param name="workflowDefinitions"></param>
-    /// <returns></returns>
-    IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> workflowDefinitions);
-  }
-
   public class NoopUserWorkflowMappingService : IUserWorkflowMappingService
   {
     public IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> definitions)

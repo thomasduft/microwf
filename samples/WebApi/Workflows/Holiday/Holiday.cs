@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using tomware.Microwf.Engine;
-using WebApi.Workflows.Holiday;
 
 namespace WebApi.Workflows.Holiday
 {
   [Table("Holiday")]
-  public partial class Holiday : IEntityWorkflow
+  public partial class Holiday : IAssignableWorkflow
   {
     [Key]
     public int Id { get; set; }

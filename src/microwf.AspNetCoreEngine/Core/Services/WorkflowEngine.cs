@@ -9,42 +9,6 @@ using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public interface IWorkflowEngine
-  {
-    /// <summary>
-    /// Returns the possible triggers for certain workflow instance.
-    /// </summary>
-    /// <param name="instance"></param>
-    /// <param name="variables"></param>
-    /// <returns></returns>
-    Task<IEnumerable<TriggerResult>> GetTriggersAsync(
-      IWorkflow instance,
-      Dictionary<string, WorkflowVariableBase> variables = null
-    );
-
-    /// <summary>
-    /// Checks whether a certain trigger can be executed.
-    /// </summary>
-    /// <param name="param"></param>
-    /// <returns></returns>
-    Task<TriggerResult> CanTriggerAsync(TriggerParam param);
-
-    /// <summary>
-    /// Triggers the desired trigger for a certain workflow instance.
-    /// </summary>
-    /// <param name="param"></param>
-    /// <returns></returns>
-    Task<TriggerResult> TriggerAsync(TriggerParam param);
-
-    /// <summary>
-    /// Returns the desired workflow instance if existing.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    IWorkflow Find(int id, Type type);
-  }
-
   public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : EngineDbContext
   {
     private readonly EngineDbContext _context;
@@ -95,7 +59,7 @@ namespace tomware.Microwf.Engine
         LogHelper.SerializeObject(param.Instance)
        );
 
-      var result = param.Instance is IEntityWorkflow
+      var result = param.Instance is IWorkflowInstanceEntity
         ? await this.TriggerForPersistingInstance(param)
         : this.TriggerForNonPersistingInstance(param);
 
@@ -134,7 +98,7 @@ namespace tomware.Microwf.Engine
     {
       TriggerResult result;
 
-      var entity = param.Instance as IEntityWorkflow;
+      var entity = param.Instance as IWorkflowInstanceEntity;
       using (var transaction = _context.Database.BeginTransaction())
       {
         try
@@ -144,11 +108,10 @@ namespace tomware.Microwf.Engine
 
           await _context.SaveChangesAsync(); // so entity id gets resolved!
 
-          workflow = FindOrCreate(
+          workflow = this.FindOrCreate(
             entity.Id,
             param.Instance.Type,
-            param.Instance.State,
-            entity.Assignee
+            param.Instance.State
           );
 
           EnsureWorkflowVariables(workflow, param);
@@ -188,7 +151,7 @@ namespace tomware.Microwf.Engine
       return result;
     }
 
-    private Workflow FindOrCreate(int id, string type, string state, string assignee)
+    private Workflow FindOrCreate(int id, string type, string state, string assignee = null)
     {
       var workflow = _context.Workflows
         .Include(v => v.WorkflowVariables)
@@ -227,14 +190,14 @@ namespace tomware.Microwf.Engine
       }
     }
 
-    private async Task PersistWorkflow(Workflow workflow, TriggerParam triggerParam)
+    private async Task PersistWorkflow(Workflow workflow, TriggerParam param)
     {
       if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
       // persisting workflow variables
-      if (triggerParam.HasVariables)
+      if (param.HasVariables)
       {
-        foreach (var v in triggerParam.Variables)
+        foreach (var v in param.Variables)
         {
           var variable = workflow.WorkflowVariables
             .FirstOrDefault(variables => variables.Type == v.Key);
@@ -251,23 +214,24 @@ namespace tomware.Microwf.Engine
       }
 
       // keeping workflow entity nsync
-      var entityWorkflow = triggerParam.Instance as IEntityWorkflow;
-      if (entityWorkflow != null)
+      var entity = param.Instance as IWorkflowInstanceEntity;
+      var assignableEntity = param.Instance as IAssignableWorkflow;
+      if (entity != null)
       {
-        workflow.Type = entityWorkflow.Type;
-        workflow.Assignee = entityWorkflow.Assignee;
+        workflow.Type = entity.Type;
+        workflow.Assignee = assignableEntity.Assignee;
 
-        workflow.AddHistoryItem(workflow.State, entityWorkflow.State, _userContext.UserName);
-        workflow.State = entityWorkflow.State;
+        workflow.AddHistoryItem(workflow.State, entity.State, _userContext.UserName);
+        workflow.State = entity.State;
       }
 
-      if (await WorkflowIsCompleted(triggerParam))
+      if (await this.WorkflowIsCompleted(param))
       {
         workflow.Completed = SystemTime.Now();
       }
     }
 
-    private void CreateWorkItemEntry(AutoTrigger autoTrigger, IEntityWorkflow entity)
+    private void CreateWorkItemEntry(AutoTrigger autoTrigger, IWorkflowInstanceEntity entity)
     {
       var workItem = WorkItem.Create(
         autoTrigger.Trigger,

@@ -107,10 +107,9 @@ namespace microwf.Tests.AspNetCoreEngine
       var service = new WorkItemService<TestDbContext>(context, logger);
 
       // Act
-      var result = await service.DeleteAsync(1);
+      await service.DeleteAsync(1);
 
       // Assert
-      Assert.AreEqual(1, result);
       Assert.AreEqual(1, context.WorkItems.Count());
       Assert.AreEqual(2, context.WorkItems.First().Id);
     }

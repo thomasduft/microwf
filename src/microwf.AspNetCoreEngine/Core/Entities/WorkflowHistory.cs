@@ -6,11 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace tomware.Microwf.Engine
 {
   [Table("WorkflowHistory")]
-  public partial class WorkflowHistory
+  public partial class WorkflowHistory : EngineEntity
   {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public DateTime Created { get; set; }
 
