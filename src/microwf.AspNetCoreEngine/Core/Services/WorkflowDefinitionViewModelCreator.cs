@@ -20,18 +20,18 @@ namespace tomware.Microwf.Engine
   public class ConfigurationWorkflowDefinitionViewModelCreator
     : IWorkflowDefinitionViewModelCreator
   {
-    private readonly WorkflowConfiguration _workflowConfiguration;
+    private readonly WorkflowConfiguration workflowConfiguration;
 
     public ConfigurationWorkflowDefinitionViewModelCreator(
       IOptions<WorkflowConfiguration> workflows
     )
     {
-      _workflowConfiguration = workflows.Value;
+      this.workflowConfiguration = workflows.Value;
     }
 
     public WorkflowDefinitionViewModel CreateViewModel(string type)
     {
-      var workflowType = _workflowConfiguration
+      var workflowType = this.workflowConfiguration
         .Types
         .First(t => t.Type == type);
 

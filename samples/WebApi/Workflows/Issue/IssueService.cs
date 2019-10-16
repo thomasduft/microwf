@@ -28,12 +28,12 @@ namespace WebApi.Workflows.Issue
   public class IssueService : IIssueService
   {
     private readonly DomainContext _context;
-    private readonly IWorkflowEngine _workflowEngine;
+    private readonly IWorkflowEngineService _workflowEngine;
     private readonly IUserContextService _userContext;
 
     public IssueService(
       DomainContext context,
-      IWorkflowEngine workflowEngine,
+      IWorkflowEngineService workflowEngine,
       IUserContextService userContext
     )
     {

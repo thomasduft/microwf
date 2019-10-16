@@ -29,7 +29,7 @@ namespace tomware.Microwf.Engine
       services.AddScoped<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
       services.AddTransient<IUserContextService, UserContextService>();
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
-      services.AddTransient<IWorkflowEngine, WorkflowEngine<TContext>>();
+      services.AddTransient<IWorkflowEngineService, WorkflowEngineService<TContext>>();
       services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
       services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();

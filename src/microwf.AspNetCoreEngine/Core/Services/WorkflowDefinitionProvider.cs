@@ -7,21 +7,21 @@ namespace tomware.Microwf.Engine
 {
   public class WorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {
-    private readonly IEnumerable<IWorkflowDefinition> _workflowDefinitions;
+    private readonly IEnumerable<IWorkflowDefinition> workflowDefinitions;
 
     public WorkflowDefinitionProvider(IEnumerable<IWorkflowDefinition> workflowDefinitions)
     {
-      _workflowDefinitions = workflowDefinitions;
+      this.workflowDefinitions = workflowDefinitions;
     }
 
     public IWorkflowDefinition GetWorkflowDefinition(string type)
     {
-      return _workflowDefinitions.First(t => t.Type == type);
+      return this.workflowDefinitions.First(t => t.Type == type);
     }
 
     public IEnumerable<IWorkflowDefinition> GetWorkflowDefinitions()
     {
-      return _workflowDefinitions;
+      return this.workflowDefinitions;
     }
 
     public void RegisterWorkflowDefinition(IWorkflowDefinition workflowDefinition)

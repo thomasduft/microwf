@@ -16,7 +16,7 @@ namespace microwf.Tests.AspNetCoreEngine
   public class WorkflowEngineTest
   {
     public TestDbContext Context { get; set; }
-    public IWorkflowEngine WorkflowEngine { get; set; }
+    public IWorkflowEngineService WorkflowEngine { get; set; }
 
     [TestInitialize]
     public void Initialize()
@@ -26,8 +26,8 @@ namespace microwf.Tests.AspNetCoreEngine
 
       var diHelper = new DITestHelper();
       var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkflowEngine<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkflowEngine<TestDbContext>>();
+      ILogger<WorkflowEngineService<TestDbContext>> logger = loggerFactory
+        .CreateLogger<WorkflowEngineService<TestDbContext>>();
 
       SimpleWorkflowDefinitionProvider.Instance
        .RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
@@ -38,7 +38,7 @@ namespace microwf.Tests.AspNetCoreEngine
 
       IUserContextService userContextService = new TestUserContextService();
 
-      this.WorkflowEngine = new WorkflowEngine<TestDbContext>(
+      this.WorkflowEngine = new WorkflowEngineService<TestDbContext>(
         Context,
         logger,
         SimpleWorkflowDefinitionProvider.Instance,

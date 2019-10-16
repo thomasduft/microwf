@@ -31,22 +31,22 @@ namespace tomware.Microwf.Engine
 
   public class InMemoryUserWorkflowMappingService : IUserWorkflowMappingService
   {
-    private readonly IUserContextService _userContext;
-    private readonly UserWorkflowMappingsStore _userWorkflowsStore;
+    private readonly IUserContextService userContext;
+    private readonly UserWorkflowMappingsStore userWorkflowsStore;
 
     public InMemoryUserWorkflowMappingService(
       IUserContextService userContext,
       UserWorkflowMappingsStore userWorkflowsStore
     )
     {
-      _userContext = userContext;
-      _userWorkflowsStore = userWorkflowsStore;
+      this.userContext = userContext;
+      this.userWorkflowsStore = userWorkflowsStore;
     }
 
     public IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> definitions)
     {
-      var userWorkflow = _userWorkflowsStore.Workflows
-        .FirstOrDefault(w => w.UserName == _userContext.UserName);
+      var userWorkflow = this.userWorkflowsStore.Workflows
+        .FirstOrDefault(w => w.UserName == this.userContext.UserName);
 
       return definitions.Where(d => userWorkflow.WorkflowDefinitions.Contains(d.Type));
     }

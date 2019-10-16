@@ -6,14 +6,14 @@ namespace tomware.Microwf.Engine
   public class UserContextService : IUserContextService
   {
     public static readonly string SYSTEM_USER = "SYSTEM";
-    private readonly IHttpContextAccessor _context;
+    private readonly IHttpContextAccessor context;
 
     public string UserName
     {
       get
       {
-        var userName = _context.HttpContext != null 
-          ? _context.HttpContext.User?.Identity?.Name 
+        var userName = this.context.HttpContext != null
+          ? this.context.HttpContext.User?.Identity?.Name
           : SYSTEM_USER;
         if (string.IsNullOrWhiteSpace(userName))
           throw new InvalidOperationException("UserName is null!");
@@ -24,7 +24,7 @@ namespace tomware.Microwf.Engine
 
     public UserContextService(IHttpContextAccessor context)
     {
-      _context = context;
+      this.context = context;
     }
   }
 }

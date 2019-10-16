@@ -9,16 +9,16 @@ using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkflowEngine<TContext> : IWorkflowEngine where TContext : EngineDbContext
+  public class WorkflowEngineService<TContext> : IWorkflowEngineService where TContext : EngineDbContext
   {
     private readonly EngineDbContext _context;
-    private readonly ILogger<WorkflowEngine<TContext>> _logger;
+    private readonly ILogger<WorkflowEngineService<TContext>> _logger;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
     private readonly IUserContextService _userContext;
 
-    public WorkflowEngine(
+    public WorkflowEngineService(
       TContext context,
-      ILogger<WorkflowEngine<TContext>> logger,
+      ILogger<WorkflowEngineService<TContext>> logger,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
       IUserContextService userContext
     )

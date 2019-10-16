@@ -170,7 +170,7 @@ namespace tomware.Microwf.Engine
       using (var scope = _serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
-        var engine = serviceProvider.GetRequiredService<IWorkflowEngine>();
+        var engine = serviceProvider.GetRequiredService<IWorkflowEngineService>();
         var workflowDefinitionProvider
           = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
 

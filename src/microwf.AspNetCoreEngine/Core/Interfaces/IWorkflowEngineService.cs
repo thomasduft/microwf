@@ -5,7 +5,7 @@ using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public interface IWorkflowEngine
+  public interface IWorkflowEngineService
   {
     /// <summary>
     /// Returns the possible triggers for certain workflow instance.
