@@ -49,6 +49,11 @@ namespace tomware.Microwf.Engine
           .Take(specification.Take);
       }
 
+      if (specification.AsNoTracking)
+      {
+        query.AsNoTracking();
+      }
+
       return query;
     }
   }

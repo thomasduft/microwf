@@ -1,12 +1,11 @@
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
 using microwf.Tests.WorkflowDefinitions;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 
@@ -16,40 +15,34 @@ namespace microwf.Tests.AspNetCoreEngine
   public class WorkflowEngineTest
   {
     public TestDbContext Context { get; set; }
-    public IWorkflowEngineService WorkflowEngine { get; set; }
+    public IWorkflowDefinitionProvider WorkflowDefinitionProvider { get; set; }
+
+    public IWorkflowEngineService WorkflowEngineService { get; set; }
 
     [TestInitialize]
     public void Initialize()
     {
-      var options = TestDbContext.CreateDbContextOptions();
-      Context = new TestDbContext(options);
-
       var diHelper = new DITestHelper();
-      var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkflowEngineService<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkflowEngineService<TestDbContext>>();
+      diHelper.AddTestDbContext();
+      diHelper.Services.AddScoped<IWorkflowDefinitionProvider, SimpleWorkflowDefinitionProvider>();
+      diHelper.Services.AddTransient<IUserWorkflowMappingService, TestUserWorkflowMappingService>(fact =>
+      {
+        return new TestUserWorkflowMappingService();
+      });
+      diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
+      diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
+      diHelper.Services.AddTransient<IWorkflowService, WorkflowService<TestDbContext>>();
+      diHelper.Services.AddTransient<IWorkflowEngineService, WorkflowEngineService<TestDbContext>>();
+      var serviceProvider = diHelper.Build();
 
-      SimpleWorkflowDefinitionProvider.Instance
-       .RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
-      SimpleWorkflowDefinitionProvider.Instance
-        .RegisterWorkflowDefinition(new OnOffWorkflow());
-      SimpleWorkflowDefinitionProvider.Instance
-        .RegisterWorkflowDefinition(new EntityOnOffWorkflow());
+      this.Context = serviceProvider.GetRequiredService<TestDbContext>();
+      this.WorkflowDefinitionProvider = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
 
-      IUserContextService userContextService = new TestUserContextService();
+      this.WorkflowDefinitionProvider.RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
+      this.WorkflowDefinitionProvider.RegisterWorkflowDefinition(new OnOffWorkflow());
+      this.WorkflowDefinitionProvider.RegisterWorkflowDefinition(new EntityOnOffWorkflow());
 
-      this.WorkflowEngine = new WorkflowEngineService<TestDbContext>(
-        Context,
-        logger,
-        SimpleWorkflowDefinitionProvider.Instance,
-        userContextService
-      );
-    }
-
-    [TestCleanup]
-    public void Cleanup()
-    {
-      SimpleWorkflowDefinitionProvider.Instance.Invalidate();
+      this.WorkflowEngineService = serviceProvider.GetRequiredService<IWorkflowEngineService>();
     }
 
     [TestMethod]
@@ -60,7 +53,7 @@ namespace microwf.Tests.AspNetCoreEngine
       var param = new TriggerParam("SwitchOn", instance);
 
       // Act
-      var triggerResult = await WorkflowEngine.CanTriggerAsync(param);
+      var triggerResult = await this.WorkflowEngineService.CanTriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -76,7 +69,7 @@ namespace microwf.Tests.AspNetCoreEngine
 
       // Act
       await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-        () => this.WorkflowEngine.CanTriggerAsync(null));
+        () => this.WorkflowEngineService.CanTriggerAsync(null));
     }
 
     [TestMethod]
@@ -86,7 +79,7 @@ namespace microwf.Tests.AspNetCoreEngine
       var instance = new Switcher();
 
       // Act
-      var results = await WorkflowEngine.GetTriggersAsync(instance);
+      var results = await WorkflowEngineService.GetTriggersAsync(instance);
 
       // Assert
       Assert.IsNotNull(results);
@@ -99,7 +92,7 @@ namespace microwf.Tests.AspNetCoreEngine
     {
       // Act
       await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-        () => this.WorkflowEngine.GetTriggersAsync(null));
+        () => this.WorkflowEngineService.GetTriggersAsync(null));
     }
 
     [TestMethod]
@@ -110,7 +103,7 @@ namespace microwf.Tests.AspNetCoreEngine
       var param = new TriggerParam("SwitchOn", instance);
 
       // Act
-      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+      var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -124,7 +117,7 @@ namespace microwf.Tests.AspNetCoreEngine
     {
       // Act
       await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-        () => this.WorkflowEngine.TriggerAsync(null));
+        () => this.WorkflowEngineService.TriggerAsync(null));
     }
 
     [TestMethod]
@@ -135,7 +128,7 @@ namespace microwf.Tests.AspNetCoreEngine
       var param = new TriggerParam("SwitchOn", instance);
 
       // Act
-      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+      var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -157,7 +150,7 @@ namespace microwf.Tests.AspNetCoreEngine
         .AddVariableWithKey<LightSwitcherWorkflowVariable>(workfowVariable);
 
       // Act
-      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+      var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -185,7 +178,7 @@ namespace microwf.Tests.AspNetCoreEngine
       var param = new TriggerParam("SwitchOn", instance);
 
       // Act
-      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+      var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -217,7 +210,7 @@ namespace microwf.Tests.AspNetCoreEngine
         .AddVariableWithKey<LightSwitcherWorkflowVariable>(variable); ;
 
       // Act
-      var triggerResult = await this.WorkflowEngine.TriggerAsync(param);
+      var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
       Assert.IsNotNull(triggerResult);
@@ -250,7 +243,7 @@ namespace microwf.Tests.AspNetCoreEngine
       await this.Context.SaveChangesAsync();
 
       // Act
-      var result = this.WorkflowEngine.Find(instance.Id, typeof(LightSwitcher));
+      var result = this.WorkflowEngineService.Find(instance.Id, typeof(LightSwitcher));
 
       // Assert
       Assert.IsNotNull(result);

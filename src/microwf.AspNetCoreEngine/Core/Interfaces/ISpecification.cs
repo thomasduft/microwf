@@ -16,5 +16,6 @@ namespace tomware.Microwf.Engine
     int Take { get; }
     int Skip { get; }
     bool IsPagingEnabled { get; }
+    bool AsNoTracking { get; }
   }
 }

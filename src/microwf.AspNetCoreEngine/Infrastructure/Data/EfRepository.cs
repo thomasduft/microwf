@@ -1,66 +1,65 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
-  public class EfRepository<T> : IAsyncRepository<T> where T : EngineEntity
+  public class EfRepository<TEntity> : IAsyncRepository<TEntity>
+    where TEntity : EngineEntity
   {
     protected readonly EngineDbContext DbContext;
+
+    public DatabaseFacade Database => this.DbContext.Database;
 
     public EfRepository(EngineDbContext dbContext)
     {
       this.DbContext = dbContext;
     }
 
-    public virtual async Task<T> GetByIdAsync(int id)
+    public virtual async Task<TEntity> GetByIdAsync(int id)
     {
-      return await this.DbContext.Set<T>().FindAsync(id);
+      return await this.DbContext.Set<TEntity>().FindAsync(id);
     }
 
-    public async Task<IReadOnlyList<T>> ListAllAsync()
-    {
-      return await this.DbContext.Set<T>().ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
+    public async Task<IReadOnlyList<TEntity>> ListAsync(ISpecification<TEntity> spec)
     {
       return await this.ApplySpecification(spec).ToListAsync();
     }
 
-    public async Task<int> CountAsync(ISpecification<T> spec)
+    public async Task<int> CountAsync(ISpecification<TEntity> spec)
     {
       return await this.ApplySpecification(spec).CountAsync();
     }
 
-    public async Task<T> AddAsync(T entity)
+    public async Task<TEntity> AddAsync(TEntity entity)
     {
-      this.DbContext.Set<T>().Add(entity);
+      this.DbContext.Set<TEntity>().Add(entity);
 
       await this.DbContext.SaveChangesAsync();
 
       return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task UpdateAsync(TEntity entity)
     {
       this.DbContext.Entry(entity).State = EntityState.Modified;
 
       await this.DbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(T entity)
+    public async Task DeleteAsync(TEntity entity)
     {
-      this.DbContext.Set<T>().Remove(entity);
+      this.DbContext.Set<TEntity>().Remove(entity);
 
       await this.DbContext.SaveChangesAsync();
     }
 
-    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    private IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> spec)
     {
-      return SpecificationEvaluator<T>
-        .GetQuery(this.DbContext.Set<T>().AsQueryable(), spec);
+      return SpecificationEvaluator<TEntity>
+        .GetQuery(this.DbContext.Set<TEntity>().AsQueryable(), spec);
     }
   }
 }

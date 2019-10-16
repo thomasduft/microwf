@@ -1,10 +1,11 @@
-using System;
-using System.Linq;
-using System.Text;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
 using microwf.Tests.WorkflowDefinitions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 
@@ -13,55 +14,41 @@ namespace microwf.Tests.AspNetCoreEngine
   [TestClass]
   public class WorkflowServiceTest
   {
-
     public TestDbContext Context { get; set; }
+    public IWorkflowDefinitionProvider WorkflowDefinitionProvider { get; set; }
     public IWorkflowService WorkflowService { get; set; }
 
     [TestInitialize]
     public void Initialize()
     {
-      var options = TestDbContext.CreateDbContextOptions();
-      Context = new TestDbContext(options);
-
       var diHelper = new DITestHelper();
-      var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkflowService<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkflowService<TestDbContext>>();
+      diHelper.AddTestDbContext();
+      diHelper.Services.AddScoped<IWorkflowDefinitionProvider, SimpleWorkflowDefinitionProvider>();
+      diHelper.Services.AddTransient<IUserWorkflowMappingService, TestUserWorkflowMappingService>(fact =>
+      {
+        return new TestUserWorkflowMappingService();
+      });
+      diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
+      diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
+      diHelper.Services.AddTransient<IWorkflowService, WorkflowService<TestDbContext>>();
+      var serviceProvider = diHelper.Build();
 
-      SimpleWorkflowDefinitionProvider.Instance
-       .RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
-      SimpleWorkflowDefinitionProvider.Instance
-        .RegisterWorkflowDefinition(new OnOffWorkflow());
+      this.Context = serviceProvider.GetRequiredService<TestDbContext>();
+      this.WorkflowDefinitionProvider = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
 
-      IUserWorkflowMappingService userWorkflowMappingService
-        = new TestUserWorkflowMappingService();
+      this.WorkflowDefinitionProvider.RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
+      this.WorkflowDefinitionProvider.RegisterWorkflowDefinition(new OnOffWorkflow());
 
-      IWorkflowDefinitionViewModelCreator workflowDefinitionViewModelCreator
-        = new TestWorkflowDefinitionViewModelCreator();
-
-      IUserContextService userContextService = new TestUserContextService();
-
-      this.WorkflowService = new WorkflowService<TestDbContext>(
-        Context,
-        logger,
-        SimpleWorkflowDefinitionProvider.Instance,
-        userWorkflowMappingService,
-        workflowDefinitionViewModelCreator,
-        userContextService
-      );
-    }
-
-    [TestCleanup]
-    public void Cleanup()
-    {
-      SimpleWorkflowDefinitionProvider.Instance.Invalidate();
+      this.WorkflowService = serviceProvider.GetRequiredService<IWorkflowService>();
     }
 
     [TestMethod]
     public void WorkflowService_GetWorkflowDefinitions_ReturnsTwoDefinitons()
     {
+      // Arrange
+
       // Act
-      var result = WorkflowService.GetWorkflowDefinitions();
+      var result = this.WorkflowService.GetWorkflowDefinitions();
 
       // Assert
       Assert.IsNotNull(result);
@@ -72,42 +59,26 @@ namespace microwf.Tests.AspNetCoreEngine
     public void WorkflowService_GetWorkflowDefinitions_ReturnsOneDefiniton()
     {
       // Arrange
-      SimpleWorkflowDefinitionProvider.Instance.Invalidate();
-
-      var options = TestDbContext.CreateDbContextOptions();
-      Context = new TestDbContext(options);
-
       var diHelper = new DITestHelper();
-      var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkflowService<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkflowService<TestDbContext>>();
+      diHelper.AddTestDbContext();
+      diHelper.Services.AddScoped<IWorkflowDefinitionProvider, SimpleWorkflowDefinitionProvider>();
+      diHelper.Services.AddTransient<IUserWorkflowMappingService, TestUserWorkflowMappingService>(fact =>
+      {
+        return new TestUserWorkflowMappingService(new List<IWorkflowDefinition> { new HolidayApprovalWorkflow() });
+      });
+      diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
+      diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
+      diHelper.Services.AddTransient<IWorkflowService, WorkflowService<TestDbContext>>();
+      var serviceProvider = diHelper.Build();
 
-      SimpleWorkflowDefinitionProvider.Instance
-       .RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
-      SimpleWorkflowDefinitionProvider.Instance
-        .RegisterWorkflowDefinition(new OnOffWorkflow());
+      var workflowDefinitionProvider = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
+      workflowDefinitionProvider.RegisterWorkflowDefinition(new HolidayApprovalWorkflow());
+      workflowDefinitionProvider.RegisterWorkflowDefinition(new OnOffWorkflow());
 
-      var filters = SimpleWorkflowDefinitionProvider.Instance
-              .GetWorkflowDefinitions().Where(_ => _.Type == HolidayApprovalWorkflow.TYPE);
-      IUserWorkflowMappingService userWorkflowMappingService
-        = new TestUserWorkflowMappingService(filters);
-
-      IWorkflowDefinitionViewModelCreator workflowDefinitionViewModelCreator
-        = new TestWorkflowDefinitionViewModelCreator();
-
-      IUserContextService userContextService = new TestUserContextService();
-
-      var service = new WorkflowService<TestDbContext>(
-        Context,
-        logger,
-        SimpleWorkflowDefinitionProvider.Instance,
-        userWorkflowMappingService,
-        workflowDefinitionViewModelCreator,
-        userContextService
-      );
+      var workflowService = serviceProvider.GetRequiredService<IWorkflowService>();
 
       // Act
-      var result = service.GetWorkflowDefinitions();
+      var result = workflowService.GetWorkflowDefinitions();
 
       // Assert
       Assert.IsNotNull(result);
@@ -126,7 +97,7 @@ namespace microwf.Tests.AspNetCoreEngine
       expected.AppendLine("}");
 
       // Act
-      var diagraph = WorkflowService.Dot(OnOffWorkflow.TYPE);
+      var diagraph = this.WorkflowService.Dot(OnOffWorkflow.TYPE);
 
       // Assert
       Assert.AreEqual(expected.ToString(), diagraph);
@@ -136,14 +107,14 @@ namespace microwf.Tests.AspNetCoreEngine
     public void WorkflowService_DotWithEmptyString_FailsWithArgumentNullException()
     {
       // Act
-      Assert.ThrowsException<ArgumentNullException>(() => WorkflowService.Dot(""));
+      Assert.ThrowsException<ArgumentNullException>(() => this.WorkflowService.Dot(string.Empty));
     }
 
     [TestMethod]
     public void WorkflowService_DotPassingInNull_FailsWithArgumentNullException()
     {
       // Act
-      Assert.ThrowsException<ArgumentNullException>(() => WorkflowService.Dot(null));
+      Assert.ThrowsException<ArgumentNullException>(() => this.WorkflowService.Dot(null));
     }
   }
 }

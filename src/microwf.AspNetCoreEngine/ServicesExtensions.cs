@@ -27,14 +27,19 @@ namespace tomware.Microwf.Engine
       });
 
       services.AddScoped<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
+      services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+
       services.AddTransient<IUserContextService, UserContextService>();
-      services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
-      services.AddTransient<IWorkflowEngineService, WorkflowEngineService<TContext>>();
-      services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
-      services.AddTransient<IWorkItemService, WorkItemService<TContext>>();
       services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
       services.AddTransient<IWorkflowDefinitionViewModelCreator,
         ConfigurationWorkflowDefinitionViewModelCreator>();
+
+      // Data related
+      services.AddTransient<IWorkItemRepository, WorkItemRepository<TContext>>();
+
+      services.AddTransient<IWorkflowEngineService, WorkflowEngineService<TContext>>();
+      services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
+      services.AddTransient<IWorkItemService, WorkItemService>();
 
       // Setting up messaging infrastructure
       services.AddSingleton<IMessageBus, InMemoryMessageBus>();

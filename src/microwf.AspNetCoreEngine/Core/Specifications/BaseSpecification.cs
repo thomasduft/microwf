@@ -16,6 +16,7 @@ namespace tomware.Microwf.Engine
     public int Take { get; private set; }
     public int Skip { get; private set; }
     public bool IsPagingEnabled { get; private set; } = false;
+    public bool AsNoTracking { get; private set; } = false;
 
     protected BaseSpecification(Expression<Func<T, bool>> criteria)
     {
@@ -37,6 +38,11 @@ namespace tomware.Microwf.Engine
       this.Skip = skip;
       this.Take = take;
       this.IsPagingEnabled = true;
+    }
+
+    protected virtual void ApplyNoTracking()
+    {
+      this.AsNoTracking = true;
     }
 
     protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)

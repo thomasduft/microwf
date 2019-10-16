@@ -1,41 +1,33 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkItemService<TContext> : IWorkItemService where TContext : EngineDbContext
+  public class WorkItemService : IWorkItemService
   {
-    private readonly EngineDbContext _context;
-    private readonly ILogger<WorkItemService<TContext>> _logger;
+    private readonly IWorkItemRepository repository;
 
-    public WorkItemService(
-      TContext context,
-      ILogger<WorkItemService<TContext>> logger
-    )
+    public WorkItemService(IWorkItemRepository repository)
     {
-      _context = context ?? throw new ArgumentNullException(nameof(context));
-      _logger = logger;
+      this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(PagingParameters pagingParameters)
+    public async Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(
+      PagingParameters pagingParameters
+    )
     {
       var now = SystemTime.Now();
 
-      var count = _context.WorkItems
-        .Where(wi => wi.DueDate > now)
-        .Count();
+      var count = await this.repository
+        .CountAsync(new WorkItemDueDateGreaterThanNowCount(now));
 
-      var items = await _context.WorkItems
-        .Where(wi => wi.DueDate > now)
-        .OrderBy(wi => wi.DueDate)
-        .Skip(pagingParameters.SkipCount)
-        .Take(pagingParameters.PageSize)
-        .AsNoTracking()
-        .ToListAsync<WorkItem>();
+      var items = await this.repository
+        .ListAsync(new WorkItemDueDateGreaterThanNowOrderedPaginated(
+          now,
+          pagingParameters.SkipCount,
+          pagingParameters.PageSize
+        ));
 
       return new PaginatedList<WorkItemViewModel>(
         ViewModelMapper.ToWorkItemViewModelList(items),
@@ -45,17 +37,19 @@ namespace tomware.Microwf.Engine
       );
     }
 
-    public async Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(PagingParameters pagingParameters)
+    public async Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(
+      PagingParameters pagingParameters
+    )
     {
-      var count = _context.WorkItems
-        .Where(wi => wi.Retries > Constants.WORKITEM_RETRIES)
-        .Count();
+      var count = await this.repository
+        .CountAsync(new WorkItemRetryLimitHitCount(Constants.WORKITEM_RETRIES));
 
-      var items = await _context.WorkItems
-        .Where(wi => wi.Retries > Constants.WORKITEM_RETRIES)
-        .OrderBy(wi => wi.DueDate)
-        .AsNoTracking()
-        .ToListAsync<WorkItem>();
+      var items = await this.repository
+        .ListAsync(new WorkItemRetryLimitHitCountOrderedPaginated(
+          Constants.WORKITEM_RETRIES,
+          pagingParameters.SkipCount,
+          pagingParameters.PageSize
+        ));
 
       return new PaginatedList<WorkItemViewModel>(
         ViewModelMapper.ToWorkItemViewModelList(items),
@@ -69,54 +63,26 @@ namespace tomware.Microwf.Engine
     {
       var now = SystemTime.Now();
 
-      return await _context.WorkItems
-        .Where(wi => wi.Retries <= Constants.WORKITEM_RETRIES
-        && wi.DueDate <= now)
-        .ToListAsync<WorkItem>();
+      return await this.repository
+        .ListAsync(new WorkItemFilterForItemsToResume(
+          now,
+          Constants.WORKITEM_RETRIES
+        ));
     }
 
     public async Task PersistWorkItemsAsync(IEnumerable<WorkItem> items)
     {
-      var ids = items.Select(wi => wi.Id).ToArray();
-      var existingItems = await _context.WorkItems
-        .Where(wi => ids.Contains(wi.Id))
-        .ToListAsync<WorkItem>();
-
-      var comparer = new WorkItemComparer();
-
-      // updates
-      var updates = items.Intersect(existingItems, comparer);
-      _context.WorkItems.UpdateRange(updates);
-
-      // new items
-      var inserts = items.Except(existingItems, comparer);
-      _context.WorkItems.AddRange(inserts);
-
-      await _context.SaveChangesAsync();
+      await this.repository.PersistWorkItemsAsync(items);
     }
 
     public async Task Reschedule(WorkItemInfoViewModel model)
     {
-      var item = await _context.WorkItems.FindAsync(model.Id);
-
-      item.Retries = Constants.WORKITEM_RETRIES; // so it reschedules only once!
-      if (model.DueDate.HasValue)
-      {
-        item.DueDate = model.DueDate.Value;
-      }
-
-      _context.WorkItems.Update(item);
-
-      await _context.SaveChangesAsync();
+      await this.repository.Reschedule(model);
     }
 
     public async Task DeleteAsync(int id)
     {
-      var item = await _context.WorkItems.FindAsync(id);
-      if (item == null) return;
-
-      _context.WorkItems.Remove(item);
-      await _context.SaveChangesAsync();
+      await this.repository.DeleteAsync(id);
     }
   }
 
