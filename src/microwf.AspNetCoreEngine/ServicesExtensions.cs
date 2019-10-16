@@ -35,10 +35,11 @@ namespace tomware.Microwf.Engine
         ConfigurationWorkflowDefinitionViewModelCreator>();
 
       // Data related
+      services.AddTransient<IWorkflowRepository, WorkflowRepository<TContext>>();
       services.AddTransient<IWorkItemRepository, WorkItemRepository<TContext>>();
 
-      services.AddTransient<IWorkflowEngineService, WorkflowEngineService<TContext>>();
-      services.AddTransient<IWorkflowService, WorkflowService<TContext>>();
+      services.AddTransient<IWorkflowEngineService, WorkflowEngineService>();
+      services.AddTransient<IWorkflowService, WorkflowService>();
       services.AddTransient<IWorkItemService, WorkItemService>();
 
       // Setting up messaging infrastructure

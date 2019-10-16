@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +7,21 @@ using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkflowService<TContext> : IWorkflowService
-    where TContext : EngineDbContext
+  public class WorkflowService : IWorkflowService
   {
-    private readonly EngineDbContext _context;
+    private readonly IWorkflowRepository _repository;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
     private readonly IUserWorkflowMappingService _userWorkflowMappingService;
     private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
 
     public WorkflowService(
-      TContext context,
+      IWorkflowRepository repository,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
       IUserWorkflowMappingService userWorkflowMappingService,
       IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {
-      _context = context ?? throw new ArgumentNullException(nameof(context));
+      _repository = repository ?? throw new ArgumentNullException(nameof(repository));
       _workflowDefinitionProvider = workflowDefinitionProvider;
       _userWorkflowMappingService = userWorkflowMappingService;
       _viewModelCreator = viewModelCreator;
@@ -33,29 +31,23 @@ namespace tomware.Microwf.Engine
       WorkflowSearchPagingParameters pagingParameters
     )
     {
-      var count = _context.Workflows.Count();
+      var count = await _repository.CountAsync(new WorkflowCount());
 
-      List<Workflow> instances = null;
+      IReadOnlyList<Workflow> instances = null;
       if (pagingParameters.HasValues)
       {
-        // Specification Pattern ?!
-        // see: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implemenation-entity-framework-core#implementing-the-specification-pattern
-        instances = await _context.Workflows
-          .Where(this.GetWhereClause(pagingParameters))
-          .OrderByDescending(w => w.Id)
-          .Skip(pagingParameters.SkipCount)
-          .Take(pagingParameters.PageSize)
-          .AsNoTracking()
-          .ToListAsync();
+        instances = await _repository
+          .ListAsync(new WorkflowInstancesFilterAndOrderedPaginated(
+            pagingParameters
+          ));
       }
       else
       {
-        instances = await _context.Workflows
-          .OrderByDescending(w => w.Id)
-          .Skip(pagingParameters.SkipCount)
-          .Take(pagingParameters.PageSize)
-          .AsNoTracking()
-          .ToListAsync();
+        instances = await _repository
+          .ListAsync(new WorkflowInstancesOrderedPaginated(
+            pagingParameters.SkipCount,
+            pagingParameters.PageSize
+          ));
       }
 
       var items = instances.Select(i => ToWorkflowViewModel(i));
@@ -70,7 +62,7 @@ namespace tomware.Microwf.Engine
 
     public async Task<WorkflowViewModel> GetAsync(int id)
     {
-      var workflow = await _context.Workflows.FindAsync(id);
+      var workflow = await _repository.GetByIdAsync(id);
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
       return ToWorkflowViewModel(workflow);
@@ -78,11 +70,8 @@ namespace tomware.Microwf.Engine
 
     public async Task<IEnumerable<WorkflowHistoryViewModel>> GetHistoryAsync(int id)
     {
-      var workflow = await _context.Workflows
-        .Include(h => h.WorkflowHistories)
-        .Where(w => w.Id == id)
-        .AsNoTracking()
-        .FirstAsync();
+      var list = await _repository.ListAsync(new WorkflowHistoryForWorkflow(id));
+      var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
       var viewModels = workflow.WorkflowHistories.OrderByDescending(h => h.Created);
@@ -92,11 +81,8 @@ namespace tomware.Microwf.Engine
 
     public async Task<IEnumerable<WorkflowVariableViewModel>> GetVariablesAsync(int id)
     {
-      var workflow = await _context.Workflows
-        .Include(v => v.WorkflowVariables)
-        .Where(w => w.Id == id)
-        .AsNoTracking()
-        .FirstAsync();
+      var list = await _repository.ListAsync(new WorkflowVariablesForWorkflow(id));
+      var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
       var viewModels = workflow.WorkflowVariables.OrderBy(v => v.Type);
@@ -106,9 +92,8 @@ namespace tomware.Microwf.Engine
 
     public async Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId)
     {
-      var workflow = await _context.Workflows
-        .AsNoTracking()
-        .FirstAsync(w => w.Type == type && w.CorrelationId == correlationId);
+      var list = await _repository.ListAsync(new GetWorkflowInstance(type, correlationId));
+      var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
 
       return ToWorkflowViewModel(workflow);
@@ -136,10 +121,12 @@ namespace tomware.Microwf.Engine
     {
       if (string.IsNullOrEmpty(type)) throw new ArgumentNullException(nameof(type));
 
-      var workflow = await _context.Workflows
-        .Include(h => h.WorkflowHistories)
-        .AsNoTracking()
-        .FirstAsync(w => w.Type == type && w.CorrelationId == correlationId);
+      var list = await _repository
+        .ListAsync(new GetWorkflowInstanceHistories(
+          type, 
+          correlationId
+        ));
+      var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
 
       var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);

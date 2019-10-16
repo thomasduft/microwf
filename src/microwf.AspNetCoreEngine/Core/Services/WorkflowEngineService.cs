@@ -9,21 +9,21 @@ using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkflowEngineService<TContext> : IWorkflowEngineService where TContext : EngineDbContext
+  public class WorkflowEngineService : IWorkflowEngineService
   {
-    private readonly EngineDbContext _context;
-    private readonly ILogger<WorkflowEngineService<TContext>> _logger;
+    private readonly IWorkflowRepository _repository;
+    private readonly ILogger<WorkflowEngineService> _logger;
     private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
     private readonly IUserContextService _userContext;
 
     public WorkflowEngineService(
-      TContext context,
-      ILogger<WorkflowEngineService<TContext>> logger,
+      IWorkflowRepository repository,
+      ILogger<WorkflowEngineService> logger,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
       IUserContextService userContext
     )
     {
-      _context = context ?? throw new ArgumentNullException(nameof(context));
+      _repository = repository ?? throw new ArgumentNullException(nameof(repository));
       _logger = logger;
       _workflowDefinitionProvider = workflowDefinitionProvider;
       _userContext = userContext;
@@ -77,7 +77,7 @@ namespace tomware.Microwf.Engine
 
     public IWorkflow Find(int id, Type type)
     {
-      return (IWorkflow)_context.Find(type, id);
+      return this._repository.Find(id, type);
     }
 
     private WorkflowExecution GetExecution(string type)
@@ -98,17 +98,17 @@ namespace tomware.Microwf.Engine
     {
       TriggerResult result;
 
-      var entity = param.Instance as IWorkflowInstanceEntity;
-      using (var transaction = _context.Database.BeginTransaction())
+      using (var transaction = _repository.Database.BeginTransaction())
       {
         try
         {
           Workflow workflow = null;
           var execution = GetExecution(param.Instance.Type);
+          var entity = param.Instance as IWorkflowInstanceEntity;
 
-          await _context.SaveChangesAsync(); // so entity id gets resolved!
+          await _repository.ApplyChangesAsync(); // so entity id gets resolved!
 
-          workflow = this.FindOrCreate(
+          workflow = await this.FindOrCreate(
             entity.Id,
             param.Instance.Type,
             param.Instance.State
@@ -120,9 +120,12 @@ namespace tomware.Microwf.Engine
           if (!result.IsAborted)
           {
             await PersistWorkflow(workflow, param);
-            if (result.HasAutoTrigger) CreateWorkItemEntry(result.AutoTrigger, entity);
+            if (result.HasAutoTrigger)
+            {
+              this._repository.AddWorkItemEntry(result.AutoTrigger, entity);
+            }
 
-            await _context.SaveChangesAsync();
+            await _repository.ApplyChangesAsync();
 
             transaction.Commit();
           }
@@ -151,15 +154,14 @@ namespace tomware.Microwf.Engine
       return result;
     }
 
-    private Workflow FindOrCreate(int id, string type, string state, string assignee = null)
+    private async Task<Workflow> FindOrCreate(int id, string type, string state, string assignee = null)
     {
-      var workflow = _context.Workflows
-        .Include(v => v.WorkflowVariables)
-        .SingleOrDefault(w => w.CorrelationId == id && w.Type == type);
+      var list = await _repository.ListAsync(new GetWorkflowInstanceVariables(type, id));
+      var workflow = list.FirstOrDefault();
       if (workflow == null)
       {
         workflow = Workflow.Create(id, type, state, assignee);
-        _context.Workflows.Add(workflow);
+        await _repository.AddAsync(workflow);
       }
 
       return workflow;
@@ -229,18 +231,6 @@ namespace tomware.Microwf.Engine
       {
         workflow.Completed = SystemTime.Now();
       }
-    }
-
-    private void CreateWorkItemEntry(AutoTrigger autoTrigger, IWorkflowInstanceEntity entity)
-    {
-      var workItem = WorkItem.Create(
-        autoTrigger.Trigger,
-        entity.Id,
-        entity.Type,
-        autoTrigger.DueDate
-      );
-
-      this._context.WorkItems.Add(workItem);
     }
 
     private async Task<bool> WorkflowIsCompleted(TriggerParam triggerParam)

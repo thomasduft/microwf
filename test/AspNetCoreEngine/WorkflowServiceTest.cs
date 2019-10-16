@@ -30,7 +30,8 @@ namespace microwf.Tests.AspNetCoreEngine
       });
       diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
       diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
-      diHelper.Services.AddTransient<IWorkflowService, WorkflowService<TestDbContext>>();
+      diHelper.Services.AddTransient<IWorkflowRepository, WorkflowRepository<TestDbContext>>();
+      diHelper.Services.AddTransient<IWorkflowService, WorkflowService>();
       var serviceProvider = diHelper.Build();
 
       this.Context = serviceProvider.GetRequiredService<TestDbContext>();
@@ -68,7 +69,8 @@ namespace microwf.Tests.AspNetCoreEngine
       });
       diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
       diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
-      diHelper.Services.AddTransient<IWorkflowService, WorkflowService<TestDbContext>>();
+      diHelper.Services.AddTransient<IWorkflowRepository, WorkflowRepository<TestDbContext>>();
+      diHelper.Services.AddTransient<IWorkflowService, WorkflowService>();
       var serviceProvider = diHelper.Build();
 
       var workflowDefinitionProvider = serviceProvider.GetRequiredService<IWorkflowDefinitionProvider>();
