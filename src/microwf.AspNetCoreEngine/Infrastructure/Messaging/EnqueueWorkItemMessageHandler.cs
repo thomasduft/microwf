@@ -22,7 +22,7 @@ namespace tomware.Microwf.Engine
 
     public async Task Handle(
       WorkItemMessage message,
-      CancellationToken token = default
+      CancellationToken token = default(CancellationToken)
     )
     {
       _logger.LogTrace($"Handle WorkItemMessage", message);
