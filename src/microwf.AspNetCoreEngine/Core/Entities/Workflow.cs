@@ -12,9 +12,6 @@ namespace tomware.Microwf.Engine
   [Table("Workflow")]
   public partial class Workflow : EngineEntity
   {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public string Type { get; set; }
 
