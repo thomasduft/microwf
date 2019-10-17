@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using StepperApi.Domain;
 using StepperApi.Extensions;
 using StepperApi.Identity;
@@ -37,14 +38,11 @@ namespace StepperApi
         });
       })
         .AddMvc()
-        .AddJsonOptions(o =>
-          o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        )
-        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-      services.AddRouting(o => o.LowercaseUrls = true);
+        .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+        .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
       services.AddAuthorization();
+      services.AddRouting(o => o.LowercaseUrls = true);
 
       var connection = this.Configuration["ConnectionString"];
       services
@@ -80,11 +78,16 @@ namespace StepperApi
 
       app.UseHttpsRedirection();
 
+      app.UseAuthorization();
       app.UseIdentityServer();
 
       app.SubscribeMessageHandlers();
 
-      app.UseMvcWithDefaultRoute();
+      app.UseRouting();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
     }
 
     private string GetAuthority()

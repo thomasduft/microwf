@@ -46,7 +46,7 @@ namespace tomware.Microwf.Engine
       services.AddSingleton<IMessageBus, InMemoryMessageBus>();
 
       // Policies
-      services.AddAuthorization(options =>
+      services.AddAuthorizationCore(options =>
       {
         options.AddPolicy(
           Constants.MANAGE_WORKFLOWS_POLICY,

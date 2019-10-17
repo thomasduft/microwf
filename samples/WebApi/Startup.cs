@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Serilog;
 using tomware.Microwf.Engine;
 using WebApi.Domain;
@@ -40,12 +42,11 @@ namespace WebApi
         });
       })
         .AddMvc()
-        .AddJsonOptions(o =>
-          o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        );
-      services.AddRouting(o => o.LowercaseUrls = true);
+        .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+        .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
       services.AddAuthorization();
+      services.AddRouting(o => o.LowercaseUrls = true);
 
       var connection = this.Configuration["ConnectionString"];
       services
@@ -106,11 +107,16 @@ namespace WebApi
 
       app.UseFileServer();
 
+      app.UseAuthorization();
       app.UseIdentityServer();
 
       app.SubscribeMessageHandlers();
 
-      app.UseMvcWithDefaultRoute();
+      app.UseRouting();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
     }
 
     private string GetAuthority()
