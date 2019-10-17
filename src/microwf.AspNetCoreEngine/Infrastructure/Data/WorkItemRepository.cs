@@ -49,14 +49,29 @@ namespace tomware.Microwf.Engine
       await this.DbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task RemoveAsync(int id)
     {
-      var item = await this.DbContext.WorkItems.FindAsync(id);
-      if (item == null) return;
+      var item = await this.GetByIdAsync(id);
 
-      this.DbContext.WorkItems.Remove(item);
+      await this.DeleteAsync(item);
+    }
+  }
 
-      await this.DbContext.SaveChangesAsync();
+  public class WorkItemComparer : IEqualityComparer<WorkItem>
+  {
+    public bool Equals(WorkItem wm1, WorkItem wm2)
+    {
+      if (wm1.Id == wm2.Id)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public int GetHashCode(WorkItem workItem)
+    {
+      return workItem.Id.GetHashCode();
     }
   }
 }

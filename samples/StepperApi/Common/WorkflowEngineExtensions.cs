@@ -9,7 +9,7 @@ namespace StepperApi.Common
   public static class WorkflowServiceExtension
   {
     public static async Task<WorkflowTriggerInfo> ToWorkflowTriggerInfo(
-      this IWorkflowEngine workflowEngine,
+      this IWorkflowEngineService workflowEngine,
       IWorkflow instance,
       TriggerResult result = null)
     {

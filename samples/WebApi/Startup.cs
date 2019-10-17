@@ -1,11 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
@@ -43,9 +43,13 @@ namespace WebApi
       })
         .AddMvc()
         .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-        .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+        .AddNewtonsoftJson(opt =>
+        {
+          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
-      services.AddAuthorization();
+      services.AddAuthentication()
+        .AddIdentityServerJwt();
       services.AddRouting(o => o.LowercaseUrls = true);
 
       var connection = this.Configuration["ConnectionString"];
@@ -68,7 +72,7 @@ namespace WebApi
 
     public void Configure(
       IApplicationBuilder app,
-      IHostingEnvironment env,
+      IWebHostEnvironment env,
       ILoggerFactory loggerFactory
     )
     {
@@ -83,40 +87,22 @@ namespace WebApi
       }
       else
       {
-        app.UseExceptionHandler(errorApp =>
-        {
-          errorApp.Run(async context =>
-          {
-            context.Response.StatusCode = 500;
-            context.Response.ContentType = "text/plain";
-            var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-            if (errorFeature != null)
-            {
-              var logger = loggerFactory.CreateLogger("Global exception logger");
-              logger.LogError(500, errorFeature.Error, errorFeature.Error.Message);
-            }
-
-            await context.Response.WriteAsync("There was an error");
-          });
-        });
-
-        // app.UseHsts();
+        app.UseExceptionHandler("/Error");
       }
 
-      // app.UseHttpsRedirection();
-
-      app.UseFileServer();
-
-      app.UseAuthorization();
-      app.UseIdentityServer();
-
-      app.SubscribeMessageHandlers();
+      app.UseStaticFiles();
 
       app.UseRouting();
+
+      app.UseAuthentication();
+      app.UseIdentityServer();
+      app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
+
+      app.SubscribeMessageHandlers();
     }
 
     private string GetAuthority()

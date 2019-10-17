@@ -31,7 +31,6 @@ namespace StepperApi.Extensions
       services.AddTransient<IWorkflowDefinition, StepperWorkflow>();
       services.AddTransient<IStepperService, StepperService>();
 
-
       return services;
     }
 

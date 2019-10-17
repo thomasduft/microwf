@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using StepperApi.Domain;
 using StepperApi.Extensions;
@@ -39,9 +41,12 @@ namespace StepperApi
       })
         .AddMvc()
         .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-        .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+        .AddNewtonsoftJson(opt => {
+          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
-      services.AddAuthorization();
+      services.AddAuthentication()
+        .AddIdentityServerJwt();
       services.AddRouting(o => o.LowercaseUrls = true);
 
       var connection = this.Configuration["ConnectionString"];
@@ -62,7 +67,7 @@ namespace StepperApi
       services.AddApiServices<DomainContext>(this.Configuration);
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
@@ -71,23 +76,18 @@ namespace StepperApi
 
         app.UseDeveloperExceptionPage();
       }
-      else
-      {
-        app.UseHsts();
-      }
-
-      app.UseHttpsRedirection();
-
-      app.UseAuthorization();
-      app.UseIdentityServer();
-
-      app.SubscribeMessageHandlers();
 
       app.UseRouting();
+
+      app.UseAuthentication();
+      app.UseIdentityServer();
+      app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
+
+      app.SubscribeMessageHandlers();
     }
 
     private string GetAuthority()

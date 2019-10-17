@@ -20,7 +20,7 @@ namespace tomware.Microwf.Engine
 
     public virtual async Task<TEntity> GetByIdAsync(int id)
     {
-      return await this.DbContext.Set<TEntity>().FindAsync(id);
+      return await this.DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<IReadOnlyList<TEntity>> ListAsync(ISpecification<TEntity> spec)

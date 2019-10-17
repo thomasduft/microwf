@@ -9,6 +9,6 @@ namespace tomware.Microwf.Engine
 
     Task Reschedule(WorkItemInfoViewModel model);
 
-    Task DeleteAsync(int id);
+    Task RemoveAsync(int id);
   }
 }

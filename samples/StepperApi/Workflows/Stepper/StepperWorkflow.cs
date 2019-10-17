@@ -144,7 +144,7 @@ namespace StepperApi.Workflows.Stepper
       return new AutoTrigger
       {
         Trigger = GOTO3_TRIGGER,
-        DueDate = SystemTime.Now().AddMinutes(2)
+        DueDate = SystemTime.Now().AddMinutes(1)
       };
     }
 

@@ -82,25 +82,7 @@ namespace tomware.Microwf.Engine
 
     public async Task DeleteAsync(int id)
     {
-      await this.repository.DeleteAsync(id);
-    }
-  }
-
-  public class WorkItemComparer : IEqualityComparer<WorkItem>
-  {
-    public bool Equals(WorkItem wm1, WorkItem wm2)
-    {
-      if (wm1.Id == wm2.Id)
-      {
-        return true;
-      }
-
-      return false;
-    }
-
-    public int GetHashCode(WorkItem workItem)
-    {
-      return workItem.Id.GetHashCode();
+      await this.repository.RemoveAsync(id);
     }
   }
 }

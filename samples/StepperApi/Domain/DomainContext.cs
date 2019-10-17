@@ -29,7 +29,7 @@ namespace StepperApi.Domain
         foreach (var property in timestampProperties)
         {
           property.SetValueConverter(new SqliteTimestampConverter());
-          property.SetDefaultValue("CURRENT_TIMESTAMP");
+          // property.GetTypeMapping() .SetDefaultValue("CURRENT_TIMESTAMP");
         }
       }
     }
