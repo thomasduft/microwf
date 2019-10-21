@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 using StepperApi.Domain;
 using System;
 using System.IO;
@@ -14,9 +13,37 @@ namespace StepperApi
 {
   public class Program
   {
+    public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+     .SetBasePath(Directory.GetCurrentDirectory())
+     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+     .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+     .AddEnvironmentVariables()
+     .Build();
+
     public static async Task Main(string[] args)
     {
-      var host = CreateWebHostBuilder(args).Build();
+      Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(Configuration)
+        .CreateLogger();
+
+      try
+      {
+        Log.Information("Starting up");
+        await Start(args);
+      }
+      catch (Exception ex)
+      {
+        Log.Fatal(ex, "Application start failed!");
+      }
+      finally
+      {
+        Log.CloseAndFlush();
+      }
+    }
+
+    public static async Task Start(string[] args)
+    {
+      var host = CreateHostBuilder(args).Build();
 
       // ensure database will be migrated
       using (var scope = host.Services.CreateScope())
@@ -37,16 +64,14 @@ namespace StepperApi
       await host.RunAsync();
     }
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseUrls(GetUrls(GetConfig()))
-            .UseStartup<Startup>()
-            .UseSerilog((hostingContext, loggerConfiguration) =>
-              loggerConfiguration
-              .ReadFrom.Configuration(hostingContext.Configuration)
-              .Enrich.FromLogContext()
-              .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-        );
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .UseSerilog()
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+              webBuilder.UseUrls(GetUrls(GetConfig()));
+              webBuilder.UseStartup<Startup>();
+            });
 
     private static IConfigurationRoot GetConfig()
     {

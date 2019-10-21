@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using Serilog;
 using StepperApi.Domain;
 using StepperApi.Extensions;
 using StepperApi.Identity;
@@ -39,7 +40,8 @@ namespace StepperApi
         });
       })
         .AddMvc()
-        .AddNewtonsoftJson(opt => {
+        .AddNewtonsoftJson(opt =>
+        {
           opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         });
 
@@ -74,6 +76,8 @@ namespace StepperApi
 
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseSerilogRequestLogging();
 
       app.UseRouting();
 

@@ -90,6 +90,8 @@ namespace WebApi
 
       app.UseStaticFiles();
 
+      app.UseSerilogRequestLogging();
+
       app.UseRouting();
 
       app.UseAuthentication();
