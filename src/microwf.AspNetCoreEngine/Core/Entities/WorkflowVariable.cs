@@ -30,6 +30,14 @@ namespace tomware.Microwf.Engine
       };
     }
 
+    internal static WorkflowVariableBase ConvertContent(WorkflowVariable workflowVariable)
+    {
+      return (WorkflowVariableBase)JsonConvert.DeserializeObject(
+        workflowVariable.Content,
+        KeyBuilder.FromKey(workflowVariable.Type)
+      );
+    }
+
     internal void UpdateContent(WorkflowVariableBase variable)
     {
       this.Content = JsonConvert.SerializeObject(variable);

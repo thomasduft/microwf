@@ -35,7 +35,7 @@ namespace microwf.Tests.Utils
 
     public void AddTestDbContext()
     {
-      this.Services.AddDbContext<TestDbContext>((o) => 
+      this.Services.AddDbContext<TestDbContext>((o) =>
       {
         o.UseInMemoryDatabase(Guid.NewGuid().ToString())
          .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));

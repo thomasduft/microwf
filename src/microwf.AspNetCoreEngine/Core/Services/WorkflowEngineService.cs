@@ -173,10 +173,7 @@ namespace tomware.Microwf.Engine
 
       foreach (var workflowVariable in workflow.WorkflowVariables)
       {
-        var variable = JsonConvert.DeserializeObject(
-          workflowVariable.Content,
-          KeyBuilder.FromKey(workflowVariable.Type)
-        );
+        var variable = WorkflowVariable.ConvertContent(workflowVariable);
         if (variable is WorkflowVariableBase)
         {
           var key = workflowVariable.Type;

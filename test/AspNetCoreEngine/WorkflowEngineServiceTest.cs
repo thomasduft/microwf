@@ -12,7 +12,7 @@ using tomware.Microwf.Engine;
 namespace microwf.Tests.AspNetCoreEngine
 {
   [TestClass]
-  public class WorkflowEngineTest
+  public class WorkflowEngineServiceTest
   {
     public TestDbContext Context { get; set; }
     public IWorkflowDefinitionProvider WorkflowDefinitionProvider { get; set; }
@@ -47,7 +47,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_CanTriggerAsync_CanTriggerWorkflow()
+    public async Task WorkflowEngineService_CanTriggerAsync_CanTriggerWorkflow()
     {
       // Arrange
       var instance = new Switcher();
@@ -62,7 +62,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_CanTriggerAsyncPassInNull_ThrowsArgumentNullException()
+    public async Task WorkflowEngineService_CanTriggerAsyncPassInNull_ThrowsArgumentNullException()
     {
       // Arrange
       var instance = new Switcher();
@@ -74,7 +74,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_GetTriggersAsync_ReturnsPossibleTriggers()
+    public async Task WorkflowEngineService_GetTriggersAsync_ReturnsPossibleTriggers()
     {
       // Arrange
       var instance = new Switcher();
@@ -89,7 +89,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_GetTriggersAsyncPassInNull_ThrowsArgumentNullException()
+    public async Task WorkflowEngineService_GetTriggersAsyncPassInNull_ThrowsArgumentNullException()
     {
       // Act
       await Assert.ThrowsExceptionAsync<ArgumentNullException>(
@@ -97,7 +97,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_TriggerAsync_ReturnsTriggerResult()
+    public async Task WorkflowEngineService_TriggerAsync_ReturnsTriggerResult()
     {
       // Arrange
       var instance = new Switcher();
@@ -114,7 +114,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_TriggerAsyncPassInNull_ThrowsArgumentNullException()
+    public async Task WorkflowEngineService_TriggerAsyncPassInNull_ThrowsArgumentNullException()
     {
       // Act
       await Assert.ThrowsExceptionAsync<ArgumentNullException>(
@@ -122,7 +122,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstance_ReturnsTriggerResult()
+    public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstance_ReturnsTriggerResult()
     {
       // Arrange
       var instance = new LightSwitcher();
@@ -142,7 +142,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstanceAndNewWorkflowVariable_ReturnsTriggerResult()
+    public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstanceAndNewWorkflowVariable_ReturnsTriggerResult()
     {
       // Arrange
       var instance = new LightSwitcher();
@@ -164,7 +164,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstanceAndExistingWorkflowVariable_ReturnsTriggerResult()
+    public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstanceAndExistingWorkflowVariable_ReturnsTriggerResult()
     {
       // Arrange
       var instance = new LightSwitcher();
@@ -193,7 +193,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_TriggerAsyncWithEntityWorkflowInstanceAndSameWorkflowVariable_ReturnsTriggerResult()
+    public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstanceAndSameWorkflowVariable_ReturnsTriggerResult()
     {
       // Arrange
       var instance = new LightSwitcher();
@@ -233,7 +233,7 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkflowEngine_Find_ReturnsTheDesiredIWorkflowInstance()
+    public async Task WorkflowEngineService_Find_ReturnsTheDesiredIWorkflowInstance()
     {
       // Arrange
       var instance = new LightSwitcher();

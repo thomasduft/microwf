@@ -123,7 +123,7 @@ namespace tomware.Microwf.Engine
 
       var list = await _repository
         .ListAsync(new GetWorkflowInstanceHistories(
-          type, 
+          type,
           correlationId
         ));
       var workflow = list.FirstOrDefault();
@@ -132,32 +132,6 @@ namespace tomware.Microwf.Engine
       var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return workflowDefinition.ToDotWithHistory(workflow);
-    }
-
-    private Expression<Func<Workflow, bool>> GetWhereClause(
-      WorkflowSearchPagingParameters pagingParameters
-    )
-    {
-      var predicate = PredicateBuilder.True<Workflow>();
-      if (pagingParameters.HasType)
-      {
-        predicate = predicate
-          .And(w => w.Type.ToLowerInvariant()
-            .StartsWith(pagingParameters.Type.ToLowerInvariant()));
-      }
-      if (pagingParameters.HasCorrelationId)
-      {
-        predicate = predicate
-          .And(w => w.CorrelationId == pagingParameters.CorrelationId);
-      }
-      if (pagingParameters.HasAssignee)
-      {
-        predicate = predicate
-          .And(w => w.Assignee.ToLowerInvariant()
-            .StartsWith(pagingParameters.Assignee.ToLowerInvariant()));
-      }
-
-      return predicate;
     }
 
     private WorkflowViewModel ToWorkflowViewModel(Workflow w)

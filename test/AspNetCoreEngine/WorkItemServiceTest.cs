@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,59 @@ namespace microwf.Tests.AspNetCoreEngine
   [TestClass]
   public class WorkItemServiceTest
   {
+    [TestMethod]
+    public async Task WorkItemService_GetUpCommingsAsync_UpCommingsReturned()
+    {
+      // Arrange
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+
+      var dueDate = SystemTime.Now().AddMinutes(2);
+
+      var workItems = this.GetWorkItems(dueDate);
+      await context.WorkItems.AddRangeAsync(workItems);
+      await context.SaveChangesAsync();
+
+      var parameters = new PagingParameters();
+
+      // Act
+      var upcommings = await service.GetUpCommingsAsync(parameters);
+
+      // Assert
+      Assert.IsNotNull(upcommings);
+      Assert.AreEqual(upcommings.Count, 2);
+    }
+
+    [TestMethod]
+    public async Task WorkItemService_GetFailedAsync_FailedReturned()
+    {
+      // Arrange
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+
+      var workItems = this.GetWorkItems();
+      workItems.First().Retries = 4;
+      await context.WorkItems.AddRangeAsync(workItems);
+      await context.SaveChangesAsync();
+
+      var parameters = new PagingParameters();
+
+      // Act
+      var failed = await service.GetFailedAsync(parameters);
+
+      // Assert
+      Assert.IsNotNull(failed);
+      Assert.AreEqual(failed.Count, 1);
+      Assert.AreEqual(failed.First().Id, 1);
+      Assert.AreEqual(failed.First().Retries, 4);
+    }
+
     [TestMethod]
     public async Task WorkItemService_ResumeWorkItemsAsync_TwoItemsResumed()
     {
@@ -78,6 +132,38 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
+    public async Task WorkItemService_Reschedule_WorkItemRescheduled()
+    {
+      // Arrange
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+      var repository = serviceProvider.GetRequiredService<IWorkItemRepository>();
+
+      var workItems = this.GetWorkItems();
+      await context.WorkItems.AddRangeAsync(workItems);
+      await context.SaveChangesAsync();
+
+
+      var dueDate = SystemTime.Now().AddMinutes(1);
+      var model = new WorkItemInfoViewModel
+      {
+        Id = 1,
+        DueDate = dueDate
+      };
+
+      // Act
+      await service.Reschedule(model);
+
+      // Assert
+      var rescheduledItem = await repository.GetByIdAsync(1);
+      Assert.IsNotNull(rescheduledItem);
+      Assert.AreEqual(rescheduledItem.DueDate, dueDate);
+    }
+
+    [TestMethod]
     public async Task WorkItemService_DeleteAsync_OneItemDeleted()
     {
       // Arrange
@@ -99,20 +185,22 @@ namespace microwf.Tests.AspNetCoreEngine
       Assert.AreEqual(2, context.WorkItems.First().Id);
     }
 
-    private List<WorkItem> GetWorkItems()
+    private List<WorkItem> GetWorkItems(DateTime? dueDate = null)
     {
       List<WorkItem> workItems = new List<WorkItem>() {
         new WorkItem {
           Id = 1,
           WorkflowType = "first",
           TriggerName = "triggerFirst",
-          EntityId = 1
+          EntityId = 1,
+          DueDate = dueDate ?? SystemTime.Now()
         },
         new WorkItem {
           Id = 2,
           WorkflowType = "second",
           TriggerName = "triggerSecond",
-          EntityId = 1
+          EntityId = 1,
+          DueDate = dueDate ?? SystemTime.Now()
         }
       };
 
