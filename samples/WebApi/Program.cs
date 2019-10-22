@@ -17,6 +17,18 @@ namespace WebApi
 {
   public class Program
   {
+    public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+      .SetBasePath(Directory.GetCurrentDirectory())
+      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+      .AddJsonFile(
+          $"appsettings.Docker.json",
+          optional: true,
+          reloadOnChange: true
+        )
+      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+      .AddEnvironmentVariables()
+      .Build();
+
     public static async Task Main(string[] args)
     {
       Log.Logger = new LoggerConfiguration()
@@ -68,27 +80,9 @@ namespace WebApi
             .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder =>
             {
-              webBuilder.UseUrls(GetUrls(GetConfig()));
+              webBuilder.UseUrls(GetUrls(Configuration));
               webBuilder.UseStartup<Startup>();
             });
-
-    private static IConfigurationRoot GetConfig()
-    {
-      return new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddEnvironmentVariables()
-        .AddJsonFile(
-          "appsettings.json",
-          optional: false,
-          reloadOnChange: true
-        )
-        .AddJsonFile(
-          $"appsettings.Docker.json",
-          optional: true,
-          reloadOnChange: true
-        )
-        .Build();
-    }
 
     private static string GetUrls(IConfiguration config)
     {

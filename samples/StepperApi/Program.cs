@@ -14,11 +14,11 @@ namespace StepperApi
   public class Program
   {
     public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-     .SetBasePath(Directory.GetCurrentDirectory())
-     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-     .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
-     .AddEnvironmentVariables()
-     .Build();
+      .SetBasePath(Directory.GetCurrentDirectory())
+      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+      .AddEnvironmentVariables()
+      .Build();
 
     public static async Task Main(string[] args)
     {
@@ -69,21 +69,9 @@ namespace StepperApi
             .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder =>
             {
-              webBuilder.UseUrls(GetUrls(GetConfig()));
+              webBuilder.UseUrls(GetUrls(Configuration));
               webBuilder.UseStartup<Startup>();
             });
-
-    private static IConfigurationRoot GetConfig()
-    {
-      return new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddEnvironmentVariables()
-        .AddJsonFile(
-          "appsettings.json",
-          optional: false,
-          reloadOnChange: true
-        ).Build();
-    }
 
     private static string GetUrls(IConfiguration config)
     {

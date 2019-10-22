@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
 using tomware.Microwf.Engine;
@@ -70,12 +69,9 @@ namespace WebApi
 
     public void Configure(
       IApplicationBuilder app,
-      IWebHostEnvironment env,
-      ILoggerFactory loggerFactory
+      IWebHostEnvironment env
     )
     {
-      loggerFactory.AddSerilog();
-
       if (env.IsDevelopment())
       {
         app.UseCors("AllowAllOrigins");
