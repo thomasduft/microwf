@@ -15,9 +15,11 @@ namespace ConsoleClient
   //  - https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/console-webapiclient
   class Program
   {
-    static readonly string HOST = "http://localhost:5028";
+    static readonly string HOST = "http://localhost:5000";
     static readonly int AMOUNT_OF_STEPPERS = 100;
     static readonly bool USE_CLIENT_CREDENTIALS = true;
+
+    static string Host { get; set; }
 
     static void Main(string[] args)
     {
@@ -27,10 +29,12 @@ namespace ConsoleClient
 
     static async Task MainAsync(string[] args)
     {
+      Host = args.Length == 1 ? args[0] : HOST;
+
       var httpClient = new HttpClient();
       // Just a sample call with an invalid access token.
       // The expected response from this call is 401 Unauthorized
-      var apiResponse = await httpClient.GetAsync($"{HOST}/api/workflow");
+      var apiResponse = await httpClient.GetAsync($"{Host}/api/workflow");
       httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
         "Bearer",
         "invalid_access_token"
@@ -54,7 +58,7 @@ namespace ConsoleClient
           response = await httpClient
             .RequestPasswordTokenAsync(new PasswordTokenRequest
             {
-              Address = $"{HOST}/connect/token",
+              Address = $"{Host}/connect/token",
               GrantType = "password",
               ClientId = "ro.client",
               Scope = "api1",
@@ -67,7 +71,7 @@ namespace ConsoleClient
           response = await httpClient
             .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
-              Address = $"{HOST}/connect/token",
+              Address = $"{Host}/connect/token",
 
               ClientId = "console.client",
               ClientSecret = "00000000-0000-0000-0000-000000000001",
@@ -109,7 +113,7 @@ namespace ConsoleClient
             }
           }
 
-          var workflowResponse = await httpClient.GetAsync($"{HOST}/api/workflow");
+          var workflowResponse = await httpClient.GetAsync($"{Host}/api/workflow");
           if (workflowResponse.IsSuccessStatusCode)
           {
             Console.WriteLine(await workflowResponse.Content.ReadAsStringAsync());
@@ -145,7 +149,7 @@ namespace ConsoleClient
 
     static async Task<HttpResponseMessage> CreateStepper(HttpClient client, string stepper)
     {
-      var uri = $"{HOST}/api/stepper";
+      var uri = $"{Host}/api/stepper";
 
       return await client.PostAsync(
         uri,
@@ -159,7 +163,7 @@ namespace ConsoleClient
 
     static async Task<HttpResponseMessage> ProcessStepper(HttpClient client, int stepperId)
     {
-      var uri = $"{HOST}/api/stepper/process";
+      var uri = $"{Host}/api/stepper/process";
       var jsonString = JsonConvert.SerializeObject(new
       {
         Id = stepperId,

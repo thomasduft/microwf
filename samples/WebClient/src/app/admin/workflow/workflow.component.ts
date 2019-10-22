@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
+import { AutoUnsubscribe } from '../../shared/services/autoUnsubscribe';
 
 import {
   WorkflowService,
@@ -11,7 +11,7 @@ import {
   Workflow,
   WorkflowHistory,
   WorkflowVariable
-} from '../workflow/index';
+} from '../../workflow/index';
 
 @AutoUnsubscribe
 @Component({

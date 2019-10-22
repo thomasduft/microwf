@@ -1,5 +1,5 @@
 import { Component, Input, HostBinding } from '@angular/core';
-import { Workflow } from '../workflow';
+import { Workflow } from '../../workflow';
 
 @Component({
   selector: 'tw-workflow-list-item',

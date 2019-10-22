@@ -1,13 +1,9 @@
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Events;
-using Serilog.Formatting.Compact;
-using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -32,9 +28,7 @@ namespace WebApi
     public static async Task Main(string[] args)
     {
       Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-        .Enrich.FromLogContext()
-        .WriteTo.Console(new RenderedCompactJsonFormatter())
+        .ReadFrom.Configuration(Configuration)
         .CreateLogger();
 
       try

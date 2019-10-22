@@ -1,21 +1,21 @@
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
 
-import { AutoUnsubscribe } from './../shared/services/autoUnsubscribe';
-import { ListComponent } from '../shared/list/list.component';
+import { AutoUnsubscribe } from '../../shared/services/autoUnsubscribe';
+import { ListComponent } from '../../shared/list/list.component';
 
 import {
   WorkflowService,
   Workflow,
   WorkflowSearchModel,
   WorkflowPagingModel
-} from './../workflow/index';
-import { PagingModel } from '../shared/services/models';
+} from './../../workflow/index';
+import { PagingModel } from '../../shared/services/models';
 
 @AutoUnsubscribe
 @Component({
-  selector: 'tw-admin-dashboard',
+  selector: 'tw-workflow-dashboard',
   providers: [WorkflowService],
   template: `
   <div class="pane__left"
@@ -53,7 +53,7 @@ import { PagingModel } from '../shared/services/models';
     <router-outlet></router-outlet>
   </div>`
 })
-export class AdminDashboardComponent implements OnInit {
+export class WorkflowDashboardComponent implements OnInit {
   private workflows$: Subscription;
   private page: PagingModel = PagingModel.create();
 

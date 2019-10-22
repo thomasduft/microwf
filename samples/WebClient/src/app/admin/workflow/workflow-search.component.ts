@@ -7,7 +7,7 @@ import {
   Input
 } from '@angular/core';
 
-import { WorkflowSearchModel } from '../workflow/models';
+import { WorkflowSearchModel } from '../../workflow/models';
 import { WorkflowSearchSlot } from './models';
 
 @Component({

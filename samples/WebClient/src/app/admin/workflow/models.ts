@@ -4,7 +4,7 @@ import {
   Editor,
   TEXT_EDITOR,
   NUMBER_EDITOR
-} from '../shared/formdef/index';
+} from '../../shared/formdef/index';
 
 export class WorkflowSearchSlot implements Slot {
   public static KEY = 'workflowsearchslot';
