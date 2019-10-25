@@ -30,9 +30,15 @@ import { AuthService } from '../../shared/services/auth.service';
           Admin
           <ul>
             <li routerLinkActive="active" class="menu__item">
-              <a routerLink="/admin">
+              <a routerLink="/admin/workflows">
                 <tw-icon name="arrow-right"></tw-icon>
                 Workflows
+              </a>
+            </li>
+            <li routerLinkActive="active" class="menu__item">
+              <a routerLink="/admin/queue">
+                <tw-icon name="cog"></tw-icon>
+                Jobqueue
               </a>
             </li>
           </ul>

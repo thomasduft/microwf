@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Serilog;
 using StepperApi.Domain;
 using StepperApi.Extensions;
 using StepperApi.Identity;
@@ -37,14 +40,14 @@ namespace StepperApi
         });
       })
         .AddMvc()
-        .AddJsonOptions(o =>
-          o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        )
-        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        .AddNewtonsoftJson(opt =>
+        {
+          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
+      services.AddAuthentication()
+        .AddIdentityServerJwt();
       services.AddRouting(o => o.LowercaseUrls = true);
-
-      services.AddAuthorization();
 
       var connection = this.Configuration["ConnectionString"];
       services
@@ -64,7 +67,7 @@ namespace StepperApi
       services.AddApiServices<DomainContext>(this.Configuration);
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
@@ -73,18 +76,20 @@ namespace StepperApi
 
         app.UseDeveloperExceptionPage();
       }
-      else
-      {
-        app.UseHsts();
-      }
 
-      app.UseHttpsRedirection();
+      app.UseSerilogRequestLogging();
 
+      app.UseRouting();
+
+      app.UseAuthentication();
       app.UseIdentityServer();
+      app.UseAuthorization();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
 
       app.SubscribeMessageHandlers();
-
-      app.UseMvcWithDefaultRoute();
     }
 
     private string GetAuthority()

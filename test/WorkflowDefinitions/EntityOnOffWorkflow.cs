@@ -61,7 +61,7 @@ namespace microwf.Tests.WorkflowDefinitions
     }
   }
 
-  public class LightSwitcher : IEntityWorkflow
+  public class LightSwitcher : IAssignableWorkflow
   {
     [Key]
     public int Id { get; set; }

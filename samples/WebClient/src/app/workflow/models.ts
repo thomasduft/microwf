@@ -101,3 +101,13 @@ export class WorkflowPagingModel extends PagingModel {
     return model;
   }
 }
+
+export interface QueueItem {
+  id: number;
+  triggerName: string;
+  entityId: number;
+  workflowType: string;
+  retries: number;
+  error: string;
+  dueDate: Date;
+}

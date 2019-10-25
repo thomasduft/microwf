@@ -29,12 +29,12 @@ namespace WebApi.Workflows.Holiday
   public class HolidayService : IHolidayService
   {
     private readonly DomainContext _context;
-    private readonly IWorkflowEngine _workflowEngine;
+    private readonly IWorkflowEngineService _workflowEngine;
     private readonly IUserContextService _userContext;
 
     public HolidayService(
       DomainContext context,
-      IWorkflowEngine workflowEngine,
+      IWorkflowEngineService workflowEngine,
       IUserContextService userContext
     )
     {

@@ -1,25 +1,45 @@
-using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using System;
 using tomware.Microwf.Engine;
 
 namespace microwf.Tests.Utils
 {
   public class DITestHelper
   {
-    public ServiceProvider Services { get; private set; }
+    public IServiceCollection Services { get; private set; }
 
     public DITestHelper()
     {
-      Services = new ServiceCollection()
-        .AddLogging()
-        .BuildServiceProvider();
+      this.Services = new ServiceCollection().AddLogging();
     }
 
-    public ILoggerFactory GetLoggerFactory()
+    public ServiceProvider Build()
     {
-      return this.Services.GetService<ILoggerFactory>();
+      return this.Services.BuildServiceProvider();
+    }
+
+    public ServiceProvider BuildDefault(WorkflowConfiguration workflowConfiguration = null)
+    {
+      if (workflowConfiguration == null)
+      {
+        workflowConfiguration = new WorkflowConfiguration();
+      }
+
+      this.AddTestDbContext();
+      this.Services.AddWorkflowEngineServices<TestDbContext>(workflowConfiguration);
+
+      return this.Build();
+    }
+
+    public void AddTestDbContext()
+    {
+      this.Services.AddDbContext<TestDbContext>((o) =>
+      {
+        o.UseInMemoryDatabase(Guid.NewGuid().ToString())
+         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
+      });
     }
   }
 }

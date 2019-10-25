@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System.Collections.Generic;
 
 namespace StepperApi.Extensions
 {
@@ -12,24 +11,19 @@ namespace StepperApi.Extensions
     {
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new Info
+        c.SwaggerDoc("v1", new OpenApiInfo
         {
           Version = "v1",
           Title = "Stepper API Documentation",
           Description = "Stepper API Documentation"
         });
 
-        c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
-          In = "header",
+          In = ParameterLocation.Header,
           Description = "Example: \"Bearer {token}\"",
           Name = "Authorization",
-          Type = "apiKey"
-        });
-
-        c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-        {
-          { "Bearer", new string[] { } }
+          Type = SecuritySchemeType.ApiKey
         });
       });
 

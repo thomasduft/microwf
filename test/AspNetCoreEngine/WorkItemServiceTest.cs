@@ -1,9 +1,10 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using microwf.Tests.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using microwf.Tests.Utils;
 using tomware.Microwf.Engine;
 
 namespace microwf.Tests.AspNetCoreEngine
@@ -12,22 +13,70 @@ namespace microwf.Tests.AspNetCoreEngine
   public class WorkItemServiceTest
   {
     [TestMethod]
-    public async Task WorkItemService_ResumeWorkItemsAsync_TwoItemsResumed()
+    public async Task WorkItemService_GetUpCommingsAsync_UpCommingsReturned()
     {
       // Arrange
-      var options = TestDbContext.CreateDbContextOptions();
-      var context = new TestDbContext(options);
-      var workItems = GetWorkItems();
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
 
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+
+      var dueDate = SystemTime.Now().AddMinutes(2);
+
+      var workItems = this.GetWorkItems(dueDate);
       await context.WorkItems.AddRangeAsync(workItems);
       await context.SaveChangesAsync();
 
-      var diHelper = new DITestHelper();
-      var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkItemService<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkItemService<TestDbContext>>();
+      var parameters = new PagingParameters();
 
-      var service = new WorkItemService<TestDbContext>(context, logger);
+      // Act
+      var upcommings = await service.GetUpCommingsAsync(parameters);
+
+      // Assert
+      Assert.IsNotNull(upcommings);
+      Assert.AreEqual(upcommings.Count, 2);
+    }
+
+    [TestMethod]
+    public async Task WorkItemService_GetFailedAsync_FailedReturned()
+    {
+      // Arrange
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+
+      var workItems = this.GetWorkItems();
+      workItems.First().Retries = 4;
+      await context.WorkItems.AddRangeAsync(workItems);
+      await context.SaveChangesAsync();
+
+      var parameters = new PagingParameters();
+
+      // Act
+      var failed = await service.GetFailedAsync(parameters);
+
+      // Assert
+      Assert.IsNotNull(failed);
+      Assert.AreEqual(failed.Count, 1);
+      Assert.AreEqual(failed.First().Id, 1);
+      Assert.AreEqual(failed.First().Retries, 4);
+    }
+
+    [TestMethod]
+    public async Task WorkItemService_ResumeWorkItemsAsync_TwoItemsResumed()
+    {
+      // Arrange
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      await context.WorkItems.AddRangeAsync(this.GetWorkItems());
+      await context.SaveChangesAsync();
+
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
 
       // Act
       IEnumerable<WorkItem> resumedItems = await service.ResumeWorkItemsAsync();
@@ -40,15 +89,12 @@ namespace microwf.Tests.AspNetCoreEngine
     public async Task WorkItemService_PersistWorkItemsAsync_TwoItemsPersisted()
     {
       // Arrange
-      var options = TestDbContext.CreateDbContextOptions();
-
-      var context = new TestDbContext(options);
       var diHelper = new DITestHelper();
-      var logger = diHelper.GetLoggerFactory()
-        .CreateLogger<WorkItemService<TestDbContext>>();
-      var workItems = GetWorkItems();
+      var serviceProvider = diHelper.BuildDefault();
 
-      var service = new WorkItemService<TestDbContext>(context, logger);
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+      var workItems = this.GetWorkItems();
 
       // Act
       await service.PersistWorkItemsAsync(workItems);
@@ -61,9 +107,13 @@ namespace microwf.Tests.AspNetCoreEngine
     public async Task WorkItemService_PersistWorkItemsAsync_OneItemPersistedOneItemUpdated()
     {
       // Arrange
-      var options = TestDbContext.CreateDbContextOptions();
-      var context = new TestDbContext(options);
-      var workItems = GetWorkItems();
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+
+      var workItems = this.GetWorkItems();
 
       var firstWorkItem = workItems.First();
       firstWorkItem.WorkflowType = "firstCopy";
@@ -72,13 +122,6 @@ namespace microwf.Tests.AspNetCoreEngine
       await context.SaveChangesAsync();
 
       firstWorkItem.WorkflowType = "first";
-
-      var diHelper = new DITestHelper();
-      var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkItemService<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkItemService<TestDbContext>>();
-
-      var service = new WorkItemService<TestDbContext>(context, logger);
 
       // Act
       await service.PersistWorkItemsAsync(workItems);
@@ -89,46 +132,75 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
-    public async Task WorkItemService_DeleteAsync_OneItemDeleted()
+    public async Task WorkItemService_Reschedule_WorkItemRescheduled()
     {
       // Arrange
-      var options = TestDbContext.CreateDbContextOptions();
-      var context = new TestDbContext(options);
-      var workItems = GetWorkItems();
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
 
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+      var repository = serviceProvider.GetRequiredService<IWorkItemRepository>();
+
+      var workItems = this.GetWorkItems();
       await context.WorkItems.AddRangeAsync(workItems);
       await context.SaveChangesAsync();
 
-      var diHelper = new DITestHelper();
-      var loggerFactory = diHelper.GetLoggerFactory();
-      ILogger<WorkItemService<TestDbContext>> logger = loggerFactory
-        .CreateLogger<WorkItemService<TestDbContext>>();
 
-      var service = new WorkItemService<TestDbContext>(context, logger);
+      var dueDate = SystemTime.Now().AddMinutes(1);
+      var model = new WorkItemInfoViewModel
+      {
+        Id = 1,
+        DueDate = dueDate
+      };
 
       // Act
-      var result = await service.DeleteAsync(1);
+      await service.Reschedule(model);
 
       // Assert
-      Assert.AreEqual(1, result);
+      var rescheduledItem = await repository.GetByIdAsync(1);
+      Assert.IsNotNull(rescheduledItem);
+      Assert.AreEqual(rescheduledItem.DueDate, dueDate);
+    }
+
+    [TestMethod]
+    public async Task WorkItemService_DeleteAsync_OneItemDeleted()
+    {
+      // Arrange
+      var diHelper = new DITestHelper();
+      var serviceProvider = diHelper.BuildDefault();
+
+      var context = serviceProvider.GetRequiredService<TestDbContext>();
+      var service = serviceProvider.GetRequiredService<IWorkItemService>();
+
+      var workItems = this.GetWorkItems();
+      await context.WorkItems.AddRangeAsync(workItems);
+      await context.SaveChangesAsync();
+
+      // Act
+      await service.DeleteAsync(1);
+
+      // Assert
       Assert.AreEqual(1, context.WorkItems.Count());
       Assert.AreEqual(2, context.WorkItems.First().Id);
     }
 
-    private List<WorkItem> GetWorkItems()
+    private List<WorkItem> GetWorkItems(DateTime? dueDate = null)
     {
       List<WorkItem> workItems = new List<WorkItem>() {
         new WorkItem {
           Id = 1,
           WorkflowType = "first",
           TriggerName = "triggerFirst",
-          EntityId = 1
+          EntityId = 1,
+          DueDate = dueDate ?? SystemTime.Now()
         },
         new WorkItem {
           Id = 2,
           WorkflowType = "second",
           TriggerName = "triggerSecond",
-          EntityId = 1
+          EntityId = 1,
+          DueDate = dueDate ?? SystemTime.Now()
         }
       };
 

@@ -24,13 +24,13 @@ namespace StepperApi.Workflows.Stepper
   public class StepperService : IStepperService
   {
     private readonly DomainContext context;
-    private readonly IWorkflowEngine workflowEngine;
+    private readonly IWorkflowEngineService workflowEngine;
     private readonly IUserContextService userContext;
     private readonly IMessageBus messageBus;
 
     public StepperService(
       DomainContext context,
-      IWorkflowEngine workflowEngine,
+      IWorkflowEngineService workflowEngine,
       IUserContextService userContext,
       IMessageBus messageBus
     )
