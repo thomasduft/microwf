@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
 
@@ -9,10 +8,10 @@ namespace tomware.Microwf.Engine
 {
   public class WorkflowService : IWorkflowService
   {
-    private readonly IWorkflowRepository _repository;
-    private readonly IWorkflowDefinitionProvider _workflowDefinitionProvider;
-    private readonly IUserWorkflowMappingService _userWorkflowMappingService;
-    private readonly IWorkflowDefinitionViewModelCreator _viewModelCreator;
+    private readonly IWorkflowRepository repository;
+    private readonly IWorkflowDefinitionProvider workflowDefinitionProvider;
+    private readonly IUserWorkflowMappingService userWorkflowMappingService;
+    private readonly IWorkflowDefinitionViewModelCreator viewModelCreator;
 
     public WorkflowService(
       IWorkflowRepository repository,
@@ -21,36 +20,36 @@ namespace tomware.Microwf.Engine
       IWorkflowDefinitionViewModelCreator viewModelCreator
     )
     {
-      _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-      _workflowDefinitionProvider = workflowDefinitionProvider;
-      _userWorkflowMappingService = userWorkflowMappingService;
-      _viewModelCreator = viewModelCreator;
+      this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+      this.workflowDefinitionProvider = workflowDefinitionProvider;
+      this.userWorkflowMappingService = userWorkflowMappingService;
+      this.viewModelCreator = viewModelCreator;
     }
 
     public async Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(
       WorkflowSearchPagingParameters pagingParameters
     )
     {
-      var count = await _repository.CountAsync(new WorkflowCount());
+      var count = await this.repository.CountAsync(new WorkflowCount());
 
       IReadOnlyList<Workflow> instances = null;
       if (pagingParameters.HasValues)
       {
-        instances = await _repository
+        instances = await this.repository
           .ListAsync(new WorkflowInstancesFilterAndOrderedPaginated(
             pagingParameters
           ));
       }
       else
       {
-        instances = await _repository
+        instances = await this.repository
           .ListAsync(new WorkflowInstancesOrderedPaginated(
             pagingParameters.SkipCount,
             pagingParameters.PageSize
           ));
       }
 
-      var items = instances.Select(i => ToWorkflowViewModel(i));
+      var items = instances.Select(i => this.ToWorkflowViewModel(i));
 
       return new PaginatedList<WorkflowViewModel>(
         items,
@@ -62,15 +61,15 @@ namespace tomware.Microwf.Engine
 
     public async Task<WorkflowViewModel> GetAsync(int id)
     {
-      var workflow = await _repository.GetByIdAsync(id);
+      var workflow = await this.repository.GetByIdAsync(id);
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
-      return ToWorkflowViewModel(workflow);
+      return this.ToWorkflowViewModel(workflow);
     }
 
     public async Task<IEnumerable<WorkflowHistoryViewModel>> GetHistoryAsync(int id)
     {
-      var list = await _repository.ListAsync(new WorkflowHistoryForWorkflow(id));
+      var list = await this.repository.ListAsync(new WorkflowHistoryForWorkflow(id));
       var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
@@ -81,7 +80,7 @@ namespace tomware.Microwf.Engine
 
     public async Task<IEnumerable<WorkflowVariableViewModel>> GetVariablesAsync(int id)
     {
-      var list = await _repository.ListAsync(new WorkflowVariablesForWorkflow(id));
+      var list = await this.repository.ListAsync(new WorkflowVariablesForWorkflow(id));
       var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException(nameof(id));
 
@@ -92,27 +91,27 @@ namespace tomware.Microwf.Engine
 
     public async Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId)
     {
-      var list = await _repository.ListAsync(new GetWorkflowInstance(type, correlationId));
+      var list = await this.repository.ListAsync(new GetWorkflowInstance(type, correlationId));
       var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
 
-      return ToWorkflowViewModel(workflow);
+      return this.ToWorkflowViewModel(workflow);
     }
 
     public IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions()
     {
-      var workflowDefinitions = _workflowDefinitionProvider.GetWorkflowDefinitions();
+      var workflowDefinitions = this.workflowDefinitionProvider.GetWorkflowDefinitions();
 
-      workflowDefinitions = _userWorkflowMappingService.Filter(workflowDefinitions);
+      workflowDefinitions = this.userWorkflowMappingService.Filter(workflowDefinitions);
 
-      return workflowDefinitions.Select(d => _viewModelCreator.CreateViewModel(d.Type));
+      return workflowDefinitions.Select(d => this.viewModelCreator.CreateViewModel(d.Type));
     }
 
     public string Dot(string type)
     {
       if (string.IsNullOrEmpty(type)) throw new ArgumentNullException(nameof(type));
 
-      var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
+      var workflowDefinition = this.workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return workflowDefinition.ToDot();
     }
@@ -121,7 +120,7 @@ namespace tomware.Microwf.Engine
     {
       if (string.IsNullOrEmpty(type)) throw new ArgumentNullException(nameof(type));
 
-      var list = await _repository
+      var list = await this.repository
         .ListAsync(new GetWorkflowInstanceHistories(
           type,
           correlationId
@@ -129,14 +128,14 @@ namespace tomware.Microwf.Engine
       var workflow = list.FirstOrDefault();
       if (workflow == null) throw new KeyNotFoundException($"{type}, {correlationId}");
 
-      var workflowDefinition = _workflowDefinitionProvider.GetWorkflowDefinition(type);
+      var workflowDefinition = this.workflowDefinitionProvider.GetWorkflowDefinition(type);
 
       return workflowDefinition.ToDotWithHistory(workflow);
     }
 
     private WorkflowViewModel ToWorkflowViewModel(Workflow w)
     {
-      var model = _viewModelCreator.CreateViewModel(w.Type);
+      var model = this.viewModelCreator.CreateViewModel(w.Type);
 
       return new WorkflowViewModel
       {

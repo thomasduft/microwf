@@ -10,16 +10,21 @@ namespace tomware.Microwf.Engine
   [Route("api/jobqueue")]
   public class JobQueueController : Controller
   {
-    private readonly IJobQueueService _service;
-    private readonly IWorkItemService _workItemService;
+    private readonly IJobQueueService service;
+    private readonly IWorkItemService workItemService;
 
     public JobQueueController(
       IJobQueueService service,
       IWorkItemService workItemService
     )
     {
-      _service = service;
-      _workItemService = workItemService;
+      this.service = service;
+      this.workItemService = workItemService;
+    }
+
+    public JobQueueController(IJobQueueService service)
+    {
+      this.service = service;
     }
 
     [HttpGet("snapshot")]
@@ -27,7 +32,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkItemViewModel>), 200)]
     public ActionResult<IEnumerable<WorkItemViewModel>> GetSnapshot()
     {
-      var result = _service.GetSnapshot();
+      var result = this.service.GetSnapshot();
 
       return Ok(result);
     }
@@ -40,9 +45,9 @@ namespace tomware.Microwf.Engine
     )
     {
       PaginatedList<WorkItemViewModel> result
-        = await _workItemService.GetUpCommingsAsync(pagingParameters);
+        = await this.workItemService.GetUpCommingsAsync(pagingParameters);
 
-      AddXPagination(pagingParameters, result);
+      this.AddXPagination(pagingParameters, result);
 
       return Ok(result);
     }
@@ -55,9 +60,9 @@ namespace tomware.Microwf.Engine
     )
     {
       PaginatedList<WorkItemViewModel> result
-        = await _workItemService.GetFailedAsync(pagingParameters);
+        = await this.workItemService.GetFailedAsync(pagingParameters);
 
-      AddXPagination(pagingParameters, result);
+      this.AddXPagination(pagingParameters, result);
 
       return Ok(result);
     }
@@ -71,7 +76,7 @@ namespace tomware.Microwf.Engine
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
 
-      await this._workItemService.Reschedule(model);
+      await this.workItemService.Reschedule(model);
 
       return NoContent();
     }
@@ -89,7 +94,7 @@ namespace tomware.Microwf.Engine
         totalPages = result.TotalPages
       };
 
-      Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
+      this.Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
     }
   }
 }

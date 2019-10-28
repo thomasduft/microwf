@@ -14,11 +14,11 @@ namespace tomware.Microwf.Engine
 
   public class WorkflowProcessor : BackgroundService
   {
-    private readonly ILogger<WorkflowProcessor> _logger;
+    private readonly ILogger<WorkflowProcessor> logger;
 
-    private readonly ProcessorConfiguration _options;
+    private readonly ProcessorConfiguration options;
 
-    private readonly IJobQueueService _jobQueueService;
+    private readonly IJobQueueService jobQueueService;
 
     public WorkflowProcessor(
       ILogger<WorkflowProcessor> logger,
@@ -26,29 +26,29 @@ namespace tomware.Microwf.Engine
       IJobQueueService jobQueueService
     )
     {
-      _logger = logger;
-      _options = options.Value;
-      _jobQueueService = jobQueueService;
+      this.logger = logger;
+      this.options = options.Value;
+      this.jobQueueService = jobQueueService;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
       while (!stoppingToken.IsCancellationRequested)
       {
-        _logger.LogTrace($"Triggering JobQueueService.ProcessItemsAsync");
+        this.logger.LogTrace($"Triggering JobQueueService.ProcessItemsAsync");
 
-        await _jobQueueService.ResumeWorkItems();
-        await _jobQueueService.ProcessItemsAsync();
+        await this.jobQueueService.ResumeWorkItems();
+        await this.jobQueueService.ProcessItemsAsync();
 
-        await Task.Delay(_options.Interval, stoppingToken);
+        await Task.Delay(this.options.Interval, stoppingToken);
       }
     }
 
     public override async Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger.LogTrace($"Stopping processor");
+      this.logger.LogTrace($"Stopping processor");
 
-      await _jobQueueService.PersistWorkItemsAsync();
+      await this.jobQueueService.PersistWorkItemsAsync();
     }
   }
 }

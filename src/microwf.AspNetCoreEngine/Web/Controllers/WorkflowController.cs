@@ -11,16 +11,16 @@ namespace tomware.Microwf.Engine
   [Route("api/workflow")]
   public class WorkflowController : Controller
   {
-    private readonly IWorkflowService _service;
-    private readonly IMessageBus _messageBus;
+    private readonly IWorkflowService service;
+    private readonly IMessageBus messageBus;
 
     public WorkflowController(
       IWorkflowService service,
       IMessageBus messageBus
     )
     {
-      _service = service;
-      _messageBus = messageBus;
+      this.service = service;
+      this.messageBus = messageBus;
     }
 
     [HttpGet()]
@@ -31,9 +31,9 @@ namespace tomware.Microwf.Engine
     )
     {
       PaginatedList<WorkflowViewModel> result
-        = await _service.GetWorkflowsAsync(pagingParameters);
+        = await this.service.GetWorkflowsAsync(pagingParameters);
 
-      AddXPagination(pagingParameters, result);
+      this.AddXPagination(pagingParameters, result);
 
       return Ok(result);
     }
@@ -43,7 +43,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
     public async Task<ActionResult<WorkflowViewModel>> Get(int id)
     {
-      var result = await _service.GetAsync(id);
+      var result = await this.service.GetAsync(id);
 
       return Ok(result);
     }
@@ -58,10 +58,10 @@ namespace tomware.Microwf.Engine
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
 
-      var workflow = await this._service.GetAsync(model.Id);
+      var workflow = await this.service.GetAsync(model.Id);
       if (workflow == null) return NotFound();
 
-      await _messageBus.PublishAsync(WorkItemMessage.Create(
+      await this.messageBus.PublishAsync(WorkItemMessage.Create(
          model.Trigger,
          workflow.CorrelationId,
          workflow.Type
@@ -75,7 +75,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), 200)]
     public async Task<ActionResult<IEnumerable<WorkflowHistoryViewModel>>> GetHistory(int id)
     {
-      var result = await _service.GetHistoryAsync(id);
+      var result = await this.service.GetHistoryAsync(id);
 
       return Ok(result);
     }
@@ -85,7 +85,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkflowVariableViewModel>), 200)]
     public async Task<ActionResult<IEnumerable<WorkflowVariableViewModel>>> GetVariables(int id)
     {
-      var result = await _service.GetVariablesAsync(id);
+      var result = await this.service.GetVariablesAsync(id);
 
       return Ok(result);
     }
@@ -94,7 +94,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
     public async Task<ActionResult<WorkflowViewModel>> GetInstance(string type, int correlationId)
     {
-      WorkflowViewModel result = await _service.GetInstanceAsync(type, correlationId);
+      WorkflowViewModel result = await this.service.GetInstanceAsync(type, correlationId);
 
       return Ok(result);
     }
@@ -103,7 +103,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
     public ActionResult<IEnumerable<WorkflowDefinitionViewModel>> GetWorkflowDefinitions()
     {
-      var result = _service.GetWorkflowDefinitions();
+      var result = this.service.GetWorkflowDefinitions();
 
       return Ok(result);
     }
@@ -112,7 +112,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(string), 200)]
     public ActionResult<string> Dot(string type)
     {
-      var result = _service.Dot(type);
+      var result = this.service.Dot(type);
 
       return Ok(result);
     }
@@ -121,7 +121,7 @@ namespace tomware.Microwf.Engine
     [ProducesResponseType(typeof(WorkflowViewModel), 200)]
     public async Task<ActionResult<WorkflowViewModel>> DotWithHistory(string type, int correlationId)
     {
-      var result = await _service.DotWithHistoryAsync(type, correlationId);
+      var result = await this.service.DotWithHistoryAsync(type, correlationId);
 
       return Ok(result);
     }
@@ -139,7 +139,7 @@ namespace tomware.Microwf.Engine
         totalPages = result.TotalPages
       };
 
-      Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
+      this.Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
     }
   }
 }

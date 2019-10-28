@@ -60,7 +60,7 @@ namespace tomware.Microwf.Engine
     }
   }
 
-  public class WorkItemComparer : IEqualityComparer<WorkItem>
+  internal class WorkItemComparer : IEqualityComparer<WorkItem>
   {
     public bool Equals(WorkItem wm1, WorkItem wm2)
     {

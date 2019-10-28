@@ -6,8 +6,10 @@ namespace tomware.Microwf.Engine
 {
   public abstract class BaseSpecification<T> : ISpecification<T>
   {
-    public List<Expression<Func<T, bool>>> Criterias { get; } = new List<Expression<Func<T, bool>>>();
-    public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+    public List<Expression<Func<T, bool>>> Criterias { get; }
+      = new List<Expression<Func<T, bool>>>();
+    public List<Expression<Func<T, object>>> Includes { get; }
+      = new List<Expression<Func<T, object>>>();
     public List<string> IncludeStrings { get; } = new List<string>();
     public Expression<Func<T, object>> OrderBy { get; private set; }
     public Expression<Func<T, object>> OrderByDescending { get; private set; }

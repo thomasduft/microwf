@@ -10,20 +10,20 @@ namespace tomware.Microwf.Engine
 {
   public class JobQueueService : IJobQueueService
   {
-    private readonly ILogger<JobQueueService> _logger;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
-    private ConcurrentQueue<WorkItem> _items;
+    private readonly ILogger<JobQueueService> logger;
+    private readonly IServiceScopeFactory serviceScopeFactory;
+    private ConcurrentQueue<WorkItem> items;
 
     private ConcurrentQueue<WorkItem> Items
     {
       get
       {
-        if (_items == null)
+        if (items == null)
         {
-          _items = new ConcurrentQueue<WorkItem>();
+          items = new ConcurrentQueue<WorkItem>();
         }
 
-        return _items;
+        return items;
       }
     }
 
@@ -32,17 +32,22 @@ namespace tomware.Microwf.Engine
       IServiceScopeFactory serviceScopeFactory
     )
     {
-      _logger = logger;
-      _serviceScopeFactory = serviceScopeFactory;
+      this.logger = logger;
+      this.serviceScopeFactory = serviceScopeFactory;
+    }
+
+    public JobQueueService(ILogger<JobQueueService> logger)
+    {
+      this.logger = logger;
     }
 
     public async Task Enqueue(WorkItem item)
     {
-      _logger.LogTrace("Enqueue work item", item);
+      this.logger.LogTrace("Enqueue work item", item);
 
       if (item.Retries > Constants.WORKITEM_RETRIES)
       {
-        _logger.LogInformation(
+        this.logger.LogInformation(
           "Amount of retries for work item {WorkItem} exceeded!",
           LogHelper.SerializeObject(item)
         );
@@ -51,7 +56,7 @@ namespace tomware.Microwf.Engine
       }
       else
       {
-        Items.Enqueue(item);
+        this.Items.Enqueue(item);
 
         await Task.CompletedTask;
       }
@@ -59,14 +64,14 @@ namespace tomware.Microwf.Engine
 
     public async Task ProcessItemsAsync()
     {
-      while (Items.Count > 0)
+      while (this.Items.Count > 0)
       {
-        var item = Dequeue();
+        var item = this.Dequeue();
         if (item == null) continue;
 
         try
         {
-          _logger.LogTrace(
+          this.logger.LogTrace(
             "Processing work item {WorkItem}",
             LogHelper.SerializeObject(item)
           );
@@ -77,7 +82,7 @@ namespace tomware.Microwf.Engine
         }
         catch (Exception ex)
         {
-          _logger.LogError(
+          this.logger.LogError(
             ex,
             "Processing of work item {WorkItem} failed",
             LogHelper.SerializeObject(item)
@@ -85,7 +90,7 @@ namespace tomware.Microwf.Engine
           item.Error = $"{ex.Message} - {ex.StackTrace}";
           item.Retries++;
 
-          await Enqueue(item);
+          await this.Enqueue(item);
         }
       }
 
@@ -94,9 +99,9 @@ namespace tomware.Microwf.Engine
 
     public async Task ResumeWorkItems()
     {
-      _logger.LogTrace("Resuming work items");
+      this.logger.LogTrace("Resuming work items");
 
-      using (var scope = _serviceScopeFactory.CreateScope())
+      using (var scope = this.serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
@@ -104,16 +109,16 @@ namespace tomware.Microwf.Engine
 
         foreach (var item in items)
         {
-          await Enqueue(item);
+          await this.Enqueue(item);
         }
       }
     }
 
     public async Task PersistWorkItemsAsync()
     {
-      _logger.LogTrace("Persisting work items");
+      this.logger.LogTrace("Persisting work items");
 
-      await this.PersistWorkItemsAsync(Items.ToArray());
+      await this.PersistWorkItemsAsync(this.Items.ToArray());
     }
 
     public IEnumerable<WorkItemViewModel> GetSnapshot()
@@ -123,7 +128,7 @@ namespace tomware.Microwf.Engine
 
     private WorkItem Dequeue()
     {
-      if (Items.TryDequeue(out WorkItem item))
+      if (this.Items.TryDequeue(out WorkItem item))
       {
         item.Error = string.Empty;
 
@@ -135,9 +140,9 @@ namespace tomware.Microwf.Engine
 
     private async Task PersistWorkItemsAsync(IEnumerable<WorkItem> items)
     {
-      _logger.LogTrace("Persisting work items");
+      this.logger.LogTrace("Persisting work items");
 
-      using (var scope = _serviceScopeFactory.CreateScope())
+      using (var scope = this.serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
@@ -147,9 +152,9 @@ namespace tomware.Microwf.Engine
 
     private async Task DeleteWorkItem(WorkItem item)
     {
-      _logger.LogTrace("Deleting work item {WorkItem}", item);
+      this.logger.LogTrace("Deleting work item {WorkItem}", item);
 
-      using (var scope = _serviceScopeFactory.CreateScope())
+      using (var scope = this.serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var service = serviceProvider.GetRequiredService<IWorkItemService>();
@@ -159,15 +164,15 @@ namespace tomware.Microwf.Engine
 
     private async Task ProcessItemInternal(WorkItem item)
     {
-      TriggerResult triggerResult = await ProcessItemAsync(item);
+      TriggerResult triggerResult = await this.ProcessItemAsync(item);
       await this.HandleTriggerResult(triggerResult, item);
     }
 
     private async Task<TriggerResult> ProcessItemAsync(WorkItem item)
     {
-      _logger.LogTrace("Processing work item {WorkItem}", item);
+      this.logger.LogTrace("Processing work item {WorkItem}", item);
 
-      using (var scope = _serviceScopeFactory.CreateScope())
+      using (var scope = this.serviceScopeFactory.CreateScope())
       {
         IServiceProvider serviceProvider = scope.ServiceProvider;
         var engine = serviceProvider.GetRequiredService<IWorkflowEngineService>();
@@ -190,20 +195,20 @@ namespace tomware.Microwf.Engine
       if (triggerResult.HasErrors || triggerResult.IsAborted)
       {
         item.Error = string.Join(" - ", triggerResult.Errors);
-        _logger.LogError(
+        this.logger.LogError(
           "Bad TriggerResult: {TriggerResult}",
           LogHelper.SerializeObject(triggerResult)
         );
 
         item.Retries++;
-        await Enqueue(item);
+        await this.Enqueue(item);
       }
       else
       {
         if (item.Id > 0)
         {
           // Delete it from db if it was once persisted!
-          await DeleteWorkItem(item);
+          await this.DeleteWorkItem(item);
         }
       }
     }

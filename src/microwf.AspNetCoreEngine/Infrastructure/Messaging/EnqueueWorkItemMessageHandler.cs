@@ -7,17 +7,17 @@ namespace tomware.Microwf.Engine
 {
   public class EnqueueWorkItemMessageHandler : IMessageHandler<WorkItemMessage>
   {
-    private readonly ILogger<EnqueueWorkItemMessageHandler> _logger;
+    private readonly ILogger<EnqueueWorkItemMessageHandler> logger;
 
-    private readonly IJobQueueService _jobQueueService;
+    private readonly IJobQueueService jobQueueService;
 
     public EnqueueWorkItemMessageHandler(
       ILogger<EnqueueWorkItemMessageHandler> logger,
       IJobQueueService jobQueueService
     )
     {
-      _logger = logger;
-      _jobQueueService = jobQueueService;
+      this.logger = logger;
+      this.jobQueueService = jobQueueService;
     }
 
     public async Task Handle(
@@ -25,9 +25,9 @@ namespace tomware.Microwf.Engine
       CancellationToken token = default(CancellationToken)
     )
     {
-      _logger.LogTrace($"Handle WorkItemMessage", message);
+      this.logger.LogTrace($"Handle WorkItemMessage", message);
 
-      await _jobQueueService.Enqueue(WorkItem.Create(
+      await this.jobQueueService.Enqueue(WorkItem.Create(
         message.TriggerName,
         message.EntityId,
         message.WorkflowType
