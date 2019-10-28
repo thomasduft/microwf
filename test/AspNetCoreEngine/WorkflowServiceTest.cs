@@ -91,6 +91,27 @@ namespace microwf.Tests.AspNetCoreEngine
     }
 
     [TestMethod]
+    public async Task WorkflowService_GetWorkflowsAsyncWithFilters_NoWorkflowsReturned()
+    {
+      // Arrange
+      var workflows = this.GetWorkflows();
+      await this.Context.Workflows.AddRangeAsync(workflows);
+      await this.Context.SaveChangesAsync();
+
+      // Act
+      var result = await this.WorkflowService
+        .GetWorkflowsAsync(new WorkflowSearchPagingParameters
+        {
+          CorrelationId = 1,
+          Assignee = "not-the-tester"
+        });
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(result.Count, 0);
+    }
+
+    [TestMethod]
     public async Task WorkflowService_GetAsync_WorkflowReturned()
     {
       // Arrange
