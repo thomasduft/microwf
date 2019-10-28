@@ -13,18 +13,27 @@ namespace tomware.Microwf.Engine
       var query = inputQuery;
 
       // modify the IQueryable using the specification's criteria expression
-      if (specification.Criteria != null)
+      if (specification.Criterias.Count > 0)
       {
-        query = query.Where(specification.Criteria);
+        foreach (var criteria in specification.Criterias)
+        {
+          query = query.Where(criteria);
+        }
       }
 
       // Includes all expression-based includes
-      query = specification.Includes.Aggregate(query,
-                              (current, include) => current.Include(include));
+      query = specification
+        .Includes.Aggregate(
+          query,
+          (current, include) => current.Include(include)
+        );
 
       // Include any string-based include statements
-      query = specification.IncludeStrings.Aggregate(query,
-                              (current, include) => current.Include(include));
+      query = specification
+        .IncludeStrings.Aggregate(
+          query,
+          (current, include) => current.Include(include)
+        );
 
       // Apply ordering if expressions are set
       if (specification.OrderBy != null)

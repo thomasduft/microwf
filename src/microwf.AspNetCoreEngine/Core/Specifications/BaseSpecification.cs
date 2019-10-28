@@ -6,7 +6,7 @@ namespace tomware.Microwf.Engine
 {
   public abstract class BaseSpecification<T> : ISpecification<T>
   {
-    public Expression<Func<T, bool>> Criteria { get; }
+    public List<Expression<Func<T, bool>>> Criterias { get; } = new List<Expression<Func<T, bool>>>();
     public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
     public List<string> IncludeStrings { get; } = new List<string>();
     public Expression<Func<T, object>> OrderBy { get; private set; }
@@ -18,9 +18,25 @@ namespace tomware.Microwf.Engine
     public bool IsPagingEnabled { get; private set; } = false;
     public bool AsNoTracking { get; private set; } = false;
 
+    /// <summary>
+    /// Constructor for BaseSpecification with no Criteria.
+    /// Note: Use AddCriteria(criteria) when criterias are required!
+    /// </summary>
+    protected BaseSpecification()
+    {
+    }
+
+    /// <summary>
+    /// Constructor for BaseSpecification with default Criteria.
+    /// </summary>
     protected BaseSpecification(Expression<Func<T, bool>> criteria)
     {
-      this.Criteria = criteria;
+      this.Criterias.Add(criteria);
+    }
+
+    protected virtual void AddCriteria(Expression<Func<T, bool>> criteria)
+    {
+      this.Criterias.Add(criteria);
     }
 
     protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)

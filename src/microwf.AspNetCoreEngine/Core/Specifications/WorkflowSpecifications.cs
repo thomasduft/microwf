@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace tomware.Microwf.Engine
 {
   public sealed class WorkflowCount : BaseSpecification<Workflow>
   {
-    public WorkflowCount() : base(null)
+    public WorkflowCount() : base()
     {
     }
   }
@@ -14,7 +15,7 @@ namespace tomware.Microwf.Engine
   {
     public WorkflowInstancesOrderedPaginated(
       int skip, int take
-    ) : base(PredicateBuilder.True<Workflow>())
+    ) : base()
     {
       this.ApplyOrderByDescending(w => w.Id);
       this.ApplyPaging(skip, take);
@@ -26,37 +27,45 @@ namespace tomware.Microwf.Engine
   {
     public WorkflowInstancesFilterAndOrderedPaginated(
       WorkflowSearchPagingParameters pagingParameters
-    ) : base(GetWhereClause(pagingParameters))
+    ) : base()
     {
+      var criterias = GetCriterias(pagingParameters);
+      foreach (var criteria in criterias)
+      {
+        this.AddCriteria(criteria);
+      }
+
       this.ApplyOrderByDescending(w => w.Id);
       this.ApplyPaging(pagingParameters.SkipCount, pagingParameters.PageSize);
       this.ApplyNoTracking();
     }
 
-    private static Expression<Func<Workflow, bool>> GetWhereClause(
+    private static List<Expression<Func<Workflow, bool>>> GetCriterias(
       WorkflowSearchPagingParameters pagingParameters
     )
     {
-      var predicate = PredicateBuilder.True<Workflow>();
+      List<Expression<Func<Workflow, bool>>> criterias
+        = new List<Expression<Func<Workflow, bool>>>();
+
       if (pagingParameters.HasType)
       {
-        predicate = predicate
-          .And(w => w.Type.ToLowerInvariant()
-            .StartsWith(pagingParameters.Type.ToLowerInvariant()));
-      }
-      if (pagingParameters.HasCorrelationId)
-      {
-        predicate = predicate
-          .And(w => w.CorrelationId == pagingParameters.CorrelationId);
-      }
-      if (pagingParameters.HasAssignee)
-      {
-        predicate = predicate
-          .And(w => w.Assignee.ToLowerInvariant()
-            .StartsWith(pagingParameters.Assignee.ToLowerInvariant()));
+        criterias.Add(w => w.Type.ToLower()
+          .StartsWith(pagingParameters.Type.ToLower()));
       }
 
-      return predicate;
+      if (pagingParameters.HasCorrelationId)
+      {
+        criterias.Add(
+          w => w.CorrelationId == pagingParameters.CorrelationId);
+      }
+
+      if (pagingParameters.HasAssignee)
+      {
+        criterias.Add(w => w.Assignee.ToLower()
+          .StartsWith(pagingParameters.Assignee.ToLower()));
+      }
+
+      return criterias;
     }
   }
 

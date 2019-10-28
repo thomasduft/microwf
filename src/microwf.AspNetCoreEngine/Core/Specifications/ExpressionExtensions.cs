@@ -4,11 +4,8 @@ using System.Linq.Expressions;
 
 namespace tomware.Microwf.Engine
 {
-  public static class PredicateBuilder
+  public static class ExpressionExtensions
   {
-    public static Expression<Func<T, bool>> True<T>() { return f => true; }
-    public static Expression<Func<T, bool>> False<T>() { return f => false; }
-
     public static Expression<Func<T, bool>> Or<T>(
       this Expression<Func<T, bool>> left,
       Expression<Func<T, bool>> right
