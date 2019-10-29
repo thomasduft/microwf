@@ -22,11 +22,6 @@ namespace tomware.Microwf.Engine
       this.workItemService = workItemService;
     }
 
-    public JobQueueController(IJobQueueService service)
-    {
-      this.service = service;
-    }
-
     [HttpGet("snapshot")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkItemViewModel>), 200)]

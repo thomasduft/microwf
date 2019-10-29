@@ -87,6 +87,6 @@ That ensures you are able to build the dotnet related stuff!
 3. Run the application
 > npm run start
 
-You should see now the login screen. 
+You should see now the login screen.
 
 Happy poking!!
