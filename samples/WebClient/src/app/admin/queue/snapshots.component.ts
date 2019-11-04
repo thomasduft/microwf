@@ -10,23 +10,17 @@ import { JobQueueService, QueueItem } from './../../workflow/index';
 
 @AutoUnsubscribe
 @Component({
-  selector: 'tw-queue-dashboard',
+  selector: 'tw-snapshots',
   providers: [JobQueueService],
   template: `
-  <div class="pane__left">
+  <div class="pane__main">
     <tw-list [rows]="snapshotItems">
-      <tw-header>
-        <h3 i18n>Snapshots</h3>
-      </tw-header>
       <ng-template let-queueItem twTemplate="queueItem-item">
         <tw-queue-list-item
           [queueItem]="queueItem">
         </tw-queue-list-item>
       </ng-template>
     </tw-list>
-  </div>
-  <div class="pane__main">
-    <router-outlet></router-outlet>
   </div>`
 })
 export class SnapshotsComponent implements OnInit {

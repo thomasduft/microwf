@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AccordionModule } from '../../shared/accordion/accordion.module';
 import { IconModule } from '../../shared/icon/icon.module';
 import { ListModule } from '../../shared/list/list.module';
 import { FormdefModule } from '../../shared/formdef/index';
@@ -33,6 +34,7 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     FormdefModule,
     WorkflowModule,
+    AccordionModule,
     IconModule,
     ListModule,
     ScrollerModule

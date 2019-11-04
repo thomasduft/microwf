@@ -1,0 +1,35 @@
+@import './../shared/variables';
+
+@accordion-background-color: @workspace-hover-color;
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+
+    &-title {
+      display: block;
+      font-weight: bold;
+      background: @accordion-background-color;
+      padding: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &-body {
+      display: block;
+      padding: 10px;
+
+      &--hidden {
+        display: none;
+      }
+    }
+  }
+}
