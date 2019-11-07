@@ -43,7 +43,7 @@ namespace tomware.Microwf.Engine
     {
       var item = await this.GetByIdAsync(model.Id);
 
-      item.Retries = Constants.WORKITEM_RETRIES; // so it reschedules only once!
+      item.Retries = WorkItem.WORKITEM_RETRIES; // so it reschedules only once!
       if (model.DueDate.HasValue)
       {
         item.DueDate = model.DueDate.Value;

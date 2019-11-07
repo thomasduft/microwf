@@ -45,7 +45,7 @@ namespace tomware.Microwf.Engine
     {
       this.logger.LogTrace("Enqueue work item", item);
 
-      if (item.Retries > Constants.WORKITEM_RETRIES)
+      if (item.Retries > WorkItem.WORKITEM_RETRIES)
       {
         this.logger.LogInformation(
           "Amount of retries for work item {WorkItem} exceeded!",

@@ -7,6 +7,8 @@ namespace tomware.Microwf.Engine
   [Table("WorkItem")]
   public partial class WorkItem : EngineEntity
   {
+    public static int WORKITEM_RETRIES = 3;
+
     [Required]
     public string TriggerName { get; set; }
 

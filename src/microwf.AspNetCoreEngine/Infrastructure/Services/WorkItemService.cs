@@ -42,11 +42,11 @@ namespace tomware.Microwf.Engine
     )
     {
       var count = await this.repository
-        .CountAsync(new WorkItemRetryLimitHitCount(Constants.WORKITEM_RETRIES));
+        .CountAsync(new WorkItemRetryLimitHitCount(WorkItem.WORKITEM_RETRIES));
 
       var items = await this.repository
         .ListAsync(new WorkItemRetryLimitHitCountOrderedPaginated(
-          Constants.WORKITEM_RETRIES,
+          WorkItem.WORKITEM_RETRIES,
           pagingParameters.SkipCount,
           pagingParameters.PageSize
         ));
@@ -66,7 +66,7 @@ namespace tomware.Microwf.Engine
       return await this.repository
         .ListAsync(new WorkItemFilterForItemsToResume(
           now,
-          Constants.WORKITEM_RETRIES
+          WorkItem.WORKITEM_RETRIES
         ));
     }
 

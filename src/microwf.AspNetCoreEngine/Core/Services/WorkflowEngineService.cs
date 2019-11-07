@@ -121,7 +121,7 @@ namespace tomware.Microwf.Engine
             await this.PersistWorkflow(workflow, param);
             if (result.HasAutoTrigger)
             {
-              this.repository.AddWorkItemEntry(result.AutoTrigger, entity);
+              this.repository.AddAutoTrigger(result.AutoTrigger, entity);
             }
 
             await this.repository.ApplyChangesAsync();

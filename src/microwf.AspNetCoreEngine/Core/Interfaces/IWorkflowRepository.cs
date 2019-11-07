@@ -10,6 +10,6 @@ namespace tomware.Microwf.Engine
 
     Task ApplyChangesAsync();
 
-    void AddWorkItemEntry(AutoTrigger autoTrigger, IWorkflowInstanceEntity entity);
+    void AddAutoTrigger(AutoTrigger autoTrigger, IWorkflowInstanceEntity entity);
   }
 }

@@ -12,7 +12,7 @@ namespace tomware.Microwf.Engine
     {
     }
 
-    public void AddWorkItemEntry(AutoTrigger autoTrigger, IWorkflowInstanceEntity entity)
+    public void AddAutoTrigger(AutoTrigger autoTrigger, IWorkflowInstanceEntity entity)
     {
       var workItem = WorkItem.Create(
         autoTrigger.Trigger,
