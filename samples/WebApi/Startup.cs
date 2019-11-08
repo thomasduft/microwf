@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Serilog;
-using tomware.Microwf.Engine;
 using WebApi.Domain;
 using WebApi.Extensions;
 using WebApi.Identity;
@@ -98,8 +97,6 @@ namespace WebApi
       {
         endpoints.MapControllers();
       });
-
-      app.SubscribeMessageHandlers();
     }
 
     private string GetAuthority()

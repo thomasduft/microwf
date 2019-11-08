@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using tomware.Microbus.Core;
 
 namespace tomware.Microwf.Engine
 {
@@ -12,15 +11,15 @@ namespace tomware.Microwf.Engine
   public class WorkflowController : Controller
   {
     private readonly IWorkflowService service;
-    private readonly IMessageBus messageBus;
+    private readonly IJobQueueService jobQueueService;
 
     public WorkflowController(
       IWorkflowService service,
-      IMessageBus messageBus
+      IJobQueueService jobQueueService
     )
     {
       this.service = service;
-      this.messageBus = messageBus;
+      this.jobQueueService = jobQueueService;
     }
 
     [HttpGet()]
@@ -61,10 +60,11 @@ namespace tomware.Microwf.Engine
       var workflow = await this.service.GetAsync(model.Id);
       if (workflow == null) return NotFound();
 
-      await this.messageBus.PublishAsync(WorkItemMessage.Create(
+      await this.jobQueueService.Enqueue(WorkItem.Create(
          model.Trigger,
          workflow.CorrelationId,
-         workflow.Type
+         workflow.Type,
+         model.DueDate
        ));
 
       return NoContent();

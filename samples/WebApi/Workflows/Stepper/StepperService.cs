@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using tomware.Microbus.Core;
-using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 using WebApi.Common;
 using WebApi.Domain;
@@ -27,19 +25,19 @@ namespace WebApi.Workflows.Stepper
     private readonly DomainContext _context;
     private readonly IWorkflowEngineService _workflowEngine;
     private readonly IUserContextService _userContext;
-    private readonly IMessageBus _messageBus;
+    private readonly IJobQueueService jobQueueService;
 
     public StepperService(
       DomainContext context,
       IWorkflowEngineService workflowEngine,
       IUserContextService userContext,
-      IMessageBus messageBus
+      IJobQueueService jobQueueService
     )
     {
       _context = context;
       _workflowEngine = workflowEngine;
       _userContext = userContext;
-      _messageBus = messageBus;
+      this.jobQueueService = jobQueueService;
     }
 
     public async Task<int> CreateAsync(string name)
@@ -66,7 +64,7 @@ namespace WebApi.Workflows.Stepper
     {
       var stepper = await this.Find(model.Id);
 
-      await _messageBus.PublishAsync(WorkItemMessage.Create(
+      await this.jobQueueService.Enqueue(WorkItem.Create(
         model.Trigger,
         stepper.Id,
         stepper.Type

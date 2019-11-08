@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace tomware.Microwf.Engine
@@ -9,5 +10,7 @@ namespace tomware.Microwf.Engine
 
     [Required]
     public string Trigger { get; set; }
+
+    public DateTime? DueDate { get; set; }
   }
 }

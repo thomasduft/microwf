@@ -29,6 +29,11 @@ namespace microwf.Tests.Utils
 
       this.AddTestDbContext();
       this.Services.AddWorkflowEngineServices<TestDbContext>(workflowConfiguration);
+      this.Services.AddJobQueueServices<TestDbContext>(new ProcessorConfiguration
+      {
+        Enabled = true,
+        Interval = 5000
+      });
 
       return this.Build();
     }

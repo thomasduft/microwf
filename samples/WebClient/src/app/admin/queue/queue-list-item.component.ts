@@ -15,7 +15,7 @@ import { QueueItem } from '../../workflow';
       <p>
         <b>Retries:</b> {{ queueItem?.retries }}
         <span class="list_item--right">
-          <b>DueDate:</b> {{ queueItem?.dueDate | date }}
+          <b>DueDate:</b> {{ queueItem?.dueDate | date : 'MM/dd/yyyy - hh:mm:ss' }}
         </span>
       </p>
     </div>

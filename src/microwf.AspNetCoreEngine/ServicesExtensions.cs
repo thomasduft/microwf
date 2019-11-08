@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Engine
@@ -36,14 +33,9 @@ namespace tomware.Microwf.Engine
 
       // Data related
       services.AddTransient<IWorkflowRepository, WorkflowRepository<TContext>>();
-      services.AddTransient<IWorkItemRepository, WorkItemRepository<TContext>>();
 
       services.AddTransient<IWorkflowEngineService, WorkflowEngineService>();
       services.AddTransient<IWorkflowService, WorkflowService>();
-      services.AddTransient<IWorkItemService, WorkItemService>();
-
-      // Setting up messaging infrastructure
-      services.AddSingleton<IMessageBus, InMemoryMessageBus>();
 
       // Policies
       services.AddAuthorizationCore(options =>
@@ -73,13 +65,11 @@ namespace tomware.Microwf.Engine
         config.Interval = processorConfiguration.Interval;
       });
 
-      if (processorConfiguration.Enabled)
-      {
-        services.AddSingleton<IHostedService, WorkflowProcessor>();
-        services.AddSingleton<IJobQueueService, JobQueueService>();
+      services.AddSingleton<IHostedService, WorkflowProcessor>();
+      services.AddSingleton<IJobQueueService, JobQueueService>();
 
-        services.AddSingleton<EnqueueWorkItemMessageHandler>();
-      }
+      services.AddTransient<IWorkItemRepository, WorkItemRepository<TContext>>();
+      services.AddTransient<IWorkItemService, WorkItemService>();
 
       return services;
     }
@@ -98,22 +88,6 @@ namespace tomware.Microwf.Engine
       services.AddSingleton(new UserWorkflowMappingsStore(userWorkflows));
 
       return services;
-    }
-
-    public static IApplicationBuilder SubscribeMessageHandlers(this IApplicationBuilder app)
-    {
-      IOptions<ProcessorConfiguration> processorConfiguration = app
-        .ApplicationServices
-        .GetRequiredService<IOptions<ProcessorConfiguration>>();
-      if (!processorConfiguration.Value.Enabled) return app;
-
-      var messageBus = app.ApplicationServices.GetRequiredService<IMessageBus>();
-      if (messageBus != null)
-      {
-        messageBus.Subscribe<EnqueueWorkItemMessageHandler, WorkItemMessage>();
-      }
-
-      return app;
     }
   }
 }

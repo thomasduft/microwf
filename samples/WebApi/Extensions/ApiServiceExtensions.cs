@@ -19,7 +19,8 @@ namespace WebApi.Extensions
     ) where TContext : EngineDbContext
     {
       var workflowConf = CreateWorkflowConfiguration(); // GetWorkflowConfiguration(services);
-      IOptions<ProcessorConfiguration> processorConf = GetProcessorConfiguration(configuration, services);
+      IOptions<ProcessorConfiguration> processorConf
+        = GetProcessorConfiguration(configuration, services);
 
       services
        .AddWorkflowEngineServices<TContext>(workflowConf)

@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 
 import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
 
@@ -26,6 +26,7 @@ import { JobQueueService, QueueItem } from './../../workflow/index';
 export class SnapshotsComponent implements OnInit {
   private snapshotItems$: Subscription;
   private upcommingItems$: Subscription;
+  private intervall$: Subscription;
 
   public snapshotItems: Array<QueueItem> = [];
   public upcommingItems: Array<QueueItem> = [];
@@ -48,6 +49,11 @@ export class SnapshotsComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.intervall$ = interval(5000)
+      .subscribe(() => { this.loadData(); });
+  }
+
+  private loadData(): void {
     this.loadSnapshot();
     this.loadUpcommings(this.upcommingPage);
   }

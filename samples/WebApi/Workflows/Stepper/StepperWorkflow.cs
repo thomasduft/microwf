@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using tomware.Microbus.Core;
 using tomware.Microwf.Core;
 using tomware.Microwf.Engine;
 
@@ -16,7 +15,7 @@ namespace WebApi.Workflows.Stepper
    */
   public class StepperWorkflow : EntityWorkflowDefinitionBase
   {
-    private readonly IMessageBus _messageBus;
+    private readonly IJobQueueService jobQueueService;
 
     public const string TYPE = "StepperWorkflow";
 
@@ -116,9 +115,9 @@ namespace WebApi.Workflows.Stepper
       }
     }
 
-    public StepperWorkflow(IMessageBus messageBus)
+    public StepperWorkflow(IJobQueueService jobQueueService)
     {
-      _messageBus = messageBus;
+      this.jobQueueService = jobQueueService;
     }
 
     private void GoToStep2(TransitionContext context)
@@ -127,7 +126,7 @@ namespace WebApi.Workflows.Stepper
 
       var stepper = context.GetInstance<Stepper>();
 
-      _messageBus.PublishAsync(WorkItemMessage.Create(
+      this.jobQueueService.Enqueue(WorkItem.Create(
         GOTO2_TRIGGER,
         stepper.Id,
         stepper.Type
@@ -154,7 +153,7 @@ namespace WebApi.Workflows.Stepper
 
       var stepper = context.GetInstance<Stepper>();
 
-      _messageBus.PublishAsync(WorkItemMessage.Create(
+      this.jobQueueService.Enqueue(WorkItem.Create(
         GOTO4_TRIGGER,
         stepper.Id,
         stepper.Type
@@ -167,7 +166,7 @@ namespace WebApi.Workflows.Stepper
 
       var stepper = context.GetInstance<Stepper>();
 
-      _messageBus.PublishAsync(WorkItemMessage.Create(
+      this.jobQueueService.Enqueue(WorkItem.Create(
         GOTO5_TRIGGER,
         stepper.Id,
         stepper.Type
