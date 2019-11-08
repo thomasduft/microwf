@@ -70,13 +70,13 @@ namespace WebApi
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .UseSerilog()
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-              webBuilder.UseUrls(GetUrls(Configuration));
-              webBuilder.UseStartup<Startup>();
-            });
+      Host.CreateDefaultBuilder(args)
+        .UseSerilog()
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+          webBuilder.UseUrls(GetUrls(Configuration));
+          webBuilder.UseStartup<Startup>();
+        });
 
     private static string GetUrls(IConfiguration config)
     {
