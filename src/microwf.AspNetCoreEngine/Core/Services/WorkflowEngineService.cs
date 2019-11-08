@@ -118,11 +118,7 @@ namespace tomware.Microwf.Engine
           result = execution.Trigger(param);
           if (!result.IsAborted)
           {
-            await this.PersistWorkflow(workflow, param);
-            if (result.HasAutoTrigger)
-            {
-              this.repository.AddAutoTrigger(result.AutoTrigger, entity);
-            }
+            await this.PersistWorkflow(workflow, param, result);
 
             await this.repository.ApplyChangesAsync();
 
@@ -193,7 +189,11 @@ namespace tomware.Microwf.Engine
       }
     }
 
-    private async Task PersistWorkflow(Workflow workflow, TriggerParam param)
+    private async Task PersistWorkflow(
+      Workflow workflow,
+      TriggerParam param,
+      TriggerResult result
+    )
     {
       if (workflow == null) throw new ArgumentNullException(nameof(workflow));
 
@@ -226,6 +226,12 @@ namespace tomware.Microwf.Engine
 
         workflow.AddHistoryItem(workflow.State, entity.State, this.userContext.UserName);
         workflow.State = entity.State;
+      }
+
+      // treating AutoTrigger
+      if (result.HasAutoTrigger)
+      {
+        this.repository.AddAutoTrigger(result.AutoTrigger, entity);
       }
 
       if (await this.WorkflowIsCompleted(param))
