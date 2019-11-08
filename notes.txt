@@ -5,6 +5,7 @@ notes:
     - microwf frontend
       - consider nginx angular reverse proxy
     - STS
+- WorkItem Id as Guid
 
 ----------------------------------------------------------------------------------------------------
 self signed dev certificate:
