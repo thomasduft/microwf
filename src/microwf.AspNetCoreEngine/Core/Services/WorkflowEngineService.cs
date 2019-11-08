@@ -54,9 +54,9 @@ namespace tomware.Microwf.Engine
       if (param == null) throw new ArgumentNullException(nameof(param));
 
       this.logger.LogTrace(
-        "Trigger instance: {Instance}",
+        "Trigger transition for instance {Instance}",
         LogHelper.SerializeObject(param.Instance)
-       );
+      );
 
       var result = param.Instance is IWorkflowInstanceEntity
         ? await this.TriggerForPersistingInstance(param)
@@ -65,9 +65,16 @@ namespace tomware.Microwf.Engine
       if (result.IsAborted)
       {
         this.logger.LogInformation(
-          "Trigger instance: {Instance} aborted! Aborting reasons: {Reasons}",
+          "Transition for instance {Instance} aborted! Aborting reason: {Reason}",
           LogHelper.SerializeObject(param.Instance),
           LogHelper.SerializeObject(result.Errors)
+        );
+      }
+      else
+      {
+        this.logger.LogTrace(
+          "Transition for instance {Instance} successfully triggered",
+          LogHelper.SerializeObject(param.Instance)
         );
       }
 

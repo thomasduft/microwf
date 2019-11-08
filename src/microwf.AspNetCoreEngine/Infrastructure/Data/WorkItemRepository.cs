@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,21 +21,13 @@ namespace tomware.Microwf.Engine
 
       // updates
       var updates = items.Intersect(existingItems, comparer);
-      // this.DbContext.WorkItems.UpdateRange(updates);
-      foreach (var update in updates)
-      {
-        await this.UpdateAsync(update);
-      }
+      this.DbContext.WorkItems.UpdateRange(updates);
 
       // new items
       var inserts = items.Except(existingItems, comparer);
-      // this.DbContext.WorkItems.AddRange(inserts);
-      foreach (var insert in inserts)
-      {
-        await this.AddAsync(insert);
-      }
+      this.DbContext.WorkItems.AddRange(inserts);
 
-      // await this.DbContext.SaveChangesAsync();
+      await this.DbContext.SaveChangesAsync();
     }
 
     public async Task Reschedule(WorkItemInfoViewModel model)
@@ -64,12 +55,7 @@ namespace tomware.Microwf.Engine
   {
     public bool Equals(WorkItem wm1, WorkItem wm2)
     {
-      if (wm1.Id == wm2.Id)
-      {
-        return true;
-      }
-
-      return false;
+      return wm1.Id == wm2.Id;
     }
 
     public int GetHashCode(WorkItem workItem)
