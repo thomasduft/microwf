@@ -26,11 +26,6 @@ namespace microwf.Tests.AspNetCoreEngine
       Assert.AreEqual(workItem.WorkflowType, workflowType);
       Assert.AreEqual(workItem.DueDate, dueDate);
       Assert.AreEqual(workItem.Retries, 0);
-
-      Assert.AreEqual(
-        workItem.ToString(),
-        $"Id: ${workItem.Id}, TriggerName: {workItem.TriggerName}, EntityId: {workItem.EntityId}, WorkflowType: {workItem.WorkflowType}"
-      );
     }
   }
 }

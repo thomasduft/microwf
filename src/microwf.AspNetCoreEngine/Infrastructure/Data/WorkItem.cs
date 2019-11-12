@@ -25,11 +25,6 @@ namespace tomware.Microwf.Engine
     [Required]
     public DateTime DueDate { get; set; }
 
-    public override string ToString()
-    {
-      return $@"Id: ${this.Id}, TriggerName: {this.TriggerName}, EntityId: {this.EntityId}, WorkflowType: {this.WorkflowType}";
-    }
-
     public static WorkItem Create(
       string triggerName,
       int entityId,
