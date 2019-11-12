@@ -84,8 +84,8 @@ namespace tomware.Microwf.Engine
         throw new ArgumentNullException(nameof(userWorkflows));
       }
 
-      services.AddTransient<IUserWorkflowMappingService, InMemoryUserWorkflowMappingService>();
       services.AddSingleton(new UserWorkflowMappingsStore(userWorkflows));
+      services.AddTransient<IUserWorkflowMappingService, InMemoryUserWorkflowMappingService>();
 
       return services;
     }
