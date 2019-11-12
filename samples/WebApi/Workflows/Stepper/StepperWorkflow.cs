@@ -15,8 +15,6 @@ namespace WebApi.Workflows.Stepper
    */
   public class StepperWorkflow : EntityWorkflowDefinitionBase
   {
-    private readonly IJobQueueService jobQueueService;
-
     public const string TYPE = "StepperWorkflow";
 
     public const string GOTO1_TRIGGER = "goto1";
@@ -51,7 +49,8 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO1_TRIGGER,
             TargetState = STEP1_STATE,
             CanMakeTransition = IsCreator,
-            AfterTransition = GoToStep2
+            AfterTransition = GoToStep2,
+            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO2_TRIGGER)
           },
           new Transition
           {
@@ -60,7 +59,7 @@ namespace WebApi.Workflows.Stepper
             TargetState = STEP2_STATE,
             CanMakeTransition = IsAssignedToSystem,
             AfterTransition = AssignForStep3,
-            AutoTrigger = GoToStep3
+            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO3_TRIGGER, SystemTime.Now().AddMinutes(1))
           },
           new Transition
           {
@@ -74,7 +73,8 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO3_TRIGGER,
             TargetState = STEP3_STATE,
             CanMakeTransition = IsAssignedToSystem,
-            AfterTransition = GoToStep4
+            AfterTransition = GoToStep4,
+            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO4_TRIGGER)
           },
           new Transition
           {
@@ -88,7 +88,8 @@ namespace WebApi.Workflows.Stepper
             Trigger = GOTO4_TRIGGER,
             TargetState = STEP4_STATE,
             CanMakeTransition = IsCreator,
-            AfterTransition = GoTo5
+            AfterTransition = GoTo5,
+            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO5_TRIGGER)
           },
           new Transition
           {
@@ -115,22 +116,11 @@ namespace WebApi.Workflows.Stepper
       }
     }
 
-    public StepperWorkflow(IJobQueueService jobQueueService)
-    {
-      this.jobQueueService = jobQueueService;
-    }
-
     private void GoToStep2(TransitionContext context)
     {
       this.AssignToSystem(context);
 
       var stepper = context.GetInstance<Stepper>();
-
-      this.jobQueueService.Enqueue(WorkItem.Create(
-        GOTO2_TRIGGER,
-        stepper.Id,
-        stepper.Type
-      ));
     }
 
     private void AssignForStep3(TransitionContext context)
@@ -138,26 +128,11 @@ namespace WebApi.Workflows.Stepper
       this.AssignToSystem(context);
     }
 
-    private AutoTrigger GoToStep3(TransitionContext context)
-    {
-      return new AutoTrigger
-      {
-        Trigger = GOTO3_TRIGGER,
-        DueDate = SystemTime.Now().AddMinutes(2)
-      };
-    }
-
     private void GoToStep4(TransitionContext context)
     {
       this.AssignToCreator(context);
 
       var stepper = context.GetInstance<Stepper>();
-
-      this.jobQueueService.Enqueue(WorkItem.Create(
-        GOTO4_TRIGGER,
-        stepper.Id,
-        stepper.Type
-      ));
     }
 
     private void GoTo5(TransitionContext context)
@@ -165,12 +140,6 @@ namespace WebApi.Workflows.Stepper
       this.AssignToSystem(context);
 
       var stepper = context.GetInstance<Stepper>();
-
-      this.jobQueueService.Enqueue(WorkItem.Create(
-        GOTO5_TRIGGER,
-        stepper.Id,
-        stepper.Type
-      ));
     }
 
     private void FailForFinish(TransitionContext context)
