@@ -1,6 +1,6 @@
-using tomware.Microwf.Engine;
+using tomware.Microwf.Core;
 
-namespace tomware.Microwf.Core
+namespace tomware.Microwf.Engine
 {
   public static class TriggerParamExtension
   {
