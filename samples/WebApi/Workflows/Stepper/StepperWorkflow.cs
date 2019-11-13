@@ -50,7 +50,7 @@ namespace WebApi.Workflows.Stepper
             TargetState = STEP1_STATE,
             CanMakeTransition = IsCreator,
             AfterTransition = GoToStep2,
-            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO2_TRIGGER)
+            AutoTrigger = (ctx) => AutoTrigger(GOTO2_TRIGGER)
           },
           new Transition
           {
@@ -59,7 +59,7 @@ namespace WebApi.Workflows.Stepper
             TargetState = STEP2_STATE,
             CanMakeTransition = IsAssignedToSystem,
             AfterTransition = AssignForStep3,
-            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO3_TRIGGER, SystemTime.Now().AddMinutes(1))
+            AutoTrigger = (ctx) => AutoTrigger(GOTO3_TRIGGER, SystemTime.Now().AddMinutes(1))
           },
           new Transition
           {
@@ -74,7 +74,7 @@ namespace WebApi.Workflows.Stepper
             TargetState = STEP3_STATE,
             CanMakeTransition = IsAssignedToSystem,
             AfterTransition = GoToStep4,
-            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO4_TRIGGER)
+            AutoTrigger = (ctx) => AutoTrigger(GOTO4_TRIGGER)
           },
           new Transition
           {
@@ -89,7 +89,7 @@ namespace WebApi.Workflows.Stepper
             TargetState = STEP4_STATE,
             CanMakeTransition = IsCreator,
             AfterTransition = GoTo5,
-            AutoTrigger = (ctx) => AutoTrigger(ctx, GOTO5_TRIGGER)
+            AutoTrigger = (ctx) => AutoTrigger(GOTO5_TRIGGER)
           },
           new Transition
           {

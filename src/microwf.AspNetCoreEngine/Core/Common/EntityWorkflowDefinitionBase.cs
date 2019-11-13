@@ -8,7 +8,6 @@ namespace tomware.Microwf.Engine
     public abstract Type EntityType { get; }
 
     protected AutoTrigger AutoTrigger(
-      TransitionContext contex,
       string trigger,
       DateTime? dueDate = null
     )
