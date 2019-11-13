@@ -76,8 +76,6 @@ namespace tomware.Microwf.Engine
             LogHelper.SerializeObject(item)
           );
 
-          // Process item async, do not await it.
-          // Task.Run(() => this.ProcessItemInternal(item)).ConfigureAwait(false);
           await this.ProcessItemInternal(item);
         }
         catch (Exception ex)
