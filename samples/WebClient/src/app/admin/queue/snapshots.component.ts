@@ -55,7 +55,7 @@ export class SnapshotsComponent implements OnInit {
 
   private loadData(): void {
     this.loadSnapshot();
-    this.loadUpcommings(this.upcommingPage);
+    // this.loadUpcommings(this.upcommingPage);
   }
 
   private loadSnapshot(): void {

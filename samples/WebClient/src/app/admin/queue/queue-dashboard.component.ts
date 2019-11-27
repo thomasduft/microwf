@@ -3,17 +3,17 @@ import { Component, HostBinding } from '@angular/core';
 @Component({
   selector: 'tw-queue-dashboard',
   template: `
-  <tw-accordion>
-    <tw-accordion-group i18n-title title='Snapshots'>
+  <tw-tabs>
+    <tw-tab i18n-title title='Snapshot'>
       <tw-snapshots></tw-snapshots>
-    </tw-accordion-group>
-    <tw-accordion-group i18n-title title='Upcommings'>
+    </tw-tab>
+    <tw-tab i18n-title title='Upcommings'>
       <p>Some upcommings<p>
-    </tw-accordion-group>
-    <tw-accordion-group i18n-title title='Failed'>
+    </tw-tab>
+    <tw-tab i18n-title title='Failed'>
       <p>Some failed<p>
-    </tw-accordion-group>
-  </tw-accordion>
+    </tw-tab>
+  </tw-tabs>
   `
 })
 export class QueueDashboardComponent {

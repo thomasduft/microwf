@@ -1,0 +1,32 @@
+@import './../shared/variables';
+
+@tabs-tab-border-color: @sidebar-background;
+@tabs-tab-background-color: @tabs-tab-border-color;
+
+.tabs {
+  width: 100%;
+  margin: 10px 0px;
+  ul {
+    border-bottom: 1px solid @tabs-tab-border-color;
+    li {
+      display: inline;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+
+  &__tab > div {
+    margin-top: 10px;
+  }
+
+  .tab__title {
+    margin: 0px 10px;
+    padding: 0px 5px;
+    &--active {
+      border-top: 1px solid @tabs-tab-border-color;
+      border-left: 1px solid @tabs-tab-border-color;
+      border-right: 1px solid @tabs-tab-border-color;
+      border-bottom: 1px solid #fff;
+    }
+  }
+}

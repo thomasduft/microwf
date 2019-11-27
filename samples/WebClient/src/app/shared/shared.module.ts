@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AccordionModule } from './accordion/accordion.module';
 import { IconModule } from './icon/icon.module';
 import { ListModule } from './list/list.module';
 import { ScrollerModule } from './scroller/scroller.module';
 import { ServicesModule } from './services/services.module';
+import { TabModule } from './tab/tab.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    AccordionModule,
     IconModule,
     ListModule,
     ServicesModule,
-    ScrollerModule
+    ScrollerModule,
+    TabModule
   ],
   declarations: [],
   exports: [
-    AccordionModule,
     IconModule,
     ListModule,
-    ScrollerModule
+    ScrollerModule,
+    TabModule
   ]
 })
 export class SharedModule { }
