@@ -47,12 +47,12 @@ namespace tomware.Microwf.Engine
       return Ok(result);
     }
 
-    [HttpPost("trigger")]
+    [HttpPost("enqueue")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult> Trigger([FromBody]WorkflowTriggerViewModel model)
+    public async Task<ActionResult> Enqueue([FromBody]EnqueueWorkItemViewModel model)
     {
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace tomware.Microwf.Engine
 {
-  public class WorkflowTriggerViewModel
+  public class EnqueueWorkItemViewModel
   {
     [Required]
     public int Id { get; set; }
