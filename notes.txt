@@ -6,6 +6,10 @@ notes:
       - consider nginx angular reverse proxy
     - STS
 - WorkItem Id as Guid
+- own services for Api
+  - JobQueueControllerService
+  - WorkflowControllerService
+    - new TriggerAsync method
 
 ----------------------------------------------------------------------------------------------------
 self signed dev certificate:

@@ -47,29 +47,6 @@ namespace tomware.Microwf.Engine
       return Ok(result);
     }
 
-    [HttpPost("enqueue")]
-    [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(204)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(404)]
-    public async Task<ActionResult> Enqueue([FromBody]EnqueueWorkItemViewModel model)
-    {
-      if (model == null) return BadRequest();
-      if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
-
-      var workflow = await this.service.GetAsync(model.Id);
-      if (workflow == null) return NotFound();
-
-      await this.jobQueueService.Enqueue(WorkItem.Create(
-         model.Trigger,
-         workflow.CorrelationId,
-         workflow.Type,
-         model.DueDate
-       ));
-
-      return NoContent();
-    }
-
     [HttpGet("{id}/history")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), 200)]
@@ -86,15 +63,6 @@ namespace tomware.Microwf.Engine
     public async Task<ActionResult<IEnumerable<WorkflowVariableViewModel>>> GetVariables(int id)
     {
       var result = await this.service.GetVariablesAsync(id);
-
-      return Ok(result);
-    }
-
-    [HttpGet("instance/{type}/{correlationId}")]
-    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
-    public async Task<ActionResult<WorkflowViewModel>> GetInstance(string type, int correlationId)
-    {
-      WorkflowViewModel result = await this.service.GetInstanceAsync(type, correlationId);
 
       return Ok(result);
     }
