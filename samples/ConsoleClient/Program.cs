@@ -17,7 +17,6 @@ namespace ConsoleClient
   {
     static readonly string HOST = "http://localhost:5000";
     static readonly int AMOUNT_OF_STEPPERS = 100;
-    static readonly bool USE_CLIENT_CREDENTIALS = true;
 
     static string Host { get; set; }
 
@@ -47,37 +46,15 @@ namespace ConsoleClient
       {
         httpClient.DefaultRequestHeaders.Clear();
 
-        //Ask User
-        var username = "admin";
-        var password = "password";
-
         // Make the call and get the access token back
-        TokenResponse response;
-        if (!USE_CLIENT_CREDENTIALS)
-        {
-          response = await httpClient
-            .RequestPasswordTokenAsync(new PasswordTokenRequest
-            {
-              Address = $"{Host}/connect/token",
-              GrantType = "password",
-              ClientId = "ro.client",
-              Scope = "api1",
-              UserName = username,
-              Password = password
-            });
-        }
-        else
-        {
-          response = await httpClient
-            .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-            {
-              Address = $"{Host}/connect/token",
-
-              ClientId = "console.client",
-              ClientSecret = "00000000-0000-0000-0000-000000000001",
-              Scope = "api1"
-            });
-        }
+        TokenResponse response = await httpClient
+          .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+          {
+            Address = $"{Host}/connect/token",
+            ClientId = "console.client",
+            ClientSecret = "00000000-0000-0000-0000-000000000001",
+            Scope = "api1"
+          });
 
         // all good?
         if (!response.IsError)
