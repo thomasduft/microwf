@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpEvent, HttpRequest } from '@angular/common/http';
 
 import { PagingModel } from './models';
 import { ApiService } from './api.service';
@@ -51,10 +51,32 @@ export class HttpWrapperService {
     return this.http.get(url, { responseType: 'text' });
   }
 
+  public getBlob(endpoint: string): Observable<Blob> {
+    const url = this._api.createApiUrl(endpoint);
+
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
   public post<T>(endpoint: string, body: any): Observable<T> {
     const url = this._api.createApiUrl(endpoint);
 
     return this.http.post<T>(url, body);
+  }
+
+  public postFile(
+    endpoint: string,
+    file: File,
+    useProgress: boolean = false
+  ): Observable<HttpEvent<unknown>> {
+    const url = this._api.createApiUrl(endpoint);
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', url, formData, {
+      reportProgress: useProgress
+    });
+
+    return this.http.request(req);
   }
 
   public put<T>(endpoint: string, body: string): Observable<T> {

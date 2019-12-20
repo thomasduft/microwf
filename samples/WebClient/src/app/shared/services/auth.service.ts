@@ -16,6 +16,7 @@ export class AuthService {
   private static ANONYMOUS = 'anonymous';
   private static TOKEN_KEY = 'token_key';
 
+  private _exp: number;
   private _token: IToken;
   private _username: string = AuthService.ANONYMOUS;
   private _claims: Array<string> = new Array<string>();
@@ -23,7 +24,9 @@ export class AuthService {
   public onAuthenticated: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public get isAuthenticated(): boolean {
-    // TODO: check also expiration!
+    if (this.tokenHasExpired()) {
+      return false;
+    }
 
     return this._token
       ? true
@@ -71,6 +74,9 @@ export class AuthService {
   public logout(): void {
     this._storage.removeItem(AuthService.TOKEN_KEY);
     delete this._token;
+    delete this._exp;
+
+    this._username = AuthService.ANONYMOUS;
 
     this.onAuthenticated.next(this.isAuthenticated);
   }
@@ -86,8 +92,6 @@ export class AuthService {
   public tryAuthenticate(): void {
     const token = this._storage.getItem<IToken>(AuthService.TOKEN_KEY);
     if (token) {
-      // TODO: check expiration!!!
-
       this.authenticate(token);
     }
   }
@@ -96,10 +100,19 @@ export class AuthService {
     this._claims = claims;
   }
 
+  public tokenHasExpired(): boolean {
+    if (!this._exp) {
+      return true;
+    }
+
+    return Date.now() >= this._exp * 1000;
+  }
+
   private setProperties(): void {
     if (this._token) {
       const jwt = JSON.parse(window.atob(this._token.access_token.split('.')[1]));
 
+      this._exp = jwt.exp;
       this._username = jwt.name;
 
       this._claims = Array.isArray(jwt.role)
