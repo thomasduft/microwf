@@ -105,7 +105,12 @@ export class AuthService {
       return true;
     }
 
-    return Date.now() >= this._exp * 1000;
+    const hasExpired = Date.now() >= this._exp * 1000;
+    if (hasExpired) {
+      this.logout();
+    }
+
+    return hasExpired;
   }
 
   private setProperties(): void {
