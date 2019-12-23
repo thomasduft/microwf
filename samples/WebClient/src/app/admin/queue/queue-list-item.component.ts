@@ -5,7 +5,7 @@ import { QueueItem } from '../../workflow';
   selector: 'tw-queue-list-item',
   template: `
   <div
-    [routerLink]="['detail', queueItem?.id]"
+    [routerLink]="['.', queueItem?.id]"
     routerLinkActive="active"
     [attr.title]="queueItem?.workflowType">
     <p>
