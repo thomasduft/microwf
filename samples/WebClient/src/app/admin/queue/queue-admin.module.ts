@@ -12,6 +12,7 @@ import { TabModule } from '../../shared/tab/tab.module';
 import { AdministratorClaimGuard } from './../administratorClaimGuard';
 
 import { SnapshotsComponent } from './snapshots.component';
+import { UpcommingsComponent } from './upcommings.component';
 import { QueueDashboardComponent } from './queue-dashboard.component';
 import { QueueListItemComponent } from './queue-list-item.component';
 
@@ -19,12 +20,7 @@ const ROUTES: Routes = [
   {
     path: 'queue',
     component: QueueDashboardComponent,
-    canActivate: [AdministratorClaimGuard],
-    children: [
-      { path: 'snapshots', component: SnapshotsComponent },
-      { path: 'upcommings', component: SnapshotsComponent },
-      { path: 'failed', component: SnapshotsComponent }
-    ]
+    canActivate: [AdministratorClaimGuard]
   }
 ];
 
@@ -41,6 +37,7 @@ const ROUTES: Routes = [
   ],
   declarations: [
     SnapshotsComponent,
+    UpcommingsComponent,
     QueueDashboardComponent,
     QueueListItemComponent
   ]

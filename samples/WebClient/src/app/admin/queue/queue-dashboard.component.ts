@@ -8,7 +8,7 @@ import { Component, HostBinding } from '@angular/core';
       <tw-snapshots></tw-snapshots>
     </tw-tab>
     <tw-tab i18n-title title='Upcommings'>
-      <p>Some upcommings<p>
+      <tw-upcommings></tw-upcommings>
     </tw-tab>
     <tw-tab i18n-title title='Failed'>
       <p>Some failed<p>

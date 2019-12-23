@@ -2,10 +2,7 @@ import { Component, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'tw-tab',
-  template: `
-  <div *ngIf="active">
-    <ng-content></ng-content>
-  </div>`
+  template: `<ng-content *ngIf="active"></ng-content>`
 })
 export class TabComponent {
   @HostBinding('class')

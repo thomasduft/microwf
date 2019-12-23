@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (WebApi)",
+      "name": "WebApi",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -34,7 +34,7 @@
       }
     },
     {
-      "name": ".NET Core Launch (ConsoleClient)",
+      "name": "ConsoleClient",
       "type": "coreclr",
       "request": "launch",
       "console":"externalTerminal",
@@ -47,7 +47,7 @@
       "stopAtEntry": false
     },
     {
-      "name": ".NET Core Attach",
+      "name": "Attach",
       "type": "coreclr",
       "request": "attach",
       "processId": "${command:pickProcess}"
