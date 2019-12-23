@@ -11,7 +11,7 @@ import { Component, HostBinding } from '@angular/core';
       <tw-upcommings></tw-upcommings>
     </tw-tab>
     <tw-tab i18n-title title='Failed'>
-      <p>Some failed<p>
+      <tw-failed></tw-failed>
     </tw-tab>
   </tw-tabs>
   `

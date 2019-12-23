@@ -10,14 +10,14 @@ import { JobQueueService, QueueItem } from './../../workflow/index';
 
 @AutoUnsubscribe
 @Component({
-  selector: 'tw-upcommings',
+  selector: 'tw-failed',
   providers: [JobQueueService],
   template: `
   <div class="pane__main"
     twScroller
     [offset]="40"
     (scrollEnd)="loadNextPage()">
-    <tw-list [rows]="upcommingItems">
+    <tw-list [rows]="failedItems">
     <tw-header>
         <div class="button__bar">
           <button type="button" (click)="refresh()">
@@ -25,7 +25,7 @@ import { JobQueueService, QueueItem } from './../../workflow/index';
           </button>
         </div>
       </tw-header>
-      <ng-template let-queueItem twTemplate="upcomming-item">
+      <ng-template let-queueItem twTemplate="failed-item">
         <tw-queue-list-item
           [queueItem]="queueItem">
         </tw-queue-list-item>
@@ -33,16 +33,15 @@ import { JobQueueService, QueueItem } from './../../workflow/index';
     </tw-list>
   </div>`
 })
+export class FailedComponent implements OnInit {
+  private failedItems$: Subscription;
 
-export class UpcommingsComponent implements OnInit {
-  private upcommingItems$: Subscription;
+  private failedPage: PagingModel = PagingModel.create();
 
-  private upcommingPage: PagingModel = PagingModel.create();
-
-  public upcommingItems: Array<QueueItem> = [];
+  public failedItems: Array<QueueItem> = [];
 
   @ViewChild(ListComponent, { static: false })
-  public upcommingList: ListComponent;
+  public failedList: ListComponent;
 
   @HostBinding('class')
   public style = 'pane';
@@ -56,28 +55,28 @@ export class UpcommingsComponent implements OnInit {
   }
 
   public loadNextPage(): void {
-    if (this.upcommingPage.totalPages - 1 > this.upcommingPage.pageIndex) {
-      this.loadUpcommings(PagingModel.createNextPage(this.upcommingPage.pageIndex, 50));
+    if (this.failedPage.totalPages - 1 > this.failedPage.pageIndex) {
+      this.loadFailed(PagingModel.createNextPage(this.failedPage.pageIndex, 50));
     }
   }
 
   public refresh(): void {
-    this.upcommingList.rows = [];
-    this.upcommingPage = PagingModel.create();
+    this.failedList.rows = [];
+    this.failedPage = PagingModel.create();
     this.ngOnInit();
   }
 
   private loadData(): void {
-    this.loadUpcommings(this.upcommingPage);
+    this.loadFailed(this.failedPage);
   }
 
-  private loadUpcommings(pagingModel: PagingModel): void {
-    this.upcommingItems$ = this._service.upcommings(pagingModel)
+  private loadFailed(pagingModel: PagingModel): void {
+    this.failedItems$ = this._service.failed(pagingModel)
       .subscribe((response: any) => {
         const xPagination = JSON.parse(response.headers.get('X-Pagination'));
-        this.upcommingPage = PagingModel.fromResponse(xPagination);
+        this.failedPage = PagingModel.fromResponse(xPagination);
 
-        this.upcommingList.attachRows(response.body);
+        this.failedList.attachRows(response.body);
       });
   }
 }

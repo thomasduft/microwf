@@ -4,8 +4,11 @@ import { QueueItem } from '../../workflow';
 @Component({
   selector: 'tw-queue-list-item',
   template: `
-  <div [routerLink]="['detail', queueItem?.id]" routerLinkActive="active">
-    <p [attr.title]="queueItem?.workflowType">
+  <div
+    [routerLink]="['detail', queueItem?.id]"
+    routerLinkActive="active"
+    [attr.title]="queueItem?.workflowType">
+    <p>
       <b>{{ queueItem?.triggerName }} #{{queueItem?.entityId}}</b>
     </p>
     <div class="list__itemDetail">
@@ -14,9 +17,9 @@ import { QueueItem } from '../../workflow';
       </p>
       <p>
         <b>Retries:</b> {{ queueItem?.retries }}
-        <span class="list_item--right">
-          <b>DueDate:</b> {{ queueItem?.dueDate | date : 'MM/dd/yyyy - hh:mm:ss' }}
-        </span>
+      </p>
+      <p>
+        <b>DueDate:</b> {{ queueItem?.dueDate | date : 'MM/dd/yyyy-hh:mm:ss' }}
       </p>
     </div>
   </div>`

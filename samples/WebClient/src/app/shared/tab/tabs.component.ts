@@ -14,10 +14,11 @@ import { TabComponent } from './tab.component';
   <ul>
     <li *ngFor="let tab of tabs"
       class="tabs__tab"
+      [ngClass]="{ 'tab__title--active': tab.active }"
       [attr.tabindex]="getTabIndex(tab)"
       (click)="selectTab(tab)"
       (keydown)="keydownOnTab($event, tab)">
-      <span class="tab__title" [ngClass]="{ 'tab__title--active': tab.active }">{{tab.title}}</span>
+      <span class="tab__title">{{tab.title}}</span>
     </li>
   </ul>
   <ng-content></ng-content>`

@@ -13,6 +13,7 @@ import { AdministratorClaimGuard } from './../administratorClaimGuard';
 
 import { SnapshotsComponent } from './snapshots.component';
 import { UpcommingsComponent } from './upcommings.component';
+import { FailedComponent } from './failed.component';
 import { QueueDashboardComponent } from './queue-dashboard.component';
 import { QueueListItemComponent } from './queue-list-item.component';
 
@@ -38,6 +39,7 @@ const ROUTES: Routes = [
   declarations: [
     SnapshotsComponent,
     UpcommingsComponent,
+    FailedComponent,
     QueueDashboardComponent,
     QueueListItemComponent
   ]
