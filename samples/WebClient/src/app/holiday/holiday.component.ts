@@ -71,7 +71,7 @@ export class HolidayComponent implements OnInit {
   public canTrigger = false;
   public triggerInfo: TriggerInfo;
 
-  @ViewChild('formDef', {static: false})
+  @ViewChild('formDef')
   public formDef: FormdefComponent;
 
   public constructor(

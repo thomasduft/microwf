@@ -82,10 +82,10 @@ export class ListComponent implements OnInit, AfterContentInit {
     }
   }
 
-  @ContentChild(HeaderComponent, {static: false})
+  @ContentChild(HeaderComponent)
   public header;
 
-  @ContentChild(FooterComponent, {static: false})
+  @ContentChild(FooterComponent)
   public footer;
 
   @ContentChildren(TwTemplateDirective)

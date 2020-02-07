@@ -65,7 +65,7 @@ export class WorkflowDashboardComponent implements OnInit {
   @HostBinding('class')
   public workspace = 'pane';
 
-  @ViewChild(ListComponent, {static: false})
+  @ViewChild(ListComponent)
   public list: ListComponent;
 
   public constructor(

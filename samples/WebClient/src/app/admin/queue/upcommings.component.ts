@@ -41,7 +41,7 @@ export class UpcommingsComponent implements OnInit {
 
   public upcommingItems: Array<QueueItem> = [];
 
-  @ViewChild(ListComponent, { static: false })
+  @ViewChild(ListComponent)
   public upcommingList: ListComponent;
 
   @HostBinding('class')

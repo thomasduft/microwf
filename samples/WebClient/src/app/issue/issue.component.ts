@@ -49,7 +49,7 @@ export class IssueComponent implements OnInit {
 
   public isNew = false;
 
-  @ViewChild('formDef', {static: false})
+  @ViewChild('formDef')
   public formDef: FormdefComponent;
 
   public constructor(

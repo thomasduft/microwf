@@ -40,7 +40,7 @@ export class FailedComponent implements OnInit {
 
   public failedItems: Array<QueueItem> = [];
 
-  @ViewChild(ListComponent, { static: false })
+  @ViewChild(ListComponent)
   public failedList: ListComponent;
 
   @HostBinding('class')

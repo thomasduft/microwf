@@ -30,15 +30,15 @@ const ROUTES: Routes = [
       { path: 'dispatch/:assignee/:goto', component: DispatchWorkflowComponent },
       {
         path: 'admin',
-        loadChildren: './admin/admin.module#AdminModule'
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
       },
       {
         path: 'holiday',
-        loadChildren: './holiday/holiday.module#HolidayModule'
+        loadChildren: () => import('./holiday/holiday.module').then(m => m.HolidayModule)
       },
       {
         path: 'issue',
-        loadChildren: './issue/issue.module#IssueModule'
+        loadChildren: () => import('./issue/issue.module').then(m => m.IssueModule)
       },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
