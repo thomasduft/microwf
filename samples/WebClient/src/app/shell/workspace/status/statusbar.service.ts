@@ -17,7 +17,7 @@ export class StatusBarService implements IMessageSubscriber<StatusMessage> {
   public constructor(
     private _messageBus: MessageBus
   ) {
-    this._messageBus.subsribe(this);
+    this._messageBus.subscribe(this);
   }
 
   public onMessage(message: StatusMessage): void {
