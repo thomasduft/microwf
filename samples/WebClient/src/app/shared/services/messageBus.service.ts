@@ -4,7 +4,7 @@ import { ServicesModule } from './services.module';
 import { MessageBase, IMessageSubscriber } from './models';
 
 @Injectable({
-  providedIn: ServicesModule
+  providedIn: ServicesModule // 'root'
 })
 export class MessageBus {
   private _subscribers: { [id: number]: IMessageSubscriber<MessageBase>; };
@@ -36,7 +36,9 @@ export class MessageBus {
     });
   }
 
-  private getSubscribersForMessage<T extends MessageBase>(message: T): Array<IMessageSubscriber<T>> {
+  private getSubscribersForMessage<T extends MessageBase>(
+    message: T
+  ): Array<IMessageSubscriber<T>> {
     const subscribers = new Array<IMessageSubscriber<T>>();
 
     for (const key in this._subscribers) {
@@ -52,7 +54,9 @@ export class MessageBus {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: ServicesModule // 'root'
+})
 export class MessageBusSubscriberRegistrar {
   public constructor(
     private _messageBus: MessageBus,
