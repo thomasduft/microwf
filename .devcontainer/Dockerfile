@@ -14,6 +14,7 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 # [Optional] Version of Node.js to install.
+ARG INSTALL_GLOBAL_TOOLS="true"
 ARG INSTALL_NODE="true"
 ARG NODE_VERSION="lts/*"
 ENV NVM_DIR=/home/vscode/.nvm
@@ -38,6 +39,13 @@ RUN apt-get update \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
+    # [Optional] Install global dotnet tools
+    && if [ "$INSTALL_GLOBAL_TOOLS" = "true" ]; then \
+        #
+        dotnet tool install --global dotnet-outdated \
+        && dotnet tool install --global dotnet-ef; \
+    fi \
     #
     # [Optional] Install Node.js for ASP.NET Core Web Applicationss
     && if [ "$INSTALL_NODE" = "true" ]; then \
