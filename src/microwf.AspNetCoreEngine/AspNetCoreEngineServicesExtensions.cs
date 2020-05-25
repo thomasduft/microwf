@@ -5,7 +5,7 @@ using tomware.Microwf.Domain;
 
 namespace tomware.Microwf.Engine
 {
-  public static class MicrowfServicesExtensions
+  public static class AspNetCoreEngineServicesExtensions
   {
     public static IServiceCollection AddAspNetCoreEngineServices(
       this IServiceCollection services
