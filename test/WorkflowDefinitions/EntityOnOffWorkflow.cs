@@ -1,8 +1,8 @@
 using tomware.Microwf.Core;
 using System;
 using System.Collections.Generic;
-using tomware.Microwf.Engine;
 using System.ComponentModel.DataAnnotations;
+using tomware.Microwf.Domain;
 
 namespace microwf.Tests.WorkflowDefinitions
 {

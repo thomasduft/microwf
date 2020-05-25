@@ -32,6 +32,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\microwf.Core\microwf.Core.csproj" />
+    <ProjectReference Include="..\..\src\microwf.Domain\microwf.Domain.csproj" />
+    <ProjectReference Include="..\..\src\microwf.Infrastructure\microwf.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\microwf.AspNetCoreEngine\microwf.AspNetCoreEngine.csproj" />
   </ItemGroup>
 

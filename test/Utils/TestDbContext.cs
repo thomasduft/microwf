@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using microwf.Tests.WorkflowDefinitions;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Infrastructure;
 
 namespace microwf.Tests.Utils
 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
 
 namespace WebApi.Workflows.Issue
 {

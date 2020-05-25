@@ -1,9 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
+using tomware.Microwf.Domain;
 using tomware.Microwf.Engine;
+using tomware.Microwf.Infrastructure;
 using WebApi.Domain;
 using WebApi.Workflows.Holiday;
 using WebApi.Workflows.Issue;
@@ -18,13 +19,17 @@ namespace WebApi.Extensions
       IConfiguration configuration
     ) where TContext : EngineDbContext
     {
-      var workflowConf = CreateWorkflowConfiguration(); // GetWorkflowConfiguration(services);
-      IOptions<ProcessorConfiguration> processorConf
-        = GetProcessorConfiguration(configuration, services);
+      var workflows = configuration.GetSection("Workflows");
+      services.Configure<WorkflowConfiguration>(workflows);
+
+      var worker = configuration.GetSection("Worker");
+      services.Configure<ProcessorConfiguration>(worker);
 
       services
-       .AddWorkflowEngineServices<TContext>(workflowConf)
-       .AddJobQueueServices<TContext>(processorConf.Value)
+       .AddDomainServices()
+       .AddInfrastructureServices<TContext>()
+       .AddJobQueueServices<TContext>()
+       .AddAspNetCoreEngineServices()
        .AddTestUserWorkflowMappings(CreateSampleUserWorkflowMappings());
 
       services.AddTransient<IUserContextService, IdentityUserContextService>();
@@ -96,32 +101,6 @@ namespace WebApi.Extensions
           }
         }
       };
-    }
-
-    private static IOptions<WorkflowConfiguration> GetWorkflowConfiguration(
-      IConfiguration configuration,
-      IServiceCollection services
-    )
-    {
-      var workflows = configuration.GetSection("Workflows");
-      services.Configure<WorkflowConfiguration>(workflows);
-
-      return services
-      .BuildServiceProvider()
-      .GetRequiredService<IOptions<WorkflowConfiguration>>();
-    }
-
-    private static IOptions<ProcessorConfiguration> GetProcessorConfiguration(
-      IConfiguration configuration,
-      IServiceCollection services
-    )
-    {
-      var worker = configuration.GetSection("Worker");
-      services.Configure<ProcessorConfiguration>(worker);
-
-      return services
-      .BuildServiceProvider()
-      .GetRequiredService<IOptions<ProcessorConfiguration>>();
     }
   }
 }

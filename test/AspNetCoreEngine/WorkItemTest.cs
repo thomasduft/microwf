@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
 
 namespace microwf.Tests.AspNetCoreEngine
 {

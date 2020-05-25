@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
 
 namespace WebApi.Workflows.Issue
 {

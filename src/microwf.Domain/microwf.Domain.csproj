@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>tomware.Microwf.Domain</AssemblyName>
+    <RootNamespace>tomware.Microwf.Domain</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>
+      Domain types for the tomware.Microwf library.
+    </Description>
+    <RepositoryUrl>https://github.com/thomasduft/microwf</RepositoryUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Authors>Thomas Duft</Authors>
+    <Company>tomWare SOLUTIONS</Company>
+    <PackageProjectUrl>https://github.com/thomasduft/microwf</PackageProjectUrl>
+    <PackageTags>StateMachine Workflow micro</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>2018 tomWare SOLUTIONS</Copyright>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\microwf.Core\microwf.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

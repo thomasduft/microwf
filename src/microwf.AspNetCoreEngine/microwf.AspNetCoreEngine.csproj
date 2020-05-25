@@ -25,19 +25,21 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0-preview.4.20251.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0-preview.4.20251.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0-preview.4.20251.6" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0-preview.4.20251.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0-preview.4.20251.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\microwf.Core\microwf.Core.csproj" />
+    <ProjectReference Include="..\microwf.Domain\microwf.Domain.csproj" />
+    <ProjectReference Include="..\microwf.Infrastructure\microwf.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath="" />
   </ItemGroup>
+
 </Project>

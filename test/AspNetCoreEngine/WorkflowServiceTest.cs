@@ -8,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
+using tomware.Microwf.Infrastructure;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
