@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace tomware.Microwf.Domain
 {
-  public static class ViewModelMapper
+  public static class ObjectMapper
   {
-    public static IEnumerable<WorkItemViewModel> ToWorkItemViewModelList(
+    public static IEnumerable<WorkItemDto> ToWorkItemViewModelList(
       IEnumerable<WorkItem> items
     )
     {
-      return items.Select(i => new WorkItemViewModel
+      return items.Select(i => new WorkItemDto
       {
         Id = i.Id,
         TriggerName = i.TriggerName,
@@ -21,11 +21,11 @@ namespace tomware.Microwf.Domain
       });
     }
 
-    public static IEnumerable<WorkflowHistoryViewModel> ToWorkflowHistoryViewModelList(
+    public static IEnumerable<WorkflowHistoryDto> ToWorkflowHistoryViewModelList(
       IEnumerable<WorkflowHistory> items
     )
     {
-      return items.Select(i => new WorkflowHistoryViewModel
+      return items.Select(i => new WorkflowHistoryDto
       {
         Id = i.Id,
         Created = i.Created,
@@ -36,11 +36,11 @@ namespace tomware.Microwf.Domain
       });
     }
 
-    public static IEnumerable<WorkflowVariableViewModel> ToWorkflowVariableViewModelList(
+    public static IEnumerable<WorkflowVariableDto> ToWorkflowVariableViewModelList(
       IEnumerable<WorkflowVariable> items
     )
     {
-      return items.Select(i => new WorkflowVariableViewModel
+      return items.Select(i => new WorkflowVariableDto
       {
         Id = i.Id,
         Type = i.Type,

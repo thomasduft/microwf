@@ -2,8 +2,7 @@ using System;
 
 namespace tomware.Microwf.Domain
 {
-  // TODO: Rename to DTO!
-  public class WorkflowViewModel
+  public class WorkflowDto
   {
     public int Id { get; set; }
     public int CorrelationId { get; set; }

@@ -120,9 +120,9 @@ namespace tomware.Microwf.Infrastructure
       await this.PersistWorkItemsAsync(this.Items.ToArray());
     }
 
-    public IEnumerable<WorkItemViewModel> GetSnapshot()
+    public IEnumerable<Domain.WorkItemDto> GetSnapshot()
     {
-      return ViewModelMapper.ToWorkItemViewModelList(this.Items.ToArray());
+      return ObjectMapper.ToWorkItemViewModelList(this.Items.ToArray());
     }
 
     private WorkItem Dequeue()

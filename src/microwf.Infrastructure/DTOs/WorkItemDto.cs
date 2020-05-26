@@ -2,8 +2,7 @@ using System;
 
 namespace tomware.Microwf.Infrastructure
 {
-  // TODO: Rename to DTO!
-  public class WorkItemInfoViewModel
+  public class WorkItemDto
   {
     public int Id { get; set; }
 

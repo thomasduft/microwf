@@ -10,7 +10,7 @@ namespace tomware.Microwf.Domain
       services.AddScoped<IWorkflowDefinitionProvider, WorkflowDefinitionProvider>();
 
       services.AddTransient<IUserWorkflowMappingService, NoopUserWorkflowMappingService>();
-      services.AddTransient<IWorkflowDefinitionViewModelCreator, ConfigurationWorkflowDefinitionViewModelCreator>();
+      services.AddTransient<IWorkflowDefinitionDtoCreator, WorkflowDefinitionDtoCreator>();
       services.AddTransient<IWorkflowService, WorkflowService>();
 
       return services;

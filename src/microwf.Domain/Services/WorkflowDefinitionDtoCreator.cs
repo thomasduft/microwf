@@ -17,25 +17,25 @@ namespace tomware.Microwf.Domain
     public string Route { get; set; }
   }
 
-  public class ConfigurationWorkflowDefinitionViewModelCreator
-    : IWorkflowDefinitionViewModelCreator
+  public class WorkflowDefinitionDtoCreator
+    : IWorkflowDefinitionDtoCreator
   {
     private readonly WorkflowConfiguration workflowConfiguration;
 
-    public ConfigurationWorkflowDefinitionViewModelCreator(
+    public WorkflowDefinitionDtoCreator(
       IOptions<WorkflowConfiguration> workflows
     )
     {
       this.workflowConfiguration = workflows.Value;
     }
 
-    public WorkflowDefinitionViewModel CreateViewModel(string type)
+    public WorkflowDefinitionDto Create(string type)
     {
       var workflowType = this.workflowConfiguration
         .Types
         .First(t => t.Type == type);
 
-      return new WorkflowDefinitionViewModel
+      return new WorkflowDefinitionDto
       {
         Type = workflowType.Type,
         Title = workflowType.Title,

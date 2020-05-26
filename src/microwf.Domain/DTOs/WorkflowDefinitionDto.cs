@@ -1,7 +1,6 @@
 namespace tomware.Microwf.Domain
 {
-  // TODO: Rename to DTO!
-  public class WorkflowDefinitionViewModel
+  public class WorkflowDefinitionDto
   {
     public string Type { get; set; }
     public string Title { get; set; }

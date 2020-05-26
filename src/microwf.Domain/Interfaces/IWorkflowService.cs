@@ -10,28 +10,28 @@ namespace tomware.Microwf.Domain
     /// </summary>
     /// <param name="pagingParameters"></param>
     /// <returns></returns>
-    Task<PaginatedList<WorkflowViewModel>> GetWorkflowsAsync(WorkflowSearchPagingParameters pagingParameters);
+    Task<PaginatedList<WorkflowDto>> GetWorkflowsAsync(WorkflowSearchPagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a workflow instance.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<WorkflowViewModel> GetAsync(int id);
+    Task<WorkflowDto> GetAsync(int id);
 
     /// <summary>
     /// Returns the workflow history for a workflow instance.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<IEnumerable<WorkflowHistoryViewModel>> GetHistoryAsync(int id);
+    Task<IEnumerable<WorkflowHistoryDto>> GetHistoryAsync(int id);
 
     /// <summary>
     /// Returns the workflow variables for a workflow instance.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<IEnumerable<WorkflowVariableViewModel>> GetVariablesAsync(int id);
+    Task<IEnumerable<WorkflowVariableDto>> GetVariablesAsync(int id);
 
     /// <summary>
     /// Returns a workflow instance.
@@ -39,13 +39,13 @@ namespace tomware.Microwf.Domain
     /// <param name="type"></param>
     /// <param name="correlationId"></param>
     /// <returns></returns>
-    Task<WorkflowViewModel> GetInstanceAsync(string type, int correlationId);
+    Task<WorkflowDto> GetInstanceAsync(string type, int correlationId);
 
     /// <summary>
     /// Returns a list of workflow definitions that exist in the system.
     /// </summary>
     /// <returns></returns>
-    IEnumerable<WorkflowDefinitionViewModel> GetWorkflowDefinitions();
+    IEnumerable<WorkflowDefinitionDto> GetWorkflowDefinitions();
 
     /// <summary>
     /// Returns the dot -> diagraph notation for the given workflow type.

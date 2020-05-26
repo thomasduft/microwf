@@ -10,13 +10,13 @@ namespace tomware.Microwf.Infrastructure
     /// Returns a list of upcomming work items.
     /// </summary>
     /// <returns></returns>
-    Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(PagingParameters pagingParameters);
+    Task<PaginatedList<Domain.WorkItemDto>> GetUpCommingsAsync(PagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a list of failed work items.
     /// </summary>
     /// <returns></returns>
-    Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(PagingParameters pagingParameters);
+    Task<PaginatedList<Domain.WorkItemDto>> GetFailedAsync(PagingParameters pagingParameters);
 
     /// <summary>
     /// Returns a list of persisted WorkItems.
@@ -42,6 +42,6 @@ namespace tomware.Microwf.Infrastructure
     /// Reschedules an existing WorkItem.
     /// </summary>
     /// <returns></returns>
-    Task Reschedule(WorkItemInfoViewModel model);
+    Task Reschedule(WorkItemDto model);
   }
 }

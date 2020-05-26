@@ -149,7 +149,7 @@ namespace microwf.Tests.AspNetCoreEngine
 
 
       var dueDate = SystemTime.Now().AddMinutes(1);
-      var model = new WorkItemInfoViewModel
+      var model = new tomware.Microwf.Infrastructure.WorkItemDto
       {
         Id = 1,
         DueDate = dueDate

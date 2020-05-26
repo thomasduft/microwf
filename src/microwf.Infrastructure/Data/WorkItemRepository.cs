@@ -31,7 +31,7 @@ namespace tomware.Microwf.Infrastructure
       await this.DbContext.SaveChangesAsync();
     }
 
-    public async Task Reschedule(WorkItemInfoViewModel model)
+    public async Task Reschedule(WorkItemDto model)
     {
       var item = await this.GetByIdAsync(model.Id);
 

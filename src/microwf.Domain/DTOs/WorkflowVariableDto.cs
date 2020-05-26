@@ -1,7 +1,6 @@
 namespace tomware.Microwf.Domain
 {
-  // TODO: Rename to DTO!
-  public class WorkflowVariableViewModel
+  public class WorkflowVariableDto
   {
     public int Id { get; set; }
 

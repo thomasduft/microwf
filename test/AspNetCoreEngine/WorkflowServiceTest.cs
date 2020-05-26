@@ -38,7 +38,7 @@ namespace microwf.Tests.AspNetCoreEngine
       {
         return new TestUserWorkflowMappingService();
       });
-      diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
+      diHelper.Services.AddTransient<IWorkflowDefinitionDtoCreator, TestWorkflowDefinitionViewModelCreator>();
       diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
       diHelper.Services.AddTransient<IWorkflowRepository, WorkflowRepository<TestDbContext>>();
       diHelper.Services.AddTransient<IWorkflowService, WorkflowService>();
@@ -213,7 +213,7 @@ namespace microwf.Tests.AspNetCoreEngine
       {
         return new TestUserWorkflowMappingService(new List<IWorkflowDefinition> { new HolidayApprovalWorkflow() });
       });
-      diHelper.Services.AddTransient<IWorkflowDefinitionViewModelCreator, TestWorkflowDefinitionViewModelCreator>();
+      diHelper.Services.AddTransient<IWorkflowDefinitionDtoCreator, TestWorkflowDefinitionViewModelCreator>();
       diHelper.Services.AddTransient<IUserContextService, TestUserContextService>();
       diHelper.Services.AddTransient<IWorkflowRepository, WorkflowRepository<TestDbContext>>();
       diHelper.Services.AddTransient<IWorkflowService, WorkflowService>();

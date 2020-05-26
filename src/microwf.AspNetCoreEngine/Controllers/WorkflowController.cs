@@ -26,12 +26,12 @@ namespace tomware.Microwf.Engine
 
     [HttpGet()]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
-    public async Task<ActionResult<PaginatedList<WorkflowViewModel>>> GetWorkflows(
+    [ProducesResponseType(typeof(PaginatedList<WorkflowDto>), 200)]
+    public async Task<ActionResult<PaginatedList<WorkflowDto>>> GetWorkflows(
       [FromQuery] WorkflowSearchPagingParameters pagingParameters
     )
     {
-      PaginatedList<WorkflowViewModel> result
+      PaginatedList<WorkflowDto> result
         = await this.service.GetWorkflowsAsync(pagingParameters);
 
       this.AddXPagination(pagingParameters, result);
@@ -41,8 +41,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
-    public async Task<ActionResult<WorkflowViewModel>> Get(int id)
+    [ProducesResponseType(typeof(WorkflowDto), 200)]
+    public async Task<ActionResult<WorkflowDto>> Get(int id)
     {
       var result = await this.service.GetAsync(id);
 
@@ -51,8 +51,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/history")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), 200)]
-    public async Task<ActionResult<IEnumerable<WorkflowHistoryViewModel>>> GetHistory(int id)
+    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryDto>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowHistoryDto>>> GetHistory(int id)
     {
       var result = await this.service.GetHistoryAsync(id);
 
@@ -61,8 +61,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/variables")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableViewModel>), 200)]
-    public async Task<ActionResult<IEnumerable<WorkflowVariableViewModel>>> GetVariables(int id)
+    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableDto>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowVariableDto>>> GetVariables(int id)
     {
       var result = await this.service.GetVariablesAsync(id);
 
@@ -70,8 +70,8 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("definitions")]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
-    public ActionResult<IEnumerable<WorkflowDefinitionViewModel>> GetWorkflowDefinitions()
+    [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionDto>), 200)]
+    public ActionResult<IEnumerable<WorkflowDefinitionDto>> GetWorkflowDefinitions()
     {
       var result = this.service.GetWorkflowDefinitions();
 
@@ -88,8 +88,8 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("dotwithhistory/{type}/{correlationId}")]
-    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
-    public async Task<ActionResult<WorkflowViewModel>> DotWithHistory(string type, int correlationId)
+    [ProducesResponseType(typeof(WorkflowDto), 200)]
+    public async Task<ActionResult<WorkflowDto>> DotWithHistory(string type, int correlationId)
     {
       var result = await this.service.DotWithHistoryAsync(type, correlationId);
 
@@ -98,7 +98,7 @@ namespace tomware.Microwf.Engine
 
     private void AddXPagination(
       PagingParameters pagingParameters,
-      PaginatedList<WorkflowViewModel> result
+      PaginatedList<WorkflowDto> result
     )
     {
       var paginationMetadata = new

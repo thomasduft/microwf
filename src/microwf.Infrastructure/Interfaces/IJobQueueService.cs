@@ -33,6 +33,6 @@ namespace tomware.Microwf.Infrastructure
     /// Returns a snapshot of the current queued work items.
     /// </summary>
     /// <returns></returns>
-    IEnumerable<WorkItemViewModel> GetSnapshot();
+    IEnumerable<Domain.WorkItemDto> GetSnapshot();
   }
 }

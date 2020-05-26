@@ -14,7 +14,7 @@ namespace tomware.Microwf.Infrastructure
       this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(
+    public async Task<PaginatedList<Domain.WorkItemDto>> GetUpCommingsAsync(
       PagingParameters pagingParameters
     )
     {
@@ -30,15 +30,15 @@ namespace tomware.Microwf.Infrastructure
           pagingParameters.PageSize
         ));
 
-      return new PaginatedList<WorkItemViewModel>(
-        ViewModelMapper.ToWorkItemViewModelList(items),
+      return new PaginatedList<Domain.WorkItemDto>(
+        ObjectMapper.ToWorkItemViewModelList(items),
         count,
         pagingParameters.PageIndex,
         pagingParameters.PageSize
       );
     }
 
-    public async Task<PaginatedList<WorkItemViewModel>> GetFailedAsync(
+    public async Task<PaginatedList<Domain.WorkItemDto>> GetFailedAsync(
       PagingParameters pagingParameters
     )
     {
@@ -52,8 +52,8 @@ namespace tomware.Microwf.Infrastructure
           pagingParameters.PageSize
         ));
 
-      return new PaginatedList<WorkItemViewModel>(
-        ViewModelMapper.ToWorkItemViewModelList(items),
+      return new PaginatedList<Domain.WorkItemDto>(
+        ObjectMapper.ToWorkItemViewModelList(items),
         count,
         pagingParameters.PageIndex,
         pagingParameters.PageSize
@@ -76,7 +76,7 @@ namespace tomware.Microwf.Infrastructure
       await this.repository.PersistWorkItemsAsync(items);
     }
 
-    public async Task Reschedule(WorkItemInfoViewModel model)
+    public async Task Reschedule(WorkItemDto model)
     {
       await this.repository.Reschedule(model);
     }

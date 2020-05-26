@@ -8,7 +8,7 @@ namespace tomware.Microwf.Infrastructure
   {
     Task PersistWorkItemsAsync(IEnumerable<WorkItem> items);
 
-    Task Reschedule(WorkItemInfoViewModel model);
+    Task Reschedule(WorkItemDto model);
 
     Task RemoveAsync(int id);
   }
