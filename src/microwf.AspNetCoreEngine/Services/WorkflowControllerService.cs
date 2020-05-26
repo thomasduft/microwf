@@ -90,54 +90,58 @@ namespace tomware.Microwf.Engine
 
     private WorkflowViewModel ToViewModel(WorkflowDto dto)
     {
-      return new WorkflowViewModel
-      {
-        Id = dto.Id,
-        CorrelationId = dto.CorrelationId,
-        Type = dto.Type,
-        State = dto.State,
-        Title = dto.Title,
-        Description = dto.Description,
-        Assignee = dto.Assignee,
-        Route = dto.Route,
-        Started = dto.Started,
-        Completed = dto.Completed
-      };
+      return PropertyMapper<WorkflowDto, WorkflowViewModel>.From(dto);
+      // return new WorkflowViewModel
+      // {
+      //   Id = dto.Id,
+      //   CorrelationId = dto.CorrelationId,
+      //   Type = dto.Type,
+      //   State = dto.State,
+      //   Title = dto.Title,
+      //   Description = dto.Description,
+      //   Assignee = dto.Assignee,
+      //   Route = dto.Route,
+      //   Started = dto.Started,
+      //   Completed = dto.Completed
+      // };
     }
 
     private WorkflowHistoryViewModel ToWorkflowHistoryViewModel(WorkflowHistoryDto dto)
     {
-      return new WorkflowHistoryViewModel
-      {
-        Id = dto.Id,
-        Created = dto.Created,
-        FromState = dto.FromState,
-        ToState = dto.ToState,
-        UserName = dto.UserName,
-        WorkflowId = dto.WorkflowId
-      };
+      return PropertyMapper<WorkflowHistoryDto, WorkflowHistoryViewModel>.From(dto);
+      // return new WorkflowHistoryViewModel
+      // {
+      //   Id = dto.Id,
+      //   Created = dto.Created,
+      //   FromState = dto.FromState,
+      //   ToState = dto.ToState,
+      //   UserName = dto.UserName,
+      //   WorkflowId = dto.WorkflowId
+      // };
     }
 
     private WorkflowVariableViewModel ToWorkflowVariablesViewModel(WorkflowVariableDto dto)
     {
-      return new WorkflowVariableViewModel
-      {
-        Id = dto.Id,
-        Type = dto.Type,
-        Content = dto.Content,
-        WorkflowId = dto.WorkflowId
-      };
+      return PropertyMapper<WorkflowVariableDto, WorkflowVariableViewModel>.From(dto);
+      // return new WorkflowVariableViewModel
+      // {
+      //   Id = dto.Id,
+      //   Type = dto.Type,
+      //   Content = dto.Content,
+      //   WorkflowId = dto.WorkflowId
+      // };
     }
 
     private WorkflowDefinitionViewModel ToWorkflowDefinitionViewModel(WorkflowDefinitionDto dto)
     {
-      return new WorkflowDefinitionViewModel
-      {
-        Type = dto.Type,
-        Title = dto.Title,
-        Description = dto.Description,
-        Route = dto.Route
-      };
+      return PropertyMapper<WorkflowDefinitionDto, WorkflowDefinitionViewModel>.From(dto);
+      // return new WorkflowDefinitionViewModel
+      // {
+      //   Type = dto.Type,
+      //   Title = dto.Title,
+      //   Description = dto.Description,
+      //   Route = dto.Route
+      // };
     }
   }
 }

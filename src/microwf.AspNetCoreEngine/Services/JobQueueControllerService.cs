@@ -77,16 +77,17 @@ namespace tomware.Microwf.Engine
 
     private WorkItemViewModel ToViewModel(Domain.WorkItemDto dto)
     {
-      return new WorkItemViewModel
-      {
-        Id = dto.Id,
-        TriggerName = dto.TriggerName,
-        EntityId = dto.EntityId,
-        WorkflowType = dto.WorkflowType,
-        Retries = dto.Retries,
-        Error = dto.Error,
-        DueDate = dto.DueDate
-      };
+      return PropertyMapper<Domain.WorkItemDto, WorkItemViewModel>.From(dto);
+      // return new WorkItemViewModel
+      // {
+      //   Id = dto.Id,
+      //   TriggerName = dto.TriggerName,
+      //   EntityId = dto.EntityId,
+      //   WorkflowType = dto.WorkflowType,
+      //   Retries = dto.Retries,
+      //   Error = dto.Error,
+      //   DueDate = dto.DueDate
+      // };
     }
   }
 }
