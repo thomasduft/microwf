@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using tomware.Microwf.Domain;
-using tomware.Microwf.Infrastructure;
 
 namespace tomware.Microwf.Engine
 {
@@ -12,27 +11,21 @@ namespace tomware.Microwf.Engine
   [Route("api/workflow")]
   public class WorkflowController : Controller
   {
-    private readonly IWorkflowService service;
-    private readonly IJobQueueService jobQueueService;
+    private readonly IWorkflowControllerService service;
 
-    public WorkflowController(
-      IWorkflowService service,
-      IJobQueueService jobQueueService
-    )
+    public WorkflowController(IWorkflowControllerService service)
     {
       this.service = service;
-      this.jobQueueService = jobQueueService;
     }
 
     [HttpGet()]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<WorkflowDto>), 200)]
-    public async Task<ActionResult<PaginatedList<WorkflowDto>>> GetWorkflows(
+    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
+    public async Task<ActionResult<PaginatedList<WorkflowViewModel>>> GetWorkflows(
       [FromQuery] WorkflowSearchPagingParameters pagingParameters
     )
     {
-      PaginatedList<WorkflowDto> result
-        = await this.service.GetWorkflowsAsync(pagingParameters);
+      var result = await this.service.GetWorkflowsAsync(pagingParameters);
 
       this.AddXPagination(pagingParameters, result);
 
@@ -41,8 +34,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(WorkflowDto), 200)]
-    public async Task<ActionResult<WorkflowDto>> Get(int id)
+    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
+    public async Task<ActionResult<WorkflowViewModel>> Get(int id)
     {
       var result = await this.service.GetAsync(id);
 
@@ -51,8 +44,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/history")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryDto>), 200)]
-    public async Task<ActionResult<IEnumerable<WorkflowHistoryDto>>> GetHistory(int id)
+    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowHistoryViewModel>>> GetHistory(int id)
     {
       var result = await this.service.GetHistoryAsync(id);
 
@@ -61,8 +54,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/variables")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableDto>), 200)]
-    public async Task<ActionResult<IEnumerable<WorkflowVariableDto>>> GetVariables(int id)
+    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableViewModel>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowVariableViewModel>>> GetVariables(int id)
     {
       var result = await this.service.GetVariablesAsync(id);
 
@@ -70,19 +63,19 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("definitions")]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionDto>), 200)]
-    public ActionResult<IEnumerable<WorkflowDefinitionDto>> GetWorkflowDefinitions()
+    [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
+    public async Task<ActionResult<IEnumerable<WorkflowDefinitionViewModel>>> GetWorkflowDefinitions()
     {
-      var result = this.service.GetWorkflowDefinitions();
+      var result = await this.service.GetWorkflowDefinitionsAsync();
 
       return Ok(result);
     }
 
     [HttpGet("dot/{type}")]
     [ProducesResponseType(typeof(string), 200)]
-    public ActionResult<string> Dot(string type)
+    public async Task<ActionResult<string>> Dot(string type)
     {
-      var result = this.service.Dot(type);
+      var result = await this.service.DotAsync(type);
 
       return Ok(result);
     }
@@ -98,7 +91,7 @@ namespace tomware.Microwf.Engine
 
     private void AddXPagination(
       PagingParameters pagingParameters,
-      PaginatedList<WorkflowDto> result
+      PaginatedList<WorkflowViewModel> result
     )
     {
       var paginationMetadata = new

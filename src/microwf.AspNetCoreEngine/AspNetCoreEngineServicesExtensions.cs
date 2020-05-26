@@ -12,6 +12,8 @@ namespace tomware.Microwf.Engine
     )
     {
       services.AddTransient<IUserContextService, UserContextService>();
+      services.AddTransient<IJobQueueControllerService, JobQueueControllerService>();
+      services.AddTransient<IWorkflowControllerService, WorkflowControllerService>();
 
       // Policies
       services.AddAuthorizationCore(options =>

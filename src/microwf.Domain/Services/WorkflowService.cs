@@ -17,13 +17,13 @@ namespace tomware.Microwf.Domain
       IWorkflowRepository repository,
       IWorkflowDefinitionProvider workflowDefinitionProvider,
       IUserWorkflowMappingService userWorkflowMappingService,
-      IWorkflowDefinitionDtoCreator viewModelCreator
+      IWorkflowDefinitionDtoCreator dtoCreator
     )
     {
       this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
       this.workflowDefinitionProvider = workflowDefinitionProvider;
       this.userWorkflowMappingService = userWorkflowMappingService;
-      this.viewModelCreator = viewModelCreator;
+      this.viewModelCreator = dtoCreator;
     }
 
     public async Task<PaginatedList<WorkflowDto>> GetWorkflowsAsync(

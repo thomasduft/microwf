@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using tomware.Microwf.Domain;
-using tomware.Microwf.Infrastructure;
 
 namespace tomware.Microwf.Engine
 {
@@ -12,16 +11,13 @@ namespace tomware.Microwf.Engine
   [Route("api/jobqueue")]
   public class JobQueueController : Controller
   {
-    private readonly IJobQueueService service;
-    private readonly IWorkItemService workItemService;
+    private readonly IJobQueueControllerService service;
 
     public JobQueueController(
-      IJobQueueService service,
-      IWorkItemService workItemService
+      IJobQueueControllerService service
     )
     {
       this.service = service;
-      this.workItemService = workItemService;
     }
 
     [HttpGet("snapshot")]
@@ -36,13 +32,12 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("upcommings")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<Domain.WorkItemDto>), 200)]
-    public async Task<ActionResult<PaginatedList<Domain.WorkItemDto>>> GetUpcommings(
+    [ProducesResponseType(typeof(PaginatedList<WorkItemViewModel>), 200)]
+    public async Task<ActionResult<PaginatedList<WorkItemViewModel>>> GetUpcommings(
       [FromQuery] PagingParameters pagingParameters
     )
     {
-      PaginatedList<Domain.WorkItemDto> result
-        = await this.workItemService.GetUpCommingsAsync(pagingParameters);
+      var result = await this.service.GetUpCommingsAsync(pagingParameters);
 
       this.AddXPagination(pagingParameters, result);
 
@@ -51,13 +46,12 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("failed")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<Domain.WorkItemDto>), 200)]
-    public async Task<ActionResult<PaginatedList<Domain.WorkItemDto>>> GetFailed(
+    [ProducesResponseType(typeof(PaginatedList<WorkItemViewModel>), 200)]
+    public async Task<ActionResult<PaginatedList<WorkItemViewModel>>> GetFailed(
       [FromQuery] PagingParameters pagingParameters
     )
     {
-      PaginatedList<Domain.WorkItemDto> result
-        = await this.workItemService.GetFailedAsync(pagingParameters);
+      var result = await this.service.GetFailedAsync(pagingParameters);
 
       this.AddXPagination(pagingParameters, result);
 
@@ -68,19 +62,19 @@ namespace tomware.Microwf.Engine
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
-    public async Task<ActionResult> Reschedule([FromBody] Infrastructure.WorkItemDto model)
+    public async Task<ActionResult> Reschedule([FromBody] WorkItemViewModel model)
     {
       if (model == null) return BadRequest();
       if (!this.ModelState.IsValid) return BadRequest(this.ModelState);
 
-      await this.workItemService.Reschedule(model);
+      await this.service.Reschedule(model);
 
       return NoContent();
     }
 
     private void AddXPagination(
       PagingParameters pagingParameters,
-      PaginatedList<Domain.WorkItemDto> result
+      PaginatedList<WorkItemViewModel> result
     )
     {
       var paginationMetadata = new
