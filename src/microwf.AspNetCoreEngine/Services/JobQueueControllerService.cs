@@ -46,9 +46,9 @@ namespace tomware.Microwf.Engine
 
       return new PaginatedList<WorkItemViewModel>(
         result.Select(x => ToViewModel(x)),
-        result.Count,
-        result.PageIndex,
-        result.TotalPages
+        result.AllItemsCount,
+        parameters.PageIndex,
+        parameters.PageSize
       );
     }
 
@@ -60,9 +60,9 @@ namespace tomware.Microwf.Engine
 
       return new PaginatedList<WorkItemViewModel>(
         result.Select(x => ToViewModel(x)),
-        result.Count,
-        result.PageIndex,
-        result.TotalPages
+        result.AllItemsCount,
+        parameters.PageIndex,
+        parameters.PageSize
       );
     }
 

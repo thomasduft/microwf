@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,9 +39,9 @@ namespace tomware.Microwf.Engine
 
       return new PaginatedList<WorkflowViewModel>(
         result.Select(x => ToViewModel(x)),
-        result.Count,
-        result.PageIndex,
-        result.TotalPages
+        result.AllItemsCount,
+        parameters.PageIndex,
+        parameters.PageSize
       );
     }
 
