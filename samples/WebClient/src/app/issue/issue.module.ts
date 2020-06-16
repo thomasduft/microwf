@@ -4,10 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IconModule } from '../shared/icon/icon.module';
 import { ListModule } from './../shared/list/list.module';
-import { FormdefModule, FormdefRegistry } from '../shared/formdef/index';
+import { FormdefModule } from '../shared/formdef/index';
 import { WorkflowModule } from '../workflow/workflow.module';
 
-import { IssueDetailSlot } from './models';
 import { IssueService } from './issue.service';
 import { IssueDashboardComponent } from './issue-dashboard.component';
 import { IssueComponent } from './issue.component';
