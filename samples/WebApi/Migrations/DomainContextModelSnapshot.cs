@@ -14,30 +14,38 @@ namespace WebApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+                .HasAnnotation("ProductVersion", "3.1.4");
 
             modelBuilder.Entity("WebApi.Workflows.Holiday.Holiday", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Assignee")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("From");
+                    b.Property<DateTime?>("From")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Requester")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Superior");
+                    b.Property<string>("Superior")
+                        .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("To");
+                    b.Property<DateTime?>("To")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -47,15 +55,19 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Workflows.Holiday.HolidayMessage", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Author")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("HolidayId");
+                    b.Property<int>("HolidayId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Message")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -67,24 +79,31 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Workflows.Issue.Issue", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Assignee")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Creator")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -94,92 +113,118 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Workflows.Stepper.Stepper", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Assignee")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Creator")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Stepper");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkItem", b =>
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkItem", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DueDate");
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("EntityId");
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Error");
+                    b.Property<string>("Error")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Retries");
+                    b.Property<int>("Retries")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("TriggerName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("WorkflowType")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("WorkItem");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.Workflow", b =>
+            modelBuilder.Entity("tomware.Microwf.Domain.Workflow", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Assignee");
+                    b.Property<string>("Assignee")
+                        .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("Completed");
+                    b.Property<DateTime?>("Completed")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("CorrelationId");
+                    b.Property<int>("CorrelationId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Started");
+                    b.Property<DateTime>("Started")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Workflow");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowHistory", b =>
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowHistory", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FromState")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ToState")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("WorkflowId");
+                    b.Property<int>("WorkflowId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -188,18 +233,22 @@ namespace WebApi.Migrations
                     b.ToTable("WorkflowHistory");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowVariable", b =>
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowVariable", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("WorkflowId");
+                    b.Property<int>("WorkflowId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -213,23 +262,26 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Workflows.Holiday.Holiday", "Holiday")
                         .WithMany("Messages")
                         .HasForeignKey("HolidayId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowHistory", b =>
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowHistory", b =>
                 {
-                    b.HasOne("tomware.Microwf.Engine.Workflow", "Workflow")
+                    b.HasOne("tomware.Microwf.Domain.Workflow", "Workflow")
                         .WithMany("WorkflowHistories")
                         .HasForeignKey("WorkflowId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Engine.WorkflowVariable", b =>
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowVariable", b =>
                 {
-                    b.HasOne("tomware.Microwf.Engine.Workflow", "Workflow")
+                    b.HasOne("tomware.Microwf.Domain.Workflow", "Workflow")
                         .WithMany("WorkflowVariables")
                         .HasForeignKey("WorkflowId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

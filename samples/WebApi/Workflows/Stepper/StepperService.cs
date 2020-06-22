@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
+using tomware.Microwf.Infrastructure;
 using WebApi.Common;
 using WebApi.Domain;
 

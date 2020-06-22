@@ -34,10 +34,6 @@ import { SlotHostComponent } from './slotHost.component';
     FormdefComponent,
     EditorComponent
   ],
-  entryComponents: [
-    SlotComponent,
-    ArraySlotComponent
-  ],
   providers: [
     FormdefRegistry,
     SlotComponentRegistry

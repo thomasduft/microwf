@@ -49,9 +49,7 @@ namespace WebApi
       services.AddRouting(o => o.LowercaseUrls = true);
 
       var connection = this.Configuration["ConnectionString"];
-      services
-        .AddEntityFrameworkSqlite()
-        .AddDbContext<DomainContext>(o => o.UseSqlite(connection));
+      services.AddDbContext<DomainContext>(o => o.UseSqlite(connection));
 
       // Identity
       var authority = this.GetAuthority();

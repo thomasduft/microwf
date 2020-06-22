@@ -12,7 +12,9 @@ echo Restore solution
 dotnet restore microwf.sln
 
 echo Packaging solution
-dotnet pack src/microwf.Core -c Release /p:PackageVersion=$1 /p:Version=$1 -o ./dist/nupkgs/
-dotnet pack src/microwf.AspNetCoreEngine -c Release /p:PackageVersion=$1 /p:Version=$1 -o ./dist/nupkgs/
+dotnet pack src/microwf.Core -c Release -p:PackageVersion=$1 -p:Version=$1 -o ./dist/nupkgs/
+dotnet pack src/microwf.Domain -c Release -p:PackageVersion=$1 -p:Version=$1 -o ./dist/nupkgs/
+dotnet pack src/microwf.Infrastructure -c Release -p:PackageVersion=$1 -p:Version=$1 -o ./dist/nupkgs/
+dotnet pack src/microwf.AspNetCoreEngine -c Release -p:PackageVersion=$1 -p:Version=$1 -o ./dist/nupkgs/
 
 echo Done

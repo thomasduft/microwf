@@ -31,7 +31,7 @@ export class PagingModel {
   public totalCount;
   public totalPages;
 
-  public static create(pageIndex = 0, pageSize = 20): PagingModel {
+  public static create(pageIndex = 0, pageSize = 50): PagingModel {
     const model = new PagingModel();
     model.pageIndex = pageIndex;
     model.pageSize = pageSize;

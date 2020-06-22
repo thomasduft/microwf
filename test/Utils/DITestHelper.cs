@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
+using tomware.Microwf.Infrastructure;
 
 namespace microwf.Tests.Utils
 {
@@ -28,12 +29,19 @@ namespace microwf.Tests.Utils
       }
 
       this.AddTestDbContext();
-      this.Services.AddWorkflowEngineServices<TestDbContext>(workflowConfiguration);
-      this.Services.AddJobQueueServices<TestDbContext>(new ProcessorConfiguration
+      this.Services.Configure<WorkflowConfiguration>(opt =>
       {
-        Enabled = true,
-        Interval = 5000
+        opt.Types = workflowConfiguration.Types;
       });
+      this.Services.Configure<ProcessorConfiguration>(opt =>
+      {
+        opt.Enabled = true;
+        opt.Interval = 5000;
+      });
+
+      this.Services.AddDomainServices();
+      this.Services.AddInfrastructureServices<TestDbContext>();
+      this.Services.AddJobQueueServices<TestDbContext>();
 
       return this.Build();
     }

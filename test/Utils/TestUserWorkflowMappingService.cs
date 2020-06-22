@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using tomware.Microwf.Core;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
 
 namespace microwf.Tests.Utils
 {

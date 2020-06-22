@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using tomware.Microwf.Engine;
+using tomware.Microwf.Domain;
+using tomware.Microwf.Infrastructure;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
@@ -148,7 +149,7 @@ namespace microwf.Tests.AspNetCoreEngine
 
 
       var dueDate = SystemTime.Now().AddMinutes(1);
-      var model = new WorkItemInfoViewModel
+      var model = new tomware.Microwf.Infrastructure.WorkItemDto
       {
         Id = 1,
         DueDate = dueDate
