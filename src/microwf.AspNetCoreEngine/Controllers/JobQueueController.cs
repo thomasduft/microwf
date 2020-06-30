@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using tomware.Microwf.Domain;
 namespace tomware.Microwf.Engine
 {
   [Authorize]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [Route("api/jobqueue")]
-  public class JobQueueController : Controller
+  public class JobQueueController : ControllerBase
   {
     private readonly IJobQueueControllerService service;
 
@@ -22,7 +24,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("snapshot")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<Domain.WorkItemDto>), 200)]
+    [ProducesResponseType(typeof(IEnumerable<Domain.WorkItemDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public ActionResult<IEnumerable<Domain.WorkItemDto>> GetSnapshot()
     {
       var result = this.service.GetSnapshot();
@@ -32,7 +35,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("upcommings")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<WorkItemViewModel>), 200)]
+    [ProducesResponseType(typeof(PaginatedList<WorkItemViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<PaginatedList<WorkItemViewModel>>> GetUpcommings(
       [FromQuery] PagingParameters pagingParameters
     )
@@ -46,7 +50,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("failed")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<WorkItemViewModel>), 200)]
+    [ProducesResponseType(typeof(PaginatedList<WorkItemViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<PaginatedList<WorkItemViewModel>>> GetFailed(
       [FromQuery] PagingParameters pagingParameters
     )
@@ -60,8 +65,9 @@ namespace tomware.Microwf.Engine
 
     [HttpPost("reschedule")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(204)]
-    [ProducesResponseType(400)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult> Reschedule([FromBody] WorkItemViewModel model)
     {
       if (model == null) return BadRequest();

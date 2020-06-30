@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using tomware.Microwf.Domain;
 namespace tomware.Microwf.Engine
 {
   [Authorize]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [Route("api/workflow")]
-  public class WorkflowController : Controller
+  public class WorkflowController : ControllerBase
   {
     private readonly IWorkflowControllerService service;
 
@@ -20,7 +22,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet()]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), 200)]
+    [ProducesResponseType(typeof(PaginatedList<WorkflowViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<PaginatedList<WorkflowViewModel>>> GetWorkflows(
       [FromQuery] WorkflowSearchPagingParameters pagingParameters
     )
@@ -34,7 +37,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(WorkflowViewModel), 200)]
+    [ProducesResponseType(typeof(WorkflowViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<WorkflowViewModel>> Get(int id)
     {
       var result = await this.service.GetAsync(id);
@@ -44,7 +48,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/history")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), 200)]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowHistoryViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<IEnumerable<WorkflowHistoryViewModel>>> GetHistory(int id)
     {
       var result = await this.service.GetHistoryAsync(id);
@@ -54,7 +59,8 @@ namespace tomware.Microwf.Engine
 
     [HttpGet("{id}/variables")]
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableViewModel>), 200)]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowVariableViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<IEnumerable<WorkflowVariableViewModel>>> GetVariables(int id)
     {
       var result = await this.service.GetVariablesAsync(id);
@@ -63,7 +69,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("definitions")]
-    [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), 200)]
+    [ProducesResponseType(typeof(IEnumerable<WorkflowDefinitionViewModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<WorkflowDefinitionViewModel>>> GetWorkflowDefinitions()
     {
       var result = await this.service.GetWorkflowDefinitionsAsync();
@@ -72,7 +78,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("dot/{type}")]
-    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     public async Task<ActionResult<string>> Dot(string type)
     {
       var result = await this.service.DotAsync(type);
@@ -81,7 +87,7 @@ namespace tomware.Microwf.Engine
     }
 
     [HttpGet("dotwithhistory/{type}/{correlationId}")]
-    [ProducesResponseType(typeof(WorkflowDto), 200)]
+    [ProducesResponseType(typeof(WorkflowDto), StatusCodes.Status200OK)]
     public async Task<ActionResult<WorkflowDto>> DotWithHistory(string type, int correlationId)
     {
       var result = await this.service.DotWithHistoryAsync(type, correlationId);
