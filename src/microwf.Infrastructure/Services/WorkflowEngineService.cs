@@ -108,7 +108,11 @@ namespace tomware.Microwf.Infrastructure
       var dbFacadeRepository = this.repository as IDatabaseFacadeRepository;
       if (dbFacadeRepository == null)
       {
-        throw new System.InvalidCastException(nameof(IDatabaseFacadeRepository));
+        var msg = "Please register a custom IWorkflowEngineService - implementation!"
+                + Environment.NewLine + "The default implementation relies on a "
+                + "transactional database that exposes the DatabaseFacade property "
+                + "in the Microsoft.EntityFrameworkCore.Infrastructure namespace.";
+        throw new InvalidOperationException(msg);
       }
 
       using (var transaction = dbFacadeRepository.Database.BeginTransaction())
