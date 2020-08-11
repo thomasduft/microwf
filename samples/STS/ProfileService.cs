@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 
-namespace WebApi.Identity
+namespace STS
 {
   public class ProfileService : IProfileService
   {
@@ -17,7 +18,9 @@ namespace WebApi.Identity
       var user = Config.GetUsers().First(u => u.SubjectId == sub);
       if (user != null)
       {
-        context.AddRequestedClaims(user.Claims);
+        user.Claims.Add(new Claim(IdentityModel.JwtClaimTypes.GivenName, user.Username));
+
+        context.IssuedClaims = user.Claims.ToList();
       }
 
       await Task.CompletedTask;

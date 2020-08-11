@@ -1,15 +1,16 @@
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Serilog;
 using WebApi.Domain;
 using WebApi.Extensions;
-using WebApi.Identity;
 
 namespace WebApi
 {
@@ -24,8 +25,6 @@ namespace WebApi
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddOptions();
-
       services.AddCors(o =>
       {
         o.AddPolicy("AllowAllOrigins", builder =>
@@ -37,31 +36,41 @@ namespace WebApi
             .AllowCredentials()
             .WithExposedHeaders("X-Pagination");
         });
-      })
-        .AddMvc()
-        .AddNewtonsoftJson(opt =>
-        {
-          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-        });
+      });
 
-      services.AddAuthentication()
-        .AddIdentityServerJwt();
       services.AddRouting(o => o.LowercaseUrls = true);
+
+      var authority = this.Configuration["Authority"];
+
+      services
+       .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+       .AddJwtBearer(opt =>
+       {
+         opt.Authority = authority;
+         opt.Audience = "api1";
+         opt.RequireHttpsMetadata = false;
+         opt.TokenValidationParameters = new TokenValidationParameters()
+         {
+           ValidateIssuer = true,
+           ValidateAudience = false,
+         };
+       });
 
       var connection = this.Configuration["ConnectionString"];
       services.AddDbContext<DomainContext>(o => o.UseSqlite(connection));
-
-      // Identity
-      var authority = this.GetAuthority();
-      // var cert = Program.GetCertificate(this.Configuration);
-      // services.AddIdentityServices(authority, cert);
-      services.AddIdentityServices(authority);
 
       // Swagger
       services.AddSwaggerDocumentation();
 
       // Api services
       services.AddApiServices<DomainContext>(this.Configuration);
+
+      services.AddHttpContextAccessor();
+      services.AddControllers()
+        .AddNewtonsoftJson(opt =>
+        {
+          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
     }
 
     public void Configure(
@@ -73,6 +82,8 @@ namespace WebApi
       {
         app.UseCors("AllowAllOrigins");
         app.UseSwaggerDocumentation();
+
+        IdentityModelEventSource.ShowPII = true;
 
         app.UseDeveloperExceptionPage();
       }
@@ -89,21 +100,12 @@ namespace WebApi
       app.UseRouting();
 
       app.UseAuthentication();
-      app.UseIdentityServer();
       app.UseAuthorization();
+
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
-    }
-
-    private string GetAuthority()
-    {
-      var domainSettings = this.Configuration.GetSection("DomainSettings");
-      string schema = domainSettings.GetValue<string>("schema");
-      int port = domainSettings.GetValue<int>("port");
-
-      return $"{schema}://localhost:{port}";
     }
   }
 }

@@ -2,6 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "STS",
+      "type": "coreclr",
+      "request": "launch",
+      "console": "externalTerminal",
+      "preLaunchTask": "build-sts",
+      "program": "${workspaceRoot}/samples/STS/bin/Debug/netcoreapp3.1/STS.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/samples/STS",
+      "stopAtEntry": false
+    },
+    {
       "name": "WebApi",
       "type": "coreclr",
       "request": "launch",

@@ -42,13 +42,9 @@ namespace WebApi.Workflows.Issue
       this._userContext = userContext;
     }
 
-    public Task<IEnumerable<string>> GetAssigneesAsync()
+    public async Task<IEnumerable<string>> GetAssigneesAsync()
     {
-      var assignees = WebApi.Identity.Config.GetUsers()
-        .Where(u => u.Username != "bob")
-        .Select(u => u.Username);
-
-      return Task.FromResult(assignees);
+      return await Task.FromResult(new string[] { "alice", "admin" });
     }
 
     public async Task<IWorkflowResult<IssueViewModel>> NewAsync()

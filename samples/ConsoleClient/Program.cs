@@ -15,10 +15,9 @@ namespace ConsoleClient
   //  - https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/console-webapiclient
   class Program
   {
-    static readonly string HOST = "http://localhost:5000";
+    static readonly string STS_HOST = "http://localhost:5000";
+    static readonly string API_HOST = "http://localhost:5001";
     static readonly int AMOUNT_OF_STEPPERS = 100;
-
-    static string Host { get; set; }
 
     static void Main(string[] args)
     {
@@ -28,12 +27,10 @@ namespace ConsoleClient
 
     static async Task MainAsync(string[] args)
     {
-      Host = args.Length == 1 ? args[0] : HOST;
-
       var httpClient = new HttpClient();
       // Just a sample call with an invalid access token.
       // The expected response from this call is 401 Unauthorized
-      var apiResponse = await httpClient.GetAsync($"{Host}/api/workflow");
+      var apiResponse = await httpClient.GetAsync($"{API_HOST}/api/workflow");
       httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
         "Bearer",
         "invalid_access_token"
@@ -50,7 +47,7 @@ namespace ConsoleClient
         TokenResponse response = await httpClient
           .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
           {
-            Address = $"{Host}/connect/token",
+            Address = $"{STS_HOST}/connect/token",
             ClientId = "console.client",
             ClientSecret = "00000000-0000-0000-0000-000000000001",
             Scope = "api1"
@@ -66,11 +63,6 @@ namespace ConsoleClient
           Console.WriteLine("Access Token: ");
           Console.WriteLine(response.AccessToken);
 
-          // Call the API with the correct access token
-          // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-          //   "Bearer",
-          //   response.AccessToken
-          // );
           httpClient.SetBearerToken(response.AccessToken);
 
           var steppers = GetSteppers(AMOUNT_OF_STEPPERS);
@@ -90,7 +82,7 @@ namespace ConsoleClient
             }
           }
 
-          var workflowResponse = await httpClient.GetAsync($"{Host}/api/workflow");
+          var workflowResponse = await httpClient.GetAsync($"{API_HOST}/api/workflow");
           if (workflowResponse.IsSuccessStatusCode)
           {
             Console.WriteLine(await workflowResponse.Content.ReadAsStringAsync());
@@ -101,7 +93,7 @@ namespace ConsoleClient
           Console.ForegroundColor = ConsoleColor.Red;
           Console.WriteLine();
           Console.WriteLine("Failed to login with error:");
-          Console.WriteLine(response.ErrorDescription);
+          Console.WriteLine(response.Error);
         }
       }
       else
@@ -126,7 +118,7 @@ namespace ConsoleClient
 
     static async Task<HttpResponseMessage> CreateStepper(HttpClient client, string stepper)
     {
-      var uri = $"{Host}/api/stepper";
+      var uri = $"{API_HOST}/api/stepper";
 
       return await client.PostAsync(
         uri,
@@ -140,7 +132,7 @@ namespace ConsoleClient
 
     static async Task<HttpResponseMessage> ProcessStepper(HttpClient client, int stepperId)
     {
-      var uri = $"{Host}/api/stepper/process";
+      var uri = $"{API_HOST}/api/stepper/process";
       var jsonString = JsonConvert.SerializeObject(new
       {
         Id = stepperId,

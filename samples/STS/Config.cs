@@ -4,46 +4,51 @@ using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Collections.Generic;
 using System.Security.Claims;
-using tomware.Microwf.Domain;
-using tomware.Microwf.Engine;
 
-namespace WebApi.Identity
+namespace STS
 {
-  public class Config
+  public static class Config
   {
-    public static IEnumerable<IdentityResource> GetIdentityResources()
-    {
-      return new List<IdentityResource>
+    public static IEnumerable<IdentityResource> Ids =>
+      new IdentityResource[]
       {
         new IdentityResources.OpenId(),
         new IdentityResources.Profile()
       };
-    }
 
-    public static IEnumerable<ApiResource> GetApiResources()
-    {
-      return new List<ApiResource>
+    public static IEnumerable<ApiScope> ApiScopes =>
+       new ApiScope[]
+       {
+        new ApiScope
+        {
+          Name = "api1",
+          DisplayName = "API1"
+        }
+       };
+
+    public static IEnumerable<ApiResource> ApiResources =>
+      new ApiResource[]
       {
-        new ApiResource("api1", "My API") {
-          UserClaims = {
-            JwtClaimTypes.Subject,
-            JwtClaimTypes.Name,
-            JwtClaimTypes.Role
+        new ApiResource
+        {
+          Name = "api1",
+          DisplayName = "API1",
+          Scopes = {
+           "api1"
           }
         }
       };
-    }
 
-    public static IEnumerable<Client> GetClients()
-    {
-      // client credentials client
-      return new List<Client>
+    public static IEnumerable<Client> Clients =>
+      new Client[]
       {
-        // client credentials
+        // Console client
         new Client
         {
           ClientId = "console.client",
+          ClientName = "Console client",
           AllowedGrantTypes = GrantTypes.ClientCredentials,
+          RequireClientSecret = false,
           ClientSecrets =
           {
             new Secret("00000000-0000-0000-0000-000000000001".Sha256())
@@ -51,24 +56,26 @@ namespace WebApi.Identity
           AllowedScopes = { "api1" }
         },
 
-        // resource owner password
+        // SPA client using code flow + pkce
         new Client
         {
           ClientId = "ro.client",
-          AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-          AllowAccessTokensViaBrowser = true,
-          RequireConsent = false,
+          ClientName = "SPA Client",
+          ClientUri = "http://localhost:5001",
+          AllowedGrantTypes = GrantTypes.Code,
+          RequirePkce = true,
           RequireClientSecret = false,
-          AllowedScopes = {
-            IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
-            IdentityServerConstants.StandardScopes.Profile,
-            "api1"
+          AllowAccessTokensViaBrowser = true,
+          RedirectUris =
+          {
+            "http://localhost:5001",
+            "http://localhost:4200"
           },
-          AllowOfflineAccess = true,
-          AllowedCorsOrigins = { "http://localhost:4200" }
+          PostLogoutRedirectUris = { "http://localhost:5001/index.html", "http://localhost:4200" },
+          AllowedCorsOrigins = { "http://localhost:4200", "http://localhost:5001" },
+          AllowedScopes = { "openid", "profile", "api1" }
         }
       };
-    }
 
     public static List<TestUser> GetUsers()
     {
@@ -81,7 +88,7 @@ namespace WebApi.Identity
           Password = "password",
           Claims = {
             new Claim(JwtClaimTypes.Name, "admin"),
-            new Claim(JwtClaimTypes.Role, Constants.WORKFLOW_ADMIN_ROLE)
+            new Claim(JwtClaimTypes.Role, "workflow_admin")
           }
         },
         new TestUser

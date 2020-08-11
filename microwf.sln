@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microwf.Domain", "src\micro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microwf.Infrastructure", "src\microwf.Infrastructure\microwf.Infrastructure.csproj", "{93D8AB05-A880-4ED1-8901-0935023579CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sts", "samples\sts\sts.csproj", "{722711D9-9BAD-4D02-8578-678B32104C83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{93D8AB05-A880-4ED1-8901-0935023579CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D8AB05-A880-4ED1-8901-0935023579CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D8AB05-A880-4ED1-8901-0935023579CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{722711D9-9BAD-4D02-8578-678B32104C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722711D9-9BAD-4D02-8578-678B32104C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722711D9-9BAD-4D02-8578-678B32104C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722711D9-9BAD-4D02-8578-678B32104C83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{362BB25A-E54E-484A-8A66-99F6BE0AC4F0} = {09798C40-0E34-46B7-A2BA-DFFB0CCCC1EE}
 		{79651F6F-8F62-43DC-9085-7FF302F75662} = {C92AFF28-C04F-407F-AE9B-6B8BF2321485}
 		{93D8AB05-A880-4ED1-8901-0935023579CF} = {C92AFF28-C04F-407F-AE9B-6B8BF2321485}
+		{722711D9-9BAD-4D02-8578-678B32104C83} = {09798C40-0E34-46B7-A2BA-DFFB0CCCC1EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E5EA939-10CC-40AF-82EF-6C990F76C953}
