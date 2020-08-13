@@ -1,10 +1,7 @@
-import { Observable } from 'rxjs';
-
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, CanActivateChild } from '@angular/router';
 
-import { ServicesModule } from './services.module';
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
 export abstract class MessageBase {
   public abstract getType(): string;
@@ -74,47 +71,21 @@ export class ResponseErrorHandler {
 }
 
 @Injectable({
-  providedIn: ServicesModule
-})
-export abstract class AuthGuard implements CanActivate, CanActivateChild {
-  protected readonly abstract claim: string;
-
-  public constructor(
-    private _authService: AuthService,
-    private _router: Router
-  ) { }
-
-  public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    const isAuthenticated = this._authService.isAuthenticated;
-
-    if (!isAuthenticated) {
-      this._router.navigate(['login']);
-    }
-
-    return isAuthenticated;
-  }
-
-  public canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.canActivate();
-  }
-}
-
-@Injectable({
   providedIn: 'root'
 })
 export abstract class ClaimGuardBase implements CanActivate, CanActivateChild {
   protected abstract claim: string;
 
   public constructor(
-    private _authService: AuthService,
-    private _router: Router
+    private router: Router,
+    private user: UserService
   ) { }
 
   public canActivate(): boolean {
-    const can = this._authService.hasClaim(this.claim);
+    const can = this.user.hasClaim(this.claim);
 
     if (!can) {
-      this._router.navigate(['login']);
+      this.router.navigate(['login']);
     }
 
     return can;

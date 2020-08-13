@@ -59,8 +59,8 @@ namespace STS
         // SPA client using code flow + pkce
         new Client
         {
-          ClientId = "ro.client",
-          ClientName = "SPA Client",
+          ClientId = "frontend",
+          ClientName = "Frontend",
           ClientUri = "http://localhost:5001",
           AllowedGrantTypes = GrantTypes.Code,
           RequirePkce = true,

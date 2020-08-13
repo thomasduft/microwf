@@ -20,8 +20,9 @@ dotnet restore samples/WebApi/WebApi.csproj
 echo Building solution
 dotnet publish samples/WebApi/WebApi.csproj -c Release -o ./publish/
 
-echo Deploy web app
-cd samples/WebClient && npm i && npm run build-webclient && cd ../..;
+# echo Deploy web app
+# WebClient comes built in with WebApi
+# cd samples/WebClient && npm i && npm run build-webclient && cd ../..;
 
 echo Building docker image tomware/microwf-playground:$1
 #echo $PWD

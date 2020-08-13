@@ -1,6 +1,10 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +13,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Serilog;
+using tomware.Microwf.Domain;
 using WebApi.Domain;
 using WebApi.Extensions;
 
@@ -49,10 +54,14 @@ namespace WebApi
          opt.Authority = authority;
          opt.Audience = "api1";
          opt.RequireHttpsMetadata = false;
+         opt.IncludeErrorDetails = true;
+         opt.SaveToken = true;
          opt.TokenValidationParameters = new TokenValidationParameters()
          {
            ValidateIssuer = true,
            ValidateAudience = false,
+           NameClaimType = "name",
+          //  RoleClaimType = "role" // role based policies will not work if uncommented!
          };
        });
 
@@ -92,6 +101,8 @@ namespace WebApi
         app.UseExceptionHandler("/Error");
       }
 
+      ConsiderSpaRoutes(app);
+
       app.UseDefaultFiles();
       app.UseStaticFiles();
 
@@ -105,6 +116,31 @@ namespace WebApi
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+      });
+    }
+
+    private static void ConsiderSpaRoutes(IApplicationBuilder app)
+    {
+      var angularRoutes = new[]
+      {
+        "/home",
+        "/dispatch",
+        "/admin",
+        "/issue",
+        "/dispatch",
+        "/forbidden"
+      };
+
+      app.Use(async (context, next) =>
+      {
+        if (context.Request.Path.HasValue
+          && null != angularRoutes.FirstOrDefault(
+            (ar) => context.Request.Path.Value.StartsWith(ar, StringComparison.OrdinalIgnoreCase)))
+        {
+          context.Request.Path = new PathString("/");
+        }
+
+        await next();
       });
     }
   }

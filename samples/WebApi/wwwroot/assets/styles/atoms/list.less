@@ -1,0 +1,58 @@
+@import './../shared/variables';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 100vh;
+
+  &__header,
+  &__footer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    text-transform: uppercase;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  &__item {
+    width: 100%;
+    color: @workspace-color;
+    margin-top: 10px;
+
+    &--right {
+      float: right;
+    }
+
+    .active {
+      background: lighten(@workspace-hover-color, 45%);
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: lighten(@workspace-hover-color, 45%);
+    }
+
+    div:focus {
+      outline: none;
+    }
+  }
+
+  &__itemDetail {
+    font-size: 0.8em;
+  }
+
+  &__item--active {
+    background: lighten(@workspace-link-color, 5%)
+  }
+}

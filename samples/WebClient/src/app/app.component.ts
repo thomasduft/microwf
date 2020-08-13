@@ -1,30 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, isDevMode } from '@angular/core';
 
-import { AuthService } from './shared/services/auth.service';
+import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
+
+import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'tw-root',
-  template: `
-  <router-outlet></router-outlet>
-  `
+  template: `<tw-shell></tw-shell>`
 })
 export class AppComponent implements OnInit {
   public loading = true;
 
   public constructor(
-    private _router: Router,
-    private _authService: AuthService
+    private user: UserService,
+    private oauthService: OAuthService
   ) { }
 
   public ngOnInit(): void {
-    this._authService.onAuthenticated
-      .subscribe((isOuthenticated: boolean) => {
-        if (isOuthenticated) {
-          this._router.navigate(['home']);
-        } else {
-          this._router.navigate(['login']);
-        }
-      });
+    this.configure();
+  }
+
+  private async configure() {
+    const issuer = 'http://localhost:5000';
+
+    this.oauthService.configure({
+      clientId: 'frontend',
+      issuer: issuer,
+      redirectUri: isDevMode()
+        ? 'http://localhost:4200'
+        : window.location.origin,
+      responseType: 'code',
+      scope: 'openid profile api1',
+      loginUrl: issuer + '/account/login',
+      logoutUrl: issuer + '/account/logout',
+      requireHttps: false,
+      showDebugInformation: true
+    });
+
+    this.oauthService.events.subscribe(async (e: OAuthEvent) => {
+      // console.log(e);
+
+      if (e.type === 'token_received' || e.type === 'token_refreshed') {
+        this.user.setProperties(this.oauthService.getAccessToken());
+      }
+    });
+
+    this.oauthService.loadDiscoveryDocumentAndLogin({
+      onTokenReceived: context => {
+        this.user.setProperties(context.accessToken);
+      }
+    });
   }
 }

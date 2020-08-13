@@ -1,0 +1,35 @@
+@import './../shared/variables';
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &--space {
+    padding: 5px;
+  }
+
+  &__left {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  &__main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0px 5px;
+  }
+
+  @media (min-width: @breakpoint-min-width) {
+    flex-direction: row;
+    &__left {
+      max-width: 300px;
+      overflow-y: auto;
+    }
+     &__main {
+      flex: 1;
+      overflow-y: auto;
+      margin-top: 0;
+    }
+  }
+}

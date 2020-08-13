@@ -18,6 +18,9 @@ import { PageNotFoundComponent } from './page-not-found.component';
     ShellComponent,
     ForbiddenComponent,
     PageNotFoundComponent
+  ],
+  exports: [
+    ShellComponent
   ]
 })
 export class ShellModule { }

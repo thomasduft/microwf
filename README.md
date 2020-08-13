@@ -75,17 +75,9 @@ Assuming you downloaded the sources and opened the directory with [VS Code](http
 
 That ensures you are able to build the dotnet related stuff!
 
-2. Hit "F5" and VS Code will do its magic! There are some VS Code tasks defined which will run the WebApi and open your default browser.
+2. Go to the VS Code Debug tab (Ctrl+Shift+D) and run the Security Token Server (STS = [IdentityServer](https://identityserver.io/)) project.
 
-#### Running the Angular WebClient frontend
-1. In the terminal change to the directory
-> cd samples/WebClient
-
-2. Install all npm deps
-> npm install
-
-3. Run the application
-> npm run start
+3. After the STS is running change the dropdown to the WebApi project and run it.
 
 You should see now the login screen.
 

@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AutoUnsubscribe } from '../shared/services/autoUnsubscribe';
-import { AuthService } from '../shared/services/auth.service';
+import { UserService } from '../shared/services/user.service';
 import { FormdefComponent, FormdefRegistry } from '../shared/formdef/index';
 import { WorkflowResult, TriggerInfo, AssigneeWorkflowResult } from '../workflow/index';
 
@@ -55,7 +55,7 @@ export class IssueComponent implements OnInit {
   public constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _auth: AuthService,
+    private _user: UserService,
     private _service: IssueService,
     private _slotRegistry: FormdefRegistry
   ) { }
@@ -94,7 +94,7 @@ export class IssueComponent implements OnInit {
     this._issue$ = this._service.process(model)
       .subscribe((result: WorkflowResult<Issue, AssigneeWorkflowResult>) => {
         if (result.triggerInfo.succeeded
-          && result.viewModel.assignee !== this._auth.username) {
+          && result.viewModel.assignee !== this._user.userName) {
           this._router.navigate(['dispatch', result.viewModel.assignee, 'issue']);
         } else {
           this.viewModel = result.entity;

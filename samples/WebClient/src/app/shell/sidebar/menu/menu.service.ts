@@ -7,7 +7,7 @@ import {
   WorkflowService,
   WorkflowAreaRegistry
 } from '../../../workflow';
-import { isNgTemplate } from '@angular/compiler';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Injectable()
 export class MenuService implements OnDestroy {
@@ -18,19 +18,22 @@ export class MenuService implements OnDestroy {
   }
 
   public constructor(
-    private _workflowService: WorkflowService,
-    private _workflowAreaRegistry: WorkflowAreaRegistry
+    private user: UserService,
+    private workflowService: WorkflowService,
+    private workflowAreaRegistry: WorkflowAreaRegistry
   ) {
-    this._workflowService.definitions()
-      .subscribe((definitions: Array<WorkflowDefinition>) => {
-        this.init(definitions);
-        this.createMenu();
-      });
+    this.user.authenticated$.subscribe(() => {
+      this.workflowService.definitions()
+        .subscribe((definitions: Array<WorkflowDefinition>) => {
+          this.init(definitions);
+          this.createMenu();
+        });
+    });
   }
 
   public ngOnDestroy(): void {
     this._items = [];
-    this._workflowAreaRegistry.clear();
+    this.workflowAreaRegistry.clear();
   }
 
   public register(item: MenuItem): void {
@@ -44,7 +47,7 @@ export class MenuService implements OnDestroy {
   private init(definitions: Array<WorkflowDefinition>): void {
     definitions.forEach((d: WorkflowDefinition) => {
       if (d.route) {
-        this._workflowAreaRegistry
+        this.workflowAreaRegistry
           .register(new WorkflowArea(d.type, d.title, d.description, d.route));
       }
     });
@@ -58,7 +61,7 @@ export class MenuService implements OnDestroy {
       children: []
     };
 
-    this._workflowAreaRegistry.areas.forEach((area: WorkflowArea) => {
+    this.workflowAreaRegistry.areas.forEach((area: WorkflowArea) => {
       const child: MenuItem = {
         id: area.key,
         name: area.title,

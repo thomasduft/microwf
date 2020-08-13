@@ -1,0 +1,27 @@
+@import './../shared/variables';
+
+.workspace {
+  flex: 1;
+
+  .workspace__header {
+    max-height: 4em;
+    font-size: .8em;
+  }
+
+  .workspace__status {
+    font-size: .8em;
+  }
+
+  .workspace__content {
+    color: @workspace-color;
+    background: @workspace-background;
+    h1, h2, h3, h4, h5, h6 {
+      padding: 0 0 0.5em 0.5em;
+    }
+  }
+
+  .workspace__footer {
+    height: 4em;
+    font-size: .8em;
+  }
+}
