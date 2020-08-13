@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microwf.Domain", "src\micro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microwf.Infrastructure", "src\microwf.Infrastructure\microwf.Infrastructure.csproj", "{93D8AB05-A880-4ED1-8901-0935023579CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sts", "samples\sts\sts.csproj", "{722711D9-9BAD-4D02-8578-678B32104C83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STS", "samples\STS\STS.csproj", "{722711D9-9BAD-4D02-8578-678B32104C83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
