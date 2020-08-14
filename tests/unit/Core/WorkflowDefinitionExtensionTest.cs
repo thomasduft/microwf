@@ -1,14 +1,13 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Core;
 using System.Text;
+using Xunit;
 
 namespace microwf.Tests.Core
 {
-  [TestClass]
   public class WorkflowDefinitionExtensionTest
   {
-    [TestMethod]
+    [Fact]
     public void ToDot_IsOnOffWorkflow_ReturnsCorrectDotDiagraph()
     {
       // Arrange
@@ -24,11 +23,11 @@ namespace microwf.Tests.Core
       var diagraph = onOffWorkflowDefinition.ToDot();
 
       // Assert
-      Assert.IsNotNull(diagraph);
-      Assert.AreEqual(expected.ToString(), diagraph);
+      Assert.NotNull(diagraph);
+     Assert.Equal(expected.ToString(), diagraph);
     }
 
-    [TestMethod]
+    [Fact]
     public void ToDot_IsOnOffWorkflowWithLRRankDir_ReturnsCorrectDotDiagraph()
     {
       // Arrange
@@ -45,8 +44,8 @@ namespace microwf.Tests.Core
       var diagraph = onOffWorkflowDefinition.ToDot("LR");
 
       // Assert
-      Assert.IsNotNull(diagraph);
-      Assert.AreEqual(expected.ToString(), diagraph);
+      Assert.NotNull(diagraph);
+     Assert.Equal(expected.ToString(), diagraph);
     }
   }
 }

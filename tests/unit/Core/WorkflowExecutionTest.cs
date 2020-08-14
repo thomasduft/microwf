@@ -1,15 +1,14 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using tomware.Microwf.Core;
 using microwf.Tests.WorkflowDefinitions;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace microwf.Tests.Core
 {
-  [TestClass]
   public class WorkflowExecutionTest
   {
-    [TestMethod]
+    [Fact]
     public void GetTriggers_InitialStateIsOff_TriggerNameIsSwitchOn()
     {
       // Arrange
@@ -24,12 +23,12 @@ namespace microwf.Tests.Core
       IEnumerable<TriggerResult> result = execution.GetTriggers(switcher);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(1, result.Count());
-      Assert.AreEqual("SwitchOn", result.First().TriggerName);
+      Assert.NotNull(result);
+      Assert.Single(result);
+      Assert.Equal("SwitchOn", result.First().TriggerName);
     }
 
-    [TestMethod]
+    [Fact]
     public void CanTrigger_InitialStateIsOff_CanTriggerToStateOn()
     {
       // Arrange
@@ -44,11 +43,11 @@ namespace microwf.Tests.Core
       TriggerResult result = execution.CanTrigger(new TriggerParam("SwitchOn", switcher));
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(true, result.CanTrigger);
+      Assert.NotNull(result);
+      Assert.True(result.CanTrigger);
     }
 
-    [TestMethod]
+    [Fact]
     public void CanTrigger_InitialStateIsOff_CanNotTriggerToStateOn()
     {
       // Arrange
@@ -68,11 +67,11 @@ namespace microwf.Tests.Core
       TriggerResult result = execution.CanTrigger(triggerParam);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(false, result.CanTrigger);
+      Assert.NotNull(result);
+      Assert.False(result.CanTrigger);
     }
 
-    [TestMethod]
+    [Fact]
     public void Trigger_InitialStateIsOff_StateIsOn()
     {
       // Arrange
@@ -86,17 +85,17 @@ namespace microwf.Tests.Core
       TriggerResult result = execution.Trigger(new TriggerParam("SwitchOn", switcher));
 
       // Assert
-      Assert.IsNotNull(switcher);
-      Assert.AreEqual("On", result.CurrentState);
+      Assert.NotNull(switcher);
+      Assert.Equal("On", result.CurrentState);
 
-      Assert.IsNotNull(result);
-      Assert.AreEqual("SwitchOn", result.TriggerName);
-      Assert.IsTrue(result.HasAutoTrigger);
-      Assert.AreEqual("SwitchOff", result.AutoTrigger.Trigger);
-      Assert.IsTrue(result.AutoTrigger.DueDate.HasValue);
+      Assert.NotNull(result);
+      Assert.Equal("SwitchOn", result.TriggerName);
+      Assert.True(result.HasAutoTrigger);
+      Assert.Equal("SwitchOff", result.AutoTrigger.Trigger);
+      Assert.True(result.AutoTrigger.DueDate.HasValue);
     }
 
-    [TestMethod]
+    [Fact]
     public void Trigger_InitialStateIsOn_StateIsOff()
     {
       // Arrange
@@ -111,12 +110,12 @@ namespace microwf.Tests.Core
       TriggerResult result = execution.Trigger(new TriggerParam("SwitchOff", switcher));
 
       // Assert
-      Assert.IsNotNull(switcher);
-      Assert.AreEqual("Off", result.CurrentState);
+      Assert.NotNull(switcher);
+      Assert.Equal("Off", result.CurrentState);
 
-      Assert.IsNotNull(result);
-      Assert.AreEqual("SwitchOff", result.TriggerName);
-      Assert.IsFalse(result.HasAutoTrigger);
+      Assert.NotNull(result);
+      Assert.Equal("SwitchOff", result.TriggerName);
+      Assert.False(result.HasAutoTrigger);
     }
   }
 }

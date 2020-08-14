@@ -45,7 +45,7 @@
       "type": "process",
       "args": [
         "test",
-        "${workspaceFolder}/test/microwf.Tests.csproj"
+        "${workspaceFolder}/tests/unit/microwf.UnitTests.csproj"
       ],
       "problemMatcher": "$msCompile",
       "group": {
@@ -62,7 +62,7 @@
         "/p:CollectCoverage=true",
         "/p:CoverletOutputFormat=lcov",
         "/p:CoverletOutput=./../lcov",
-        "${workspaceFolder}/test/microwf.Tests.csproj"
+        "${workspaceFolder}/tests/unit/microwf.UnitTests.csproj"
       ],
       "problemMatcher": "$msCompile",
       "group": {

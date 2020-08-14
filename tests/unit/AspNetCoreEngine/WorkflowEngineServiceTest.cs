@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
 using microwf.Tests.WorkflowDefinitions;
 using Newtonsoft.Json;
@@ -9,10 +8,10 @@ using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
+using Xunit;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
-  [TestClass]
   public class WorkflowEngineServiceTest
   {
     public TestDbContext Context { get; set; }
@@ -20,8 +19,12 @@ namespace microwf.Tests.AspNetCoreEngine
 
     public IWorkflowEngineService WorkflowEngineService { get; set; }
 
-    [TestInitialize]
-    public void Initialize()
+    public WorkflowEngineServiceTest()
+    {
+      this.Initialize();
+    }
+
+    private void Initialize()
     {
       var diHelper = new DITestHelper();
       diHelper.AddTestDbContext();
@@ -47,7 +50,7 @@ namespace microwf.Tests.AspNetCoreEngine
       this.WorkflowEngineService = serviceProvider.GetRequiredService<IWorkflowEngineService>();
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_CanTriggerAsync_CanTriggerWorkflow()
     {
       // Arrange
@@ -58,11 +61,11 @@ namespace microwf.Tests.AspNetCoreEngine
       var triggerResult = await this.WorkflowEngineService.CanTriggerAsync(param);
 
       // Assert
-      Assert.IsNotNull(triggerResult);
-      Assert.AreEqual(true, triggerResult.CanTrigger);
+      Assert.NotNull(triggerResult);
+      Assert.True(triggerResult.CanTrigger);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_CanTriggerAsyncPassInNull_ThrowsArgumentNullException()
     {
       // Arrange
@@ -70,34 +73,34 @@ namespace microwf.Tests.AspNetCoreEngine
       var param = new TriggerParam("SwitchOn", instance);
 
       // Act
-      await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+      await Assert.ThrowsAsync<ArgumentNullException>(
         () => this.WorkflowEngineService.CanTriggerAsync(null));
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_GetTriggersAsync_ReturnsPossibleTriggers()
     {
       // Arrange
       var instance = new Switcher();
 
       // Act
-      var results = await WorkflowEngineService.GetTriggersAsync(instance);
+      var results = await this.WorkflowEngineService.GetTriggersAsync(instance);
 
       // Assert
-      Assert.IsNotNull(results);
-      Assert.AreEqual(1, results.Count());
-      Assert.AreEqual("SwitchOn", results.First().TriggerName);
+      Assert.NotNull(results);
+      Assert.Single(results);
+      Assert.Equal("SwitchOn", results.First().TriggerName);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_GetTriggersAsyncPassInNull_ThrowsArgumentNullException()
     {
       // Act
-      await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+      await Assert.ThrowsAsync<ArgumentNullException>(
         () => this.WorkflowEngineService.GetTriggersAsync(null));
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_TriggerAsync_ReturnsTriggerResult()
     {
       // Arrange
@@ -108,21 +111,21 @@ namespace microwf.Tests.AspNetCoreEngine
       var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
-      Assert.IsNotNull(triggerResult);
-      Assert.IsFalse(triggerResult.HasErrors);
-      Assert.AreEqual(instance.State, triggerResult.CurrentState);
-      Assert.AreEqual("On", triggerResult.CurrentState);
+      Assert.NotNull(triggerResult);
+      Assert.False(triggerResult.HasErrors);
+      Assert.Equal(instance.State, triggerResult.CurrentState);
+      Assert.Equal("On", triggerResult.CurrentState);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_TriggerAsyncPassInNull_ThrowsArgumentNullException()
     {
       // Act
-      await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+      await Assert.ThrowsAsync<ArgumentNullException>(
         () => this.WorkflowEngineService.TriggerAsync(null));
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstance_ReturnsTriggerResult()
     {
       // Arrange
@@ -133,16 +136,16 @@ namespace microwf.Tests.AspNetCoreEngine
       var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
-      Assert.IsNotNull(triggerResult);
-      Assert.IsFalse(triggerResult.HasErrors);
-      Assert.AreEqual(instance.State, triggerResult.CurrentState);
-      Assert.AreEqual("On", triggerResult.CurrentState);
+      Assert.NotNull(triggerResult);
+      Assert.False(triggerResult.HasErrors);
+      Assert.Equal(instance.State, triggerResult.CurrentState);
+      Assert.Equal("On", triggerResult.CurrentState);
 
-      Assert.AreEqual(1, this.Context.Workflows.Count());
-      Assert.AreEqual(0, this.Context.Workflows.First().WorkflowVariables.Count());
+      Assert.Equal(1, this.Context.Workflows.Count());
+      Assert.Empty(this.Context.Workflows.First().WorkflowVariables);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstanceAndNewWorkflowVariable_ReturnsTriggerResult()
     {
       // Arrange
@@ -155,16 +158,16 @@ namespace microwf.Tests.AspNetCoreEngine
       var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
-      Assert.IsNotNull(triggerResult);
-      Assert.IsFalse(triggerResult.HasErrors);
-      Assert.AreEqual(instance.State, triggerResult.CurrentState);
-      Assert.AreEqual("On", triggerResult.CurrentState);
+      Assert.NotNull(triggerResult);
+      Assert.False(triggerResult.HasErrors);
+      Assert.Equal(instance.State, triggerResult.CurrentState);
+      Assert.Equal("On", triggerResult.CurrentState);
 
-      Assert.AreEqual(1, this.Context.Workflows.Count());
-      Assert.AreEqual(1, this.Context.Workflows.First().WorkflowVariables.Count());
+      Assert.Equal(1, this.Context.Workflows.Count());
+      Assert.Single(this.Context.Workflows.First().WorkflowVariables);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstanceAndExistingWorkflowVariable_ReturnsTriggerResult()
     {
       // Arrange
@@ -183,17 +186,17 @@ namespace microwf.Tests.AspNetCoreEngine
       var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
-      Assert.IsNotNull(triggerResult);
-      Assert.IsFalse(triggerResult.HasErrors);
-      Assert.AreEqual(instance.State, triggerResult.CurrentState);
-      Assert.AreEqual("On", triggerResult.CurrentState);
+      Assert.NotNull(triggerResult);
+      Assert.False(triggerResult.HasErrors);
+      Assert.Equal(instance.State, triggerResult.CurrentState);
+      Assert.Equal("On", triggerResult.CurrentState);
 
-      Assert.IsTrue(param.HasVariables);
+      Assert.True(param.HasVariables);
 
-      Assert.AreEqual(1, workflow.WorkflowHistories.Count());
+      Assert.Single(workflow.WorkflowHistories);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_TriggerAsyncWithEntityWorkflowInstanceAndSameWorkflowVariable_ReturnsTriggerResult()
     {
       // Arrange
@@ -215,25 +218,25 @@ namespace microwf.Tests.AspNetCoreEngine
       var triggerResult = await this.WorkflowEngineService.TriggerAsync(param);
 
       // Assert
-      Assert.IsNotNull(triggerResult);
-      Assert.IsFalse(triggerResult.HasErrors);
-      Assert.AreEqual(instance.State, triggerResult.CurrentState);
-      Assert.AreEqual("On", triggerResult.CurrentState);
+      Assert.NotNull(triggerResult);
+      Assert.False(triggerResult.HasErrors);
+      Assert.Equal(instance.State, triggerResult.CurrentState);
+      Assert.Equal("On", triggerResult.CurrentState);
 
-      Assert.IsTrue(param.HasVariables);
+      Assert.True(param.HasVariables);
 
-      Assert.AreEqual(1, workflow.WorkflowHistories.Count());
+      Assert.Single(workflow.WorkflowHistories);
 
       var workflowVariable = workflow.WorkflowVariables.First();
       var type = KeyBuilder.FromKey(workflowVariable.Type);
       var myDeserializedVariable = JsonConvert.DeserializeObject(workflowVariable.Content, type);
-      Assert.IsInstanceOfType(myDeserializedVariable, typeof(LightSwitcherWorkflowVariable));
+      Assert.IsType<LightSwitcherWorkflowVariable>(myDeserializedVariable);
 
       var variableInstance = myDeserializedVariable as LightSwitcherWorkflowVariable;
-      Assert.IsFalse(variableInstance.CanSwitch);
+      Assert.False(variableInstance.CanSwitch);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowEngineService_Find_ReturnsTheDesiredIWorkflowInstance()
     {
       // Arrange
@@ -248,14 +251,14 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = this.WorkflowEngineService.Find(instance.Id, typeof(LightSwitcher));
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.IsInstanceOfType(result, typeof(LightSwitcher));
+      Assert.NotNull(result);
+      Assert.IsType<LightSwitcher>(result);
 
       var resultInstance = result as LightSwitcher;
-      Assert.AreEqual(resultInstance.Id, instance.Id);
-      Assert.AreEqual(resultInstance.Type, instance.Type);
-      Assert.AreEqual(resultInstance.State, instance.State);
-      Assert.AreEqual(resultInstance.Assignee, instance.Assignee);
+      Assert.Equal(resultInstance.Id, instance.Id);
+      Assert.Equal(resultInstance.Type, instance.Type);
+      Assert.Equal(resultInstance.State, instance.State);
+      Assert.Equal(resultInstance.Assignee, instance.Assignee);
     }
   }
 }

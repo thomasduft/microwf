@@ -1,15 +1,14 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using tomware.Microwf.Core;
 using microwf.Tests.WorkflowDefinitions;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace microwf.Tests.Core
 {
-  [TestClass]
   public class WorkflowDefinitionTest
   {
-    [TestMethod]
+    [Fact]
     public void States_HolidayApprovalWorkflow_Returns4States()
     {
       // Arrange
@@ -19,11 +18,11 @@ namespace microwf.Tests.Core
       List<string> states = workflow.States;
 
       // Assert
-      Assert.IsNotNull(states);
-      Assert.AreEqual(4, states.Count());
+      Assert.NotNull(states);
+     Assert.Equal(4, states.Count());
     }
 
-    [TestMethod]
+    [Fact]
     public void Triggers_HolidayApprovalWorkflow_Returns3Triggers()
     {
       // Arrange
@@ -33,11 +32,11 @@ namespace microwf.Tests.Core
       List<string> triggers = workflow.Triggers;
 
       // Assert
-      Assert.IsNotNull(triggers);
-      Assert.AreEqual(3, triggers.Count());
+      Assert.NotNull(triggers);
+     Assert.Equal(3, triggers.Count());
     }
 
-    [TestMethod]
+    [Fact]
     public void Transitions_HolidayApprovalWorkflow_Returns3Transitions()
     {
       // Arrange
@@ -47,8 +46,8 @@ namespace microwf.Tests.Core
       List<Transition> transitions = workflow.Transitions;
 
       // Assert
-      Assert.IsNotNull(transitions);
-      Assert.AreEqual(3, transitions.Count());
+      Assert.NotNull(transitions);
+     Assert.Equal(3, transitions.Count());
     }
   }
 }

@@ -1,14 +1,13 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
 using System.Linq;
 using tomware.Microwf.Domain;
+using Xunit;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
-  [TestClass]
   public class WorkflowTest
   {
-    [TestMethod]
+    [Fact]
     public void Workflow_Create_NewInstanceCreated()
     {
       // Arrange
@@ -21,14 +20,14 @@ namespace microwf.Tests.AspNetCoreEngine
       var workflow = Workflow.Create(correlationId, type, state, assignee);
 
       // Assert
-      Assert.IsNotNull(workflow);
-      Assert.AreEqual(workflow.CorrelationId, correlationId);
-      Assert.AreEqual(workflow.Type, type);
-      Assert.AreEqual(workflow.State, state);
-      Assert.AreEqual(workflow.Assignee, assignee);
+      Assert.NotNull(workflow);
+      Assert.Equal(workflow.CorrelationId, correlationId);
+      Assert.Equal(workflow.Type, type);
+      Assert.Equal(workflow.State, state);
+      Assert.Equal(workflow.Assignee, assignee);
     }
 
-    [TestMethod]
+    [Fact]
     public void Workflow_AddVariable_VariableAdded()
     {
       // Arrange
@@ -44,11 +43,11 @@ namespace microwf.Tests.AspNetCoreEngine
       workflow.AddVariable(variable);
 
       // Assert
-      Assert.IsNotNull(workflow);
-      Assert.AreEqual(workflow.WorkflowVariables.Count, 1);
+      Assert.NotNull(workflow);
+      Assert.Single(workflow.WorkflowVariables);
     }
 
-    [TestMethod]
+    [Fact]
     public void Workflow_AddExistingVariable_VariableAdded()
     {
       // Arrange
@@ -70,12 +69,12 @@ namespace microwf.Tests.AspNetCoreEngine
       workflow.AddVariable(existingVariable);
 
       // Assert
-      Assert.IsNotNull(workflow);
-      Assert.AreEqual(workflow.WorkflowVariables.Count, 1);
+      Assert.NotNull(workflow);
+      Assert.Single(workflow.WorkflowVariables);
 
       var wv = workflow.WorkflowVariables.First();
       var v = (LightSwitcherWorkflowVariable)WorkflowVariable.ConvertContent(wv);
-      Assert.IsTrue(v.CanSwitch);
+      Assert.True(v.CanSwitch);
     }
   }
 }

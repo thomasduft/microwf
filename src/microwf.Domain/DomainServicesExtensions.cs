@@ -1,5 +1,8 @@
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using tomware.Microwf.Core;
+
+[assembly: InternalsVisibleTo("tomware.Microwf.UnitTests")]
 
 namespace tomware.Microwf.Domain
 {

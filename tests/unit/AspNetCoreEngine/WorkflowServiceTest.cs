@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
 using microwf.Tests.WorkflowDefinitions;
 using System;
@@ -10,18 +9,22 @@ using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
+using Xunit;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
-  [TestClass]
   public class WorkflowServiceTest
   {
     public TestDbContext Context { get; set; }
     public IWorkflowDefinitionProvider WorkflowDefinitionProvider { get; set; }
     public IWorkflowService WorkflowService { get; set; }
 
-    [TestInitialize]
-    public void Initialize()
+    public WorkflowServiceTest()
+    {
+      this.Initialize();
+    }
+
+    private void Initialize()
     {
       var diHelper = new DITestHelper();
       diHelper.AddTestDbContext();
@@ -54,7 +57,7 @@ namespace microwf.Tests.AspNetCoreEngine
       this.WorkflowService = serviceProvider.GetRequiredService<IWorkflowService>();
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetWorkflowsAsyncWithoutFilters_WorkflowsReturned()
     {
       // Arrange
@@ -67,11 +70,11 @@ namespace microwf.Tests.AspNetCoreEngine
         .GetWorkflowsAsync(new WorkflowSearchPagingParameters());
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Count, 2);
+      Assert.NotNull(result);
+      Assert.Equal(2, result.Count);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetWorkflowsAsyncWithFilters_WorkflowsReturned()
     {
       // Arrange
@@ -87,11 +90,11 @@ namespace microwf.Tests.AspNetCoreEngine
         });
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Count, 1);
+      Assert.NotNull(result);
+      Assert.Single(result);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetWorkflowsAsyncWithFilters_NoWorkflowsReturned()
     {
       // Arrange
@@ -108,11 +111,11 @@ namespace microwf.Tests.AspNetCoreEngine
         });
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Count, 0);
+      Assert.NotNull(result);
+      Assert.Empty(result);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetAsync_WorkflowReturned()
     {
       // Arrange
@@ -124,14 +127,14 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = await this.WorkflowService.GetAsync(1);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Id, 1);
-      Assert.AreEqual(result.CorrelationId, 1);
-      Assert.AreEqual(result.State, "On");
-      Assert.AreEqual(result.Assignee, "tester");
+      Assert.NotNull(result);
+      Assert.Equal(1, result.Id);
+      Assert.Equal(1, result.CorrelationId);
+      Assert.Equal("On", result.State);
+      Assert.Equal("tester", result.Assignee);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetInstanceAsync_WorkflowReturned()
     {
       // Arrange
@@ -150,14 +153,14 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = await this.WorkflowService.GetInstanceAsync(EntityOnOffWorkflow.TYPE, 1);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Id, 1);
-      Assert.AreEqual(result.CorrelationId, 1);
-      Assert.AreEqual(result.State, "On");
-      Assert.AreEqual(result.Assignee, "tester");
+      Assert.NotNull(result);
+      Assert.Equal(1, result.Id);
+      Assert.Equal(1, result.CorrelationId);
+      Assert.Equal("On", result.State);
+      Assert.Equal("tester", result.Assignee);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetHistoryAsync_WorkflowHistoriesReturned()
     {
       // Arrange
@@ -169,11 +172,11 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = await this.WorkflowService.GetHistoryAsync(1);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Count(), 0);
+      Assert.NotNull(result);
+      Assert.Empty(result);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_GetVariablesAsync_WorkflowVariablesReturned()
     {
       // Arrange
@@ -185,11 +188,11 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = await this.WorkflowService.GetVariablesAsync(1);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.Count(), 0);
+      Assert.NotNull(result);
+      Assert.Empty(result);
     }
 
-    [TestMethod]
+    [Fact]
     public void WorkflowService_GetWorkflowDefinitions_ReturnsTwoDefinitons()
     {
       // Arrange
@@ -198,11 +201,11 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = this.WorkflowService.GetWorkflowDefinitions();
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(3, result.Count());
+      Assert.NotNull(result);
+      Assert.Equal(3, result.Count());
     }
 
-    [TestMethod]
+    [Fact]
     public void WorkflowService_GetWorkflowDefinitions_ReturnsOneDefiniton()
     {
       // Arrange
@@ -229,12 +232,12 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = workflowService.GetWorkflowDefinitions();
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(1, result.Count());
-      Assert.AreEqual(HolidayApprovalWorkflow.TYPE, result.First().Type);
+      Assert.NotNull(result);
+      Assert.Single(result);
+      Assert.Equal(HolidayApprovalWorkflow.TYPE, result.First().Type);
     }
 
-    [TestMethod]
+    [Fact]
     public void WorkflowService_Dot_ReturnsADotDefinition()
     {
       // Arrange
@@ -248,10 +251,10 @@ namespace microwf.Tests.AspNetCoreEngine
       var diagraph = this.WorkflowService.Dot(OnOffWorkflow.TYPE);
 
       // Assert
-      Assert.AreEqual(expected.ToString(), diagraph);
+      Assert.Equal(expected.ToString(), diagraph);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkflowService_DotWithHistory_ReturnsDotWithHistory()
     {
       // Arrange
@@ -270,21 +273,21 @@ namespace microwf.Tests.AspNetCoreEngine
       var result = await this.WorkflowService.DotWithHistoryAsync(EntityOnOffWorkflow.TYPE, 1);
 
       // Assert
-      Assert.IsNotNull(result);
+      Assert.NotNull(result);
     }
 
-    [TestMethod]
+    [Fact]
     public void WorkflowService_DotWithEmptyString_FailsWithArgumentNullException()
     {
       // Act
-      Assert.ThrowsException<ArgumentNullException>(() => this.WorkflowService.Dot(string.Empty));
+      Assert.Throws<ArgumentNullException>(() => this.WorkflowService.Dot(string.Empty));
     }
 
-    [TestMethod]
+    [Fact]
     public void WorkflowService_DotPassingInNull_FailsWithArgumentNullException()
     {
       // Act
-      Assert.ThrowsException<ArgumentNullException>(() => this.WorkflowService.Dot(null));
+      Assert.Throws<ArgumentNullException>(() => this.WorkflowService.Dot(null));
     }
 
     private List<Workflow> GetWorkflows()

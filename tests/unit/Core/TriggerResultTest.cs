@@ -1,13 +1,12 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Core;
+using Xunit;
 
 namespace microwf.Tests.Core
 {
-  [TestClass]
   public class TriggerResultTest
   {
-    [TestMethod]
+    [Fact]
     public void TriggerResult_NewInstance_CreatesANewInstance()
     {
       // Arrange
@@ -23,16 +22,16 @@ namespace microwf.Tests.Core
       var result = new TriggerResult(trigger, transitionContext, canTrigger);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.IsTrue(result.CanTrigger);
-      Assert.IsFalse(result.IsAborted);
-      Assert.AreSame(result.TriggerName, trigger);
-      Assert.IsFalse(result.HasErrors);
-      Assert.AreSame(result.CurrentState, switcher.State);
-      Assert.IsFalse(result.HasAutoTrigger);
+      Assert.NotNull(result);
+      Assert.True(result.CanTrigger);
+      Assert.False(result.IsAborted);
+      Assert.Same(result.TriggerName, trigger);
+      Assert.False(result.HasErrors);
+      Assert.Same(result.CurrentState, switcher.State);
+      Assert.False(result.HasAutoTrigger);
     }
 
-    [TestMethod]
+    [Fact]
     public void TriggerResult_NewInstanceWithVariables_CreatesANewInstance()
     {
       // Arrange
@@ -52,17 +51,17 @@ namespace microwf.Tests.Core
       var result = new TriggerResult(trigger, transitionContext, canTrigger);
 
       // Assert
-      Assert.IsNotNull(result);
-      Assert.IsTrue(result.CanTrigger);
-      Assert.IsFalse(result.IsAborted);
-      Assert.AreSame(result.TriggerName, trigger);
-      Assert.IsFalse(result.HasErrors);
-      Assert.AreSame(result.CurrentState, switcher.State);
-      Assert.IsFalse(result.HasAutoTrigger);
+      Assert.NotNull(result);
+      Assert.True(result.CanTrigger);
+      Assert.False(result.IsAborted);
+      Assert.Same(result.TriggerName, trigger);
+      Assert.False(result.HasErrors);
+      Assert.Same(result.CurrentState, switcher.State);
+      Assert.False(result.HasAutoTrigger);
 
       var v = result.GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY);
-      Assert.IsNotNull(v);
-      Assert.IsTrue(v.CanSwitch);
+      Assert.NotNull(v);
+      Assert.True(v.CanSwitch);
     }
   }
 }

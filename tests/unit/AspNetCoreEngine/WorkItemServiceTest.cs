@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.Utils;
 using System;
 using System.Collections.Generic;
@@ -7,13 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
+using Xunit;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
-  [TestClass]
   public class WorkItemServiceTest
   {
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_GetUpCommingsAsync_UpCommingsReturned()
     {
       // Arrange
@@ -35,11 +34,11 @@ namespace microwf.Tests.AspNetCoreEngine
       var upcommings = await service.GetUpCommingsAsync(parameters);
 
       // Assert
-      Assert.IsNotNull(upcommings);
-      Assert.AreEqual(upcommings.Count, 2);
+      Assert.NotNull(upcommings);
+      Assert.Equal(2, upcommings.Count);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_GetFailedAsync_FailedReturned()
     {
       // Arrange
@@ -60,13 +59,13 @@ namespace microwf.Tests.AspNetCoreEngine
       var failed = await service.GetFailedAsync(parameters);
 
       // Assert
-      Assert.IsNotNull(failed);
-      Assert.AreEqual(failed.Count, 1);
-      Assert.AreEqual(failed.First().Id, 1);
-      Assert.AreEqual(failed.First().Retries, 4);
+      Assert.NotNull(failed);
+      Assert.Single(failed);
+      Assert.Equal(1, failed.First().Id);
+      Assert.Equal(4, failed.First().Retries);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_ResumeWorkItemsAsync_TwoItemsResumed()
     {
       // Arrange
@@ -83,10 +82,10 @@ namespace microwf.Tests.AspNetCoreEngine
       IEnumerable<WorkItem> resumedItems = await service.ResumeWorkItemsAsync();
 
       // Assert
-      Assert.AreEqual(2, resumedItems.Count());
+      Assert.Equal(2, resumedItems.Count());
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_PersistWorkItemsAsync_TwoItemsPersisted()
     {
       // Arrange
@@ -101,10 +100,10 @@ namespace microwf.Tests.AspNetCoreEngine
       await service.PersistWorkItemsAsync(workItems);
 
       // Assert
-      Assert.AreEqual(2, context.WorkItems.Count());
+      Assert.Equal(2, context.WorkItems.Count());
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_PersistWorkItemsAsync_OneItemPersistedOneItemUpdated()
     {
       // Arrange
@@ -128,11 +127,11 @@ namespace microwf.Tests.AspNetCoreEngine
       await service.PersistWorkItemsAsync(workItems);
 
       // Assert
-      Assert.AreEqual(2, context.WorkItems.Count());
-      Assert.AreEqual("first", context.WorkItems.First().WorkflowType);
+      Assert.Equal(2, context.WorkItems.Count());
+      Assert.Equal("first", context.WorkItems.First().WorkflowType);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_Reschedule_WorkItemRescheduled()
     {
       // Arrange
@@ -160,11 +159,11 @@ namespace microwf.Tests.AspNetCoreEngine
 
       // Assert
       var rescheduledItem = await repository.GetByIdAsync(1);
-      Assert.IsNotNull(rescheduledItem);
-      Assert.AreEqual(rescheduledItem.DueDate, dueDate);
+      Assert.NotNull(rescheduledItem);
+      Assert.Equal(rescheduledItem.DueDate, dueDate);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task WorkItemService_DeleteAsync_OneItemDeleted()
     {
       // Arrange
@@ -182,8 +181,8 @@ namespace microwf.Tests.AspNetCoreEngine
       await service.DeleteAsync(1);
 
       // Assert
-      Assert.AreEqual(1, context.WorkItems.Count());
-      Assert.AreEqual(2, context.WorkItems.First().Id);
+      Assert.Equal(1, context.WorkItems.Count());
+      Assert.Equal(2, context.WorkItems.First().Id);
     }
 
     private List<WorkItem> GetWorkItems(DateTime? dueDate = null)

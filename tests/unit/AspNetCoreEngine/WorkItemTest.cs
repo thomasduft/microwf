@@ -1,13 +1,12 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Domain;
+using Xunit;
 
 namespace microwf.Tests.AspNetCoreEngine
 {
-  [TestClass]
   public class WorkItemTest
   {
-    [TestMethod]
+    [Fact]
     public void WorkItem_Create_NewInstanceCreated()
     {
       // Arrange
@@ -20,12 +19,12 @@ namespace microwf.Tests.AspNetCoreEngine
       var workItem = WorkItem.Create(triggerName, entityId, workflowType, dueDate);
 
       // Assert
-      Assert.IsNotNull(workItem);
-      Assert.AreEqual(workItem.TriggerName, triggerName);
-      Assert.AreEqual(workItem.EntityId, entityId);
-      Assert.AreEqual(workItem.WorkflowType, workflowType);
-      Assert.AreEqual(workItem.DueDate, dueDate);
-      Assert.AreEqual(workItem.Retries, 0);
+      Assert.NotNull(workItem);
+      Assert.Equal(workItem.TriggerName, triggerName);
+      Assert.Equal(workItem.EntityId, entityId);
+      Assert.Equal(workItem.WorkflowType, workflowType);
+      Assert.Equal(workItem.DueDate, dueDate);
+      Assert.Equal(0, workItem.Retries);
     }
   }
 }

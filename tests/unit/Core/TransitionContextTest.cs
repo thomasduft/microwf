@@ -1,13 +1,13 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
+using System;
 using tomware.Microwf.Core;
+using Xunit;
 
 namespace microwf.Tests.Core
 {
-  [TestClass]
   public class TransitionContextTest
   {
-    [TestMethod]
+    [Fact]
     public void TransitionContext_NewInstance_CreatesANewInstance()
     {
       // Arrange
@@ -20,14 +20,14 @@ namespace microwf.Tests.Core
       var context = new TransitionContext(switcher);
 
       // Assert
-      Assert.IsNotNull(context);
-      Assert.AreEqual(context.Instance, switcher);
-      Assert.IsFalse(context.TransitionAborted);
-      Assert.IsFalse(context.HasVariables);
-      Assert.IsFalse(context.HasErrors);
+      Assert.NotNull(context);
+      Assert.Equal(context.Instance, switcher);
+      Assert.False(context.TransitionAborted);
+      Assert.False(context.HasVariables);
+      Assert.False(context.HasErrors);
     }
 
-    [TestMethod]
+    [Fact]
     public void TransitionContext_AddError_TransitionHasErrors()
     {
       // Arrange
@@ -42,12 +42,12 @@ namespace microwf.Tests.Core
       context.AddError(error);
 
       // Assert
-      Assert.IsNotNull(context);
-      Assert.IsFalse(context.HasVariables);
-      Assert.IsTrue(context.HasErrors);
+      Assert.NotNull(context);
+      Assert.False(context.HasVariables);
+      Assert.True(context.HasErrors);
     }
 
-    [TestMethod]
+    [Fact]
     public void TransitionContext_AbortTransition_TransitionIsAbortedAndHasErrors()
     {
       // Arrange
@@ -62,13 +62,13 @@ namespace microwf.Tests.Core
       context.AbortTransition(reason);
 
       // Assert
-      Assert.IsNotNull(context);
-      Assert.IsTrue(context.TransitionAborted);
-      Assert.IsFalse(context.HasVariables);
-      Assert.IsTrue(context.HasErrors);
+      Assert.NotNull(context);
+      Assert.True(context.TransitionAborted);
+      Assert.False(context.HasVariables);
+      Assert.True(context.HasErrors);
     }
 
-    [TestMethod]
+    [Fact]
     public void TransitionContext_GetInstance_InstanceReturned()
     {
       // Arrange
@@ -82,12 +82,12 @@ namespace microwf.Tests.Core
       var worflow = context.GetInstance<Switcher>();
 
       // Assert
-      Assert.IsNotNull(worflow);
-      Assert.AreEqual(worflow, switcher);
-      Assert.AreEqual(worflow.State, switcher.State);
+      Assert.NotNull(worflow);
+      Assert.Equal(worflow, switcher);
+      Assert.Equal(worflow.State, switcher.State);
     }
 
-    [TestMethod]
+    [Fact]
     public void TransitionContext_SetVariable_VariableIsSet()
     {
       // Arrange
@@ -104,12 +104,12 @@ namespace microwf.Tests.Core
         variable);
 
       // Assert
-      Assert.IsNotNull(context);
-      Assert.IsTrue(context.HasVariables);
-      Assert.IsTrue(context.ContainsKey(SwitcherWorkflowVariable.KEY));
+      Assert.NotNull(context);
+      Assert.True(context.HasVariables);
+      Assert.True(context.ContainsKey(SwitcherWorkflowVariable.KEY));
     }
 
-    [TestMethod]
+    [Fact]
     public void TransitionContext_SetVariable_ReplacesExistingVariableValue()
     {
       // Arrange
@@ -124,7 +124,7 @@ namespace microwf.Tests.Core
         SwitcherWorkflowVariable.KEY,
         variable);
 
-      Assert.IsTrue(context
+      Assert.True(context
         .GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY)
         .CanSwitch);
 
@@ -136,15 +136,15 @@ namespace microwf.Tests.Core
         variable);
 
       // Assert
-      Assert.IsNotNull(context);
-      Assert.IsTrue(context.HasVariables);
-      Assert.IsTrue(context.ContainsKey(SwitcherWorkflowVariable.KEY));
-      Assert.IsFalse(context
+      Assert.NotNull(context);
+      Assert.True(context.HasVariables);
+      Assert.True(context.ContainsKey(SwitcherWorkflowVariable.KEY));
+      Assert.False(context
         .GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY)
         .CanSwitch);
     }
 
-    [TestMethod]
+    [Fact]
     public void TransitionContext_GetVariable_VariableReturned()
     {
       // Arrange
@@ -164,8 +164,23 @@ namespace microwf.Tests.Core
         .GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY);
 
       // Assert
-      Assert.IsNotNull(variable);
-      Assert.IsTrue(variable.CanSwitch);
+      Assert.NotNull(variable);
+      Assert.True(variable.CanSwitch);
+    }
+
+    [Fact]
+    public void TransitionContext_GetVariable_VariableNotPresent()
+    {
+      // Arrange
+      Switcher switcher = new Switcher
+      {
+        Type = OnOffWorkflow.TYPE
+      };
+      var context = new TransitionContext(switcher);
+
+      // Act
+      Assert.Throws<Exception>(
+        () => context.GetVariable<SwitcherWorkflowVariable>(SwitcherWorkflowVariable.KEY));
     }
   }
 }

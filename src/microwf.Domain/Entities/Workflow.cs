@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
 using System.Runtime.CompilerServices;
-[assembly: InternalsVisibleTo("tomware.Microwf.Tests")]
 
 namespace tomware.Microwf.Domain
 {

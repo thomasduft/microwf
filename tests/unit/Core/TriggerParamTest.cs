@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Core;
+using Xunit;
 
 namespace microwf.Tests.Core
 {
-  [TestClass]
   public class TriggerParamTest
   {
-    [TestMethod]
+    [Fact]
     public void TriggerParam_NewInstance_CreatesANewInstance()
     {
       // Arrange
@@ -23,14 +22,14 @@ namespace microwf.Tests.Core
       var triggerParam = new TriggerParam(trigger, switcher);
 
       // Assert
-      Assert.IsNotNull(triggerParam);
-      Assert.AreEqual(triggerParam.TriggerName, trigger);
-      Assert.AreEqual(triggerParam.Instance, switcher);
-      Assert.IsFalse(triggerParam.HasVariables);
-      Assert.IsNotNull(triggerParam.Variables);
+      Assert.NotNull(triggerParam);
+      Assert.Equal(triggerParam.TriggerName, trigger);
+      Assert.Equal(triggerParam.Instance, switcher);
+      Assert.False(triggerParam.HasVariables);
+      Assert.NotNull(triggerParam.Variables);
     }
 
-    [TestMethod]
+    [Fact]
     public void TriggerParam_NewInstanceWithVariables_CreatesANewInstance()
     {
       // Arrange
@@ -47,14 +46,14 @@ namespace microwf.Tests.Core
       var triggerParam = new TriggerParam(trigger, switcher, variables);
 
       // Assert
-      Assert.IsNotNull(triggerParam);
-      Assert.AreEqual(triggerParam.TriggerName, trigger);
-      Assert.AreEqual(triggerParam.Instance, switcher);
-      Assert.IsTrue(triggerParam.HasVariables);
-      Assert.IsNotNull(triggerParam.Variables);
+      Assert.NotNull(triggerParam);
+      Assert.Equal(triggerParam.TriggerName, trigger);
+      Assert.Equal(triggerParam.Instance, switcher);
+      Assert.True(triggerParam.HasVariables);
+      Assert.NotNull(triggerParam.Variables);
     }
 
-    [TestMethod]
+    [Fact]
     public void TriggerParam_NewInstanceWithFluentVariables_CreatesANewInstance()
     {
       // Arrange
@@ -69,14 +68,14 @@ namespace microwf.Tests.Core
         .AddVariable(SwitcherWorkflowVariable.KEY, new SwitcherWorkflowVariable(true));
 
       // Assert
-      Assert.IsNotNull(triggerParam);
-      Assert.AreEqual(triggerParam.TriggerName, trigger);
-      Assert.AreEqual(triggerParam.Instance, switcher);
-      Assert.IsTrue(triggerParam.HasVariables);
-      Assert.IsNotNull(triggerParam.Variables);
+      Assert.NotNull(triggerParam);
+      Assert.Equal(triggerParam.TriggerName, trigger);
+      Assert.Equal(triggerParam.Instance, switcher);
+      Assert.True(triggerParam.HasVariables);
+      Assert.NotNull(triggerParam.Variables);
     }
 
-    [TestMethod]
+    [Fact]
     public void TriggerParam_AddsTheSameWorkflowVariable_ThrowsException()
     {
       // Arrange
@@ -87,7 +86,7 @@ namespace microwf.Tests.Core
       };
 
       // Act
-      Assert.ThrowsException<InvalidOperationException>(
+      Assert.Throws<InvalidOperationException>(
         () => new TriggerParam(trigger, switcher)
         .AddVariable(SwitcherWorkflowVariable.KEY, new SwitcherWorkflowVariable(true))
         .AddVariable(SwitcherWorkflowVariable.KEY, new SwitcherWorkflowVariable(true)));
