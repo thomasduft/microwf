@@ -15,9 +15,7 @@ namespace tomware.Microwf.Engine
   {
     private readonly IJobQueueControllerService service;
 
-    public JobQueueController(
-      IJobQueueControllerService service
-    )
+    public JobQueueController(IJobQueueControllerService service)
     {
       this.service = service;
     }
