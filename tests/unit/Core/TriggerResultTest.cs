@@ -1,8 +1,8 @@
-using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Core;
+using tomware.Microwf.UnitTests.WorkflowDefinitions;
 using Xunit;
 
-namespace microwf.Tests.Core
+namespace tomware.Microwf.UnitTests.Core
 {
   public class TriggerResultTest
   {

@@ -1,10 +1,10 @@
-using tomware.Microwf.Core;
-using microwf.Tests.WorkflowDefinitions;
 using System.Collections.Generic;
 using System.Linq;
+using tomware.Microwf.Core;
+using tomware.Microwf.UnitTests.WorkflowDefinitions;
 using Xunit;
 
-namespace microwf.Tests.Core
+namespace tomware.Microwf.UnitTests.Core
 {
   public class WorkflowDefinitionTest
   {

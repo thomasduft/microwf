@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using microwf.Tests.WorkflowDefinitions;
 using tomware.Microwf.Infrastructure;
+using tomware.Microwf.UnitTests.WorkflowDefinitions;
 
-namespace microwf.Tests.Utils
+namespace tomware.Microwf.UnitTests.Utils
 {
   public class TestDbContext : EngineDbContext
   {

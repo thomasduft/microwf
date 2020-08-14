@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 
-namespace microwf.Tests.WorkflowDefinitions
+namespace tomware.Microwf.UnitTests.WorkflowDefinitions
 {
   public class OnOffWorkflow : WorkflowDefinitionBase
   {
@@ -87,8 +87,8 @@ namespace microwf.Tests.WorkflowDefinitions
 
     public Switcher()
     {
-      State = "Off";
-      Type = OnOffWorkflow.TYPE;
+      this.State = "Off";
+      this.Type = OnOffWorkflow.TYPE;
     }
   }
 
@@ -99,7 +99,7 @@ namespace microwf.Tests.WorkflowDefinitions
     public bool CanSwitch { get; set; }
     public SwitcherWorkflowVariable(bool canSwitch)
     {
-      CanSwitch = canSwitch;
+      this.CanSwitch = canSwitch;
     }
   }
 }

@@ -1,10 +1,10 @@
-using tomware.Microwf.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 
-namespace microwf.Tests.WorkflowDefinitions
+namespace tomware.Microwf.UnitTests.WorkflowDefinitions
 {
   public class EntityOnOffWorkflow : EntityWorkflowDefinitionBase
   {
@@ -71,8 +71,8 @@ namespace microwf.Tests.WorkflowDefinitions
 
     public LightSwitcher()
     {
-      State = "Off";
-      Type = EntityOnOffWorkflow.TYPE;
+      this.State = "Off";
+      this.Type = EntityOnOffWorkflow.TYPE;
     }
   }
 

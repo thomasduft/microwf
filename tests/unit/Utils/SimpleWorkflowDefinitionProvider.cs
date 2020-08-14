@@ -2,45 +2,45 @@ using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
 
-namespace microwf.Tests.Utils
+namespace tomware.Microwf.UnitTests.Utils
 {
   public class SimpleWorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {
-    private List<IWorkflowDefinition> _workflowDefinitions = null;
+    private List<IWorkflowDefinition> workflowDefinitions = null;
 
-    private static SimpleWorkflowDefinitionProvider _instance;
+    private static SimpleWorkflowDefinitionProvider instance;
 
     public static SimpleWorkflowDefinitionProvider Instance
     {
       get
       {
-        if (_instance == null) _instance = new SimpleWorkflowDefinitionProvider();
+        if (instance == null) instance = new SimpleWorkflowDefinitionProvider();
 
-        return _instance;
+        return instance;
       }
     }
 
     internal void Invalidate()
     {
-      _workflowDefinitions = new List<IWorkflowDefinition>();
+      this.workflowDefinitions = new List<IWorkflowDefinition>();
     }
 
     public SimpleWorkflowDefinitionProvider()
     {
-      _workflowDefinitions = new List<IWorkflowDefinition>();
+      this.workflowDefinitions = new List<IWorkflowDefinition>();
     }
 
     public void RegisterWorkflowDefinition(IWorkflowDefinition workflowDefinition)
-      => _workflowDefinitions.Add(workflowDefinition);
+      => this.workflowDefinitions.Add(workflowDefinition);
 
     public IWorkflowDefinition GetWorkflowDefinition(string type)
     {
-      return _workflowDefinitions.First(w => w.Type == type);
+      return this.workflowDefinitions.First(w => w.Type == type);
     }
 
     public IEnumerable<IWorkflowDefinition> GetWorkflowDefinitions()
     {
-      return _workflowDefinitions;
+      return this.workflowDefinitions;
     }
   }
 }

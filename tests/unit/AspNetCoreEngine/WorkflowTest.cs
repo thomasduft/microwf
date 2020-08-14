@@ -1,9 +1,9 @@
-using microwf.Tests.WorkflowDefinitions;
 using System.Linq;
 using tomware.Microwf.Domain;
+using tomware.Microwf.UnitTests.WorkflowDefinitions;
 using Xunit;
 
-namespace microwf.Tests.AspNetCoreEngine
+namespace tomware.Microwf.UnitTests.AspNetCoreEngine
 {
   public class WorkflowTest
   {

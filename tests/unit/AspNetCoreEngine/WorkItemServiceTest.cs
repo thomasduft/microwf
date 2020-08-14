@@ -1,14 +1,14 @@
 using Microsoft.Extensions.DependencyInjection;
-using microwf.Tests.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
+using tomware.Microwf.UnitTests.Utils;
 using Xunit;
 
-namespace microwf.Tests.AspNetCoreEngine
+namespace tomware.Microwf.UnitTests.AspNetCoreEngine
 {
   public class WorkItemServiceTest
   {

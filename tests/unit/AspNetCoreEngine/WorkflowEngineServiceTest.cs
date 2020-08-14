@@ -1,6 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using microwf.Tests.Utils;
-using microwf.Tests.WorkflowDefinitions;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -8,9 +6,11 @@ using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
+using tomware.Microwf.UnitTests.Utils;
+using tomware.Microwf.UnitTests.WorkflowDefinitions;
 using Xunit;
 
-namespace microwf.Tests.AspNetCoreEngine
+namespace tomware.Microwf.UnitTests.AspNetCoreEngine
 {
   public class WorkflowEngineServiceTest
   {
