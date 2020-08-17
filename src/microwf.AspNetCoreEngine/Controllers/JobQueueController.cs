@@ -24,9 +24,9 @@ namespace tomware.Microwf.Engine
     [Authorize(Constants.MANAGE_WORKFLOWS_POLICY)]
     [ProducesResponseType(typeof(IEnumerable<Domain.WorkItemDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public ActionResult<IEnumerable<Domain.WorkItemDto>> GetSnapshot()
+    public async Task<ActionResult<IEnumerable<Domain.WorkItemDto>>> GetSnapshot()
     {
-      var result = this.service.GetSnapshot();
+      var result = await this.service.GetSnapshotAsync();
 
       return Ok(result);
     }

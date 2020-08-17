@@ -8,7 +8,7 @@ namespace tomware.Microwf.Engine
 {
   public interface IJobQueueControllerService
   {
-    IEnumerable<WorkItemViewModel> GetSnapshot();
+    Task<IEnumerable<WorkItemViewModel>> GetSnapshotAsync();
 
     Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(PagingParameters parameters);
 
@@ -31,11 +31,11 @@ namespace tomware.Microwf.Engine
       this.workItemService = workItemService;
     }
 
-    public IEnumerable<WorkItemViewModel> GetSnapshot()
+    public async Task<IEnumerable<WorkItemViewModel>> GetSnapshotAsync()
     {
       var result = this.service.GetSnapshot();
 
-      return result.Select(x => ToViewModel(x));
+      return await Task.FromResult(result.Select(x => ToViewModel(x)));
     }
 
     public async Task<PaginatedList<WorkItemViewModel>> GetUpCommingsAsync(
