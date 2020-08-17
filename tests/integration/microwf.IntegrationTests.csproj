@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>tomware.Microwf.UnitTests</AssemblyName>
-    <RootNamespace>tomware.Microwf.UnitTests</RootNamespace>
+    <AssemblyName>tomware.Microwf.IntegrationTests</AssemblyName>
+    <RootNamespace>tomware.Microwf.IntegrationTests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

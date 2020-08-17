@@ -1,6 +1,6 @@
 using System;
 using tomware.Microwf.Core;
-using tomware.Microwf.UnitTests.WorkflowDefinitions;
+using tomware.Microwf.TestsCommon.WorkflowDefinitions;
 using Xunit;
 
 namespace tomware.Microwf.UnitTests.Core

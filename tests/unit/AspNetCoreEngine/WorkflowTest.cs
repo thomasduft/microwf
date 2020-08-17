@@ -1,6 +1,6 @@
 using System.Linq;
 using tomware.Microwf.Domain;
-using tomware.Microwf.UnitTests.WorkflowDefinitions;
+using tomware.Microwf.TestsCommon.WorkflowDefinitions;
 using Xunit;
 
 namespace tomware.Microwf.UnitTests.AspNetCoreEngine

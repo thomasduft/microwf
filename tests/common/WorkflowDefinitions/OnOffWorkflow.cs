@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 
-namespace tomware.Microwf.UnitTests.WorkflowDefinitions
+namespace tomware.Microwf.TestsCommon.WorkflowDefinitions
 {
   public class OnOffWorkflow : WorkflowDefinitionBase
   {

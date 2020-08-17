@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
-using tomware.Microwf.UnitTests.Utils;
+using tomware.Microwf.IntegrationTests.Utils;
 using Xunit;
 
-namespace tomware.Microwf.UnitTests.AspNetCoreEngine
+namespace tomware.Microwf.IntegrationTests.AspNetCoreEngine
 {
   public class WorkItemServiceTest
   {

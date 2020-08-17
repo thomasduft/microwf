@@ -4,7 +4,7 @@ using System.Linq;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 
-namespace tomware.Microwf.UnitTests.Utils
+namespace tomware.Microwf.IntegrationTests.Utils
 {
   public class TestUserWorkflowMappingService : IUserWorkflowMappingService
   {

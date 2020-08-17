@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
-using tomware.Microwf.UnitTests.Utils;
-using tomware.Microwf.UnitTests.WorkflowDefinitions;
+using tomware.Microwf.IntegrationTests.Utils;
+using tomware.Microwf.TestsCommon.WorkflowDefinitions;
 using Xunit;
 
-namespace tomware.Microwf.UnitTests.AspNetCoreEngine
+namespace tomware.Microwf.IntegrationTests.AspNetCoreEngine
 {
   public class WorkflowServiceTest
   {
