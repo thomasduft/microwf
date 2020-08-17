@@ -8,7 +8,7 @@ using tomware.Microwf.Infrastructure;
 using tomware.Microwf.Tests.Integration.Utils;
 using Xunit;
 
-namespace tomware.Microwf.Tests.Integration.AspNetCoreEngine
+namespace tomware.Microwf.Tests.Integration.Infrastructure
 {
   public class WorkItemServiceTest
   {

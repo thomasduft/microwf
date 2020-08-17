@@ -10,7 +10,7 @@ using tomware.Microwf.Tests.Integration.Utils;
 using tomware.Microwf.Tests.Common.WorkflowDefinitions;
 using Xunit;
 
-namespace tomware.Microwf.Tests.Integration.AspNetCoreEngine
+namespace tomware.Microwf.Tests.Integration.Infrastructure
 {
   public class WorkflowEngineServiceTest
   {

@@ -40,7 +40,7 @@
       }
     },
     {
-      "label": "tests with coverage",
+      "label": "test",
       "command": "dotnet",
       "type": "process",
       "args": [
