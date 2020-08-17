@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 
-namespace tomware.Microwf.TestsCommon.WorkflowDefinitions
+namespace tomware.Microwf.Tests.Common.WorkflowDefinitions
 {
   public class EntityOnOffWorkflow : EntityWorkflowDefinitionBase
   {

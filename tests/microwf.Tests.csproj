@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>tomware.Microwf.IntegrationTests</AssemblyName>
-    <RootNamespace>tomware.Microwf.IntegrationTests</RootNamespace>
+    <AssemblyName>tomware.Microwf.Tests</AssemblyName>
+    <RootNamespace>tomware.Microwf.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -24,11 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\microwf.AspNetCoreEngine\microwf.AspNetCoreEngine.csproj" />
-    <ProjectReference Include="..\..\src\microwf.Core\microwf.Core.csproj" />
-    <ProjectReference Include="..\..\src\microwf.Domain\microwf.Domain.csproj" />
-    <ProjectReference Include="..\..\src\microwf.Infrastructure\microwf.Infrastructure.csproj" />
-    <ProjectReference Include="..\common\microwf.TestsCommon.csproj" />
+    <ProjectReference Include="..\src\microwf.AspNetCoreEngine\microwf.AspNetCoreEngine.csproj" />
+    <ProjectReference Include="..\src\microwf.Core\microwf.Core.csproj" />
+    <ProjectReference Include="..\src\microwf.Domain\microwf.Domain.csproj" />
+    <ProjectReference Include="..\src\microwf.Infrastructure\microwf.Infrastructure.csproj" />
   </ItemGroup>
-
 </Project>

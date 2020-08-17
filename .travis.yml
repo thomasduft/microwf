@@ -5,5 +5,4 @@ dotnet: 3.1.100
 
 script:
   - dotnet build
-  - dotnet test tests/unit/microwf.UnitTests.csproj
-  - dotnet test tests/integration/microwf.IntegrationTests.csproj
+  - dotnet test tests/microwf.Tests.csproj

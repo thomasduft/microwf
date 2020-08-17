@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using tomware.Microwf.Core;
 
-namespace tomware.Microwf.TestsCommon.WorkflowDefinitions
+namespace tomware.Microwf.Tests.Common.WorkflowDefinitions
 {
   public class HolidayApprovalWorkflow : WorkflowDefinitionBase
   {

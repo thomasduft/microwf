@@ -1,9 +1,9 @@
 using System.Text;
 using tomware.Microwf.Core;
-using tomware.Microwf.TestsCommon.WorkflowDefinitions;
+using tomware.Microwf.Tests.Common.WorkflowDefinitions;
 using Xunit;
 
-namespace tomware.Microwf.UnitTests.Core
+namespace tomware.Microwf.Tests.Unit.Core
 {
   public class WorkflowDefinitionExtensionTest
   {

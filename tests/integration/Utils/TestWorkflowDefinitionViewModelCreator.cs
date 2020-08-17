@@ -1,6 +1,6 @@
 using tomware.Microwf.Domain;
 
-namespace tomware.Microwf.IntegrationTests.Utils
+namespace tomware.Microwf.Tests.Integration.Utils
 {
   public class TestWorkflowDefinitionViewModelCreator : IWorkflowDefinitionDtoCreator
   {

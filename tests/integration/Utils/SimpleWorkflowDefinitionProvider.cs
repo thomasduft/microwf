@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
 
-namespace tomware.Microwf.IntegrationTests.Utils
+namespace tomware.Microwf.Tests.Integration.Utils
 {
   public class SimpleWorkflowDefinitionProvider : IWorkflowDefinitionProvider
   {

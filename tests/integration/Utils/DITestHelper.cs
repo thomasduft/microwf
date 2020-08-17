@@ -5,7 +5,7 @@ using System;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Infrastructure;
 
-namespace tomware.Microwf.IntegrationTests.Utils
+namespace tomware.Microwf.Tests.Integration.Utils
 {
   public class DITestHelper
   {

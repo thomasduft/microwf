@@ -40,7 +40,7 @@
       }
     },
     {
-      "label": "unit-test with coverage",
+      "label": "tests with coverage",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -48,30 +48,13 @@
         "/p:CollectCoverage=true",
         "/p:CoverletOutputFormat=lcov",
         "/p:CoverletOutput=./../lcov",
-        "${workspaceFolder}/tests/unit/microwf.UnitTests.csproj"
+        "${workspaceFolder}/tests/microwf.Tests.csproj"
       ],
       "problemMatcher": "$msCompile",
       "group": {
         "kind": "test",
         "isDefault": true
       }
-    },
-    {
-      "label": "integration-tests with coverage",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "test",
-        "/p:CollectCoverage=true",
-        "/p:CoverletOutputFormat=lcov",
-        "/p:CoverletOutput=./../lcov",
-        "${workspaceFolder}/tests/integration/microwf.IntegrationTests.csproj"
-      ],
-      "problemMatcher": "$msCompile",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      }
-    },
+    }
   ]
 }
