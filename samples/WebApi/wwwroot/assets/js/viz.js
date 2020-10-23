@@ -1,5 +1,5 @@
 /*
-Viz.js 2.0.0 (Graphviz 2.40.1, Expat 2.2.5, Emscripten 1.37.36)
+Viz.js 2.1.2 (Graphviz 2.40.1, Expat 2.2.5, Emscripten 1.37.36)
 Copyright (c) 2014-2018 Michael Daines
 Licensed under MIT license
 
@@ -269,7 +269,9 @@ http://www.zlib.net/zlib_license.html
             _ref4$images = _ref4.images,
             images = _ref4$images === undefined ? [] : _ref4$images,
             _ref4$yInvert = _ref4.yInvert,
-            yInvert = _ref4$yInvert === undefined ? false : _ref4$yInvert;
+            yInvert = _ref4$yInvert === undefined ? false : _ref4$yInvert,
+            _ref4$nop = _ref4.nop,
+            nop = _ref4$nop === undefined ? 0 : _ref4$nop;
 
         for (var i = 0; i < images.length; i++) {
           files.push({
@@ -278,7 +280,7 @@ http://www.zlib.net/zlib_license.html
           });
         }
 
-        return this.wrapper.render(src, { format: format, engine: engine, files: files, images: images, yInvert: yInvert });
+        return this.wrapper.render(src, { format: format, engine: engine, files: files, images: images, yInvert: yInvert, nop: nop });
       }
     }, {
       key: 'renderSVGElement',

@@ -24,6 +24,9 @@ namespace STS
     {
       services.AddControllersWithViews();
 
+      // cookie policy to deal with temporary browser incompatibilities
+      services.AddSameSiteCookiePolicy();
+
       // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
       services.Configure<IISOptions>(iis =>
       {
@@ -73,6 +76,8 @@ namespace STS
 
     public void Configure(IApplicationBuilder app)
     {
+      app.UseCookiePolicy();
+
       if (Environment.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();

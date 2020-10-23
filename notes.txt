@@ -1,10 +1,4 @@
 notes:
-- new samples
-  - docker compose based
-    - microwf server
-    - microwf frontend
-      - consider nginx angular reverse proxy
-    - STS
 - WorkItem Id as Guid
 
 ----------------------------------------------------------------------------------------------------
@@ -35,16 +29,6 @@ dotnet ef database drop
 Docker commands:
 - docker run -it --rm -p 5000:5000 --name microwf tomware/microwf-playground:1.8.0
 - docker push <image>
-
-----------------------------------------------------------------------------------------------------
-NuGet Commands:
-dotnet pack src/microwf.Core -c Release /p:PackageVersion=1.0.0 -o ./../../dist/nupkgs
-
-see: https://stackoverflow.com/questions/42797993/package-version-is-always-1-0-0-with-dotnet-pack
-
-----------------------------------------------------------------------------------------------------
-Links:
- - https://github.com/jitbit/PropMapper
 
 ----------------------------------------------------------------------------------------------------
 Global tools in docker container issue:
