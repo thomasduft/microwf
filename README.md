@@ -67,7 +67,7 @@ public class HolidayApprovalWorkflow : WorkflowDefinitionBase
 ```
 
 ### Running the samples
-Assuming you downloaded the sources and opened the directory with [VS Code](https://code.visualstudio.com/) you should be good to go! Ahh and of course you need [dot.net core](https://dotnet.microsoft.com/download) and [node.js](https://nodejs.org/en/) installed on your development environment.
+Assuming you downloaded the sources and opened the directory with [VS Code](https://code.visualstudio.com/) you should be good to go! Ahh and of course you need [.NET Core](https://dotnet.microsoft.com/download) and [node.js](https://nodejs.org/en/) installed on your development environment.
 
 #### Running the WebApi backend
 1. Open the integrated terminal in VS Code and type
