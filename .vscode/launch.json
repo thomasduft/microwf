@@ -7,7 +7,7 @@
       "request": "launch",
       "console": "externalTerminal",
       "preLaunchTask": "build-sts",
-      "program": "${workspaceRoot}/samples/STS/bin/Debug/netcoreapp3.1/STS.dll",
+      "program": "${workspaceRoot}/samples/STS/bin/Debug/net5.0/STS.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/STS",
       "stopAtEntry": false
@@ -17,7 +17,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/netcoreapp3.1/WebApi.dll",
+      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net5.0/WebApi.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/WebApi",
       "stopAtEntry": false,
@@ -48,7 +48,7 @@
       "request": "launch",
       "console":"externalTerminal",
       "preLaunchTask": "build-ConsoleClient",
-      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/netcoreapp3.1/ConsoleClient.dll",
+      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net5.0/ConsoleClient.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
       "stopAtEntry": false
