@@ -36,7 +36,8 @@
               "src/styles.css",
               "src/assets/styles/app.less",
               {
-                "input": "./node_modules/font-awesome/css/font-awesome.css"
+                "input": "./node_modules/font-awesome/css/font-awesome.css",
+                "inject": true
               }
             ],
             "scripts": []
@@ -52,7 +53,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -100,7 +100,8 @@
               "src/styles.css",
               "src/assets/styles/app.less",
               {
-                "input": "./node_modules/font-awesome/css/font-awesome.css"
+                "input": "./node_modules/font-awesome/css/font-awesome.css",
+                "inject": true
               }
             ],
             "scripts": [],

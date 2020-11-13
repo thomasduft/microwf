@@ -42,7 +42,7 @@ const ROUTES: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, { relativeLinkResolution: 'legacy' }),
     OAuthModule.forRoot(),
     SharedModule,
     ShellModule,
