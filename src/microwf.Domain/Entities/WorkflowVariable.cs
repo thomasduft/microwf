@@ -22,7 +22,7 @@ namespace tomware.Microwf.Domain
         WorkflowId = workflow.Id,
         Workflow = workflow,
         Type = KeyBuilder.ToKey(variable.GetType()),
-        Content = JsonSerializer.Serialize(variable)
+        Content = JsonSerializer.Serialize(variable, variable.GetType())
       };
     }
 
@@ -36,7 +36,7 @@ namespace tomware.Microwf.Domain
 
     internal void UpdateContent(WorkflowVariableBase variable)
     {
-      this.Content = JsonSerializer.Serialize(variable);
+      this.Content = JsonSerializer.Serialize(variable, variable.GetType());
     }
   }
 }

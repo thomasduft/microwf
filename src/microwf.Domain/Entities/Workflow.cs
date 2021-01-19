@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using tomware.Microwf.Core;
-using System.Runtime.CompilerServices;
 
 namespace tomware.Microwf.Domain
 {
