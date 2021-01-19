@@ -77,7 +77,7 @@ namespace ConsoleClient
               var processStepperResponse = await ProcessStepper(httpClient, stepperId);
               if (processStepperResponse.IsSuccessStatusCode)
               {
-                Console.WriteLine($"Workflow for stepper id ${stepperId} started...");
+                Console.WriteLine($"Workflow for stepper id {stepperId} started...");
               }
             }
           }
