@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
@@ -55,8 +55,8 @@ namespace tomware.Microwf.Infrastructure
       if (param == null) throw new ArgumentNullException(nameof(param));
 
       this.logger.LogTrace(
-        "Trigger transition for instance {Instance}",
-        LogHelper.SerializeObject(param.Instance)
+        "Trigger transition for instance {@Instance}",
+        param.Instance
       );
 
       var result = param.Instance is IWorkflowInstanceEntity
@@ -66,16 +66,16 @@ namespace tomware.Microwf.Infrastructure
       if (result.IsAborted)
       {
         this.logger.LogInformation(
-          "Transition for instance {Instance} aborted! Aborting reason: {Reason}",
-          LogHelper.SerializeObject(param.Instance),
-          LogHelper.SerializeObject(result.Errors)
+          "Transition for instance {@Instance} aborted! Aborting reason: {@Reason}",
+          param.Instance,
+          result.Errors
         );
       }
       else
       {
         this.logger.LogTrace(
-          "Transition for instance {Instance} successfully triggered",
-          LogHelper.SerializeObject(param.Instance)
+          "Transition for instance {@Instance} successfully triggered",
+          param.Instance
         );
       }
 
@@ -148,8 +148,8 @@ namespace tomware.Microwf.Infrastructure
           transaction.Rollback();
 
           this.logger.LogError(
-            "Trigger with TriggerParameter: {TriggerParameter} failed! {Exception}",
-            LogHelper.SerializeObject(param),
+            "Trigger with TriggerParameter: {@TriggerParameter} failed! {Exception}",
+            param,
             ex
           );
 
@@ -225,7 +225,7 @@ namespace tomware.Microwf.Infrastructure
 
           if (variable != null)
           {
-            variable.Content = JsonConvert.SerializeObject(v.Value);
+            variable.Content = JsonSerializer.Serialize(v.Value);
           }
           else
           {

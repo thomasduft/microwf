@@ -1,4 +1,5 @@
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using tomware.Microwf.Core;
 
 namespace tomware.Microwf.Domain
@@ -21,13 +22,13 @@ namespace tomware.Microwf.Domain
         WorkflowId = workflow.Id,
         Workflow = workflow,
         Type = KeyBuilder.ToKey(variable.GetType()),
-        Content = JsonConvert.SerializeObject(variable)
+        Content = JsonSerializer.Serialize(variable)
       };
     }
 
     public static WorkflowVariableBase ConvertContent(WorkflowVariable workflowVariable)
     {
-      return (WorkflowVariableBase)JsonConvert.DeserializeObject(
+      return (WorkflowVariableBase)JsonSerializer.Deserialize(
         workflowVariable.Content,
         KeyBuilder.FromKey(workflowVariable.Type)
       );
@@ -35,7 +36,7 @@ namespace tomware.Microwf.Domain
 
     internal void UpdateContent(WorkflowVariableBase variable)
     {
-      this.Content = JsonConvert.SerializeObject(variable);
+      this.Content = JsonSerializer.Serialize(variable);
     }
   }
 }

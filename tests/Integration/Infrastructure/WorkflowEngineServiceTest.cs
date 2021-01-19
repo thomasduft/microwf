@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
@@ -229,7 +229,7 @@ namespace tomware.Microwf.Tests.Integration.Infrastructure
 
       var workflowVariable = workflow.WorkflowVariables.First();
       var type = KeyBuilder.FromKey(workflowVariable.Type);
-      var myDeserializedVariable = JsonConvert.DeserializeObject(workflowVariable.Content, type);
+      var myDeserializedVariable = JsonSerializer.Deserialize(workflowVariable.Content, type);
       Assert.IsType<LightSwitcherWorkflowVariable>(myDeserializedVariable);
 
       var variableInstance = myDeserializedVariable as LightSwitcherWorkflowVariable;

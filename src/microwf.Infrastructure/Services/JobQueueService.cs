@@ -49,8 +49,8 @@ namespace tomware.Microwf.Infrastructure
       if (item.Retries > WorkItem.WORKITEM_RETRIES)
       {
         this.logger.LogInformation(
-          "Amount of retries for work item {WorkItem} exceeded!",
-          LogHelper.SerializeObject(item)
+          "Amount of retries for work item {@WorkItem} exceeded!",
+          item
         );
 
         await this.PersistWorkItemsAsync(new List<WorkItem> { item });
@@ -73,8 +73,8 @@ namespace tomware.Microwf.Infrastructure
         try
         {
           this.logger.LogTrace(
-            "Processing work item {WorkItem}",
-            LogHelper.SerializeObject(item)
+            "Processing work item {@WorkItem}",
+            item
           );
 
           await this.ProcessItemInternal(item);
@@ -83,8 +83,8 @@ namespace tomware.Microwf.Infrastructure
         {
           this.logger.LogError(
             ex,
-            "Processing of work item {WorkItem} failed",
-            LogHelper.SerializeObject(item)
+            "Processing of work item {@WorkItem} failed",
+            item
           );
           item.Error = $"{ex.Message} - {ex.StackTrace}";
           item.Retries++;
@@ -195,8 +195,8 @@ namespace tomware.Microwf.Infrastructure
       {
         item.Error = string.Join(" - ", triggerResult.Errors);
         this.logger.LogError(
-          "Bad TriggerResult: {TriggerResult}",
-          LogHelper.SerializeObject(triggerResult)
+          "Bad TriggerResult: {@TriggerResult}",
+          triggerResult
         );
 
         item.Retries++;

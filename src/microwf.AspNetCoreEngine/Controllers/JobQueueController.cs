@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using tomware.Microwf.Domain;
 
@@ -89,7 +89,7 @@ namespace tomware.Microwf.Engine
         totalPages = result.TotalPages
       };
 
-      this.Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
+      this.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
     }
   }
 }
