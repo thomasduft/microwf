@@ -81,4 +81,9 @@ That ensures you are able to build the dotnet related stuff!
 
 You should see now the login screen.
 
+### Administrator Web UI
+A web interface allows an administrator to search for workflow instances and have a look into the current state.
+
+![Admin](https://www.tomware.ch/2018/11/27/sample-workflow-system-with-asp-net-core-angular-and-microwf-explained-new-ui/admin.gif)
+
 Happy poking!!
