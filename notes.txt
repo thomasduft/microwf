@@ -32,4 +32,5 @@ Docker commands:
 
 ----------------------------------------------------------------------------------------------------
 Global tools in docker container issue:
-- export PATH="$PATH:/root/.dotnet/tools"
+- dotnet tool install --global dotnet-outdated-tool
+- export PATH="$PATH:/home/vscode/.dotnet/tools"
