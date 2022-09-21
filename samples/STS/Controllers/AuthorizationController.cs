@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 using static OpenIddict.Abstractions.OpenIddictConstants;
@@ -303,6 +304,36 @@ public class AuthorizationController : Controller
   {
     var request = HttpContext.GetOpenIddictServerRequest() ??
         throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
+
+    if (request.IsClientCredentialsGrantType())
+    {
+      var application = await _applicationManager.FindByClientIdAsync(request.ClientId!);
+      if (application == null)
+      {
+        throw new InvalidOperationException("The application details cannot be found in the database.");
+      }
+
+      // Create the claims-based identity that will be used by OpenIddict to generate tokens.
+      var identity = new ClaimsIdentity(
+        TokenValidationParameters.DefaultAuthenticationType,
+        Claims.Name,
+        Claims.Role
+      );
+      if (identity is null)
+        throw new InvalidOperationException("Identity must not be present.");
+
+      // Add the claims that will be persisted in the tokens (use the client_id as the subject identifier).
+      var clientId = await _applicationManager.GetClientIdAsync(application);
+      if (clientId != null) identity.AddClaim(Claims.Subject, clientId);
+
+      var displayName = await _applicationManager.GetDisplayNameAsync(application);
+      if (displayName != null) identity.AddClaim(Claims.Name, displayName);
+
+      return SignIn(
+        new ClaimsPrincipal(identity),
+        OpenIddictServerAspNetCoreDefaults.AuthenticationScheme
+      );
+    }
 
     if (request.IsAuthorizationCodeGrantType()
       || request.IsDeviceCodeGrantType()

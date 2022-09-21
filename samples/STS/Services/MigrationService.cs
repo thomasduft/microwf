@@ -29,8 +29,8 @@ public class MigrationService : IMigrationService
     await RegisterApplicationsAsync(scope.ServiceProvider);
     await RegisterScopesAsync(scope.ServiceProvider);
 
-    // TODO: seed roles workflow_admin, 
-    // TODO: seed users admin/alice/bob 
+    // TODO: seed roles workflow_admin,
+    // TODO: seed users admin/alice/bob
     await SeedRole(scope.ServiceProvider);
     await SeedUser(scope.ServiceProvider, Users.AdminUser, Roles.WorkflowAdministrator);
     await SeedUser(scope.ServiceProvider, Users.AliceUser, null);
@@ -87,6 +87,7 @@ public class MigrationService : IMigrationService
         ClientSecret = "00000000-0000-0000-0000-000000000001",
         Permissions =
           {
+            Permissions.Endpoints.Token,
             Permissions.GrantTypes.ClientCredentials,
             Permissions.Prefixes.Scope + "webapi_scope"
           }
