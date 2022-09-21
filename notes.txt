@@ -25,6 +25,11 @@ dotnet ef migrations add <somename> -c DomainContext
 dotnet ef database update -c DomainContext
 dotnet ef database drop
 
+
+- dotnet ef migrations add Initial -c ApplicationDbContext -o Domain/Data
+- dotnet ef migrations add InitialUI -c OpenIddictUIContext -o Domain/Data/UI
+- dotnet ef migrations add InitialIdentity -c OpenIddictUIIdentityContext -o Domain/Data/Identity
+
 ----------------------------------------------------------------------------------------------------
 Docker commands:
 - docker run -it --rm -p 5000:5000 --name microwf tomware/microwf-playground:1.8.0
@@ -33,4 +38,5 @@ Docker commands:
 ----------------------------------------------------------------------------------------------------
 Global tools in docker container issue:
 - dotnet tool install --global dotnet-outdated-tool
+- dotnet tool install --global dotnet-ef
 - export PATH="$PATH:/home/vscode/.dotnet/tools"

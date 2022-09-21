@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     const issuer = 'https://localhost:5000';
 
     this.oauthService.configure({
-      clientId: 'frontend',
+      clientId: 'spa_webclient',
       issuer: issuer,
       redirectUri: isDevMode()
         ? 'http://localhost:4200'

@@ -75,7 +75,7 @@ Assuming you downloaded the sources and opened the directory with [VS Code](http
 
 That ensures you are able to build the dotnet related stuff!
 
-2. Go to the VS Code Debug tab (Ctrl+Shift+D) and run the Security Token Server (STS = [IdentityServer](https://identityserver.io/)) project.
+2. Go to the VS Code Debug tab (Ctrl+Shift+D) and run the Security Token Server (STS = Security Token Server) project.
 
 3. After the STS is running change the dropdown to the WebApi project and run it.
 

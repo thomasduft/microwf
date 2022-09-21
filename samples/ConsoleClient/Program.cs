@@ -16,7 +16,7 @@ namespace ConsoleClient
   class Program
   {
     static readonly string STS_HOST = "https://localhost:5000";
-    static readonly string API_HOST = "http://localhost:5001";
+    static readonly string API_HOST = "https://localhost:5001";
     static readonly int AMOUNT_OF_STEPPERS = 100;
 
     static void Main(string[] args)
@@ -48,9 +48,9 @@ namespace ConsoleClient
           .RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
           {
             Address = $"{STS_HOST}/connect/token",
-            ClientId = "console.client",
+            ClientId = "console_client",
             ClientSecret = "00000000-0000-0000-0000-000000000001",
-            Scope = "api1"
+            Scope = "webapi_scope"
           });
 
         // all good?

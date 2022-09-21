@@ -23,13 +23,13 @@ public static class ConfigureServices
      .AddJwtBearer(opt =>
      {
        opt.Authority = authority;
-       opt.Audience = "api1";
+       opt.Audience = "webapi_scope";
        opt.RequireHttpsMetadata = false;
        opt.IncludeErrorDetails = true;
        opt.SaveToken = true;
        opt.TokenValidationParameters = new TokenValidationParameters()
        {
-         ValidateIssuer = true,
+         ValidateIssuer = false,
          ValidateAudience = false,
          NameClaimType = "name",
          RoleClaimType = "role"
@@ -44,10 +44,6 @@ public static class ConfigureServices
 
     services.AddHttpContextAccessor();
     services.AddControllers();
-    // .AddNewtonsoftJson(opt =>
-    // {
-    //   opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-    // });
 
     if (environment.IsDevelopment())
     {
