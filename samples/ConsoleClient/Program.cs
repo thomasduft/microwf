@@ -1,11 +1,11 @@
 using IdentityModel.Client;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ConsoleClient
@@ -123,7 +123,7 @@ namespace ConsoleClient
       return await client.PostAsync(
         uri,
         new StringContent(
-          JsonConvert.SerializeObject(stepper),
+          JsonSerializer.Serialize(stepper),
           Encoding.UTF8,
           "application/json"
          )
@@ -133,7 +133,7 @@ namespace ConsoleClient
     static async Task<HttpResponseMessage> ProcessStepper(HttpClient client, int stepperId)
     {
       var uri = $"{API_HOST}/api/stepper/process";
-      var jsonString = JsonConvert.SerializeObject(new
+      var jsonString = JsonSerializer.Serialize(new
       {
         Id = stepperId,
         Trigger = "goto1"

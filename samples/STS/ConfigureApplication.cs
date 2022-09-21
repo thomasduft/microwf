@@ -11,7 +11,7 @@ public static class ConfigureApplication
     {
       app.UseCors(builder =>
       {
-        builder.WithOrigins("http://localhost:4200");
+        builder.WithOrigins("http://localhost:4200", "https://localhost:5001");
         builder.AllowAnyHeader();
         builder.AllowAnyMethod();
         builder.AllowCredentials();

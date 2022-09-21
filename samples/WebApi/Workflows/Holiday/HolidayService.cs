@@ -66,7 +66,7 @@ namespace WebApi.Workflows.Holiday
       if (model == null) throw new ArgumentNullException(nameof(model));
 
       var holiday = await FindOrCreate(null);
-      holiday.Superior = "alice";
+      holiday.Superior = "Alice";
 
       var triggerParam = new TriggerParam(HolidayApprovalWorkflow.APPLY_TRIGGER, holiday)
        .AddVariableWithKey<ApplyHolidayViewModel>(model);

@@ -92,7 +92,7 @@ namespace WebApi.Workflows.Issue
       // because admin is the dev ;-)...
       var issue = context.GetInstance<Issue>();
 
-      issue.Assignee = "admin";
+      issue.Assignee = "Admin";
 
       this._logger.LogInformation($"Assignee: {issue.Assignee}");
     }

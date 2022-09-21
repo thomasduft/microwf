@@ -40,7 +40,7 @@ namespace WebApi.Workflows.Issue
 
     public async Task<IEnumerable<string>> GetAssigneesAsync()
     {
-      return await Task.FromResult(new string[] { "alice", "admin" });
+      return await Task.FromResult(new string[] { "Alice", "Admin" });
     }
 
     public async Task<IWorkflowResult<IssueViewModel>> NewAsync()

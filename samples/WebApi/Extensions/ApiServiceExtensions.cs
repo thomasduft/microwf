@@ -75,7 +75,7 @@ namespace WebApi.Extensions
     {
       return new List<UserWorkflowMapping> {
         new UserWorkflowMapping {
-          UserName = "admin",
+          UserName = "Admin",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
             IssueTrackingWorkflow.TYPE,
@@ -83,7 +83,7 @@ namespace WebApi.Extensions
           }
         },
         new UserWorkflowMapping {
-          UserName = "alice",
+          UserName = "Alice",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
             IssueTrackingWorkflow.TYPE,
@@ -91,7 +91,7 @@ namespace WebApi.Extensions
           }
         },
         new UserWorkflowMapping {
-          UserName = "bob",
+          UserName = "Bob",
           WorkflowDefinitions = new List<string> {
             HolidayApprovalWorkflow.TYPE,
             StepperWorkflow.TYPE

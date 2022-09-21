@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using WebApi.Domain;
 using WebApi.Extensions;
+using System.Text.Json.Serialization;
 
 namespace WebApi;
 
@@ -27,7 +29,7 @@ public static class ConfigureServices
        opt.RequireHttpsMetadata = false;
        opt.IncludeErrorDetails = true;
        opt.SaveToken = true;
-       // opt.MapInboundClaims = false;
+       opt.MapInboundClaims = false;
        opt.TokenValidationParameters = new TokenValidationParameters()
        {
          ValidateIssuer = false,
@@ -44,7 +46,11 @@ public static class ConfigureServices
     services.AddApiServices<DomainContext>(configuration);
 
     services.AddHttpContextAccessor();
-    services.AddControllers();
+    services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+              options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
 
     if (environment.IsDevelopment())
     {
