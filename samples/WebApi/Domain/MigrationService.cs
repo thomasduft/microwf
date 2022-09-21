@@ -5,7 +5,7 @@ namespace WebApi.Domain
 {
   public interface IMigrationService
   {
-    Task EnsureMigrationAsync();
+    Task EnsureMigrationAsync(CancellationToken cancellationToken);
   }
 
   public class MigrationService : IMigrationService
@@ -17,7 +17,7 @@ namespace WebApi.Domain
       _context = context;
     }
 
-    public async Task EnsureMigrationAsync()
+    public async Task EnsureMigrationAsync(CancellationToken cancellationToken)
     {
       await _context.Database.MigrateAsync();
     }

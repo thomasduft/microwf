@@ -12,7 +12,7 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "build",
+      "label": "build-webapi",
       "command": "dotnet",
       "type": "process",
       "args": [

@@ -1,91 +1,62 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using WebApi;
 using WebApi.Domain;
 
-namespace WebApi
+var loggerConfiguration = new ConfigurationBuilder()
+  .AddJsonFile("appsettings.json")
+  .Build();
+
+Log.Logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(loggerConfiguration)
+  .CreateLogger();
+
+try
 {
-  public class Program
+  Log.Information("Starting WebHost");
+
+  var builder = WebApplication.CreateBuilder(args);
+  var configuration = builder.Configuration;
+  var environment = builder.Environment;
+
+  // Configure Kestrel
+  builder.WebHost.ConfigureKestrel(serverOptions =>
   {
-    public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-      .SetBasePath(Directory.GetCurrentDirectory())
-      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-      .AddJsonFile(
-          $"appsettings.Docker.json",
-          optional: true,
-          reloadOnChange: true
-        )
-      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
-      .AddEnvironmentVariables()
-      .Build();
+    serverOptions.AddServerHeader = false;
+  });
+  builder.WebHost.UseSerilog();
 
-    public static async Task Main(string[] args)
+  // Configure services
+  builder.Services.AddServer(configuration, environment);
+
+  // Configure application pipeline
+  var app = builder.Build();
+  app.UseServer(environment);
+
+  // Ensure DB migrations
+  using (var scope = app.Services.CreateScope())
+  {
+    var services = scope.ServiceProvider;
+    try
     {
-      Log.Logger = new LoggerConfiguration()
-        .ReadFrom.Configuration(Configuration)
-        .CreateLogger();
-
-      try
-      {
-        Log.Information("Starting up");
-        await Start(args);
-      }
-      catch (Exception ex)
-      {
-        Log.Fatal(ex, "Application start failed!");
-      }
-      finally
-      {
-        Log.CloseAndFlush();
-      }
+      var migrator = services.GetRequiredService<IMigrationService>();
+      migrator.EnsureMigrationAsync(default).GetAwaiter().GetResult();
     }
-
-    public static async Task Start(string[] args)
+    catch (Exception ex)
     {
-      var host = CreateHostBuilder(args).Build();
-
-      // ensure database will be migrated
-      using (var scope = host.Services.CreateScope())
-      {
-        var services = scope.ServiceProvider;
-        try
-        {
-          var migrator = services.GetRequiredService<IMigrationService>();
-          await migrator.EnsureMigrationAsync();
-        }
-        catch (Exception ex)
-        {
-          var logger = services.GetRequiredService<ILogger<Program>>();
-          logger.LogError(ex, "An error occurred while migrating the database.");
-        }
-      }
-
-      await host.RunAsync();
-    }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-      Host.CreateDefaultBuilder(args)
-        .UseSerilog()
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-          webBuilder.UseUrls(GetUrls(Configuration));
-          webBuilder.UseStartup<Startup>();
-        });
-
-    private static string GetUrls(IConfiguration config)
-    {
-      var domainSettings = config.GetSection("DomainSettings");
-      var schema = domainSettings.GetValue<string>("Schema");
-      var host = domainSettings.GetValue<string>("Host");
-      var port = domainSettings.GetValue<int>("Port");
-
-      return $"{schema}://{host}:{port}";
+      app.Logger.LogError(ex, "An error occurred while migrating the database.");
     }
   }
+
+  app.Run();
 }
+catch (Exception ex)
+{
+  Log.Fatal(ex, "WebHost terminated unexpectedly");
+  return 1;
+}
+finally
+{
+  Log.CloseAndFlush();
+}
+
+return 0;

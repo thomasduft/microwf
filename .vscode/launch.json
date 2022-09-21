@@ -5,53 +5,49 @@
       "name": "STS",
       "type": "coreclr",
       "request": "launch",
-      "console": "externalTerminal",
       "preLaunchTask": "build-sts",
-      "program": "${workspaceRoot}/samples/STS/bin/Debug/net5.0/STS.dll",
-      "args": [],
+      "program": "${workspaceRoot}/samples/STS/bin/Debug/net6.0/STS.dll",
+      "args": [
+        "--urls",
+        "https://localhost:5000"
+      ],
       "cwd": "${workspaceRoot}/samples/STS",
-      "stopAtEntry": false
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "console": "integratedTerminal"
     },
     {
       "name": "WebApi",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build",
-      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net5.0/WebApi.dll",
-      "args": [],
+      "preLaunchTask": "build-webapi",
+      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net6.0/WebApi.dll",
+      "args": [
+        "--urls",
+        "https://localhost:5001"
+      ],
       "cwd": "${workspaceRoot}/samples/WebApi",
       "stopAtEntry": false,
-      "launchBrowser": {
-        "enabled": true,
-        "args": "${auto-detect-url}",
-        "windows": {
-          "command": "cmd.exe",
-          "args": "/C start ${auto-detect-url}"
-        },
-        "osx": {
-          "command": "open"
-        },
-        "linux": {
-          "command": "xdg-open"
-        }
-      },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sourceFileMap": {
         "/Views": "${workspaceRoot}/Views"
-      }
+      },
+      "console": "integratedTerminal",
     },
     {
       "name": "ConsoleClient",
       "type": "coreclr",
       "request": "launch",
-      "console":"externalTerminal",
       "preLaunchTask": "build-ConsoleClient",
-      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net5.0/ConsoleClient.dll",
+      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net6.0/ConsoleClient.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
-      "stopAtEntry": false
+      "stopAtEntry": false,
+      "console":"externalTerminal"
     }
   ]
 }
