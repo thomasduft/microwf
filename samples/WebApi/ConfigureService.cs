@@ -27,6 +27,7 @@ public static class ConfigureServices
        opt.RequireHttpsMetadata = false;
        opt.IncludeErrorDetails = true;
        opt.SaveToken = true;
+       // opt.MapInboundClaims = false;
        opt.TokenValidationParameters = new TokenValidationParameters()
        {
          ValidateIssuer = false,
