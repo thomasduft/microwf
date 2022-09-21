@@ -3,7 +3,7 @@ import {
   Input
 } from '@angular/core';
 import {
-  FormGroup,
+  UntypedFormGroup,
   AbstractControl
 } from '@angular/forms';
 
@@ -104,7 +104,7 @@ export class EditorComponent {
   public editor: Editor;
 
   @Input()
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   public control(name: string): AbstractControl {
     return this.form.get(name);

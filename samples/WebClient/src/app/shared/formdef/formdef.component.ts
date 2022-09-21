@@ -6,7 +6,7 @@ import {
   Output,
   HostBinding
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { Slot } from './models';
 import { FormdefService } from './formdef.service';
@@ -86,7 +86,7 @@ export class FormdefComponent implements OnInit {
   @HostBinding('class')
   public class = 'form';
 
-  public form: FormGroup = new FormGroup({});
+  public form: UntypedFormGroup = new UntypedFormGroup({});
   public slot: Slot;
 
   public get formValue(): any {

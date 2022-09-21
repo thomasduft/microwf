@@ -9,7 +9,7 @@ import {
   ComponentFactoryResolver
 } from '@angular/core';
 import {
-  FormGroup
+  UntypedFormGroup
 } from '@angular/forms';
 
 import { Slot, SINGLE_SLOT } from './models';
@@ -22,7 +22,7 @@ import { SlotComponentRegistry } from './slotComponentRegistry.service';
 export class SlotHostComponent implements OnInit, OnDestroy {
   private _componentRef: ComponentRef<any>;
   private _slot: Slot;
-  private _form: FormGroup;
+  private _form: UntypedFormGroup;
 
   @Input()
   public set slot(slot: Slot) {
@@ -30,7 +30,7 @@ export class SlotHostComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  public set form(form: FormGroup) {
+  public set form(form: UntypedFormGroup) {
     this._form = form;
   }
 
