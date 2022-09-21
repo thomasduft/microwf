@@ -48,6 +48,11 @@ public static class ConfigureServices
       options.ClaimsIdentity.RoleClaimType = Claims.Role;
     });
 
+    services.ConfigureApplicationCookie(options => {
+      options.LoginPath = new PathString("/Login");
+      options.LogoutPath = new PathString("/Logout");
+    });
+
     // OpenIddict offers native integration with Quartz.NET to perform scheduled tasks
     // (like pruning orphaned authorizations/tokens from the database) at regular intervals.
     services.AddQuartz(options =>

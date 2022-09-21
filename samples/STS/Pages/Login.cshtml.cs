@@ -25,10 +25,10 @@ public class LoginModel : PageModel
   [BindProperty]
   public InputModel? Input { get; set; }
 
-  public string ReturnUrl { get; set; }
+  public string? ReturnUrl { get; set; }
 
   [TempData]
-  public string ErrorMessage { get; set; }
+  public string? ErrorMessage { get; set; }
 
   public class InputModel
   {

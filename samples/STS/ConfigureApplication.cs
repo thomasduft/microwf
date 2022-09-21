@@ -27,7 +27,7 @@ public static class ConfigureApplication
     app.UseDefaultFiles();
     app.UseStaticFiles();
 
-    app.UseStatusCodePagesWithReExecute("/error");
+    // app.UseStatusCodePagesWithReExecute("/error");
 
     app.UseRouting();
 
