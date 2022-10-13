@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApi.Migrations
+#nullable disable
+
+namespace WebApi.Api.Domain.Data
 {
     public partial class Initial : Migration
     {
@@ -11,15 +13,15 @@ namespace WebApi.Migrations
                 name: "Holiday",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(nullable: false),
-                    State = table.Column<string>(nullable: false),
-                    Assignee = table.Column<string>(nullable: false),
-                    Requester = table.Column<string>(nullable: false),
-                    Superior = table.Column<string>(nullable: true),
-                    From = table.Column<DateTime>(nullable: true),
-                    To = table.Column<DateTime>(nullable: true)
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    State = table.Column<string>(type: "TEXT", nullable: false),
+                    Assignee = table.Column<string>(type: "TEXT", nullable: false),
+                    Requester = table.Column<string>(type: "TEXT", nullable: false),
+                    Superior = table.Column<string>(type: "TEXT", nullable: true),
+                    From = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    To = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,14 +32,14 @@ namespace WebApi.Migrations
                 name: "Issue",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(nullable: false),
-                    State = table.Column<string>(nullable: false),
-                    Creator = table.Column<string>(nullable: false),
-                    Assignee = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    State = table.Column<string>(type: "TEXT", nullable: false),
+                    Creator = table.Column<string>(type: "TEXT", nullable: false),
+                    Assignee = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,13 +50,13 @@ namespace WebApi.Migrations
                 name: "Stepper",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(nullable: false),
-                    State = table.Column<string>(nullable: false),
-                    Assignee = table.Column<string>(nullable: false),
-                    Creator = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    State = table.Column<string>(type: "TEXT", nullable: false),
+                    Assignee = table.Column<string>(type: "TEXT", nullable: false),
+                    Creator = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,14 +67,14 @@ namespace WebApi.Migrations
                 name: "Workflow",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(nullable: false),
-                    State = table.Column<string>(nullable: false),
-                    CorrelationId = table.Column<int>(nullable: false),
-                    Assignee = table.Column<string>(nullable: true),
-                    Started = table.Column<DateTime>(nullable: false),
-                    Completed = table.Column<DateTime>(nullable: true)
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    State = table.Column<string>(type: "TEXT", nullable: false),
+                    CorrelationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Assignee = table.Column<string>(type: "TEXT", nullable: true),
+                    Started = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Completed = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,14 +85,14 @@ namespace WebApi.Migrations
                 name: "WorkItem",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TriggerName = table.Column<string>(nullable: false),
-                    EntityId = table.Column<int>(nullable: false),
-                    WorkflowType = table.Column<string>(nullable: false),
-                    Retries = table.Column<int>(nullable: false),
-                    Error = table.Column<string>(nullable: true),
-                    DueDate = table.Column<DateTime>(nullable: false)
+                    TriggerName = table.Column<string>(type: "TEXT", nullable: false),
+                    EntityId = table.Column<int>(type: "INTEGER", nullable: false),
+                    WorkflowType = table.Column<string>(type: "TEXT", nullable: false),
+                    Retries = table.Column<int>(type: "INTEGER", nullable: false),
+                    Error = table.Column<string>(type: "TEXT", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,11 +103,11 @@ namespace WebApi.Migrations
                 name: "HolidayMessage",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Author = table.Column<string>(nullable: false),
-                    Message = table.Column<string>(nullable: false),
-                    HolidayId = table.Column<int>(nullable: false)
+                    Author = table.Column<string>(type: "TEXT", nullable: false),
+                    Message = table.Column<string>(type: "TEXT", nullable: false),
+                    HolidayId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,13 +124,13 @@ namespace WebApi.Migrations
                 name: "WorkflowHistory",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    FromState = table.Column<string>(nullable: false),
-                    ToState = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    WorkflowId = table.Column<int>(nullable: false)
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    FromState = table.Column<string>(type: "TEXT", nullable: false),
+                    ToState = table.Column<string>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkflowId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,11 +147,11 @@ namespace WebApi.Migrations
                 name: "WorkflowVariable",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(nullable: false),
-                    Content = table.Column<string>(nullable: false),
-                    WorkflowId = table.Column<int>(nullable: false)
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    WorkflowId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

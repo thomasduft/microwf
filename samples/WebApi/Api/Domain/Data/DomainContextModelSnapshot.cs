@@ -2,21 +2,136 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Domain;
 
-namespace WebApi.Migrations
+#nullable disable
+
+namespace WebApi.Api.Domain.Data
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20200525073541_Initial")]
-    partial class Initial
+    partial class DomainContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
+
+            modelBuilder.Entity("tomware.Microwf.Domain.Workflow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Assignee")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("Completed")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CorrelationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Started")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Workflow", (string)null);
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FromState")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ToState")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("WorkflowId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkflowId");
+
+                    b.ToTable("WorkflowHistory", (string)null);
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowVariable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("WorkflowId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkflowId");
+
+                    b.ToTable("WorkflowVariable", (string)null);
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Domain.WorkItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Retries")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("TriggerName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkflowType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkItem", (string)null);
+                });
 
             modelBuilder.Entity("WebApi.Workflows.Holiday.Holiday", b =>
                 {
@@ -143,131 +258,6 @@ namespace WebApi.Migrations
                     b.ToTable("Stepper");
                 });
 
-            modelBuilder.Entity("tomware.Microwf.Domain.WorkItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Error")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Retries")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("TriggerName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("WorkflowType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WorkItem");
-                });
-
-            modelBuilder.Entity("tomware.Microwf.Domain.Workflow", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Assignee")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("Completed")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("CorrelationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Started")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Workflow");
-                });
-
-            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FromState")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ToState")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("WorkflowId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkflowId");
-
-                    b.ToTable("WorkflowHistory");
-                });
-
-            modelBuilder.Entity("tomware.Microwf.Domain.WorkflowVariable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("WorkflowId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkflowId");
-
-                    b.ToTable("WorkflowVariable");
-                });
-
-            modelBuilder.Entity("WebApi.Workflows.Holiday.HolidayMessage", b =>
-                {
-                    b.HasOne("WebApi.Workflows.Holiday.Holiday", "Holiday")
-                        .WithMany("Messages")
-                        .HasForeignKey("HolidayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("tomware.Microwf.Domain.WorkflowHistory", b =>
                 {
                     b.HasOne("tomware.Microwf.Domain.Workflow", "Workflow")
@@ -275,6 +265,8 @@ namespace WebApi.Migrations
                         .HasForeignKey("WorkflowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Workflow");
                 });
 
             modelBuilder.Entity("tomware.Microwf.Domain.WorkflowVariable", b =>
@@ -284,6 +276,31 @@ namespace WebApi.Migrations
                         .HasForeignKey("WorkflowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Workflow");
+                });
+
+            modelBuilder.Entity("WebApi.Workflows.Holiday.HolidayMessage", b =>
+                {
+                    b.HasOne("WebApi.Workflows.Holiday.Holiday", "Holiday")
+                        .WithMany("Messages")
+                        .HasForeignKey("HolidayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Holiday");
+                });
+
+            modelBuilder.Entity("tomware.Microwf.Domain.Workflow", b =>
+                {
+                    b.Navigation("WorkflowHistories");
+
+                    b.Navigation("WorkflowVariables");
+                });
+
+            modelBuilder.Entity("WebApi.Workflows.Holiday.Holiday", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

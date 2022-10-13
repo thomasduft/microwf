@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="logs\" />
+    <Folder Include="STS\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

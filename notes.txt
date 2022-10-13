@@ -21,11 +21,8 @@ Import existing pfx cert in ubuntu:
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 
-dotnet ef migrations add <somename> -c DomainContext
-dotnet ef database update -c DomainContext
-dotnet ef database drop
 
-
+- dotnet ef migrations add Initial -c DomainContext -o Api/Domain/Data
 - dotnet ef migrations add Initial -c ApplicationDbContext -o Domain/Data
 - dotnet ef migrations add InitialUI -c OpenIddictUIContext -o Domain/Data/UI
 - dotnet ef migrations add InitialIdentity -c OpenIddictUIIdentityContext -o Domain/Data/Identity
