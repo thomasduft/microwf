@@ -1,16 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 using WebApi.Domain;
 using WebApi.Extensions;
 using System.Text.Json.Serialization;
 
 namespace WebApi;
 
-public static class ConfigureServices
+public static class ApiConfigureServices
 {
-  public static IServiceCollection AddServer(
+  public static IServiceCollection AddApiServices(
     this IServiceCollection services,
     IConfiguration configuration,
     IWebHostEnvironment environment
