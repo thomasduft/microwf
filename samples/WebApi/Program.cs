@@ -29,6 +29,7 @@ try
   builder.Services.AddSTSServices(configuration, environment);
   builder.Services.AddApiServices(configuration, environment);
   builder.Services.AddScoped<IMigrationService, MigrationService>();
+  builder.Services.AddSecurityServices();
 
   // Configure application pipeline
   var app = builder.Build();
