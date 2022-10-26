@@ -44,6 +44,8 @@ public static class ConfigureApplication
     app.UseEndpoints(endpoints =>
     {
       endpoints.MapControllers();
+      endpoints.MapRazorPages();
+      endpoints.MapDefaultControllerRoute();
     });
   }
 

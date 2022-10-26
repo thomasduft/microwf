@@ -11,13 +11,13 @@ using WebApi.Domain;
 namespace WebApi.Api.Domain.Data
 {
     [DbContext(typeof(DomainContext))]
-    [Migration("20221013055257_Initial")]
+    [Migration("20221026072131_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
             modelBuilder.Entity("tomware.Microwf.Domain.Workflow", b =>
                 {

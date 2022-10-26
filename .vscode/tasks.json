@@ -2,16 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build-sts",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceRoot}/samples/STS/STS.csproj"
-      ],
-      "problemMatcher": "$msCompile"
-    },
-    {
       "label": "build-webapi",
       "command": "dotnet",
       "type": "process",

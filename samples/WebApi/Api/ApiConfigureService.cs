@@ -38,8 +38,10 @@ public static class ApiConfigureServices
        };
      });
 
-    var connection = configuration["ConnectionString"];
-    services.AddDbContext<DomainContext>(o => o.UseSqlite(connection));
+
+    services.AddDbContext<DomainContext>(o => o.UseSqlite(
+      configuration.GetConnectionString("DefaultConnection")
+    ));
 
     // Api services
     services.AddApiServices<DomainContext>(configuration);

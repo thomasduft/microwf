@@ -1,0 +1,15 @@
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (!SignInManager.IsSignedIn(User))
+{
+  <li class="nav-item">
+    <a class="nav-link text-dark" 
+       asp-page="/Login">Login</a>
+  </li>
+}
+else {
+  <li class="nav-item">
+    <a class="nav-link text-dark" 
+       asp-page="/Logout">Logout (@User?.Identity?.Name)</a>
+  </li>
+}

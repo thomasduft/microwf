@@ -26,7 +26,9 @@ try
   builder.WebHost.UseSerilog();
 
   // Configure services
+  builder.Services.AddSTSServices(configuration, environment);
   builder.Services.AddApiServices(configuration, environment);
+  builder.Services.AddScoped<IMigrationService, MigrationService>();
 
   // Configure application pipeline
   var app = builder.Build();

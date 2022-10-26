@@ -15,7 +15,7 @@ namespace WebApi.Api.Domain.Data
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
             modelBuilder.Entity("tomware.Microwf.Domain.Workflow", b =>
                 {

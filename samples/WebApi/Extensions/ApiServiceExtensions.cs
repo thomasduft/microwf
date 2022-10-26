@@ -2,7 +2,6 @@ using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
 using tomware.Microwf.Engine;
 using tomware.Microwf.Infrastructure;
-using WebApi.Domain;
 using WebApi.Workflows.Holiday;
 using WebApi.Workflows.Issue;
 using WebApi.Workflows.Stepper;
@@ -38,8 +37,6 @@ namespace WebApi.Extensions
       services.AddTransient<IHolidayService, HolidayService>();
       services.AddTransient<IIssueService, IssueService>();
       services.AddTransient<IStepperService, StepperService>();
-
-      services.AddScoped<IMigrationService, MigrationService>();
 
       return services;
     }
