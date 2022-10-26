@@ -25,7 +25,6 @@ EF commands:
 - dotnet ef migrations add Initial -c DomainContext -o Api/Domain/Data
 - dotnet ef migrations add Initial -c STSDbContext -o STS/Domain/Data
 
-
 ----------------------------------------------------------------------------------------------------
 Docker commands:
 - docker run -it --rm -p 5000:5000 --name microwf tomware/microwf-playground:1.8.0
