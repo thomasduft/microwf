@@ -47,7 +47,7 @@
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
       "stopAtEntry": false,
-      "console":"externalTerminal"
+      "console": "integratedTerminal"
     }
   ]
 }

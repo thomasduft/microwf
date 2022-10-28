@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleClient
 {
-  // see here:
-  //  - https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=netcore-2.2
-  //  - https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/console-webapiclient
   class Program
   {
     static readonly string STS_HOST = "https://localhost:5000";
@@ -27,7 +24,11 @@ namespace ConsoleClient
 
     static async Task MainAsync(string[] args)
     {
-      var httpClient = new HttpClient();
+      HttpClientHandler clientHandler = new HttpClientHandler();
+      clientHandler.ServerCertificateCustomValidationCallback 
+        = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+      var httpClient = new HttpClient(clientHandler);
       // Just a sample call with an invalid access token.
       // The expected response from this call is 401 Unauthorized
       var apiResponse = await httpClient.GetAsync($"{API_HOST}/api/workflow");
