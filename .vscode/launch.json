@@ -30,7 +30,7 @@
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
       "stopAtEntry": false,
-      "console":"integratedTerminal"
+      "console": "integratedTerminal"
     }
   ]
 }
