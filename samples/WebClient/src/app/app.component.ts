@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   private async configure() {
-    const issuer = 'https://localhost:5000/';
+    const issuer = 'https://localhost:5001/';
 
     this.oauthService.configure({
       clientId: 'spa_webclient',

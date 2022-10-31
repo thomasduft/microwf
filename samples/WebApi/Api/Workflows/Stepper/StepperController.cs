@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OpenIddict.Validation.AspNetCore;
 using WebApi.Common;
 
 namespace WebApi.Workflows.Stepper
 {
-  [Authorize]
+  [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
   [Route("api/stepper")]
   public class StepperController : Controller
   {

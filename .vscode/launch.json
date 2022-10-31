@@ -2,23 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "STS",
-      "type": "coreclr",
-      "request": "launch",
-      "preLaunchTask": "build-sts",
-      "program": "${workspaceRoot}/samples/STS/bin/Debug/net6.0/STS.dll",
-      "args": [
-        "--urls",
-        "https://localhost:5000"
-      ],
-      "cwd": "${workspaceRoot}/samples/STS",
-      "stopAtEntry": false,
-      "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "console": "integratedTerminal"
-    },
-    {
       "name": "WebApi",
       "type": "coreclr",
       "request": "launch",

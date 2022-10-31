@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config local.proxy.conf.js",
     "build": "ng build --configuration production",
-    "publish": "ng build --configuration production --output-path=../WebApi/wwwroot",
+    "publish": "ng build --configuration production --output-path=dist",
     "test": "ng test --watch=false",
     "lint": "ng lint"
   },

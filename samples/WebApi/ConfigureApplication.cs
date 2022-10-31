@@ -31,8 +31,6 @@ public static class ConfigureApplication
 
     app.UseSerilogRequestLogging();
 
-    ConsiderSpaRoutes(app);
-
     app.UseDefaultFiles();
     app.UseStaticFiles();
 
@@ -41,9 +39,13 @@ public static class ConfigureApplication
     app.UseAuthentication();
     app.UseAuthorization();
 
+    ConsiderSpaRoutes(app);
+
     app.UseEndpoints(endpoints =>
     {
       endpoints.MapControllers();
+      endpoints.MapRazorPages();
+      endpoints.MapDefaultControllerRoute();
     });
   }
 
