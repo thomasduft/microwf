@@ -10,10 +10,12 @@ namespace WebApi.Workflows.Holiday
 
     public const string TYPE = "HolidayApprovalWorkflow";
 
+    // Triggers
     public const string APPLY_TRIGGER = "apply";
     public const string APPROVE_TRIGGER = "approve";
     public const string REJECT_TRIGGER = "reject";
 
+    // States
     public const string NEW_STATE = "new";
     public const string APPLIED_STATE = "applied";
     public const string APPROVED_STATE = "approved";

@@ -16,6 +16,7 @@ namespace WebApi.Workflows.Stepper
   {
     public const string TYPE = "StepperWorkflow";
 
+    // Triggers
     public const string GOTO1_TRIGGER = "goto1";
     public const string GOTO2_TRIGGER = "goto2";
     public const string GOTO3_TRIGGER = "goto3";
@@ -23,7 +24,7 @@ namespace WebApi.Workflows.Stepper
     public const string GOTO5_TRIGGER = "goto5";
     public const string CANCEL_TRIGGER = "cancel";
 
-
+    // States
     public const string NEW_STATE = "new";
     public const string STEP1_STATE = "step1";
     public const string STEP2_STATE = "step2";

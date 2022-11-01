@@ -9,6 +9,7 @@ namespace WebApi.Workflows.Issue
 
     public const string TYPE = "IssueTrackingWorkflow";
 
+    // Triggers
     public const string ASSIGN_TRIGGER = "assign";
     public const string FIX_TRIGGER = "fix";
     public const string REVIEW_TRIGGER = "review";
@@ -16,7 +17,7 @@ namespace WebApi.Workflows.Issue
     public const string CLOSE_TRIGGER = "close";
     public const string REJECT_TRIGGER = "reject";
 
-
+    // States
     public const string OPEN_STATE = "open";
     public const string ASSIGNED_STATE = "assigned";
     public const string IN_PROGRESS_STATE = "in_progress";

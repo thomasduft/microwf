@@ -15,11 +15,11 @@ namespace WebApi.Common
       {
         IEnumerable<TriggerResult> triggerResults = await workflowEngine.GetTriggersAsync(instance);
         var triggers = triggerResults.Select(x => x.TriggerName);
-        info = WorkflowTriggerInfo.createForSuccess(triggers);
+        info = WorkflowTriggerInfo.Success(triggers);
       }
       else
       {
-        info = WorkflowTriggerInfo.createForError(result.Errors);
+        info = WorkflowTriggerInfo.Error(result.Errors);
       }
 
       return info;

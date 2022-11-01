@@ -8,20 +8,20 @@ namespace WebApi.Common
 
     public IEnumerable<string> Triggers { get; set; }
 
-    public static WorkflowTriggerInfo createForSuccess(IEnumerable<string> triggers)
+    public static WorkflowTriggerInfo Success(IEnumerable<string> triggers)
     {
-      var info = new WorkflowTriggerInfo();
-      info.Triggers = triggers;
-
-      return info;
+      return new WorkflowTriggerInfo
+      {
+        Triggers = triggers
+      };
     }
 
-    public static WorkflowTriggerInfo createForError(IEnumerable<string> errors)
+    public static WorkflowTriggerInfo Error(IEnumerable<string> errors)
     {
-      var info = new WorkflowTriggerInfo();
-      info.Errors = errors;
-
-      return info;
+      return new WorkflowTriggerInfo
+      {
+        Errors = errors
+      };
     }
   }
 
