@@ -1,34 +1,13 @@
 notes:
-- WorkItem Id as Guid
 
-----------------------------------------------------------------------------------------------------
-self signed dev certificate:
-- http://www.waynethompson.com.au/blog/dotnet-dev-certs-https/
-- https://www.humankode.com/asp-net-core/develop-locally-with-https-self-signed-certificates-and-asp-net-core
-
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf -passin pass:MyDevCert
-sudo openssl pkcs12 -export -out ubuntu_localhost.pfx -inkey localhost.key -in localhost.crt
-
-certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "localhost" -i localhost.crt
-certutil -L -d sql:${HOME}/.pki/nssdb
-delete cert
-  - certutil -D -d sql:${HOME}/.pki/nssdb -n "localhost"
-
-Import existing pfx cert in ubuntu:
-- https://www.helloitsliam.com/2016/03/30/installing-certificate-pfx-into-debian-linux/
+- [ ] WorkItem Id as Guid
 
 ----------------------------------------------------------------------------------------------------
 EF commands:
 - see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 
-
 - dotnet ef migrations add Initial -c DomainContext -o Api/Domain/Data
 - dotnet ef migrations add Initial -c STSDbContext -o STS/Domain/Data
-
-----------------------------------------------------------------------------------------------------
-Docker commands:
-- docker run -it --rm -p 5000:5000 --name microwf tomware/microwf-playground:1.8.0
-- docker push <image>
 
 ----------------------------------------------------------------------------------------------------
 Global tools in docker container issue:
