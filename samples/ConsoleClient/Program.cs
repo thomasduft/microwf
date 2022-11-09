@@ -50,7 +50,8 @@ namespace ConsoleClient
 
         httpClient.SetBearerToken(response.AccessToken);
 
-        var steppers = GetSteppers(AMOUNT_OF_STEPPERS);
+        var stepperAmount = args.Length == 1 ? int.Parse(args[0]) : AMOUNT_OF_STEPPERS;
+        var steppers = GetSteppers(stepperAmount);
         foreach (var stepper in steppers)
         {
           var createStepperResponse = await CreateStepper(httpClient, stepper);
