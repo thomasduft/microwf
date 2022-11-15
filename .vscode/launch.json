@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-webapi",
-      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net6.0/WebApi.dll",
+      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net7.0/WebApi.dll",
       "args": [
         "--urls",
         "https://localhost:5001"
@@ -26,7 +26,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-ConsoleClient",
-      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net6.0/ConsoleClient.dll",
+      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net7.0/ConsoleClient.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
       "stopAtEntry": false,
