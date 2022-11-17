@@ -1,0 +1,9 @@
+{
+  "Id": "e201c042-da79-4bf9-af0c-b88767cc7148",
+  "IssueId": "",
+  "Prefix": "Changed",
+  "Tag": "",
+  "Message": "support for .net7.0",
+  "CreatedAt": "2022-11-17T20:34:39.4104306+00:00",
+  "CreatedBy": "vscode"
+}
