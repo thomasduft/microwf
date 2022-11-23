@@ -2,6 +2,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "build",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-targets",
+      "program": "${workspaceFolder}/build/bin/Debug/net7.0/targets.dll",
+      "args": [
+        "pack --version=0.0.2&key=1234567890"
+      ],
+      "cwd": "${workspaceFolder}/build",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
+    },
+    {
       "name": "WebApi",
       "type": "coreclr",
       "request": "launch",
