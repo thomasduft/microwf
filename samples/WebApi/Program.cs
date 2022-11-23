@@ -23,7 +23,7 @@ try
   {
     serverOptions.AddServerHeader = false;
   });
-  builder.WebHost.UseSerilog();
+  builder.Host.UseSerilog();
 
   // Configure services
   builder.Services.AddSTSServices(configuration, environment);
