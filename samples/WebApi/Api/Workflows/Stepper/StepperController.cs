@@ -27,7 +27,7 @@ namespace WebApi.Workflows.Stepper
 
     [HttpPost]
     [ProducesResponseType(typeof(int), 201)]
-    public async Task<IActionResult> Post([FromBody]string name)
+    public async Task<IActionResult> Post([FromBody] string name)
     {
       if (string.IsNullOrEmpty(name)) return BadRequest();
 
@@ -38,7 +38,7 @@ namespace WebApi.Workflows.Stepper
 
     [HttpPost("process")]
     [ProducesResponseType(200)]
-    public async Task Process([FromBody]ProcessStepViewModel model)
+    public async Task Process([FromBody] ProcessStepViewModel model)
     {
       if (model == null) BadRequest();
       if (!this.ModelState.IsValid) BadRequest(this.ModelState);

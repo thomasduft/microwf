@@ -19,7 +19,7 @@ namespace tomware.Microwf.Tests.Unit.Core
 
       // Assert
       Assert.NotNull(states);
-     Assert.Equal(4, states.Count());
+      Assert.Equal(4, states.Count());
     }
 
     [Fact]
@@ -33,7 +33,7 @@ namespace tomware.Microwf.Tests.Unit.Core
 
       // Assert
       Assert.NotNull(triggers);
-     Assert.Equal(3, triggers.Count());
+      Assert.Equal(3, triggers.Count());
     }
 
     [Fact]
@@ -47,7 +47,7 @@ namespace tomware.Microwf.Tests.Unit.Core
 
       // Assert
       Assert.NotNull(transitions);
-     Assert.Equal(3, transitions.Count());
+      Assert.Equal(3, transitions.Count());
     }
   }
 }

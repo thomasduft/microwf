@@ -17,7 +17,7 @@ namespace tomware.Microwf.Core
 
       sb.AppendLine($"digraph {workflow.Type} {{");
       if (!string.IsNullOrEmpty(rankDir)) sb.AppendLine($"  rankdir = {rankDir};");
-      foreach(var t in workflow.Transitions)
+      foreach (var t in workflow.Transitions)
       {
         sb.AppendLine($"  {t.State} -> {t.TargetState} [ label = {t.Trigger} ];");
       }

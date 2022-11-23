@@ -1,7 +1,7 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Domain;
 using WebApi.Extensions;
-using System.Text.Json.Serialization;
 
 namespace WebApi;
 

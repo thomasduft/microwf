@@ -40,7 +40,7 @@ namespace tomware.Microwf.Core
     /// <summary>
     /// Indicates whether there are Errors available.
     /// </summary>
-    public bool HasErrors 
+    public bool HasErrors
     {
       get { return _errors.Count > 0; }
     }

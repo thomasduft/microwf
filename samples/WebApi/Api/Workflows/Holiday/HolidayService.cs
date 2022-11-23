@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
-using WebApi.Domain;
 using WebApi.Common;
+using WebApi.Domain;
 
 namespace WebApi.Workflows.Holiday
 {
@@ -88,7 +88,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
-      var info = await  this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new AssigneeWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, AssigneeWorkflowResult>(info, holiday, viewModel);
@@ -103,7 +103,7 @@ namespace WebApi.Workflows.Holiday
 
       var triggerResult = await this._workflowEngine.TriggerAsync(triggerParam);
 
-      var info = await  this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
+      var info = await this._workflowEngine.ToWorkflowTriggerInfo(holiday, triggerResult);
       var viewModel = new AssigneeWorkflowResult(holiday.Assignee);
 
       return new WorkflowResult<Holiday, AssigneeWorkflowResult>(info, holiday, viewModel);

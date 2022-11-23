@@ -1,10 +1,10 @@
-using IdentityModel.Client;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 
 namespace ConsoleClient
 {
@@ -21,9 +21,11 @@ namespace ConsoleClient
 
     static async Task MainAsync(string[] args)
     {
-      HttpClientHandler clientHandler = new HttpClientHandler();
-      clientHandler.ServerCertificateCustomValidationCallback
-        = (sender, cert, chain, sslPolicyErrors) => { return true; };
+      HttpClientHandler clientHandler = new HttpClientHandler
+      {
+        ServerCertificateCustomValidationCallback
+        = (sender, cert, chain, sslPolicyErrors) => { return true; }
+      };
 
       var httpClient = new HttpClient(clientHandler);
       httpClient.DefaultRequestHeaders.Clear();

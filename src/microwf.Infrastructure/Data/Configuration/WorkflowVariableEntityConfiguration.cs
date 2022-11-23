@@ -17,7 +17,7 @@ namespace tomware.Microwf.Infrastructure.Configuration
       builder.Property(x => x.Content).IsRequired();
 
       // relations
-      
+
     }
   }
 }

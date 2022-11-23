@@ -24,7 +24,7 @@ namespace tomware.Microwf.Tests.Unit.Core
 
       // Assert
       Assert.NotNull(diagraph);
-     Assert.Equal(expected.ToString(), diagraph);
+      Assert.Equal(expected.ToString(), diagraph);
     }
 
     [Fact]
@@ -45,7 +45,7 @@ namespace tomware.Microwf.Tests.Unit.Core
 
       // Assert
       Assert.NotNull(diagraph);
-     Assert.Equal(expected.ToString(), diagraph);
+      Assert.Equal(expected.ToString(), diagraph);
     }
   }
 }

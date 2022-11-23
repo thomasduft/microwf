@@ -19,7 +19,8 @@ namespace tomware.Microwf.Tests.Integration.Utils
 
     public IEnumerable<IWorkflowDefinition> Filter(IEnumerable<IWorkflowDefinition> definitions)
     {
-      if (this.filters != null) {
+      if (this.filters != null)
+      {
         return definitions.Where(d => this.filters.Select(f => f.Type).Contains(d.Type));
       }
 

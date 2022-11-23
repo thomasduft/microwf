@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using tomware.Microwf.Domain;
 
 namespace tomware.Microwf.Infrastructure

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using tomware.Microwf.Core;
 using tomware.Microwf.Domain;
-using WebApi.Domain;
 using WebApi.Common;
+using WebApi.Domain;
 
 namespace WebApi.Workflows.Issue
 {

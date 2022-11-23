@@ -7,11 +7,11 @@ namespace WebApi;
 
 public static class STSConfigureServices
 {
-public static IServiceCollection AddSTSServices(
-    this IServiceCollection services,
-    IConfiguration configuration,
-    IWebHostEnvironment environment
-  )
+  public static IServiceCollection AddSTSServices(
+      this IServiceCollection services,
+      IConfiguration configuration,
+      IWebHostEnvironment environment
+    )
   {
     services.AddDbContext<STSDbContext>(options =>
     {
