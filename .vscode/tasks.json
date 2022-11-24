@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build-targets",
+      "label": "build:targets",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -16,7 +16,7 @@
       }
     },
     {
-      "label": "build-webapi",
+      "label": "build:WebApi",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -30,7 +30,7 @@
       }
     },
     {
-      "label": "build-ConsoleClient",
+      "label": "build:ConsoleClient",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -42,6 +42,24 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "build:restore-tools",
+      "command": "./build.sh",
+      "type": "shell",
+      "args": [
+        "restore-tools"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build:test",
+      "command": "./build.sh",
+      "type": "shell",
+      "args": [
+        "test"
+      ],
+      "problemMatcher": "$msCompile"
     },
     {
       "label": "test",
@@ -59,6 +77,6 @@
         "kind": "test",
         "isDefault": true
       }
-    }
+    },
   ]
 }

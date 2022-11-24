@@ -5,7 +5,7 @@
       "name": "build",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build-targets",
+      "preLaunchTask": "build:targets",
       "program": "${workspaceFolder}/build/bin/Debug/net7.0/targets.dll",
       "args": [
         "pack --version=0.0.2&key=1234567890"
@@ -18,7 +18,7 @@
       "name": "WebApi",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build-webapi",
+      "preLaunchTask": "build:WebApi",
       "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net7.0/WebApi.dll",
       "args": [
         "--urls",
@@ -38,7 +38,7 @@
       "name": "ConsoleClient",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build-ConsoleClient",
+      "preLaunchTask": "build:ConsoleClient",
       "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net7.0/ConsoleClient.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
