@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microwf.Tests", "tests\micr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{54C725E1-6037-42A6-9E71-6B162ADA1032}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "targets", "build\targets.csproj", "{B91187FA-40E8-4F1F-A5A1-BBF69F2E2389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{BD1B50BB-02B0-4D7D-97F7-949DD4E5281D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD1B50BB-02B0-4D7D-97F7-949DD4E5281D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD1B50BB-02B0-4D7D-97F7-949DD4E5281D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91187FA-40E8-4F1F-A5A1-BBF69F2E2389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91187FA-40E8-4F1F-A5A1-BBF69F2E2389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91187FA-40E8-4F1F-A5A1-BBF69F2E2389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91187FA-40E8-4F1F-A5A1-BBF69F2E2389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
