@@ -31,7 +31,6 @@ internal static class Program
     public const string Build = "build";
     public const string Test = "test";
     public const string Pack = "pack";
-    public const string Push = "push";
     public const string Deploy = "deploy";
   }
 
@@ -66,7 +65,6 @@ internal static class Program
       Console.WriteLine($"Using version: '{version}'" + Environment.NewLine);
     }
 
-    // see https://github.com/DuendeSoftware/IdentityServer/blob/main/.config/dotnet-tools.json
     Target(Targets.RestoreTools, () =>
     {
       Run("dotnet", "tool restore");
@@ -114,7 +112,6 @@ internal static class Program
           continue;
 
         // 3. pack them
-        // Console.WriteLine($"pack {project} -c Release -p:PackageVersion={version} -p:Version={version} -o {directory} --no-build --nologo");
         if (version is not null && packableModules.Any(m => project.Contains(m)))
         {
           Run("dotnet", $"pack {project} -c Release -p:PackageVersion={version} -p:Version={version} -o {directory} --no-build --nologo");
@@ -122,37 +119,37 @@ internal static class Program
       }
     });
 
-    Target(Targets.Push, DependsOn(Targets.Pack), () =>
+    Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Pack), () =>
     {
       if (string.IsNullOrWhiteSpace(key))
       {
         throw new Bullseye.TargetFailedException("Key for publishing is missing!");
       }
 
+      // updating the changelog
+      Console.WriteLine($"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
+      // Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
+
+      // committing the changelog changes
+      Console.WriteLine($"commit -am \"Committing changelog changes for v'{version}'\"");
+      // Run("git", $"commit -am \"\"Committing changelog changes for v'{version}'\"");
+
+      // applying the tag
+      Console.WriteLine($"tag -a v{version} -m \"version '{version}'\"");
+      // Run("git", $"tag -a v{version} -m \"version '{version}'\"");
+
+      // push packages
       var directory = Directory.CreateDirectory(packOutput).FullName;
-
-      // 1. Get all possible *.nupkgs files
       var packages = GetFiles(directory, $"*.nupkg");
-
-      // 2. iterate over them
       foreach (var package in packages)
       {
         // 3. push them
-        // Console.WriteLine($"nuget push {package} -s {nugetSource}");
         if (version is not null)
         {
-          Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
+          Console.WriteLine($"nuget push {package} -s {nugetSource} -k {key}");
+          // Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
         }
       }
-    });
-
-    Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Push), () =>
-    {
-      // updating the changelog
-      Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/"); 
-
-      // applying the tag
-      Run("git", $"tag -a v{version} -m \"version '{version}'\"");
     });
 
     await RunTargetsAndExitAsync(

@@ -1,6 +1,6 @@
 {
   "tomware.Microwf.AspNetCoreEngine.dll": {
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/AspNetCoreEngineServicesExtensions.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\AspNetCoreEngineServicesExtensions.cs": {
       "tomware.Microwf.Engine.AspNetCoreEngineServicesExtensions": {
         "Microsoft.Extensions.DependencyInjection.IServiceCollection tomware.Microwf.Engine.AspNetCoreEngineServicesExtensions::AddAspNetCoreEngineServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
           "Lines": {
@@ -52,7 +52,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Controllers/JobQueueController.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Controllers\\JobQueueController.cs": {
       "tomware.Microwf.Engine.JobQueueController": {
         "System.Void tomware.Microwf.Engine.JobQueueController::AddXPagination(tomware.Microwf.Domain.PagingParameters,tomware.Microwf.Domain.PaginatedList`1<tomware.Microwf.Engine.WorkItemViewModel>)": {
           "Lines": {
@@ -161,7 +161,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Controllers/WorkflowController.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Controllers\\WorkflowController.cs": {
       "tomware.Microwf.Engine.WorkflowController": {
         "System.Void tomware.Microwf.Engine.WorkflowController::AddXPagination(tomware.Microwf.Domain.PagingParameters,tomware.Microwf.Domain.PaginatedList`1<tomware.Microwf.Engine.WorkflowViewModel>)": {
           "Lines": {
@@ -267,7 +267,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/EnqueueWorkItemViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\EnqueueWorkItemViewModel.cs": {
       "tomware.Microwf.Engine.EnqueueWorkItemViewModel": {
         "System.Int32 tomware.Microwf.Engine.EnqueueWorkItemViewModel::get_Id()": {
           "Lines": {
@@ -289,7 +289,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/WorkflowDefinitionViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\WorkflowDefinitionViewModel.cs": {
       "tomware.Microwf.Engine.WorkflowDefinitionViewModel": {
         "System.String tomware.Microwf.Engine.WorkflowDefinitionViewModel::get_Type()": {
           "Lines": {
@@ -317,7 +317,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/WorkflowHistoryViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\WorkflowHistoryViewModel.cs": {
       "tomware.Microwf.Engine.WorkflowHistoryViewModel": {
         "System.Int32 tomware.Microwf.Engine.WorkflowHistoryViewModel::get_Id()": {
           "Lines": {
@@ -357,7 +357,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/WorkflowVariableViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\WorkflowVariableViewModel.cs": {
       "tomware.Microwf.Engine.WorkflowVariableViewModel": {
         "System.Int32 tomware.Microwf.Engine.WorkflowVariableViewModel::get_Id()": {
           "Lines": {
@@ -385,7 +385,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/WorkflowViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\WorkflowViewModel.cs": {
       "tomware.Microwf.Engine.WorkflowViewModel": {
         "System.Int32 tomware.Microwf.Engine.WorkflowViewModel::get_Id()": {
           "Lines": {
@@ -449,7 +449,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/WorkItemInfoViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\WorkItemInfoViewModel.cs": {
       "tomware.Microwf.Engine.WorkItemInfoViewModel": {
         "System.Int32 tomware.Microwf.Engine.WorkItemInfoViewModel::get_Id()": {
           "Lines": {
@@ -465,7 +465,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Models/WorkItemViewModel.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Models\\WorkItemViewModel.cs": {
       "tomware.Microwf.Engine.WorkItemViewModel": {
         "System.Int32 tomware.Microwf.Engine.WorkItemViewModel::get_Id()": {
           "Lines": {
@@ -511,7 +511,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Services/JobQueueControllerService.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Services\\JobQueueControllerService.cs": {
       "tomware.Microwf.Engine.JobQueueControllerService": {
         "tomware.Microwf.Engine.WorkItemViewModel tomware.Microwf.Engine.JobQueueControllerService::ToViewModel(tomware.Microwf.Domain.WorkItemDto)": {
           "Lines": {
@@ -608,7 +608,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Services/UserContextService.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Services\\UserContextService.cs": {
       "tomware.Microwf.Engine.UserContextService": {
         "System.String tomware.Microwf.Engine.UserContextService::get_UserName()": {
           "Lines": {
@@ -705,7 +705,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.AspNetCoreEngine/Services/WorkflowControllerService.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.AspNetCoreEngine\\Services\\WorkflowControllerService.cs": {
       "tomware.Microwf.Engine.WorkflowControllerService": {
         "tomware.Microwf.Engine.WorkflowViewModel tomware.Microwf.Engine.WorkflowControllerService::ToViewModel(tomware.Microwf.Domain.WorkflowDto)": {
           "Lines": {
@@ -857,8 +857,2886 @@
       }
     }
   },
+  "tomware.Microwf.Core.dll": {
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Definition\\AutoTrigger.cs": {
+      "tomware.Microwf.Core.AutoTrigger": {
+        "System.String tomware.Microwf.Core.AutoTrigger::get_Trigger()": {
+          "Lines": {
+            "7": 3
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> tomware.Microwf.Core.AutoTrigger::get_DueDate()": {
+          "Lines": {
+            "9": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Definition\\Transition.cs": {
+      "tomware.Microwf.Core.Transition": {
+        "System.String tomware.Microwf.Core.Transition::get_State()": {
+          "Lines": {
+            "10": 148
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Core.Transition::get_Trigger()": {
+          "Lines": {
+            "15": 145
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Core.Transition::get_TargetState()": {
+          "Lines": {
+            "20": 133
+          },
+          "Branches": []
+        },
+        "System.Func`2<tomware.Microwf.Core.TransitionContext,System.Boolean> tomware.Microwf.Core.Transition::get_CanMakeTransition()": {
+          "Lines": {
+            "25": 202
+          },
+          "Branches": []
+        },
+        "System.Action`1<tomware.Microwf.Core.TransitionContext> tomware.Microwf.Core.Transition::get_BeforeTransition()": {
+          "Lines": {
+            "30": 48
+          },
+          "Branches": []
+        },
+        "System.Action`1<tomware.Microwf.Core.TransitionContext> tomware.Microwf.Core.Transition::get_AfterTransition()": {
+          "Lines": {
+            "35": 94
+          },
+          "Branches": []
+        },
+        "System.Func`2<tomware.Microwf.Core.TransitionContext,tomware.Microwf.Core.AutoTrigger> tomware.Microwf.Core.Transition::get_AutoTrigger()": {
+          "Lines": {
+            "40": 27
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Core.Transition::.ctor()": {
+          "Lines": {
+            "42": 95,
+            "43": 95,
+            "44": 96,
+            "45": 95
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Definition\\WorkflowDefinitionBase.cs": {
+      "tomware.Microwf.Core.WorkflowDefinitionBase": {
+        "System.Collections.Generic.List`1<System.String> tomware.Microwf.Core.WorkflowDefinitionBase::get_States()": {
+          "Lines": {
+            "22": 8,
+            "23": 8,
+            "24": 0,
+            "25": 0,
+            "28": 8,
+            "29": 25,
+            "31": 8,
+            "32": 25,
+            "34": 8,
+            "35": 8,
+            "36": 8,
+            "37": 8,
+            "39": 8,
+            "40": 8
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 12,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 8
+            }
+          ]
+        },
+        "System.Collections.Generic.List`1<System.String> tomware.Microwf.Core.WorkflowDefinitionBase::get_Triggers()": {
+          "Lines": {
+            "49": 1,
+            "50": 1,
+            "51": 0,
+            "52": 0,
+            "55": 1,
+            "56": 3,
+            "57": 1,
+            "59": 1,
+            "60": 1
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 12,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Execution\\TransitionContext.cs": {
+      "tomware.Microwf.Core.TransitionContext": {
+        "System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase> tomware.Microwf.Core.TransitionContext::get__variables()": {
+          "Lines": {
+            "11": 119
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TransitionContext::get_HasVariables()": {
+          "Lines": {
+            "19": 81
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TransitionContext::get_TransitionAborted()": {
+          "Lines": {
+            "25": 35
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.IWorkflow tomware.Microwf.Core.TransitionContext::get_Instance()": {
+          "Lines": {
+            "30": 57
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IEnumerable`1<System.String> tomware.Microwf.Core.TransitionContext::get_Errors()": {
+          "Lines": {
+            "37": 54
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TransitionContext::get_HasErrors()": {
+          "Lines": {
+            "45": 9
+          },
+          "Branches": []
+        },
+        "T tomware.Microwf.Core.TransitionContext::GetInstance()": {
+          "Lines": {
+            "61": 15,
+            "62": 15,
+            "63": 15
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TransitionContext::ContainsKey(System.String)": {
+          "Lines": {
+            "71": 22,
+            "72": 32,
+            "74": 12,
+            "75": 22
+          },
+          "Branches": [
+            {
+              "Line": 72,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 72,
+              "Offset": 12,
+              "EndOffset": 18,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 12
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Core.TransitionContext::SetVariable(System.String,T)": {
+          "Lines": {
+            "84": 12,
+            "85": 12,
+            "86": 1,
+            "87": 1,
+            "88": 1,
+            "90": 11,
+            "91": 11,
+            "92": 11,
+            "93": 12
+          },
+          "Branches": [
+            {
+              "Line": 85,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 85,
+              "Offset": 15,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 11
+            }
+          ]
+        },
+        "T tomware.Microwf.Core.TransitionContext::GetVariable(System.String)": {
+          "Lines": {
+            "102": 15,
+            "103": 15,
+            "104": 1,
+            "106": 14,
+            "107": 14
+          },
+          "Branches": [
+            {
+              "Line": 103,
+              "Offset": 18,
+              "EndOffset": 20,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 103,
+              "Offset": 18,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 14
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Core.TransitionContext::AddError(System.String)": {
+          "Lines": {
+            "115": 2,
+            "116": 2,
+            "117": 2
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Core.TransitionContext::AbortTransition(System.String)": {
+          "Lines": {
+            "128": 1,
+            "129": 1,
+            "130": 1,
+            "131": 1
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Core.TransitionContext::.ctor(tomware.Microwf.Core.IWorkflow)": {
+          "Lines": {
+            "48": 27,
+            "49": 27,
+            "50": 27,
+            "51": 27,
+            "52": 27,
+            "53": 27
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Execution\\TriggerParam.cs": {
+      "tomware.Microwf.Core.TriggerParam": {
+        "System.String tomware.Microwf.Core.TriggerParam::get_TriggerName()": {
+          "Lines": {
+            "8": 35
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.IWorkflow tomware.Microwf.Core.TriggerParam::get_Instance()": {
+          "Lines": {
+            "9": 97
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase> tomware.Microwf.Core.TriggerParam::get_Variables()": {
+          "Lines": {
+            "10": 57
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TriggerParam::get_HasVariables()": {
+          "Lines": {
+            "14": 9,
+            "15": 9,
+            "16": 9
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.TriggerParam tomware.Microwf.Core.TriggerParam::AddVariable(System.String,tomware.Microwf.Core.WorkflowVariableBase)": {
+          "Lines": {
+            "32": 5,
+            "33": 5,
+            "34": 1,
+            "35": 1,
+            "38": 4,
+            "40": 4,
+            "41": 4
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 33,
+              "Offset": 15,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Core.TriggerParam::.ctor(System.String,tomware.Microwf.Core.IWorkflow,System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase>)": {
+          "Lines": {
+            "19": 15,
+            "20": 15,
+            "21": 15,
+            "22": 15,
+            "23": 15,
+            "24": 15,
+            "25": 15,
+            "26": 15,
+            "27": 15,
+            "28": 15,
+            "29": 15
+          },
+          "Branches": [
+            {
+              "Line": 26,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 13
+            },
+            {
+              "Line": 26,
+              "Offset": 26,
+              "EndOffset": 35,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Execution\\TriggerResult.cs": {
+      "tomware.Microwf.Core.TriggerResult": {
+        "System.Boolean tomware.Microwf.Core.TriggerResult::get_CanTrigger()": {
+          "Lines": {
+            "13": 34
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TriggerResult::get_IsAborted()": {
+          "Lines": {
+            "18": 29
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Core.TriggerResult::get_TriggerName()": {
+          "Lines": {
+            "23": 24
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TriggerResult::get_HasErrors()": {
+          "Lines": {
+            "30": 21
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 7
+            },
+            {
+              "Line": 30,
+              "Offset": 7,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Collections.Generic.IEnumerable`1<System.String> tomware.Microwf.Core.TriggerResult::get_Errors()": {
+          "Lines": {
+            "36": 14
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Core.TriggerResult::get_CurrentState()": {
+          "Lines": {
+            "43": 42
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.AutoTrigger tomware.Microwf.Core.TriggerResult::get_AutoTrigger()": {
+          "Lines": {
+            "46": 17
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Core.TriggerResult::get_HasAutoTrigger()": {
+          "Lines": {
+            "51": 8,
+            "52": 8,
+            "53": 8
+          },
+          "Branches": []
+        },
+        "T tomware.Microwf.Core.TriggerResult::GetVariable(System.String)": {
+          "Lines": {
+            "66": 1,
+            "67": 1,
+            "69": 1,
+            "70": 1
+          },
+          "Branches": [
+            {
+              "Line": 67,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 12,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Core.TriggerResult::SetAutoTrigger(tomware.Microwf.Core.AutoTrigger)": {
+          "Lines": {
+            "73": 7,
+            "74": 7,
+            "75": 7
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Core.TriggerResult::.ctor(System.String,tomware.Microwf.Core.TransitionContext,System.Boolean)": {
+          "Lines": {
+            "56": 18,
+            "57": 18,
+            "58": 18,
+            "59": 18,
+            "60": 18,
+            "61": 18,
+            "62": 18,
+            "63": 18
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Execution\\WorkflowExecution.cs": {
+      "tomware.Microwf.Core.WorkflowExecution": {
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.TriggerResult> tomware.Microwf.Core.WorkflowExecution::GetTriggers(tomware.Microwf.Core.IWorkflow,System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase>)": {
+          "Lines": {
+            "24": 6,
+            "25": 6,
+            "27": 6,
+            "28": 12,
+            "29": 12,
+            "30": 6
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::CanTrigger(tomware.Microwf.Core.TriggerParam)": {
+          "Lines": {
+            "38": 3,
+            "39": 3,
+            "41": 3,
+            "42": 3
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::Trigger(tomware.Microwf.Core.TriggerParam)": {
+          "Lines": {
+            "50": 7,
+            "51": 7,
+            "53": 7,
+            "54": 7,
+            "56": 7,
+            "58": 7,
+            "59": 0,
+            "61": 7,
+            "63": 7,
+            "64": 0,
+            "66": 21,
+            "67": 7,
+            "69": 7,
+            "71": 7,
+            "73": 7,
+            "74": 7
+          },
+          "Branches": [
+            {
+              "Line": 54,
+              "Offset": 58,
+              "EndOffset": 60,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 58,
+              "EndOffset": 68,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 7
+            },
+            {
+              "Line": 58,
+              "Offset": 102,
+              "EndOffset": 104,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 102,
+              "EndOffset": 129,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 7
+            },
+            {
+              "Line": 61,
+              "Offset": 141,
+              "EndOffset": 143,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 4
+            },
+            {
+              "Line": 61,
+              "Offset": 141,
+              "EndOffset": 146,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 3
+            },
+            {
+              "Line": 63,
+              "Offset": 163,
+              "EndOffset": 165,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 63,
+              "Offset": 163,
+              "EndOffset": 187,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 7
+            },
+            {
+              "Line": 69,
+              "Offset": 241,
+              "EndOffset": 243,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 241,
+              "EndOffset": 246,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 7
+            },
+            {
+              "Line": 71,
+              "Offset": 266,
+              "EndOffset": 268,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 5
+            },
+            {
+              "Line": 71,
+              "Offset": 266,
+              "EndOffset": 272,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 2
+            }
+          ]
+        },
+        "tomware.Microwf.Core.TransitionContext tomware.Microwf.Core.WorkflowExecution::CreateTransitionContext(tomware.Microwf.Core.IWorkflow,System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase>)": {
+          "Lines": {
+            "79": 16,
+            "80": 16,
+            "81": 16,
+            "82": 14,
+            "83": 56,
+            "84": 7,
+            "85": 7,
+            "86": 7,
+            "87": 14,
+            "89": 16,
+            "90": 16
+          },
+          "Branches": [
+            {
+              "Line": 81,
+              "Offset": 14,
+              "EndOffset": 16,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 14
+            },
+            {
+              "Line": 83,
+              "Offset": 65,
+              "EndOffset": 27,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 7
+            },
+            {
+              "Line": 83,
+              "Offset": 65,
+              "EndOffset": 67,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 14
+            },
+            {
+              "Line": 81,
+              "Offset": 14,
+              "EndOffset": 85,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 16
+            }
+          ]
+        },
+        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::CreateTriggerResult(System.String,tomware.Microwf.Core.TransitionContext,tomware.Microwf.Core.Transition)": {
+          "Lines": {
+            "96": 16,
+            "97": 16,
+            "99": 16,
+            "100": 16
+          },
+          "Branches": [
+            {
+              "Line": 97,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 16
+            },
+            {
+              "Line": 97,
+              "Offset": 2,
+              "EndOffset": 18,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "tomware.Microwf.Core.Transition tomware.Microwf.Core.WorkflowExecution::GetTransition(System.String,tomware.Microwf.Core.IWorkflow)": {
+          "Lines": {
+            "103": 17,
+            "104": 17,
+            "105": 51,
+            "106": 17
+          },
+          "Branches": [
+            {
+              "Line": 105,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 17
+            },
+            {
+              "Line": 105,
+              "Offset": 17,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 17
+            }
+          ]
+        },
+        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::CanMakeTransition(tomware.Microwf.Core.TransitionContext,System.String,tomware.Microwf.Core.IWorkflow)": {
+          "Lines": {
+            "112": 10,
+            "113": 10,
+            "114": 10,
+            "116": 20,
+            "118": 0,
+            "120": 0,
+            "121": 10
+          },
+          "Branches": [
+            {
+              "Line": 116,
+              "Offset": 25,
+              "EndOffset": 27,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 116,
+              "Offset": 25,
+              "EndOffset": 31,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Core.WorkflowExecution::.ctor(tomware.Microwf.Core.IWorkflowDefinition)": {
+          "Lines": {
+            "13": 16,
+            "14": 16,
+            "15": 16,
+            "16": 16
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Core\\Utils\\WorkflowDefinitionExtension.cs": {
+      "tomware.Microwf.Core.WorkflowDefinitionExtension": {
+        "System.String tomware.Microwf.Core.WorkflowDefinitionExtension::ToDot(tomware.Microwf.Core.IWorkflowDefinition,System.String)": {
+          "Lines": {
+            "15": 3,
+            "16": 3,
+            "18": 3,
+            "19": 4,
+            "20": 21,
+            "21": 6,
+            "22": 6,
+            "23": 6,
+            "24": 3,
+            "26": 3,
+            "27": 3
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 46,
+              "EndOffset": 48,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 19,
+              "Offset": 46,
+              "EndOffset": 71,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 20,
+              "Offset": 180,
+              "EndOffset": 86,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 6
+            },
+            {
+              "Line": 20,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            }
+          ]
+        }
+      }
+    }
+  },
+  "tomware.Microwf.Domain.dll": {
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Common\\CoreExtensions.cs": {
+      "tomware.Microwf.Domain.TriggerParamExtension": {
+        "tomware.Microwf.Core.TriggerParam tomware.Microwf.Domain.TriggerParamExtension::AddVariableWithKey(tomware.Microwf.Core.TriggerParam,tomware.Microwf.Core.WorkflowVariableBase)": {
+          "Lines": {
+            "18": 2,
+            "19": 2,
+            "20": 2
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.TransitionContextExtension": {
+        "System.Boolean tomware.Microwf.Domain.TransitionContextExtension::HasVariable(tomware.Microwf.Core.TransitionContext)": {
+          "Lines": {
+            "34": 12,
+            "35": 12,
+            "36": 12
+          },
+          "Branches": []
+        },
+        "TVariable tomware.Microwf.Domain.TransitionContextExtension::ReturnVariable(tomware.Microwf.Core.TransitionContext)": {
+          "Lines": {
+            "47": 9,
+            "48": 9,
+            "49": 9,
+            "50": 9,
+            "51": 9
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Common\\EntityWorkflowDefinitionBase.cs": {
+      "tomware.Microwf.Domain.EntityWorkflowDefinitionBase": {
+        "tomware.Microwf.Core.AutoTrigger tomware.Microwf.Domain.EntityWorkflowDefinitionBase::AutoTrigger(System.String,System.Nullable`1<System.DateTime>)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Common\\KeyBuilder.cs": {
+      "tomware.Microwf.Domain.KeyBuilder": {
+        "System.String tomware.Microwf.Domain.KeyBuilder::ToKey(System.Type)": {
+          "Lines": {
+            "8": 34,
+            "9": 34,
+            "10": 34
+          },
+          "Branches": []
+        },
+        "System.Type tomware.Microwf.Domain.KeyBuilder::FromKey(System.String)": {
+          "Lines": {
+            "13": 4,
+            "14": 4,
+            "15": 4,
+            "17": 504,
+            "18": 248,
+            "19": 248,
+            "20": 252,
+            "21": 244,
+            "23": 0,
+            "24": 4
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 17,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            },
+            {
+              "Line": 17,
+              "Offset": 85,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 248
+            },
+            {
+              "Line": 20,
+              "Offset": 67,
+              "EndOffset": 69,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 4
+            },
+            {
+              "Line": 20,
+              "Offset": 67,
+              "EndOffset": 73,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 244
+            },
+            {
+              "Line": 17,
+              "Offset": 85,
+              "EndOffset": 87,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Common\\SystemTime.cs": {
+      "tomware.Microwf.Domain.SystemTime": {
+        "System.Void tomware.Microwf.Domain.SystemTime::.cctor()": {
+          "Lines": {
+            "7": 51
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Common\\WorkflowDefinitionExtension.cs": {
+      "tomware.Microwf.Domain.WorkflowDefinitionExtension": {
+        "System.String tomware.Microwf.Domain.WorkflowDefinitionExtension::ToDotWithHistory(tomware.Microwf.Core.IWorkflowDefinition,tomware.Microwf.Domain.Workflow,System.String)": {
+          "Lines": {
+            "15": 1,
+            "16": 1,
+            "18": 1,
+            "20": 1,
+            "21": 1,
+            "25": 7,
+            "26": 2,
+            "27": 2,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "33": 2,
+            "34": 2,
+            "35": 2,
+            "36": 2,
+            "38": 1,
+            "40": 1,
+            "41": 1
+          },
+          "Branches": [
+            {
+              "Line": 21,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 89,
+              "EndOffset": 148,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 25,
+              "Offset": 457,
+              "EndOffset": 167,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 27,
+              "Offset": 189,
+              "EndOffset": 194,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 189,
+              "EndOffset": 329,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 25,
+              "Offset": 457,
+              "EndOffset": 462,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Boolean tomware.Microwf.Domain.WorkflowDefinitionExtension::Exists(tomware.Microwf.Core.Transition,System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowHistory>)": {
+          "Lines": {
+            "44": 2,
+            "45": 2,
+            "46": 2
+          },
+          "Branches": [
+            {
+              "Line": 45,
+              "Offset": 22,
+              "EndOffset": 24,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 22,
+              "EndOffset": 48,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DomainServicesExtensions.cs": {
+      "tomware.Microwf.Domain.DomainServicesExtensions": {
+        "Microsoft.Extensions.DependencyInjection.IServiceCollection tomware.Microwf.Domain.DomainServicesExtensions::AddDomainServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+          "Lines": {
+            "12": 7,
+            "13": 7,
+            "15": 7,
+            "16": 7,
+            "17": 7,
+            "19": 7,
+            "20": 7
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\ObjectMapper.cs": {
+      "tomware.Microwf.Domain.ObjectMapper": {
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkItemDto> tomware.Microwf.Domain.ObjectMapper::ToWorkItemViewModelList(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkItem>)": {
+          "Lines": {
+            "14": 2,
+            "15": 5,
+            "16": 5,
+            "17": 5,
+            "18": 5,
+            "19": 5,
+            "20": 5,
+            "21": 5,
+            "22": 5,
+            "23": 5,
+            "24": 5,
+            "25": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowHistoryDto> tomware.Microwf.Domain.ObjectMapper::ToWorkflowHistoryViewModelList(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowHistory>)": {
+          "Lines": {
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "38": 1,
+            "39": 1,
+            "40": 1
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowVariableDto> tomware.Microwf.Domain.ObjectMapper::ToWorkflowVariableViewModelList(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowVariable>)": {
+          "Lines": {
+            "45": 1,
+            "46": 1,
+            "47": 1,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "52": 1,
+            "53": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.PropertyMapper`2": {
+        "System.Func`2<TInput,TOutput> tomware.Microwf.Domain.PropertyMapper`2::CreateCloner()": {
+          "Lines": {
+            "78": 0,
+            "80": 0,
+            "81": 0,
+            "83": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "94": 0,
+            "95": 0,
+            "97": 0,
+            "98": 0
+          },
+          "Branches": [
+            {
+              "Line": 80,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 45,
+              "EndOffset": 47,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 45,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 80,
+              "Offset": 37,
+              "EndOffset": 77,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 87,
+              "Offset": 119,
+              "EndOffset": 121,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 87,
+              "Offset": 119,
+              "EndOffset": 144,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 87,
+              "Offset": 150,
+              "EndOffset": 152,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 87,
+              "Offset": 150,
+              "EndOffset": 175,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Action`2<TInput,TOutput> tomware.Microwf.Domain.PropertyMapper`2::CreateCopier()": {
+          "Lines": {
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0
+          },
+          "Branches": [
+            {
+              "Line": 107,
+              "Offset": 75,
+              "EndOffset": 77,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 107,
+              "Offset": 75,
+              "EndOffset": 100,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 107,
+              "Offset": 106,
+              "EndOffset": 108,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 107,
+              "Offset": 106,
+              "EndOffset": 131,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "TOutput tomware.Microwf.Domain.PropertyMapper`2::From(TInput)": {
+          "Lines": {
+            "120": 0,
+            "121": 0,
+            "123": 0,
+            "124": 0
+          },
+          "Branches": [
+            {
+              "Line": 121,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 121,
+              "Offset": 12,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Domain.PropertyMapper`2::CopyTo(TInput,TOutput)": {
+          "Lines": {
+            "127": 0,
+            "128": 0,
+            "129": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.PropertyMapper`2::.cctor()": {
+          "Lines": {
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\PagingParameters.cs": {
+      "tomware.Microwf.Domain.PagingParameters": {
+        "System.Int32 tomware.Microwf.Domain.PagingParameters::get_PageIndex()": {
+          "Lines": {
+            "8": 15
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.PagingParameters::get_PageSize()": {
+          "Lines": {
+            "10": 20
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.PagingParameters::get_SkipCount()": {
+          "Lines": {
+            "15": 5,
+            "16": 5,
+            "17": 5
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowSearchPagingParameters": {
+        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasType()": {
+          "Lines": {
+            "26": 5,
+            "27": 5,
+            "28": 5
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_Type()": {
+          "Lines": {
+            "31": 5
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasCorrelationId()": {
+          "Lines": {
+            "36": 5,
+            "37": 5,
+            "38": 5
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_CorrelationId()": {
+          "Lines": {
+            "41": 9
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasAssignee()": {
+          "Lines": {
+            "46": 3,
+            "47": 3,
+            "48": 3
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_Assignee()": {
+          "Lines": {
+            "51": 5
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasValues()": {
+          "Lines": {
+            "56": 3,
+            "57": 3,
+            "58": 3,
+            "59": 3,
+            "60": 3
+          },
+          "Branches": [
+            {
+              "Line": 57,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 57,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 57,
+              "Offset": 7,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 57,
+              "Offset": 15,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.PaginatedList`1": {
+        "System.Int32 tomware.Microwf.Domain.PaginatedList`1::get_PageIndex()": {
+          "Lines": {
+            "66": 5
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.PaginatedList`1::get_TotalPages()": {
+          "Lines": {
+            "68": 5
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.PaginatedList`1::get_AllItemsCount()": {
+          "Lines": {
+            "70": 5
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.PaginatedList`1::get_HasPreviousPage()": {
+          "Lines": {
+            "84": 0,
+            "85": 0,
+            "86": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.PaginatedList`1::get_HasNextPage()": {
+          "Lines": {
+            "92": 0,
+            "93": 0,
+            "94": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.PaginatedList`1::.ctor(System.Collections.Generic.IEnumerable`1<T>,System.Int32,System.Int32,System.Int32)": {
+          "Lines": {
+            "72": 5,
+            "73": 5,
+            "74": 5,
+            "75": 5,
+            "76": 5,
+            "78": 5,
+            "79": 5
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\WorkflowDefinitionDto.cs": {
+      "tomware.Microwf.Domain.WorkflowDefinitionDto": {
+        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Type()": {
+          "Lines": {
+            "5": 11
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Title()": {
+          "Lines": {
+            "6": 15
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Description()": {
+          "Lines": {
+            "7": 15
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Route()": {
+          "Lines": {
+            "8": 15
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\WorkflowDto.cs": {
+      "tomware.Microwf.Domain.WorkflowDto": {
+        "System.Int32 tomware.Microwf.Domain.WorkflowDto::get_Id()": {
+          "Lines": {
+            "7": 7
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkflowDto::get_CorrelationId()": {
+          "Lines": {
+            "8": 7
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDto::get_Type()": {
+          "Lines": {
+            "9": 5
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDto::get_State()": {
+          "Lines": {
+            "10": 7
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDto::get_Title()": {
+          "Lines": {
+            "11": 5
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDto::get_Description()": {
+          "Lines": {
+            "12": 5
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDto::get_Assignee()": {
+          "Lines": {
+            "13": 7
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowDto::get_Route()": {
+          "Lines": {
+            "14": 5
+          },
+          "Branches": []
+        },
+        "System.DateTime tomware.Microwf.Domain.WorkflowDto::get_Started()": {
+          "Lines": {
+            "15": 5
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> tomware.Microwf.Domain.WorkflowDto::get_Completed()": {
+          "Lines": {
+            "16": 5
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\WorkflowHistoryDto.cs": {
+      "tomware.Microwf.Domain.WorkflowHistoryDto": {
+        "System.Int32 tomware.Microwf.Domain.WorkflowHistoryDto::get_Id()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime tomware.Microwf.Domain.WorkflowHistoryDto::get_Created()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowHistoryDto::get_FromState()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowHistoryDto::get_ToState()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowHistoryDto::get_UserName()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkflowHistoryDto::get_WorkflowId()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\WorkflowVariableDto.cs": {
+      "tomware.Microwf.Domain.WorkflowVariableDto": {
+        "System.Int32 tomware.Microwf.Domain.WorkflowVariableDto::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowVariableDto::get_Type()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowVariableDto::get_Content()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkflowVariableDto::get_WorkflowId()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\DTOs\\WorkItemDto.cs": {
+      "tomware.Microwf.Domain.WorkItemDto": {
+        "System.Int32 tomware.Microwf.Domain.WorkItemDto::get_Id()": {
+          "Lines": {
+            "7": 4
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkItemDto::get_TriggerName()": {
+          "Lines": {
+            "9": 3
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkItemDto::get_EntityId()": {
+          "Lines": {
+            "11": 3
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkItemDto::get_WorkflowType()": {
+          "Lines": {
+            "13": 3
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkItemDto::get_Retries()": {
+          "Lines": {
+            "15": 4
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkItemDto::get_Error()": {
+          "Lines": {
+            "17": 3
+          },
+          "Branches": []
+        },
+        "System.DateTime tomware.Microwf.Domain.WorkItemDto::get_DueDate()": {
+          "Lines": {
+            "19": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Entities\\EngineEntity.cs": {
+      "tomware.Microwf.Domain.EngineEntity": {
+        "System.Int32 tomware.Microwf.Domain.EngineEntity::get_Id()": {
+          "Lines": {
+            "5": 64
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Entities\\Workflow.cs": {
+      "tomware.Microwf.Domain.Workflow": {
+        "System.String tomware.Microwf.Domain.Workflow::get_Type()": {
+          "Lines": {
+            "10": 39
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.Workflow::get_State()": {
+          "Lines": {
+            "12": 38
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.Workflow::get_CorrelationId()": {
+          "Lines": {
+            "14": 30
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.Workflow::get_Assignee()": {
+          "Lines": {
+            "16": 34
+          },
+          "Branches": []
+        },
+        "System.DateTime tomware.Microwf.Domain.Workflow::get_Started()": {
+          "Lines": {
+            "18": 29
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> tomware.Microwf.Domain.Workflow::get_Completed()": {
+          "Lines": {
+            "20": 8
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowVariable> tomware.Microwf.Domain.Workflow::get_WorkflowVariables()": {
+          "Lines": {
+            "22": 51
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowHistory> tomware.Microwf.Domain.Workflow::get_WorkflowHistories()": {
+          "Lines": {
+            "24": 32
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Domain.Workflow tomware.Microwf.Domain.Workflow::Create(System.Int32,System.String,System.String,System.String)": {
+          "Lines": {
+            "32": 8,
+            "33": 8,
+            "34": 8,
+            "35": 8,
+            "36": 8,
+            "37": 8,
+            "38": 8,
+            "39": 8,
+            "40": 8,
+            "41": 8
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.Workflow::AddVariable(tomware.Microwf.Core.WorkflowVariableBase)": {
+          "Lines": {
+            "44": 6,
+            "45": 6,
+            "46": 7,
+            "47": 6,
+            "48": 1,
+            "49": 1,
+            "51": 1,
+            "54": 5,
+            "55": 6
+          },
+          "Branches": [
+            {
+              "Line": 47,
+              "Offset": 54,
+              "EndOffset": 56,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 47,
+              "Offset": 54,
+              "EndOffset": 67,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Domain.Workflow::AddHistoryItem(System.String,System.String,System.String)": {
+          "Lines": {
+            "58": 4,
+            "59": 4,
+            "60": 4,
+            "61": 4,
+            "62": 4,
+            "63": 4,
+            "64": 4,
+            "65": 4,
+            "66": 4,
+            "67": 4,
+            "68": 4
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Entities\\WorkflowHistory.cs": {
+      "tomware.Microwf.Domain.WorkflowHistory": {
+        "System.DateTime tomware.Microwf.Domain.WorkflowHistory::get_Created()": {
+          "Lines": {
+            "8": 4
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowHistory::get_FromState()": {
+          "Lines": {
+            "10": 4
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowHistory::get_ToState()": {
+          "Lines": {
+            "12": 4
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowHistory::get_UserName()": {
+          "Lines": {
+            "14": 4
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkflowHistory::get_WorkflowId()": {
+          "Lines": {
+            "16": 4
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Domain.Workflow tomware.Microwf.Domain.WorkflowHistory::get_Workflow()": {
+          "Lines": {
+            "19": 4
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Entities\\WorkflowVariable.cs": {
+      "tomware.Microwf.Domain.WorkflowVariable": {
+        "System.String tomware.Microwf.Domain.WorkflowVariable::get_Type()": {
+          "Lines": {
+            "9": 14
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowVariable::get_Content()": {
+          "Lines": {
+            "11": 12
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkflowVariable::get_WorkflowId()": {
+          "Lines": {
+            "13": 5
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Domain.Workflow tomware.Microwf.Domain.WorkflowVariable::get_Workflow()": {
+          "Lines": {
+            "16": 5
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Domain.WorkflowVariable tomware.Microwf.Domain.WorkflowVariable::Create(tomware.Microwf.Domain.Workflow,tomware.Microwf.Core.WorkflowVariableBase)": {
+          "Lines": {
+            "19": 5,
+            "20": 5,
+            "21": 5,
+            "22": 5,
+            "23": 5,
+            "24": 5,
+            "25": 5,
+            "26": 5,
+            "27": 5
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Core.WorkflowVariableBase tomware.Microwf.Domain.WorkflowVariable::ConvertContent(tomware.Microwf.Domain.WorkflowVariable)": {
+          "Lines": {
+            "30": 3,
+            "31": 3,
+            "32": 3,
+            "33": 3,
+            "34": 3,
+            "35": 3
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.WorkflowVariable::UpdateContent(tomware.Microwf.Core.WorkflowVariableBase)": {
+          "Lines": {
+            "38": 1,
+            "39": 1,
+            "40": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Entities\\WorkItem.cs": {
+      "tomware.Microwf.Domain.WorkItem": {
+        "System.String tomware.Microwf.Domain.WorkItem::get_TriggerName()": {
+          "Lines": {
+            "9": 19
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkItem::get_EntityId()": {
+          "Lines": {
+            "11": 19
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkItem::get_WorkflowType()": {
+          "Lines": {
+            "13": 22
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.WorkItem::get_Retries()": {
+          "Lines": {
+            "15": 7
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkItem::get_Error()": {
+          "Lines": {
+            "17": 3
+          },
+          "Branches": []
+        },
+        "System.DateTime tomware.Microwf.Domain.WorkItem::get_DueDate()": {
+          "Lines": {
+            "19": 21
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Domain.WorkItem tomware.Microwf.Domain.WorkItem::Create(System.String,System.Int32,System.String,System.Nullable`1<System.DateTime>)": {
+          "Lines": {
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 48,
+              "EndOffset": 50,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 48,
+              "EndOffset": 62,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Domain.WorkItem::.cctor()": {
+          "Lines": {
+            "7": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Services\\UserWorkflowMappingService.cs": {
+      "tomware.Microwf.Domain.UserWorkflowMappingsStore": {
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.UserWorkflowMapping> tomware.Microwf.Domain.UserWorkflowMappingsStore::get_Workflows()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.UserWorkflowMappingsStore::.ctor(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.UserWorkflowMapping>)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.UserWorkflowMapping": {
+        "System.String tomware.Microwf.Domain.UserWorkflowMapping::get_UserName()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IList`1<System.String> tomware.Microwf.Domain.UserWorkflowMapping::get_WorkflowDefinitions()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.NoopUserWorkflowMappingService": {
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition> tomware.Microwf.Domain.NoopUserWorkflowMappingService::Filter(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition>)": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.InMemoryUserWorkflowMappingService": {
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition> tomware.Microwf.Domain.InMemoryUserWorkflowMappingService::Filter(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition>)": {
+          "Lines": {
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.InMemoryUserWorkflowMappingService::.ctor(tomware.Microwf.Domain.IUserContextService,tomware.Microwf.Domain.UserWorkflowMappingsStore)": {
+          "Lines": {
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Services\\WorkflowDefinitionDtoCreator.cs": {
+      "tomware.Microwf.Domain.WorkflowConfiguration": {
+        "System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowType> tomware.Microwf.Domain.WorkflowConfiguration::get_Types()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowType": {
+        "System.String tomware.Microwf.Domain.WorkflowType::get_Type()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowType::get_Title()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowType::get_Description()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowType::get_Route()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowDefinitionDtoCreator": {
+        "tomware.Microwf.Domain.WorkflowDefinitionDto tomware.Microwf.Domain.WorkflowDefinitionDtoCreator::Create(System.String)": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.WorkflowDefinitionDtoCreator::.ctor(Microsoft.Extensions.Options.IOptions`1<tomware.Microwf.Domain.WorkflowConfiguration>)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Services\\WorkflowDefinitionProvider.cs": {
+      "tomware.Microwf.Domain.WorkflowDefinitionProvider": {
+        "tomware.Microwf.Core.IWorkflowDefinition tomware.Microwf.Domain.WorkflowDefinitionProvider::GetWorkflowDefinition(System.String)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition> tomware.Microwf.Domain.WorkflowDefinitionProvider::GetWorkflowDefinitions()": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "25": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.WorkflowDefinitionProvider::RegisterWorkflowDefinition(tomware.Microwf.Core.IWorkflowDefinition)": {
+          "Lines": {
+            "28": 0,
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.WorkflowDefinitionProvider::.ctor(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition>)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Services\\WorkflowService.cs": {
+      "tomware.Microwf.Domain.WorkflowService": {
+        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowDefinitionDto> tomware.Microwf.Domain.WorkflowService::GetWorkflowDefinitions()": {
+          "Lines": {
+            "102": 2,
+            "103": 2,
+            "105": 2,
+            "107": 7,
+            "108": 2
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowService::Dot(System.String)": {
+          "Lines": {
+            "111": 3,
+            "112": 5,
+            "114": 1,
+            "116": 1,
+            "117": 1
+          },
+          "Branches": [
+            {
+              "Line": 112,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 112,
+              "Offset": 9,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "tomware.Microwf.Domain.WorkflowDto tomware.Microwf.Domain.WorkflowService::ToWorkflowDto(tomware.Microwf.Domain.Workflow)": {
+          "Lines": {
+            "137": 5,
+            "138": 5,
+            "140": 5,
+            "141": 5,
+            "142": 5,
+            "143": 5,
+            "144": 5,
+            "145": 5,
+            "146": 5,
+            "147": 5,
+            "148": 5,
+            "149": 5,
+            "150": 5,
+            "151": 5,
+            "152": 5,
+            "153": 5
+          },
+          "Branches": []
+        },
+        "tomware.Microwf.Domain.WorkflowDto tomware.Microwf.Domain.WorkflowService::<GetWorkflowsAsync>b__5_0(tomware.Microwf.Domain.Workflow)": {
+          "Lines": {
+            "52": 6
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.WorkflowService::.ctor(tomware.Microwf.Domain.IWorkflowRepository,tomware.Microwf.Core.IWorkflowDefinitionProvider,tomware.Microwf.Domain.IUserWorkflowMappingService,tomware.Microwf.Domain.IWorkflowDefinitionDtoCreator)": {
+          "Lines": {
+            "16": 14,
+            "17": 14,
+            "18": 14,
+            "19": 14,
+            "20": 14,
+            "21": 14,
+            "22": 14,
+            "23": 14,
+            "24": 14,
+            "25": 14,
+            "26": 14,
+            "27": 14
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 11,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 14
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<>c": {
+        "System.DateTime tomware.Microwf.Domain.WorkflowService/<>c::<GetHistoryAsync>b__7_0(tomware.Microwf.Domain.WorkflowHistory)": {
+          "Lines": {
+            "76": 1
+          },
+          "Branches": []
+        },
+        "System.String tomware.Microwf.Domain.WorkflowService/<>c::<GetVariablesAsync>b__8_0(tomware.Microwf.Domain.WorkflowVariable)": {
+          "Lines": {
+            "87": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<DotWithHistoryAsync>d__12": {
+        "System.Void tomware.Microwf.Domain.WorkflowService/<DotWithHistoryAsync>d__12::MoveNext()": {
+          "Lines": {
+            "120": 1,
+            "121": 1,
+            "123": 1,
+            "124": 1,
+            "125": 1,
+            "126": 1,
+            "127": 1,
+            "128": 1,
+            "129": 1,
+            "131": 1,
+            "133": 1,
+            "134": 1
+          },
+          "Branches": [
+            {
+              "Line": 121,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 121,
+              "Offset": 28,
+              "EndOffset": 41,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 129,
+              "Offset": 219,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 129,
+              "Offset": 219,
+              "EndOffset": 284,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<GetAsync>d__6": {
+        "System.Void tomware.Microwf.Domain.WorkflowService/<GetAsync>d__6::MoveNext()": {
+          "Lines": {
+            "63": 1,
+            "64": 1,
+            "65": 1,
+            "67": 1,
+            "68": 1
+          },
+          "Branches": [
+            {
+              "Line": 65,
+              "Offset": 164,
+              "EndOffset": 166,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 164,
+              "EndOffset": 177,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<GetHistoryAsync>d__7": {
+        "System.Void tomware.Microwf.Domain.WorkflowService/<GetHistoryAsync>d__7::MoveNext()": {
+          "Lines": {
+            "71": 1,
+            "72": 1,
+            "73": 1,
+            "74": 1,
+            "78": 1,
+            "79": 1
+          },
+          "Branches": [
+            {
+              "Line": 74,
+              "Offset": 186,
+              "EndOffset": 188,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 74,
+              "Offset": 186,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<GetInstanceAsync>d__9": {
+        "System.Void tomware.Microwf.Domain.WorkflowService/<GetInstanceAsync>d__9::MoveNext()": {
+          "Lines": {
+            "93": 1,
+            "94": 1,
+            "95": 1,
+            "96": 1,
+            "98": 1,
+            "99": 1
+          },
+          "Branches": [
+            {
+              "Line": 96,
+              "Offset": 192,
+              "EndOffset": 194,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 192,
+              "EndOffset": 257,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<GetVariablesAsync>d__8": {
+        "System.Void tomware.Microwf.Domain.WorkflowService/<GetVariablesAsync>d__8::MoveNext()": {
+          "Lines": {
+            "82": 1,
+            "83": 1,
+            "84": 1,
+            "85": 1,
+            "89": 1,
+            "90": 1
+          },
+          "Branches": [
+            {
+              "Line": 85,
+              "Offset": 186,
+              "EndOffset": 188,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 186,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowService/<GetWorkflowsAsync>d__5": {
+        "System.Void tomware.Microwf.Domain.WorkflowService/<GetWorkflowsAsync>d__5::MoveNext()": {
+          "Lines": {
+            "32": 3,
+            "33": 3,
+            "35": 3,
+            "36": 3,
+            "37": 2,
+            "38": 2,
+            "39": 2,
+            "40": 2,
+            "41": 2,
+            "42": 2,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "47": 1,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "54": 3,
+            "55": 3,
+            "56": 3,
+            "57": 3,
+            "58": 3,
+            "59": 3,
+            "60": 3
+          },
+          "Branches": [
+            {
+              "Line": 36,
+              "Offset": 190,
+              "EndOffset": 195,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 36,
+              "Offset": 190,
+              "EndOffset": 346,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Specifications\\BaseSpecification.cs": {
+      "tomware.Microwf.Domain.BaseSpecification`1": {
+        "System.Collections.Generic.List`1<System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>> tomware.Microwf.Domain.BaseSpecification`1::get_Criterias()": {
+          "Lines": {
+            "9": 56
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>> tomware.Microwf.Domain.BaseSpecification`1::get_Includes()": {
+          "Lines": {
+            "11": 28
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<System.String> tomware.Microwf.Domain.BaseSpecification`1::get_IncludeStrings()": {
+          "Lines": {
+            "13": 42
+          },
+          "Branches": []
+        },
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>> tomware.Microwf.Domain.BaseSpecification`1::get_OrderBy()": {
+          "Lines": {
+            "14": 25
+          },
+          "Branches": []
+        },
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>> tomware.Microwf.Domain.BaseSpecification`1::get_OrderByDescending()": {
+          "Lines": {
+            "15": 25
+          },
+          "Branches": []
+        },
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>> tomware.Microwf.Domain.BaseSpecification`1::get_GroupBy()": {
+          "Lines": {
+            "16": 21
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.BaseSpecification`1::get_Take()": {
+          "Lines": {
+            "18": 10
+          },
+          "Branches": []
+        },
+        "System.Int32 tomware.Microwf.Domain.BaseSpecification`1::get_Skip()": {
+          "Lines": {
+            "19": 10
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.BaseSpecification`1::get_IsPagingEnabled()": {
+          "Lines": {
+            "20": 47
+          },
+          "Branches": []
+        },
+        "System.Boolean tomware.Microwf.Domain.BaseSpecification`1::get_AsNoTracking()": {
+          "Lines": {
+            "21": 55
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::AddCriteria(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
+          "Lines": {
+            "40": 3,
+            "41": 3,
+            "42": 3
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::AddInclude(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
+          "Lines": {
+            "45": 7,
+            "46": 7,
+            "47": 7
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::AddInclude(System.String)": {
+          "Lines": {
+            "50": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyPaging(System.Int32,System.Int32)": {
+          "Lines": {
+            "55": 5,
+            "56": 5,
+            "57": 5,
+            "58": 5,
+            "59": 5
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyNoTracking()": {
+          "Lines": {
+            "62": 13,
+            "63": 13,
+            "64": 13
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyOrderBy(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
+          "Lines": {
+            "67": 2,
+            "68": 2,
+            "69": 2
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyOrderByDescending(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
+          "Lines": {
+            "72": 3,
+            "73": 3,
+            "74": 3
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyGroupBy(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
+          "Lines": {
+            "77": 0,
+            "78": 0,
+            "79": 0
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::.ctor()": {
+          "Lines": {
+            "10": 21,
+            "12": 21,
+            "27": 6,
+            "28": 6,
+            "29": 6
+          },
+          "Branches": []
+        },
+        "System.Void tomware.Microwf.Domain.BaseSpecification`1::.ctor(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
+          "Lines": {
+            "34": 15,
+            "35": 15,
+            "36": 15,
+            "37": 15
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Specifications\\ExpressionExtensions.cs": {
+      "tomware.Microwf.Domain.ExpressionExtensions": {
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> tomware.Microwf.Domain.ExpressionExtensions::Or(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>,System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> tomware.Microwf.Domain.ExpressionExtensions::And(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>,System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\work\\github\\microwf\\src\\microwf.Domain\\Specifications\\WorkflowSpecifications.cs": {
+      "tomware.Microwf.Domain.WorkflowCount": {
+        "System.Void tomware.Microwf.Domain.WorkflowCount::.ctor()": {
+          "Lines": {
+            "9": 3,
+            "10": 3,
+            "11": 3
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowInstancesOrderedPaginated": {
+        "System.Void tomware.Microwf.Domain.WorkflowInstancesOrderedPaginated::.ctor(System.Int32,System.Int32)": {
+          "Lines": {
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "23": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowInstancesFilterAndOrderedPaginated": {
+        "System.Collections.Generic.List`1<System.Linq.Expressions.Expression`1<System.Func`2<tomware.Microwf.Domain.Workflow,System.Boolean>>> tomware.Microwf.Domain.WorkflowInstancesFilterAndOrderedPaginated::GetCriterias(tomware.Microwf.Domain.WorkflowSearchPagingParameters)": {
+          "Lines": {
+            "46": 2,
+            "47": 2,
+            "48": 2,
+            "50": 2,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "56": 2,
+            "57": 2,
+            "58": 2,
+            "59": 2,
+            "60": 2,
+            "62": 2,
+            "63": 1,
+            "64": 1,
+            "65": 1,
+            "66": 1,
+            "68": 2,
+            "69": 2
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 33,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 33,
+              "EndOffset": 234,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 56,
+              "Offset": 249,
+              "EndOffset": 254,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 56,
+              "Offset": 249,
+              "EndOffset": 391,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 62,
+              "Offset": 406,
+              "EndOffset": 411,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 62,
+              "Offset": 406,
+              "EndOffset": 607,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void tomware.Microwf.Domain.WorkflowInstancesFilterAndOrderedPaginated::.ctor(tomware.Microwf.Domain.WorkflowSearchPagingParameters)": {
+          "Lines": {
+            "30": 2,
+            "31": 2,
+            "32": 2,
+            "33": 12,
+            "34": 3,
+            "35": 3,
+            "36": 3,
+            "38": 2,
+            "39": 2,
+            "40": 2,
+            "41": 2
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 50,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 33,
+              "Offset": 50,
+              "EndOffset": 52,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowVariablesForWorkflow": {
+        "System.Void tomware.Microwf.Domain.WorkflowVariablesForWorkflow::.ctor(System.Int32)": {
+          "Lines": {
+            "74": 1,
+            "75": 1,
+            "76": 1,
+            "77": 1,
+            "78": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.WorkflowHistoryForWorkflow": {
+        "System.Void tomware.Microwf.Domain.WorkflowHistoryForWorkflow::.ctor(System.Int32)": {
+          "Lines": {
+            "83": 1,
+            "84": 1,
+            "85": 1,
+            "86": 1,
+            "87": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.GetWorkflowInstance": {
+        "System.Void tomware.Microwf.Domain.GetWorkflowInstance::.ctor(System.String,System.Int32)": {
+          "Lines": {
+            "93": 1,
+            "94": 1,
+            "95": 1,
+            "96": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.GetWorkflowInstanceHistories": {
+        "System.Void tomware.Microwf.Domain.GetWorkflowInstanceHistories::.ctor(System.String,System.Int32)": {
+          "Lines": {
+            "102": 1,
+            "103": 1,
+            "104": 1,
+            "105": 1,
+            "106": 1
+          },
+          "Branches": []
+        }
+      },
+      "tomware.Microwf.Domain.GetWorkflowInstanceVariables": {
+        "System.Void tomware.Microwf.Domain.GetWorkflowInstanceVariables::.ctor(System.String,System.Int32)": {
+          "Lines": {
+            "112": 4,
+            "113": 4,
+            "114": 4,
+            "115": 4,
+            "116": 4
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
   "tomware.Microwf.Infrastructure.dll": {
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/EfRepository.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\EfRepository.cs": {
       "tomware.Microwf.Infrastructure.EfRepository`1": {
         "Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade tomware.Microwf.Infrastructure.EfRepository`1::get_Database()": {
           "Lines": {
@@ -950,7 +3828,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/EngineDbContext.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\EngineDbContext.cs": {
       "tomware.Microwf.Infrastructure.EngineDbContext": {
         "Microsoft.EntityFrameworkCore.DbSet`1<tomware.Microwf.Domain.Workflow> tomware.Microwf.Infrastructure.EngineDbContext::get_Workflows()": {
           "Lines": {
@@ -984,7 +3862,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/SpecificationEvaluator.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\SpecificationEvaluator.cs": {
       "tomware.Microwf.Infrastructure.SpecificationEvaluator`1": {
         "System.Linq.IQueryable`1<T> tomware.Microwf.Infrastructure.SpecificationEvaluator`1::GetQuery(System.Linq.IQueryable`1<T>,tomware.Microwf.Domain.ISpecification`1<T>)": {
           "Lines": {
@@ -1181,7 +4059,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/WorkflowRepository.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\WorkflowRepository.cs": {
       "tomware.Microwf.Infrastructure.WorkflowRepository`1": {
         "System.Void tomware.Microwf.Infrastructure.WorkflowRepository`1::AddAutoTrigger(tomware.Microwf.Core.AutoTrigger,tomware.Microwf.Domain.IWorkflowInstanceEntity)": {
           "Lines": {
@@ -1225,7 +4103,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/WorkItemRepository.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\WorkItemRepository.cs": {
       "tomware.Microwf.Infrastructure.WorkItemRepository`1": {
         "System.Void tomware.Microwf.Infrastructure.WorkItemRepository`1::.ctor(TContext)": {
           "Lines": {
@@ -1340,7 +4218,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/DTOs/WorkItemDto.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\DTOs\\WorkItemDto.cs": {
       "tomware.Microwf.Infrastructure.WorkItemDto": {
         "System.Int32 tomware.Microwf.Infrastructure.WorkItemDto::get_Id()": {
           "Lines": {
@@ -1356,7 +4234,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/InfrastructureServicesExtensions.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\InfrastructureServicesExtensions.cs": {
       "tomware.Microwf.Infrastructure.InfrastructureServicesExtensions": {
         "Microsoft.Extensions.DependencyInjection.IServiceCollection tomware.Microwf.Infrastructure.InfrastructureServicesExtensions::AddInfrastructureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
           "Lines": {
@@ -1384,7 +4262,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Services/JobQueueService.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Services\\JobQueueService.cs": {
       "tomware.Microwf.Infrastructure.JobQueueService": {
         "System.Collections.Concurrent.ConcurrentQueue`1<tomware.Microwf.Domain.WorkItem> tomware.Microwf.Infrastructure.JobQueueService::get_Items()": {
           "Lines": {
@@ -1768,7 +4646,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Services/WorkflowEngineService.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Services\\WorkflowEngineService.cs": {
       "tomware.Microwf.Infrastructure.WorkflowEngineService": {
         "tomware.Microwf.Core.IWorkflow tomware.Microwf.Infrastructure.WorkflowEngineService::Find(System.Int32,System.Type)": {
           "Lines": {
@@ -2363,7 +5241,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Services/WorkflowProcessor.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Services\\WorkflowProcessor.cs": {
       "tomware.Microwf.Infrastructure.ProcessorConfiguration": {
         "System.Boolean tomware.Microwf.Infrastructure.ProcessorConfiguration::get_Enabled()": {
           "Lines": {
@@ -2440,7 +5318,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Services/WorkItemService.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Services\\WorkItemService.cs": {
       "tomware.Microwf.Infrastructure.WorkItemService": {
         "System.Void tomware.Microwf.Infrastructure.WorkItemService::.ctor(tomware.Microwf.Infrastructure.IWorkItemRepository)": {
           "Lines": {
@@ -2562,7 +5440,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Specifications/WorkItemSpecifications.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Specifications\\WorkItemSpecifications.cs": {
       "tomware.Microwf.Infrastructure.WorkItemDueDateGreaterThanNowCount": {
         "System.Void tomware.Microwf.Infrastructure.WorkItemDueDateGreaterThanNowCount::.ctor(System.DateTime)": {
           "Lines": {
@@ -2630,7 +5508,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/Configuration/WorkflowEntityConfiguration.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\Configuration\\WorkflowEntityConfiguration.cs": {
       "tomware.Microwf.Infrastructure.Configuration.WorkflowEntityConfiguration": {
         "System.Void tomware.Microwf.Infrastructure.Configuration.WorkflowEntityConfiguration::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<tomware.Microwf.Domain.Workflow>)": {
           "Lines": {
@@ -2646,7 +5524,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/Configuration/WorkflowHistoryEntityConfiguration.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\Configuration\\WorkflowHistoryEntityConfiguration.cs": {
       "tomware.Microwf.Infrastructure.Configuration.WorkflowHistoryEntityConfiguration": {
         "System.Void tomware.Microwf.Infrastructure.Configuration.WorkflowHistoryEntityConfiguration::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<tomware.Microwf.Domain.WorkflowHistory>)": {
           "Lines": {
@@ -2662,7 +5540,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/Configuration/WorkflowVariableEntityConfiguration.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\Configuration\\WorkflowVariableEntityConfiguration.cs": {
       "tomware.Microwf.Infrastructure.Configuration.WorkflowVariableEntityConfiguration": {
         "System.Void tomware.Microwf.Infrastructure.Configuration.WorkflowVariableEntityConfiguration::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<tomware.Microwf.Domain.WorkflowVariable>)": {
           "Lines": {
@@ -2677,7 +5555,7 @@
         }
       }
     },
-    "/workspaces/microwf/src/microwf.Infrastructure/Data/Configuration/WorkItemEntityConfiguration.cs": {
+    "C:\\work\\github\\microwf\\src\\microwf.Infrastructure\\Data\\Configuration\\WorkItemEntityConfiguration.cs": {
       "tomware.Microwf.Infrastructure.Configuration.WorkItemEntityConfiguration": {
         "System.Void tomware.Microwf.Infrastructure.Configuration.WorkItemEntityConfiguration::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<tomware.Microwf.Domain.WorkItem>)": {
           "Lines": {
@@ -2691,2884 +5569,6 @@
             "23": 1
           },
           "Branches": []
-        }
-      }
-    }
-  },
-  "tomware.Microwf.Domain.dll": {
-    "/workspaces/microwf/src/microwf.Domain/Common/CoreExtensions.cs": {
-      "tomware.Microwf.Domain.TriggerParamExtension": {
-        "tomware.Microwf.Core.TriggerParam tomware.Microwf.Domain.TriggerParamExtension::AddVariableWithKey(tomware.Microwf.Core.TriggerParam,tomware.Microwf.Core.WorkflowVariableBase)": {
-          "Lines": {
-            "18": 2,
-            "19": 2,
-            "20": 2
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.TransitionContextExtension": {
-        "System.Boolean tomware.Microwf.Domain.TransitionContextExtension::HasVariable(tomware.Microwf.Core.TransitionContext)": {
-          "Lines": {
-            "34": 12,
-            "35": 12,
-            "36": 12
-          },
-          "Branches": []
-        },
-        "TVariable tomware.Microwf.Domain.TransitionContextExtension::ReturnVariable(tomware.Microwf.Core.TransitionContext)": {
-          "Lines": {
-            "47": 9,
-            "48": 9,
-            "49": 9,
-            "50": 9,
-            "51": 9
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Common/EntityWorkflowDefinitionBase.cs": {
-      "tomware.Microwf.Domain.EntityWorkflowDefinitionBase": {
-        "tomware.Microwf.Core.AutoTrigger tomware.Microwf.Domain.EntityWorkflowDefinitionBase::AutoTrigger(System.String,System.Nullable`1<System.DateTime>)": {
-          "Lines": {
-            "14": 0,
-            "15": 0,
-            "16": 0,
-            "17": 0,
-            "18": 0,
-            "19": 0,
-            "20": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Common/KeyBuilder.cs": {
-      "tomware.Microwf.Domain.KeyBuilder": {
-        "System.String tomware.Microwf.Domain.KeyBuilder::ToKey(System.Type)": {
-          "Lines": {
-            "8": 34,
-            "9": 34,
-            "10": 34
-          },
-          "Branches": []
-        },
-        "System.Type tomware.Microwf.Domain.KeyBuilder::FromKey(System.String)": {
-          "Lines": {
-            "13": 4,
-            "14": 4,
-            "15": 4,
-            "17": 496,
-            "18": 244,
-            "19": 244,
-            "20": 248,
-            "21": 240,
-            "23": 0,
-            "24": 4
-          },
-          "Branches": [
-            {
-              "Line": 15,
-              "Offset": 17,
-              "EndOffset": 19,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 15,
-              "Offset": 17,
-              "EndOffset": 23,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 4
-            },
-            {
-              "Line": 17,
-              "Offset": 85,
-              "EndOffset": 40,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 244
-            },
-            {
-              "Line": 20,
-              "Offset": 67,
-              "EndOffset": 69,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 4
-            },
-            {
-              "Line": 20,
-              "Offset": 67,
-              "EndOffset": 73,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 240
-            },
-            {
-              "Line": 17,
-              "Offset": 85,
-              "EndOffset": 87,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 0
-            }
-          ]
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Common/SystemTime.cs": {
-      "tomware.Microwf.Domain.SystemTime": {
-        "System.Void tomware.Microwf.Domain.SystemTime::.cctor()": {
-          "Lines": {
-            "7": 51
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Common/WorkflowDefinitionExtension.cs": {
-      "tomware.Microwf.Domain.WorkflowDefinitionExtension": {
-        "System.String tomware.Microwf.Domain.WorkflowDefinitionExtension::ToDotWithHistory(tomware.Microwf.Core.IWorkflowDefinition,tomware.Microwf.Domain.Workflow,System.String)": {
-          "Lines": {
-            "15": 1,
-            "16": 1,
-            "18": 1,
-            "20": 1,
-            "21": 1,
-            "25": 7,
-            "26": 2,
-            "27": 2,
-            "28": 0,
-            "29": 0,
-            "30": 0,
-            "31": 0,
-            "33": 2,
-            "34": 2,
-            "35": 2,
-            "36": 2,
-            "38": 1,
-            "40": 1,
-            "41": 1
-          },
-          "Branches": [
-            {
-              "Line": 21,
-              "Offset": 89,
-              "EndOffset": 91,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 21,
-              "Offset": 89,
-              "EndOffset": 148,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            },
-            {
-              "Line": 25,
-              "Offset": 457,
-              "EndOffset": 167,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 2
-            },
-            {
-              "Line": 27,
-              "Offset": 189,
-              "EndOffset": 194,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 0
-            },
-            {
-              "Line": 27,
-              "Offset": 189,
-              "EndOffset": 329,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 2
-            },
-            {
-              "Line": 25,
-              "Offset": 457,
-              "EndOffset": 462,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 1
-            }
-          ]
-        },
-        "System.Boolean tomware.Microwf.Domain.WorkflowDefinitionExtension::Exists(tomware.Microwf.Core.Transition,System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowHistory>)": {
-          "Lines": {
-            "44": 2,
-            "45": 2,
-            "46": 2
-          },
-          "Branches": [
-            {
-              "Line": 45,
-              "Offset": 22,
-              "EndOffset": 24,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 45,
-              "Offset": 22,
-              "EndOffset": 48,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            }
-          ]
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DomainServicesExtensions.cs": {
-      "tomware.Microwf.Domain.DomainServicesExtensions": {
-        "Microsoft.Extensions.DependencyInjection.IServiceCollection tomware.Microwf.Domain.DomainServicesExtensions::AddDomainServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
-          "Lines": {
-            "12": 7,
-            "13": 7,
-            "15": 7,
-            "16": 7,
-            "17": 7,
-            "19": 7,
-            "20": 7
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/ObjectMapper.cs": {
-      "tomware.Microwf.Domain.ObjectMapper": {
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkItemDto> tomware.Microwf.Domain.ObjectMapper::ToWorkItemViewModelList(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkItem>)": {
-          "Lines": {
-            "14": 2,
-            "15": 5,
-            "16": 5,
-            "17": 5,
-            "18": 5,
-            "19": 5,
-            "20": 5,
-            "21": 5,
-            "22": 5,
-            "23": 5,
-            "24": 5,
-            "25": 2
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowHistoryDto> tomware.Microwf.Domain.ObjectMapper::ToWorkflowHistoryViewModelList(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowHistory>)": {
-          "Lines": {
-            "30": 1,
-            "31": 1,
-            "32": 1,
-            "33": 1,
-            "34": 1,
-            "35": 1,
-            "36": 1,
-            "37": 1,
-            "38": 1,
-            "39": 1,
-            "40": 1
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowVariableDto> tomware.Microwf.Domain.ObjectMapper::ToWorkflowVariableViewModelList(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowVariable>)": {
-          "Lines": {
-            "45": 1,
-            "46": 1,
-            "47": 1,
-            "48": 1,
-            "49": 1,
-            "50": 1,
-            "51": 1,
-            "52": 1,
-            "53": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.PropertyMapper`2": {
-        "System.Func`2<TInput,TOutput> tomware.Microwf.Domain.PropertyMapper`2::CreateCloner()": {
-          "Lines": {
-            "78": 0,
-            "80": 0,
-            "81": 0,
-            "83": 0,
-            "87": 0,
-            "88": 0,
-            "89": 0,
-            "90": 0,
-            "91": 0,
-            "92": 0,
-            "94": 0,
-            "95": 0,
-            "97": 0,
-            "98": 0
-          },
-          "Branches": [
-            {
-              "Line": 80,
-              "Offset": 37,
-              "EndOffset": 39,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 81,
-              "Offset": 45,
-              "EndOffset": 47,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 0
-            },
-            {
-              "Line": 81,
-              "Offset": 45,
-              "EndOffset": 70,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 0
-            },
-            {
-              "Line": 80,
-              "Offset": 37,
-              "EndOffset": 77,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            },
-            {
-              "Line": 87,
-              "Offset": 119,
-              "EndOffset": 121,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 0
-            },
-            {
-              "Line": 87,
-              "Offset": 119,
-              "EndOffset": 144,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 0
-            },
-            {
-              "Line": 87,
-              "Offset": 150,
-              "EndOffset": 152,
-              "Path": 0,
-              "Ordinal": 6,
-              "Hits": 0
-            },
-            {
-              "Line": 87,
-              "Offset": 150,
-              "EndOffset": 175,
-              "Path": 1,
-              "Ordinal": 7,
-              "Hits": 0
-            }
-          ]
-        },
-        "System.Action`2<TInput,TOutput> tomware.Microwf.Domain.PropertyMapper`2::CreateCopier()": {
-          "Lines": {
-            "101": 0,
-            "102": 0,
-            "103": 0,
-            "107": 0,
-            "108": 0,
-            "109": 0,
-            "110": 0,
-            "111": 0,
-            "112": 0,
-            "114": 0,
-            "115": 0,
-            "116": 0,
-            "117": 0
-          },
-          "Branches": [
-            {
-              "Line": 107,
-              "Offset": 75,
-              "EndOffset": 77,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 107,
-              "Offset": 75,
-              "EndOffset": 100,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            },
-            {
-              "Line": 107,
-              "Offset": 106,
-              "EndOffset": 108,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 0
-            },
-            {
-              "Line": 107,
-              "Offset": 106,
-              "EndOffset": 131,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 0
-            }
-          ]
-        },
-        "TOutput tomware.Microwf.Domain.PropertyMapper`2::From(TInput)": {
-          "Lines": {
-            "120": 0,
-            "121": 0,
-            "123": 0,
-            "124": 0
-          },
-          "Branches": [
-            {
-              "Line": 121,
-              "Offset": 12,
-              "EndOffset": 14,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 121,
-              "Offset": 12,
-              "EndOffset": 26,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Domain.PropertyMapper`2::CopyTo(TInput,TOutput)": {
-          "Lines": {
-            "127": 0,
-            "128": 0,
-            "129": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.PropertyMapper`2::.cctor()": {
-          "Lines": {
-            "65": 0,
-            "66": 0,
-            "67": 0,
-            "68": 0,
-            "69": 0,
-            "70": 0,
-            "71": 0,
-            "73": 0,
-            "74": 0,
-            "75": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/PagingParameters.cs": {
-      "tomware.Microwf.Domain.PagingParameters": {
-        "System.Int32 tomware.Microwf.Domain.PagingParameters::get_PageIndex()": {
-          "Lines": {
-            "8": 15
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.PagingParameters::get_PageSize()": {
-          "Lines": {
-            "10": 20
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.PagingParameters::get_SkipCount()": {
-          "Lines": {
-            "15": 5,
-            "16": 5,
-            "17": 5
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowSearchPagingParameters": {
-        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasType()": {
-          "Lines": {
-            "26": 5,
-            "27": 5,
-            "28": 5
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_Type()": {
-          "Lines": {
-            "31": 5
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasCorrelationId()": {
-          "Lines": {
-            "36": 5,
-            "37": 5,
-            "38": 5
-          },
-          "Branches": []
-        },
-        "System.Nullable`1<System.Int32> tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_CorrelationId()": {
-          "Lines": {
-            "41": 9
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasAssignee()": {
-          "Lines": {
-            "46": 3,
-            "47": 3,
-            "48": 3
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_Assignee()": {
-          "Lines": {
-            "51": 5
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.WorkflowSearchPagingParameters::get_HasValues()": {
-          "Lines": {
-            "56": 3,
-            "57": 3,
-            "58": 3,
-            "59": 3,
-            "60": 3
-          },
-          "Branches": [
-            {
-              "Line": 57,
-              "Offset": 7,
-              "EndOffset": 9,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 3
-            },
-            {
-              "Line": 57,
-              "Offset": 15,
-              "EndOffset": 17,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 1
-            },
-            {
-              "Line": 57,
-              "Offset": 7,
-              "EndOffset": 25,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 2
-            },
-            {
-              "Line": 57,
-              "Offset": 15,
-              "EndOffset": 25,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 2
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.PaginatedList`1": {
-        "System.Int32 tomware.Microwf.Domain.PaginatedList`1::get_PageIndex()": {
-          "Lines": {
-            "66": 5
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.PaginatedList`1::get_TotalPages()": {
-          "Lines": {
-            "68": 5
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.PaginatedList`1::get_AllItemsCount()": {
-          "Lines": {
-            "70": 5
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.PaginatedList`1::get_HasPreviousPage()": {
-          "Lines": {
-            "84": 0,
-            "85": 0,
-            "86": 0
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.PaginatedList`1::get_HasNextPage()": {
-          "Lines": {
-            "92": 0,
-            "93": 0,
-            "94": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.PaginatedList`1::.ctor(System.Collections.Generic.IEnumerable`1<T>,System.Int32,System.Int32,System.Int32)": {
-          "Lines": {
-            "72": 5,
-            "73": 5,
-            "74": 5,
-            "75": 5,
-            "76": 5,
-            "78": 5,
-            "79": 5
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/WorkflowDefinitionDto.cs": {
-      "tomware.Microwf.Domain.WorkflowDefinitionDto": {
-        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Type()": {
-          "Lines": {
-            "5": 11
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Title()": {
-          "Lines": {
-            "6": 15
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Description()": {
-          "Lines": {
-            "7": 15
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDefinitionDto::get_Route()": {
-          "Lines": {
-            "8": 15
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/WorkflowDto.cs": {
-      "tomware.Microwf.Domain.WorkflowDto": {
-        "System.Int32 tomware.Microwf.Domain.WorkflowDto::get_Id()": {
-          "Lines": {
-            "7": 7
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkflowDto::get_CorrelationId()": {
-          "Lines": {
-            "8": 7
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDto::get_Type()": {
-          "Lines": {
-            "9": 5
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDto::get_State()": {
-          "Lines": {
-            "10": 7
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDto::get_Title()": {
-          "Lines": {
-            "11": 5
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDto::get_Description()": {
-          "Lines": {
-            "12": 5
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDto::get_Assignee()": {
-          "Lines": {
-            "13": 7
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowDto::get_Route()": {
-          "Lines": {
-            "14": 5
-          },
-          "Branches": []
-        },
-        "System.DateTime tomware.Microwf.Domain.WorkflowDto::get_Started()": {
-          "Lines": {
-            "15": 5
-          },
-          "Branches": []
-        },
-        "System.Nullable`1<System.DateTime> tomware.Microwf.Domain.WorkflowDto::get_Completed()": {
-          "Lines": {
-            "16": 5
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/WorkflowHistoryDto.cs": {
-      "tomware.Microwf.Domain.WorkflowHistoryDto": {
-        "System.Int32 tomware.Microwf.Domain.WorkflowHistoryDto::get_Id()": {
-          "Lines": {
-            "7": 0
-          },
-          "Branches": []
-        },
-        "System.DateTime tomware.Microwf.Domain.WorkflowHistoryDto::get_Created()": {
-          "Lines": {
-            "9": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowHistoryDto::get_FromState()": {
-          "Lines": {
-            "11": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowHistoryDto::get_ToState()": {
-          "Lines": {
-            "13": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowHistoryDto::get_UserName()": {
-          "Lines": {
-            "15": 0
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkflowHistoryDto::get_WorkflowId()": {
-          "Lines": {
-            "17": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/WorkflowVariableDto.cs": {
-      "tomware.Microwf.Domain.WorkflowVariableDto": {
-        "System.Int32 tomware.Microwf.Domain.WorkflowVariableDto::get_Id()": {
-          "Lines": {
-            "5": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowVariableDto::get_Type()": {
-          "Lines": {
-            "7": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowVariableDto::get_Content()": {
-          "Lines": {
-            "9": 0
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkflowVariableDto::get_WorkflowId()": {
-          "Lines": {
-            "11": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/DTOs/WorkItemDto.cs": {
-      "tomware.Microwf.Domain.WorkItemDto": {
-        "System.Int32 tomware.Microwf.Domain.WorkItemDto::get_Id()": {
-          "Lines": {
-            "7": 4
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkItemDto::get_TriggerName()": {
-          "Lines": {
-            "9": 3
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkItemDto::get_EntityId()": {
-          "Lines": {
-            "11": 3
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkItemDto::get_WorkflowType()": {
-          "Lines": {
-            "13": 3
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkItemDto::get_Retries()": {
-          "Lines": {
-            "15": 4
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkItemDto::get_Error()": {
-          "Lines": {
-            "17": 3
-          },
-          "Branches": []
-        },
-        "System.DateTime tomware.Microwf.Domain.WorkItemDto::get_DueDate()": {
-          "Lines": {
-            "19": 3
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Entities/EngineEntity.cs": {
-      "tomware.Microwf.Domain.EngineEntity": {
-        "System.Int32 tomware.Microwf.Domain.EngineEntity::get_Id()": {
-          "Lines": {
-            "5": 64
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Entities/Workflow.cs": {
-      "tomware.Microwf.Domain.Workflow": {
-        "System.String tomware.Microwf.Domain.Workflow::get_Type()": {
-          "Lines": {
-            "10": 39
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.Workflow::get_State()": {
-          "Lines": {
-            "12": 38
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.Workflow::get_CorrelationId()": {
-          "Lines": {
-            "14": 30
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.Workflow::get_Assignee()": {
-          "Lines": {
-            "16": 34
-          },
-          "Branches": []
-        },
-        "System.DateTime tomware.Microwf.Domain.Workflow::get_Started()": {
-          "Lines": {
-            "18": 29
-          },
-          "Branches": []
-        },
-        "System.Nullable`1<System.DateTime> tomware.Microwf.Domain.Workflow::get_Completed()": {
-          "Lines": {
-            "20": 8
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowVariable> tomware.Microwf.Domain.Workflow::get_WorkflowVariables()": {
-          "Lines": {
-            "22": 51
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowHistory> tomware.Microwf.Domain.Workflow::get_WorkflowHistories()": {
-          "Lines": {
-            "24": 32
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Domain.Workflow tomware.Microwf.Domain.Workflow::Create(System.Int32,System.String,System.String,System.String)": {
-          "Lines": {
-            "32": 8,
-            "33": 8,
-            "34": 8,
-            "35": 8,
-            "36": 8,
-            "37": 8,
-            "38": 8,
-            "39": 8,
-            "40": 8,
-            "41": 8
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.Workflow::AddVariable(tomware.Microwf.Core.WorkflowVariableBase)": {
-          "Lines": {
-            "44": 6,
-            "45": 6,
-            "46": 7,
-            "47": 6,
-            "48": 1,
-            "49": 1,
-            "51": 1,
-            "54": 5,
-            "55": 6
-          },
-          "Branches": [
-            {
-              "Line": 47,
-              "Offset": 54,
-              "EndOffset": 56,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 47,
-              "Offset": 54,
-              "EndOffset": 67,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 5
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Domain.Workflow::AddHistoryItem(System.String,System.String,System.String)": {
-          "Lines": {
-            "58": 4,
-            "59": 4,
-            "60": 4,
-            "61": 4,
-            "62": 4,
-            "63": 4,
-            "64": 4,
-            "65": 4,
-            "66": 4,
-            "67": 4,
-            "68": 4
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Entities/WorkflowHistory.cs": {
-      "tomware.Microwf.Domain.WorkflowHistory": {
-        "System.DateTime tomware.Microwf.Domain.WorkflowHistory::get_Created()": {
-          "Lines": {
-            "8": 4
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowHistory::get_FromState()": {
-          "Lines": {
-            "10": 4
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowHistory::get_ToState()": {
-          "Lines": {
-            "12": 4
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowHistory::get_UserName()": {
-          "Lines": {
-            "14": 4
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkflowHistory::get_WorkflowId()": {
-          "Lines": {
-            "16": 4
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Domain.Workflow tomware.Microwf.Domain.WorkflowHistory::get_Workflow()": {
-          "Lines": {
-            "19": 4
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Entities/WorkflowVariable.cs": {
-      "tomware.Microwf.Domain.WorkflowVariable": {
-        "System.String tomware.Microwf.Domain.WorkflowVariable::get_Type()": {
-          "Lines": {
-            "9": 14
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowVariable::get_Content()": {
-          "Lines": {
-            "11": 12
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkflowVariable::get_WorkflowId()": {
-          "Lines": {
-            "13": 5
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Domain.Workflow tomware.Microwf.Domain.WorkflowVariable::get_Workflow()": {
-          "Lines": {
-            "16": 5
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Domain.WorkflowVariable tomware.Microwf.Domain.WorkflowVariable::Create(tomware.Microwf.Domain.Workflow,tomware.Microwf.Core.WorkflowVariableBase)": {
-          "Lines": {
-            "19": 5,
-            "20": 5,
-            "21": 5,
-            "22": 5,
-            "23": 5,
-            "24": 5,
-            "25": 5,
-            "26": 5,
-            "27": 5
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.WorkflowVariableBase tomware.Microwf.Domain.WorkflowVariable::ConvertContent(tomware.Microwf.Domain.WorkflowVariable)": {
-          "Lines": {
-            "30": 3,
-            "31": 3,
-            "32": 3,
-            "33": 3,
-            "34": 3,
-            "35": 3
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.WorkflowVariable::UpdateContent(tomware.Microwf.Core.WorkflowVariableBase)": {
-          "Lines": {
-            "38": 1,
-            "39": 1,
-            "40": 1
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Entities/WorkItem.cs": {
-      "tomware.Microwf.Domain.WorkItem": {
-        "System.String tomware.Microwf.Domain.WorkItem::get_TriggerName()": {
-          "Lines": {
-            "9": 19
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkItem::get_EntityId()": {
-          "Lines": {
-            "11": 19
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkItem::get_WorkflowType()": {
-          "Lines": {
-            "13": 22
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.WorkItem::get_Retries()": {
-          "Lines": {
-            "15": 7
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkItem::get_Error()": {
-          "Lines": {
-            "17": 3
-          },
-          "Branches": []
-        },
-        "System.DateTime tomware.Microwf.Domain.WorkItem::get_DueDate()": {
-          "Lines": {
-            "19": 21
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Domain.WorkItem tomware.Microwf.Domain.WorkItem::Create(System.String,System.Int32,System.String,System.Nullable`1<System.DateTime>)": {
-          "Lines": {
-            "27": 1,
-            "28": 1,
-            "29": 1,
-            "30": 1,
-            "31": 1,
-            "32": 1,
-            "33": 1,
-            "34": 1,
-            "35": 1,
-            "36": 1
-          },
-          "Branches": [
-            {
-              "Line": 28,
-              "Offset": 48,
-              "EndOffset": 50,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 28,
-              "Offset": 48,
-              "EndOffset": 62,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Domain.WorkItem::.cctor()": {
-          "Lines": {
-            "7": 1
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Services/UserWorkflowMappingService.cs": {
-      "tomware.Microwf.Domain.UserWorkflowMappingsStore": {
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.UserWorkflowMapping> tomware.Microwf.Domain.UserWorkflowMappingsStore::get_Workflows()": {
-          "Lines": {
-            "9": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.UserWorkflowMappingsStore::.ctor(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.UserWorkflowMapping>)": {
-          "Lines": {
-            "11": 0,
-            "12": 0,
-            "13": 0,
-            "14": 0
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.UserWorkflowMapping": {
-        "System.String tomware.Microwf.Domain.UserWorkflowMapping::get_UserName()": {
-          "Lines": {
-            "19": 0
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.IList`1<System.String> tomware.Microwf.Domain.UserWorkflowMapping::get_WorkflowDefinitions()": {
-          "Lines": {
-            "21": 0
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.NoopUserWorkflowMappingService": {
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition> tomware.Microwf.Domain.NoopUserWorkflowMappingService::Filter(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition>)": {
-          "Lines": {
-            "27": 0,
-            "28": 0,
-            "29": 0
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.InMemoryUserWorkflowMappingService": {
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition> tomware.Microwf.Domain.InMemoryUserWorkflowMappingService::Filter(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition>)": {
-          "Lines": {
-            "47": 0,
-            "48": 0,
-            "49": 0,
-            "51": 0,
-            "52": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.InMemoryUserWorkflowMappingService::.ctor(tomware.Microwf.Domain.IUserContextService,tomware.Microwf.Domain.UserWorkflowMappingsStore)": {
-          "Lines": {
-            "37": 0,
-            "38": 0,
-            "39": 0,
-            "40": 0,
-            "41": 0,
-            "42": 0,
-            "43": 0,
-            "44": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Services/WorkflowDefinitionDtoCreator.cs": {
-      "tomware.Microwf.Domain.WorkflowConfiguration": {
-        "System.Collections.Generic.List`1<tomware.Microwf.Domain.WorkflowType> tomware.Microwf.Domain.WorkflowConfiguration::get_Types()": {
-          "Lines": {
-            "9": 0
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowType": {
-        "System.String tomware.Microwf.Domain.WorkflowType::get_Type()": {
-          "Lines": {
-            "14": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowType::get_Title()": {
-          "Lines": {
-            "15": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowType::get_Description()": {
-          "Lines": {
-            "16": 0
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowType::get_Route()": {
-          "Lines": {
-            "17": 0
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowDefinitionDtoCreator": {
-        "tomware.Microwf.Domain.WorkflowDefinitionDto tomware.Microwf.Domain.WorkflowDefinitionDtoCreator::Create(System.String)": {
-          "Lines": {
-            "33": 0,
-            "34": 0,
-            "35": 0,
-            "36": 0,
-            "38": 0,
-            "39": 0,
-            "40": 0,
-            "41": 0,
-            "42": 0,
-            "43": 0,
-            "44": 0,
-            "45": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.WorkflowDefinitionDtoCreator::.ctor(Microsoft.Extensions.Options.IOptions`1<tomware.Microwf.Domain.WorkflowConfiguration>)": {
-          "Lines": {
-            "25": 0,
-            "26": 0,
-            "27": 0,
-            "28": 0,
-            "29": 0,
-            "30": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Services/WorkflowDefinitionProvider.cs": {
-      "tomware.Microwf.Domain.WorkflowDefinitionProvider": {
-        "tomware.Microwf.Core.IWorkflowDefinition tomware.Microwf.Domain.WorkflowDefinitionProvider::GetWorkflowDefinition(System.String)": {
-          "Lines": {
-            "18": 0,
-            "19": 0,
-            "20": 0
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition> tomware.Microwf.Domain.WorkflowDefinitionProvider::GetWorkflowDefinitions()": {
-          "Lines": {
-            "23": 0,
-            "24": 0,
-            "25": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.WorkflowDefinitionProvider::RegisterWorkflowDefinition(tomware.Microwf.Core.IWorkflowDefinition)": {
-          "Lines": {
-            "28": 0,
-            "29": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.WorkflowDefinitionProvider::.ctor(System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.IWorkflowDefinition>)": {
-          "Lines": {
-            "12": 0,
-            "13": 0,
-            "14": 0,
-            "15": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Services/WorkflowService.cs": {
-      "tomware.Microwf.Domain.WorkflowService": {
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Domain.WorkflowDefinitionDto> tomware.Microwf.Domain.WorkflowService::GetWorkflowDefinitions()": {
-          "Lines": {
-            "102": 2,
-            "103": 2,
-            "105": 2,
-            "107": 7,
-            "108": 2
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowService::Dot(System.String)": {
-          "Lines": {
-            "111": 3,
-            "112": 5,
-            "114": 1,
-            "116": 1,
-            "117": 1
-          },
-          "Branches": [
-            {
-              "Line": 112,
-              "Offset": 9,
-              "EndOffset": 11,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 112,
-              "Offset": 9,
-              "EndOffset": 22,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        },
-        "tomware.Microwf.Domain.WorkflowDto tomware.Microwf.Domain.WorkflowService::ToWorkflowDto(tomware.Microwf.Domain.Workflow)": {
-          "Lines": {
-            "137": 5,
-            "138": 5,
-            "140": 5,
-            "141": 5,
-            "142": 5,
-            "143": 5,
-            "144": 5,
-            "145": 5,
-            "146": 5,
-            "147": 5,
-            "148": 5,
-            "149": 5,
-            "150": 5,
-            "151": 5,
-            "152": 5,
-            "153": 5
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Domain.WorkflowDto tomware.Microwf.Domain.WorkflowService::<GetWorkflowsAsync>b__5_0(tomware.Microwf.Domain.Workflow)": {
-          "Lines": {
-            "52": 6
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.WorkflowService::.ctor(tomware.Microwf.Domain.IWorkflowRepository,tomware.Microwf.Core.IWorkflowDefinitionProvider,tomware.Microwf.Domain.IUserWorkflowMappingService,tomware.Microwf.Domain.IWorkflowDefinitionDtoCreator)": {
-          "Lines": {
-            "16": 14,
-            "17": 14,
-            "18": 14,
-            "19": 14,
-            "20": 14,
-            "21": 14,
-            "22": 14,
-            "23": 14,
-            "24": 14,
-            "25": 14,
-            "26": 14,
-            "27": 14
-          },
-          "Branches": [
-            {
-              "Line": 23,
-              "Offset": 11,
-              "EndOffset": 13,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 23,
-              "Offset": 11,
-              "EndOffset": 25,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 14
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<>c": {
-        "System.DateTime tomware.Microwf.Domain.WorkflowService/<>c::<GetHistoryAsync>b__7_0(tomware.Microwf.Domain.WorkflowHistory)": {
-          "Lines": {
-            "76": 1
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Domain.WorkflowService/<>c::<GetVariablesAsync>b__8_0(tomware.Microwf.Domain.WorkflowVariable)": {
-          "Lines": {
-            "87": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<DotWithHistoryAsync>d__12": {
-        "System.Void tomware.Microwf.Domain.WorkflowService/<DotWithHistoryAsync>d__12::MoveNext()": {
-          "Lines": {
-            "120": 1,
-            "121": 1,
-            "123": 1,
-            "124": 1,
-            "125": 1,
-            "126": 1,
-            "127": 1,
-            "128": 1,
-            "129": 1,
-            "131": 1,
-            "133": 1,
-            "134": 1
-          },
-          "Branches": [
-            {
-              "Line": 121,
-              "Offset": 28,
-              "EndOffset": 30,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 121,
-              "Offset": 28,
-              "EndOffset": 41,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            },
-            {
-              "Line": 129,
-              "Offset": 219,
-              "EndOffset": 221,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 0
-            },
-            {
-              "Line": 129,
-              "Offset": 219,
-              "EndOffset": 284,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 1
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<GetAsync>d__6": {
-        "System.Void tomware.Microwf.Domain.WorkflowService/<GetAsync>d__6::MoveNext()": {
-          "Lines": {
-            "63": 1,
-            "64": 1,
-            "65": 1,
-            "67": 1,
-            "68": 1
-          },
-          "Branches": [
-            {
-              "Line": 65,
-              "Offset": 164,
-              "EndOffset": 166,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 65,
-              "Offset": 164,
-              "EndOffset": 177,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<GetHistoryAsync>d__7": {
-        "System.Void tomware.Microwf.Domain.WorkflowService/<GetHistoryAsync>d__7::MoveNext()": {
-          "Lines": {
-            "71": 1,
-            "72": 1,
-            "73": 1,
-            "74": 1,
-            "78": 1,
-            "79": 1
-          },
-          "Branches": [
-            {
-              "Line": 74,
-              "Offset": 186,
-              "EndOffset": 188,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 74,
-              "Offset": 186,
-              "EndOffset": 199,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<GetInstanceAsync>d__9": {
-        "System.Void tomware.Microwf.Domain.WorkflowService/<GetInstanceAsync>d__9::MoveNext()": {
-          "Lines": {
-            "93": 1,
-            "94": 1,
-            "95": 1,
-            "96": 1,
-            "98": 1,
-            "99": 1
-          },
-          "Branches": [
-            {
-              "Line": 96,
-              "Offset": 192,
-              "EndOffset": 194,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 96,
-              "Offset": 192,
-              "EndOffset": 257,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<GetVariablesAsync>d__8": {
-        "System.Void tomware.Microwf.Domain.WorkflowService/<GetVariablesAsync>d__8::MoveNext()": {
-          "Lines": {
-            "82": 1,
-            "83": 1,
-            "84": 1,
-            "85": 1,
-            "89": 1,
-            "90": 1
-          },
-          "Branches": [
-            {
-              "Line": 85,
-              "Offset": 186,
-              "EndOffset": 188,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 85,
-              "Offset": 186,
-              "EndOffset": 199,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowService/<GetWorkflowsAsync>d__5": {
-        "System.Void tomware.Microwf.Domain.WorkflowService/<GetWorkflowsAsync>d__5::MoveNext()": {
-          "Lines": {
-            "32": 3,
-            "33": 3,
-            "35": 3,
-            "36": 3,
-            "37": 2,
-            "38": 2,
-            "39": 2,
-            "40": 2,
-            "41": 2,
-            "42": 2,
-            "44": 1,
-            "45": 1,
-            "46": 1,
-            "47": 1,
-            "48": 1,
-            "49": 1,
-            "50": 1,
-            "54": 3,
-            "55": 3,
-            "56": 3,
-            "57": 3,
-            "58": 3,
-            "59": 3,
-            "60": 3
-          },
-          "Branches": [
-            {
-              "Line": 36,
-              "Offset": 190,
-              "EndOffset": 195,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 36,
-              "Offset": 190,
-              "EndOffset": 346,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Specifications/BaseSpecification.cs": {
-      "tomware.Microwf.Domain.BaseSpecification`1": {
-        "System.Collections.Generic.List`1<System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>> tomware.Microwf.Domain.BaseSpecification`1::get_Criterias()": {
-          "Lines": {
-            "9": 56
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.List`1<System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>> tomware.Microwf.Domain.BaseSpecification`1::get_Includes()": {
-          "Lines": {
-            "11": 28
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.List`1<System.String> tomware.Microwf.Domain.BaseSpecification`1::get_IncludeStrings()": {
-          "Lines": {
-            "13": 42
-          },
-          "Branches": []
-        },
-        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>> tomware.Microwf.Domain.BaseSpecification`1::get_OrderBy()": {
-          "Lines": {
-            "14": 25
-          },
-          "Branches": []
-        },
-        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>> tomware.Microwf.Domain.BaseSpecification`1::get_OrderByDescending()": {
-          "Lines": {
-            "15": 25
-          },
-          "Branches": []
-        },
-        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>> tomware.Microwf.Domain.BaseSpecification`1::get_GroupBy()": {
-          "Lines": {
-            "16": 21
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.BaseSpecification`1::get_Take()": {
-          "Lines": {
-            "18": 10
-          },
-          "Branches": []
-        },
-        "System.Int32 tomware.Microwf.Domain.BaseSpecification`1::get_Skip()": {
-          "Lines": {
-            "19": 10
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.BaseSpecification`1::get_IsPagingEnabled()": {
-          "Lines": {
-            "20": 47
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Domain.BaseSpecification`1::get_AsNoTracking()": {
-          "Lines": {
-            "21": 55
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::AddCriteria(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
-          "Lines": {
-            "40": 3,
-            "41": 3,
-            "42": 3
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::AddInclude(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
-          "Lines": {
-            "45": 7,
-            "46": 7,
-            "47": 7
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::AddInclude(System.String)": {
-          "Lines": {
-            "50": 0,
-            "51": 0,
-            "52": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyPaging(System.Int32,System.Int32)": {
-          "Lines": {
-            "55": 5,
-            "56": 5,
-            "57": 5,
-            "58": 5,
-            "59": 5
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyNoTracking()": {
-          "Lines": {
-            "62": 13,
-            "63": 13,
-            "64": 13
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyOrderBy(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
-          "Lines": {
-            "67": 2,
-            "68": 2,
-            "69": 2
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyOrderByDescending(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
-          "Lines": {
-            "72": 3,
-            "73": 3,
-            "74": 3
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::ApplyGroupBy(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)": {
-          "Lines": {
-            "77": 0,
-            "78": 0,
-            "79": 0
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::.ctor()": {
-          "Lines": {
-            "10": 21,
-            "12": 21,
-            "27": 6,
-            "28": 6,
-            "29": 6
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Domain.BaseSpecification`1::.ctor(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
-          "Lines": {
-            "34": 15,
-            "35": 15,
-            "36": 15,
-            "37": 15
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Specifications/ExpressionExtensions.cs": {
-      "tomware.Microwf.Domain.ExpressionExtensions": {
-        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> tomware.Microwf.Domain.ExpressionExtensions::Or(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>,System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
-          "Lines": {
-            "13": 0,
-            "14": 0,
-            "15": 0,
-            "16": 0,
-            "17": 0
-          },
-          "Branches": []
-        },
-        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> tomware.Microwf.Domain.ExpressionExtensions::And(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>,System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>)": {
-          "Lines": {
-            "23": 0,
-            "24": 0,
-            "25": 0,
-            "26": 0,
-            "27": 0
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Domain/Specifications/WorkflowSpecifications.cs": {
-      "tomware.Microwf.Domain.WorkflowCount": {
-        "System.Void tomware.Microwf.Domain.WorkflowCount::.ctor()": {
-          "Lines": {
-            "9": 3,
-            "10": 3,
-            "11": 3
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowInstancesOrderedPaginated": {
-        "System.Void tomware.Microwf.Domain.WorkflowInstancesOrderedPaginated::.ctor(System.Int32,System.Int32)": {
-          "Lines": {
-            "18": 1,
-            "19": 1,
-            "20": 1,
-            "21": 1,
-            "22": 1,
-            "23": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowInstancesFilterAndOrderedPaginated": {
-        "System.Collections.Generic.List`1<System.Linq.Expressions.Expression`1<System.Func`2<tomware.Microwf.Domain.Workflow,System.Boolean>>> tomware.Microwf.Domain.WorkflowInstancesFilterAndOrderedPaginated::GetCriterias(tomware.Microwf.Domain.WorkflowSearchPagingParameters)": {
-          "Lines": {
-            "46": 2,
-            "47": 2,
-            "48": 2,
-            "50": 2,
-            "51": 0,
-            "52": 0,
-            "53": 0,
-            "54": 0,
-            "56": 2,
-            "57": 2,
-            "58": 2,
-            "59": 2,
-            "60": 2,
-            "62": 2,
-            "63": 1,
-            "64": 1,
-            "65": 1,
-            "66": 1,
-            "68": 2,
-            "69": 2
-          },
-          "Branches": [
-            {
-              "Line": 50,
-              "Offset": 33,
-              "EndOffset": 38,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 50,
-              "Offset": 33,
-              "EndOffset": 234,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 2
-            },
-            {
-              "Line": 56,
-              "Offset": 249,
-              "EndOffset": 254,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 2
-            },
-            {
-              "Line": 56,
-              "Offset": 249,
-              "EndOffset": 391,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 2
-            },
-            {
-              "Line": 62,
-              "Offset": 406,
-              "EndOffset": 411,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 1
-            },
-            {
-              "Line": 62,
-              "Offset": 406,
-              "EndOffset": 607,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 2
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Domain.WorkflowInstancesFilterAndOrderedPaginated::.ctor(tomware.Microwf.Domain.WorkflowSearchPagingParameters)": {
-          "Lines": {
-            "30": 2,
-            "31": 2,
-            "32": 2,
-            "33": 12,
-            "34": 3,
-            "35": 3,
-            "36": 3,
-            "38": 2,
-            "39": 2,
-            "40": 2,
-            "41": 2
-          },
-          "Branches": [
-            {
-              "Line": 33,
-              "Offset": 50,
-              "EndOffset": 25,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 3
-            },
-            {
-              "Line": 33,
-              "Offset": 50,
-              "EndOffset": 52,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            }
-          ]
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowVariablesForWorkflow": {
-        "System.Void tomware.Microwf.Domain.WorkflowVariablesForWorkflow::.ctor(System.Int32)": {
-          "Lines": {
-            "74": 1,
-            "75": 1,
-            "76": 1,
-            "77": 1,
-            "78": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.WorkflowHistoryForWorkflow": {
-        "System.Void tomware.Microwf.Domain.WorkflowHistoryForWorkflow::.ctor(System.Int32)": {
-          "Lines": {
-            "83": 1,
-            "84": 1,
-            "85": 1,
-            "86": 1,
-            "87": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.GetWorkflowInstance": {
-        "System.Void tomware.Microwf.Domain.GetWorkflowInstance::.ctor(System.String,System.Int32)": {
-          "Lines": {
-            "93": 1,
-            "94": 1,
-            "95": 1,
-            "96": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.GetWorkflowInstanceHistories": {
-        "System.Void tomware.Microwf.Domain.GetWorkflowInstanceHistories::.ctor(System.String,System.Int32)": {
-          "Lines": {
-            "102": 1,
-            "103": 1,
-            "104": 1,
-            "105": 1,
-            "106": 1
-          },
-          "Branches": []
-        }
-      },
-      "tomware.Microwf.Domain.GetWorkflowInstanceVariables": {
-        "System.Void tomware.Microwf.Domain.GetWorkflowInstanceVariables::.ctor(System.String,System.Int32)": {
-          "Lines": {
-            "112": 4,
-            "113": 4,
-            "114": 4,
-            "115": 4,
-            "116": 4
-          },
-          "Branches": []
-        }
-      }
-    }
-  },
-  "tomware.Microwf.Core.dll": {
-    "/workspaces/microwf/src/microwf.Core/Definition/AutoTrigger.cs": {
-      "tomware.Microwf.Core.AutoTrigger": {
-        "System.String tomware.Microwf.Core.AutoTrigger::get_Trigger()": {
-          "Lines": {
-            "7": 3
-          },
-          "Branches": []
-        },
-        "System.Nullable`1<System.DateTime> tomware.Microwf.Core.AutoTrigger::get_DueDate()": {
-          "Lines": {
-            "9": 3
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Definition/Transition.cs": {
-      "tomware.Microwf.Core.Transition": {
-        "System.String tomware.Microwf.Core.Transition::get_State()": {
-          "Lines": {
-            "10": 148
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Core.Transition::get_Trigger()": {
-          "Lines": {
-            "15": 145
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Core.Transition::get_TargetState()": {
-          "Lines": {
-            "20": 133
-          },
-          "Branches": []
-        },
-        "System.Func`2<tomware.Microwf.Core.TransitionContext,System.Boolean> tomware.Microwf.Core.Transition::get_CanMakeTransition()": {
-          "Lines": {
-            "25": 202
-          },
-          "Branches": []
-        },
-        "System.Action`1<tomware.Microwf.Core.TransitionContext> tomware.Microwf.Core.Transition::get_BeforeTransition()": {
-          "Lines": {
-            "30": 48
-          },
-          "Branches": []
-        },
-        "System.Action`1<tomware.Microwf.Core.TransitionContext> tomware.Microwf.Core.Transition::get_AfterTransition()": {
-          "Lines": {
-            "35": 94
-          },
-          "Branches": []
-        },
-        "System.Func`2<tomware.Microwf.Core.TransitionContext,tomware.Microwf.Core.AutoTrigger> tomware.Microwf.Core.Transition::get_AutoTrigger()": {
-          "Lines": {
-            "40": 27
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Core.Transition::.ctor()": {
-          "Lines": {
-            "42": 95,
-            "43": 95,
-            "44": 96,
-            "45": 95
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Definition/WorkflowDefinitionBase.cs": {
-      "tomware.Microwf.Core.WorkflowDefinitionBase": {
-        "System.Collections.Generic.List`1<System.String> tomware.Microwf.Core.WorkflowDefinitionBase::get_States()": {
-          "Lines": {
-            "22": 8,
-            "23": 8,
-            "24": 0,
-            "25": 0,
-            "28": 8,
-            "29": 25,
-            "31": 8,
-            "32": 25,
-            "34": 8,
-            "35": 8,
-            "36": 8,
-            "37": 8,
-            "39": 8,
-            "40": 8
-          },
-          "Branches": [
-            {
-              "Line": 23,
-              "Offset": 12,
-              "EndOffset": 14,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 23,
-              "Offset": 12,
-              "EndOffset": 24,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 8
-            }
-          ]
-        },
-        "System.Collections.Generic.List`1<System.String> tomware.Microwf.Core.WorkflowDefinitionBase::get_Triggers()": {
-          "Lines": {
-            "49": 1,
-            "50": 1,
-            "51": 0,
-            "52": 0,
-            "55": 1,
-            "56": 3,
-            "57": 1,
-            "59": 1,
-            "60": 1
-          },
-          "Branches": [
-            {
-              "Line": 50,
-              "Offset": 12,
-              "EndOffset": 14,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 50,
-              "Offset": 12,
-              "EndOffset": 24,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Execution/TransitionContext.cs": {
-      "tomware.Microwf.Core.TransitionContext": {
-        "System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase> tomware.Microwf.Core.TransitionContext::get__variables()": {
-          "Lines": {
-            "11": 119
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TransitionContext::get_HasVariables()": {
-          "Lines": {
-            "19": 81
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TransitionContext::get_TransitionAborted()": {
-          "Lines": {
-            "25": 35
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.IWorkflow tomware.Microwf.Core.TransitionContext::get_Instance()": {
-          "Lines": {
-            "30": 57
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.IEnumerable`1<System.String> tomware.Microwf.Core.TransitionContext::get_Errors()": {
-          "Lines": {
-            "37": 54
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TransitionContext::get_HasErrors()": {
-          "Lines": {
-            "45": 9
-          },
-          "Branches": []
-        },
-        "T tomware.Microwf.Core.TransitionContext::GetInstance()": {
-          "Lines": {
-            "61": 15,
-            "62": 15,
-            "63": 15
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TransitionContext::ContainsKey(System.String)": {
-          "Lines": {
-            "71": 22,
-            "72": 32,
-            "74": 12,
-            "75": 22
-          },
-          "Branches": [
-            {
-              "Line": 72,
-              "Offset": 12,
-              "EndOffset": 14,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 10
-            },
-            {
-              "Line": 72,
-              "Offset": 12,
-              "EndOffset": 18,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 12
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Core.TransitionContext::SetVariable(System.String,T)": {
-          "Lines": {
-            "84": 12,
-            "85": 12,
-            "86": 1,
-            "87": 1,
-            "88": 1,
-            "90": 11,
-            "91": 11,
-            "92": 11,
-            "93": 12
-          },
-          "Branches": [
-            {
-              "Line": 85,
-              "Offset": 15,
-              "EndOffset": 17,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 85,
-              "Offset": 15,
-              "EndOffset": 40,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 11
-            }
-          ]
-        },
-        "T tomware.Microwf.Core.TransitionContext::GetVariable(System.String)": {
-          "Lines": {
-            "102": 15,
-            "103": 15,
-            "104": 1,
-            "106": 14,
-            "107": 14
-          },
-          "Branches": [
-            {
-              "Line": 103,
-              "Offset": 18,
-              "EndOffset": 20,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 103,
-              "Offset": 18,
-              "EndOffset": 46,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 14
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Core.TransitionContext::AddError(System.String)": {
-          "Lines": {
-            "115": 2,
-            "116": 2,
-            "117": 2
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Core.TransitionContext::AbortTransition(System.String)": {
-          "Lines": {
-            "128": 1,
-            "129": 1,
-            "130": 1,
-            "131": 1
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Core.TransitionContext::.ctor(tomware.Microwf.Core.IWorkflow)": {
-          "Lines": {
-            "48": 27,
-            "49": 27,
-            "50": 27,
-            "51": 27,
-            "52": 27,
-            "53": 27
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Execution/TriggerParam.cs": {
-      "tomware.Microwf.Core.TriggerParam": {
-        "System.String tomware.Microwf.Core.TriggerParam::get_TriggerName()": {
-          "Lines": {
-            "8": 35
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.IWorkflow tomware.Microwf.Core.TriggerParam::get_Instance()": {
-          "Lines": {
-            "9": 97
-          },
-          "Branches": []
-        },
-        "System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase> tomware.Microwf.Core.TriggerParam::get_Variables()": {
-          "Lines": {
-            "10": 57
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TriggerParam::get_HasVariables()": {
-          "Lines": {
-            "14": 9,
-            "15": 9,
-            "16": 9
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.TriggerParam tomware.Microwf.Core.TriggerParam::AddVariable(System.String,tomware.Microwf.Core.WorkflowVariableBase)": {
-          "Lines": {
-            "32": 5,
-            "33": 5,
-            "34": 1,
-            "35": 1,
-            "38": 4,
-            "40": 4,
-            "41": 4
-          },
-          "Branches": [
-            {
-              "Line": 33,
-              "Offset": 15,
-              "EndOffset": 17,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 33,
-              "Offset": 15,
-              "EndOffset": 40,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 4
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Core.TriggerParam::.ctor(System.String,tomware.Microwf.Core.IWorkflow,System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase>)": {
-          "Lines": {
-            "19": 15,
-            "20": 15,
-            "21": 15,
-            "22": 15,
-            "23": 15,
-            "24": 15,
-            "25": 15,
-            "26": 15,
-            "27": 15,
-            "28": 15,
-            "29": 15
-          },
-          "Branches": [
-            {
-              "Line": 26,
-              "Offset": 26,
-              "EndOffset": 28,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 13
-            },
-            {
-              "Line": 26,
-              "Offset": 26,
-              "EndOffset": 35,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 2
-            }
-          ]
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Execution/TriggerResult.cs": {
-      "tomware.Microwf.Core.TriggerResult": {
-        "System.Boolean tomware.Microwf.Core.TriggerResult::get_CanTrigger()": {
-          "Lines": {
-            "13": 34
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TriggerResult::get_IsAborted()": {
-          "Lines": {
-            "18": 29
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Core.TriggerResult::get_TriggerName()": {
-          "Lines": {
-            "23": 24
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TriggerResult::get_HasErrors()": {
-          "Lines": {
-            "30": 21
-          },
-          "Branches": [
-            {
-              "Line": 30,
-              "Offset": 7,
-              "EndOffset": 9,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 7
-            },
-            {
-              "Line": 30,
-              "Offset": 7,
-              "EndOffset": 25,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            }
-          ]
-        },
-        "System.Collections.Generic.IEnumerable`1<System.String> tomware.Microwf.Core.TriggerResult::get_Errors()": {
-          "Lines": {
-            "36": 14
-          },
-          "Branches": []
-        },
-        "System.String tomware.Microwf.Core.TriggerResult::get_CurrentState()": {
-          "Lines": {
-            "43": 42
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.AutoTrigger tomware.Microwf.Core.TriggerResult::get_AutoTrigger()": {
-          "Lines": {
-            "46": 17
-          },
-          "Branches": []
-        },
-        "System.Boolean tomware.Microwf.Core.TriggerResult::get_HasAutoTrigger()": {
-          "Lines": {
-            "51": 8,
-            "52": 8,
-            "53": 8
-          },
-          "Branches": []
-        },
-        "T tomware.Microwf.Core.TriggerResult::GetVariable(System.String)": {
-          "Lines": {
-            "66": 1,
-            "67": 1,
-            "69": 1,
-            "70": 1
-          },
-          "Branches": [
-            {
-              "Line": 67,
-              "Offset": 12,
-              "EndOffset": 14,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 67,
-              "Offset": 12,
-              "EndOffset": 26,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Core.TriggerResult::SetAutoTrigger(tomware.Microwf.Core.AutoTrigger)": {
-          "Lines": {
-            "73": 7,
-            "74": 7,
-            "75": 7
-          },
-          "Branches": []
-        },
-        "System.Void tomware.Microwf.Core.TriggerResult::.ctor(System.String,tomware.Microwf.Core.TransitionContext,System.Boolean)": {
-          "Lines": {
-            "56": 18,
-            "57": 18,
-            "58": 18,
-            "59": 18,
-            "60": 18,
-            "61": 18,
-            "62": 18,
-            "63": 18
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Execution/WorkflowExecution.cs": {
-      "tomware.Microwf.Core.WorkflowExecution": {
-        "System.Collections.Generic.IEnumerable`1<tomware.Microwf.Core.TriggerResult> tomware.Microwf.Core.WorkflowExecution::GetTriggers(tomware.Microwf.Core.IWorkflow,System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase>)": {
-          "Lines": {
-            "24": 6,
-            "25": 6,
-            "27": 6,
-            "28": 12,
-            "29": 12,
-            "30": 6
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::CanTrigger(tomware.Microwf.Core.TriggerParam)": {
-          "Lines": {
-            "38": 3,
-            "39": 3,
-            "41": 3,
-            "42": 3
-          },
-          "Branches": []
-        },
-        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::Trigger(tomware.Microwf.Core.TriggerParam)": {
-          "Lines": {
-            "50": 7,
-            "51": 7,
-            "53": 7,
-            "54": 7,
-            "56": 7,
-            "58": 7,
-            "59": 0,
-            "61": 7,
-            "63": 7,
-            "64": 0,
-            "66": 21,
-            "67": 7,
-            "69": 7,
-            "71": 7,
-            "73": 7,
-            "74": 7
-          },
-          "Branches": [
-            {
-              "Line": 54,
-              "Offset": 58,
-              "EndOffset": 60,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            },
-            {
-              "Line": 54,
-              "Offset": 58,
-              "EndOffset": 68,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 7
-            },
-            {
-              "Line": 58,
-              "Offset": 102,
-              "EndOffset": 104,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 0
-            },
-            {
-              "Line": 58,
-              "Offset": 102,
-              "EndOffset": 129,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 7
-            },
-            {
-              "Line": 61,
-              "Offset": 141,
-              "EndOffset": 143,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 4
-            },
-            {
-              "Line": 61,
-              "Offset": 141,
-              "EndOffset": 146,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 3
-            },
-            {
-              "Line": 63,
-              "Offset": 163,
-              "EndOffset": 165,
-              "Path": 0,
-              "Ordinal": 6,
-              "Hits": 0
-            },
-            {
-              "Line": 63,
-              "Offset": 163,
-              "EndOffset": 187,
-              "Path": 1,
-              "Ordinal": 7,
-              "Hits": 7
-            },
-            {
-              "Line": 69,
-              "Offset": 241,
-              "EndOffset": 243,
-              "Path": 0,
-              "Ordinal": 8,
-              "Hits": 0
-            },
-            {
-              "Line": 69,
-              "Offset": 241,
-              "EndOffset": 246,
-              "Path": 1,
-              "Ordinal": 9,
-              "Hits": 7
-            },
-            {
-              "Line": 71,
-              "Offset": 266,
-              "EndOffset": 268,
-              "Path": 0,
-              "Ordinal": 10,
-              "Hits": 5
-            },
-            {
-              "Line": 71,
-              "Offset": 266,
-              "EndOffset": 272,
-              "Path": 1,
-              "Ordinal": 11,
-              "Hits": 2
-            }
-          ]
-        },
-        "tomware.Microwf.Core.TransitionContext tomware.Microwf.Core.WorkflowExecution::CreateTransitionContext(tomware.Microwf.Core.IWorkflow,System.Collections.Generic.Dictionary`2<System.String,tomware.Microwf.Core.WorkflowVariableBase>)": {
-          "Lines": {
-            "79": 16,
-            "80": 16,
-            "81": 16,
-            "82": 14,
-            "83": 56,
-            "84": 7,
-            "85": 7,
-            "86": 7,
-            "87": 14,
-            "89": 16,
-            "90": 16
-          },
-          "Branches": [
-            {
-              "Line": 81,
-              "Offset": 14,
-              "EndOffset": 16,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 14
-            },
-            {
-              "Line": 83,
-              "Offset": 65,
-              "EndOffset": 27,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 7
-            },
-            {
-              "Line": 83,
-              "Offset": 65,
-              "EndOffset": 67,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 14
-            },
-            {
-              "Line": 81,
-              "Offset": 14,
-              "EndOffset": 85,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 16
-            }
-          ]
-        },
-        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::CreateTriggerResult(System.String,tomware.Microwf.Core.TransitionContext,tomware.Microwf.Core.Transition)": {
-          "Lines": {
-            "96": 16,
-            "97": 16,
-            "99": 16,
-            "100": 16
-          },
-          "Branches": [
-            {
-              "Line": 97,
-              "Offset": 2,
-              "EndOffset": 4,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 16
-            },
-            {
-              "Line": 97,
-              "Offset": 2,
-              "EndOffset": 18,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            }
-          ]
-        },
-        "tomware.Microwf.Core.Transition tomware.Microwf.Core.WorkflowExecution::GetTransition(System.String,tomware.Microwf.Core.IWorkflow)": {
-          "Lines": {
-            "103": 17,
-            "104": 17,
-            "105": 51,
-            "106": 17
-          },
-          "Branches": [
-            {
-              "Line": 105,
-              "Offset": 17,
-              "EndOffset": 19,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 17
-            },
-            {
-              "Line": 105,
-              "Offset": 17,
-              "EndOffset": 43,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 17
-            }
-          ]
-        },
-        "tomware.Microwf.Core.TriggerResult tomware.Microwf.Core.WorkflowExecution::CanMakeTransition(tomware.Microwf.Core.TransitionContext,System.String,tomware.Microwf.Core.IWorkflow)": {
-          "Lines": {
-            "112": 10,
-            "113": 10,
-            "114": 10,
-            "116": 20,
-            "118": 0,
-            "120": 0,
-            "121": 10
-          },
-          "Branches": [
-            {
-              "Line": 116,
-              "Offset": 25,
-              "EndOffset": 27,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 10
-            },
-            {
-              "Line": 116,
-              "Offset": 25,
-              "EndOffset": 31,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            }
-          ]
-        },
-        "System.Void tomware.Microwf.Core.WorkflowExecution::.ctor(tomware.Microwf.Core.IWorkflowDefinition)": {
-          "Lines": {
-            "13": 16,
-            "14": 16,
-            "15": 16,
-            "16": 16
-          },
-          "Branches": []
-        }
-      }
-    },
-    "/workspaces/microwf/src/microwf.Core/Utils/WorkflowDefinitionExtension.cs": {
-      "tomware.Microwf.Core.WorkflowDefinitionExtension": {
-        "System.String tomware.Microwf.Core.WorkflowDefinitionExtension::ToDot(tomware.Microwf.Core.IWorkflowDefinition,System.String)": {
-          "Lines": {
-            "15": 3,
-            "16": 3,
-            "18": 3,
-            "19": 4,
-            "20": 21,
-            "21": 6,
-            "22": 6,
-            "23": 6,
-            "24": 3,
-            "26": 3,
-            "27": 3
-          },
-          "Branches": [
-            {
-              "Line": 19,
-              "Offset": 46,
-              "EndOffset": 48,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 19,
-              "Offset": 46,
-              "EndOffset": 71,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 3
-            },
-            {
-              "Line": 20,
-              "Offset": 180,
-              "EndOffset": 86,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 6
-            },
-            {
-              "Line": 20,
-              "Offset": 180,
-              "EndOffset": 182,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 3
-            }
-          ]
         }
       }
     }
