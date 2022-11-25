@@ -151,7 +151,7 @@ internal static class Program
       }
     });
 
-    Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Pack), () =>
+    Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Test, Targets.Pack), () =>
     {
       if (string.IsNullOrWhiteSpace(version))
       {
