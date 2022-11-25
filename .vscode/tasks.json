@@ -78,17 +78,46 @@
         "isDefault": true
       }
     },
+    {
+      "label": "dev:be-watch",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceRoot}/samples/WebApi/WebApi.csproj",
+        "--urls",
+        "https://localhost:5001",
+        "--environment",
+        "Development",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/samples/WebApi/"
+      }
+    },
+    {
+      "label": "dev:fe-start",
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}/samples/WebClient/"
+      }
+    },
     // Compound tasks
     {
-      "label": "dev-backend-frontend 🚀",
+      "label": "dev:be-fe 🚀",
       "icon": {
         "id": "play",
         "color": "terminal.ansiGreen"
       },
       "dependsOrder": "parallel",
       "dependsOn": [
-        "npm:demo:start",
-        "npm:demo:start:be"
+        "dev:be-watch",
+        "dev:fe-start"
       ],
       "problemMatcher": [],
       "group": {
