@@ -1,5 +1,9 @@
 notes:
 
+- [ ] Build required that only triggers when a new tag is provided
+  - for publishing nuget-packages for a release
+  - consider a drone.io build
+
 - [ ] WorkItem Id as Guid
 
 ----------------------------------------------------------------------------------------------------

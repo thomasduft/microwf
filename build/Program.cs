@@ -30,6 +30,8 @@ internal static class Program
     public const string CleanPackOutput = "clean-pack-output";
     public const string Build = "build";
     public const string Test = "test";
+    public const string UpdateChangelog = "update-changelog";
+    public const string Release = "release";
     public const string Pack = "pack";
     public const string Deploy = "deploy";
   }
@@ -37,7 +39,7 @@ internal static class Program
   static async Task Main(string[] args)
   {
     // TODO: encapsulate with sth. like McMaster.Extensions.CommandLineUtils
-    var version = "0.0.0";
+    var version = string.Empty;
     var key = string.Empty;
 
     if (args[0].Contains("--"))
@@ -60,7 +62,7 @@ internal static class Program
       args[0] = firstArg;
     }
 
-    if (version != "0.0.0")
+    if (!string.IsNullOrWhiteSpace(version))
     {
       Console.WriteLine($"Using version: '{version}'" + Environment.NewLine);
     }
@@ -93,6 +95,36 @@ internal static class Program
       }
     });
 
+    Target(Targets.UpdateChangelog, () =>
+    {
+      if (string.IsNullOrWhiteSpace(version))
+      {
+        throw new Bullseye.TargetFailedException("Version for packaging is missing!");
+      }
+
+      // updating the changelog
+      // Console.WriteLine($"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
+      Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
+
+      // committing the changelog changes
+      // Console.WriteLine($"commit -am \"Committing changelog changes for v'{version}'\"");
+      Run("git", $"commit -am \"\"Committing changelog changes for v'{version}'\"");
+    });
+
+    Target(Targets.Release, DependsOn(Targets.RestoreTools, Targets.UpdateChangelog), () =>
+    {
+      if (string.IsNullOrWhiteSpace(key))
+      {
+        throw new Bullseye.TargetFailedException("Key for publishing is missing!");
+      }
+
+      // applying the tag
+      Run("git", $"tag -a v{version} -m \"version '{version}'\"");
+
+      // pushing latest commits
+      Run("git", $"push origin v{version}");
+    });
+
     Target(Targets.Pack, DependsOn(Targets.Build, Targets.CleanPackOutput), () =>
     {
       if (string.IsNullOrWhiteSpace(version))
@@ -112,7 +144,7 @@ internal static class Program
           continue;
 
         // 3. pack them
-        if (version is not null && packableModules.Any(m => project.Contains(m)))
+        if (packableModules.Any(m => project.Contains(m)))
         {
           Run("dotnet", $"pack {project} -c Release -p:PackageVersion={version} -p:Version={version} -o {directory} --no-build --nologo");
         }
@@ -121,22 +153,15 @@ internal static class Program
 
     Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Pack), () =>
     {
+      if (string.IsNullOrWhiteSpace(version))
+      {
+        throw new Bullseye.TargetFailedException("Version for packaging is missing!");
+      }
+
       if (string.IsNullOrWhiteSpace(key))
       {
         throw new Bullseye.TargetFailedException("Key for publishing is missing!");
       }
-
-      // updating the changelog
-      Console.WriteLine($"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
-      // Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
-
-      // committing the changelog changes
-      Console.WriteLine($"commit -am \"Committing changelog changes for v'{version}'\"");
-      // Run("git", $"commit -am \"\"Committing changelog changes for v'{version}'\"");
-
-      // applying the tag
-      Console.WriteLine($"tag -a v{version} -m \"version '{version}'\"");
-      // Run("git", $"tag -a v{version} -m \"version '{version}'\"");
 
       // push packages
       var directory = Directory.CreateDirectory(packOutput).FullName;
@@ -144,11 +169,8 @@ internal static class Program
       foreach (var package in packages)
       {
         // 3. push them
-        if (version is not null)
-        {
-          Console.WriteLine($"nuget push {package} -s {nugetSource} -k {key}");
-          // Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
-        }
+        // Console.WriteLine($"nuget push {package} -s {nugetSource} -k {key}");
+        Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
       }
     });
 
