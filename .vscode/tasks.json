@@ -78,5 +78,23 @@
         "isDefault": true
       }
     },
+    // Compound tasks
+    {
+      "label": "dev-backend-frontend 🚀",
+      "icon": {
+        "id": "play",
+        "color": "terminal.ansiGreen"
+      },
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "npm:demo:start",
+        "npm:demo:start:be"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
   ]
 }
