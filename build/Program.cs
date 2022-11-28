@@ -16,7 +16,7 @@ internal static class Program
   private const string nugetSource = "https://api.nuget.org/v3/index.json";
   private const string envVarMissing = " environment variable is missing. Aborting.";
 
-  private static IList<string> packableModules = new List<string>{
+  private static IList<string> packableProjects = new List<string>{
     "microwf.Core",
     "microwf.Domain",
     "microwf.Infrastructure",
@@ -103,11 +103,9 @@ internal static class Program
       }
 
       // updating the changelog
-      // Console.WriteLine($"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
       Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
 
       // committing the changelog changes
-      // Console.WriteLine($"commit -am \"Committing changelog changes for v'{version}'\"");
       Run("git", $"commit -am \"\"Committing changelog changes for v'{version}'\"");
     });
 
@@ -132,19 +130,15 @@ internal static class Program
         throw new Bullseye.TargetFailedException("Version for packaging is missing!");
       }
 
+      // pack packages
       var directory = Directory.CreateDirectory(packOutput).FullName;
-
-      // 1. Get all possible *.csproj files
       var projects = GetFiles("src", $"*.csproj");
-
-      // 2. iterate over them / don't allow *.Tests.csproj files
       foreach (var project in projects)
       {
         if (project.Contains(".Tests"))
           continue;
 
-        // 3. pack them
-        if (packableModules.Any(m => project.Contains(m)))
+        if (packableProjects.Any(m => project.Contains(m)))
         {
           Run("dotnet", $"pack {project} -c Release -p:PackageVersion={version} -p:Version={version} -o {directory} --no-build --nologo");
         }
@@ -168,8 +162,6 @@ internal static class Program
       var packages = GetFiles(directory, $"*.nupkg");
       foreach (var package in packages)
       {
-        // 3. push them
-        // Console.WriteLine($"nuget push {package} -s {nugetSource} -k {key}");
         Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
       }
     });
