@@ -113,7 +113,7 @@ internal static class Program
       // applying the tag
       Run("git", $"tag -a v{version} -m \"version '{version}'\"");
 
-      // pushing latest commits
+      // pushing
       Run("git", $"push origin v{version}");
     });
     #endregion
