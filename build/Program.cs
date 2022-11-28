@@ -165,6 +165,31 @@ internal static class Program
     });
     #endregion
 
+    #region Deployment of WebClient
+    Target("deploy-web-client", () =>
+    {
+
+      Run("npm", "install", "samples/WebClient");
+      Run("npm", "run publish", "samples/WebClient");
+
+      // delete all files, not directories in samples/WebApi/wwwroot
+      var files = Directory.GetFiles("samples/WebApi/wwwroot");
+      foreach (var file in files)
+      {
+        File.Delete(file);
+      }
+
+      // copy files of samples/WebClient/dist to samples/WebApi/wwwroot
+      files = Directory.GetFiles("samples/WebClient/dist");
+      foreach (var file in files)
+      {
+        var info = new FileInfo(file);
+        var destFile = $"samples/WebApi/wwwroot/{info.Name}";
+        File.Copy(file, destFile);
+      }
+    });
+    #endregion
+
     await RunTargetsAndExitAsync(
       args,
       ex => ex is SimpleExec.ExitCodeException
