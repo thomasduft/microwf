@@ -25,4 +25,4 @@ jobs:
     - name: Pack
       run: ./build.sh "pack --version=$RELEASE_VERSION"
     - name: Push
-      run:  dotnet nuget push .\artifacts\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET }}
+      run:  dotnet nuget push ./artifacts/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET }}
