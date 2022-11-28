@@ -99,7 +99,7 @@ internal static class Program
     {
       if (string.IsNullOrWhiteSpace(version))
       {
-        throw new Bullseye.TargetFailedException("Version for packaging is missing!");
+        throw new Bullseye.TargetFailedException("Version for updating changelog is missing!");
       }
 
       // updating the changelog
@@ -155,12 +155,12 @@ internal static class Program
     {
       if (string.IsNullOrWhiteSpace(version))
       {
-        throw new Bullseye.TargetFailedException("Version for packaging is missing!");
+        throw new Bullseye.TargetFailedException("Version for deploying is missing!");
       }
 
       if (string.IsNullOrWhiteSpace(key))
       {
-        throw new Bullseye.TargetFailedException("Key for publishing is missing!");
+        throw new Bullseye.TargetFailedException("Key for deploying is missing!");
       }
 
       // push packages
