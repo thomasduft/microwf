@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1] - 2022-11-28
+
+### Fixed
+
+- fixed wrong evaluation of release version in deploy workflow
+
+
 ## [3.1.0] - 2022-11-28
 
 ### Added
