@@ -100,7 +100,7 @@ internal static class Program
       Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
 
       // committing the changelog changes
-      Run("git", $"commit -am \"\"Committing changelog changes for v'{version}'\"");
+      Run("git", $"commit -am \"Committing changelog changes for v'{version}'\"");
     });
 
     Target(Targets.Release, DependsOn(Targets.RestoreTools, Targets.Test, Targets.UpdateChangelog), () =>
