@@ -67,6 +67,7 @@ internal static class Program
       Console.WriteLine($"Using version: '{version}'" + Environment.NewLine);
     }
 
+    #region Local build targets
     Target(Targets.RestoreTools, () =>
     {
       Run("dotnet", "tool restore");
@@ -87,14 +88,6 @@ internal static class Program
       Run("dotnet", $"test {solution} -c Release --no-build --nologo");
     });
 
-    Target(Targets.CleanPackOutput, () =>
-    {
-      if (Directory.Exists(packOutput))
-      {
-        Directory.Delete(packOutput, true);
-      }
-    });
-
     Target(Targets.UpdateChangelog, () =>
     {
       if (string.IsNullOrWhiteSpace(version))
@@ -109,11 +102,11 @@ internal static class Program
       Run("git", $"commit -am \"\"Committing changelog changes for v'{version}'\"");
     });
 
-    Target(Targets.Release, DependsOn(Targets.RestoreTools, Targets.UpdateChangelog), () =>
+    Target(Targets.Release, DependsOn(Targets.RestoreTools, Targets.Test, Targets.UpdateChangelog), () =>
     {
-      if (string.IsNullOrWhiteSpace(key))
+      if (string.IsNullOrWhiteSpace(version))
       {
-        throw new Bullseye.TargetFailedException("Key for publishing is missing!");
+        throw new Bullseye.TargetFailedException("Version for updating changelog is missing!");
       }
 
       // applying the tag
@@ -121,6 +114,16 @@ internal static class Program
 
       // pushing latest commits
       Run("git", $"push origin v{version}");
+    });
+    #endregion
+
+    #region Deployment targets
+    Target(Targets.CleanPackOutput, () =>
+    {
+      if (Directory.Exists(packOutput))
+      {
+        Directory.Delete(packOutput, true);
+      }
     });
 
     Target(Targets.Pack, DependsOn(Targets.Build, Targets.CleanPackOutput), () =>
@@ -147,11 +150,6 @@ internal static class Program
 
     Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Test, Targets.Pack), () =>
     {
-      if (string.IsNullOrWhiteSpace(version))
-      {
-        throw new Bullseye.TargetFailedException("Version for deploying is missing!");
-      }
-
       if (string.IsNullOrWhiteSpace(key))
       {
         throw new Bullseye.TargetFailedException("Key for deploying is missing!");
@@ -165,6 +163,7 @@ internal static class Program
         Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
       }
     });
+    #endregion
 
     await RunTargetsAndExitAsync(
       args,
