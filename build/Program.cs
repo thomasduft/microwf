@@ -169,7 +169,6 @@ internal static class Program
     #region Make life easier targets
     Target(Targets.DeployWebClient, () =>
     {
-
       Run("npm", "install", "samples/WebClient");
       Run("npm", "run publish", "samples/WebClient");
 
@@ -199,7 +198,6 @@ internal static class Program
         var destFile = $"samples/WebApi/wwwroot/assets/js/{info.Name}";
         File.Copy(file, destFile);
       }
-      
     });
     #endregion
 
