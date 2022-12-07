@@ -180,24 +180,10 @@ internal static class Program
       }
 
       // copy files of samples/WebClient/dist to samples/WebApi/wwwroot
-      files = Directory.GetFiles("samples/WebClient/dist");
-      foreach (var file in files)
-      {
-        var info = new FileInfo(file);
-        var destFile = $"samples/WebApi/wwwroot/{info.Name}";
-        File.Copy(file, destFile);
-      }
+      CopyDirectory("samples/WebClient/dist", "samples/WebApi/wwwroot");
 
       // care about special assets
-      Directory.CreateDirectory("samples/WebApi/wwwroot/assets");
-      Directory.CreateDirectory("samples/WebApi/wwwroot/assets/js");
-      files = Directory.GetFiles("samples/WebClient/dist/assets/js");
-      foreach (var file in files)
-      {
-        var info = new FileInfo(file);
-        var destFile = $"samples/WebApi/wwwroot/assets/js/{info.Name}";
-        File.Copy(file, destFile);
-      }
+      CopyDirectory("samples/WebClient/dist/assets/js", "samples/WebApi/wwwroot/assets/js");
     });
     #endregion
 
@@ -224,7 +210,7 @@ internal static class Program
     return files;
   }
 
-  static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+  static void CopyDirectory(string sourceDir, string destinationDir, bool recursive = false)
   {
     var dir = new DirectoryInfo(sourceDir);
     if (!dir.Exists)
@@ -236,7 +222,7 @@ internal static class Program
     foreach (FileInfo file in dir.GetFiles())
     {
       string targetFilePath = Path.Combine(destinationDir, file.Name);
-      file.CopyTo(targetFilePath);
+      file.CopyTo(targetFilePath, true);
     }
 
     if (recursive)
