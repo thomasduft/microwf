@@ -216,18 +216,16 @@ internal static class Program
     if (!dir.Exists)
       throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
 
-    DirectoryInfo[] dirs = dir.GetDirectories();
-    Directory.CreateDirectory(destinationDir);
-
     foreach (FileInfo file in dir.GetFiles())
     {
+      Directory.CreateDirectory(destinationDir);
       string targetFilePath = Path.Combine(destinationDir, file.Name);
       file.CopyTo(targetFilePath, true);
     }
 
     if (recursive)
     {
-      foreach (DirectoryInfo subDir in dirs)
+      foreach (DirectoryInfo subDir in dir.GetDirectories())
       {
         string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
         CopyDirectory(subDir.FullName, newDestinationDir, true);
