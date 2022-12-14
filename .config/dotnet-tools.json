@@ -13,6 +13,12 @@
       "commands": [
         "dotnet-outdated"
       ]
+    },
+    "dotnet-ef": {
+      "version": "7.0.1",
+      "commands": [
+        "dotnet-ef"
+      ]
     }
   }
 }
