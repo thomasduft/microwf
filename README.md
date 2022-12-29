@@ -13,12 +13,7 @@ In code it looks like:
 ```csharp
 public class HolidayApprovalWorkflow : WorkflowDefinitionBase
 {
-  public const string TYPE = "HolidayApprovalWorkflow";
-
-  public override string Type
-  {
-    get { return TYPE; }
-  }
+  public override string Type => nameof(HolidayApprovalWorkflow);
 
   public override List<Transition> Transitions
   {
