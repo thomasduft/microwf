@@ -85,13 +85,12 @@
       "args": [
         "watch",
         "run",
+        "--project",
         "${workspaceRoot}/samples/WebApi/WebApi.csproj",
         "--environment",
         "Development",
         "--urls",
         "https://localhost:5001",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile",
       "options": {
