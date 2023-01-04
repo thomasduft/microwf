@@ -31,6 +31,8 @@ public static class ConfigureApplication
 
     app.UseSerilogRequestLogging();
 
+    ConsiderSpaRoutes(app);
+
     app.UseDefaultFiles();
     app.UseStaticFiles();
 
@@ -38,8 +40,6 @@ public static class ConfigureApplication
 
     app.UseAuthentication();
     app.UseAuthorization();
-
-    ConsiderSpaRoutes(app);
 
     app.UseEndpoints(endpoints =>
     {
@@ -53,13 +53,13 @@ public static class ConfigureApplication
   {
     var angularRoutes = new[]
     {
-        "/home",
-        "/dispatch",
-        "/admin",
-        "/issue",
-        "/dispatch",
-        "/forbidden"
-      };
+      "/home",
+      "/dispatch",
+      "/admin",
+      "/holiday",
+      "/issue",
+      "/forbidden"
+    };
 
     app.Use(async (context, next) =>
     {
@@ -68,6 +68,7 @@ public static class ConfigureApplication
           (ar) => context.Request.Path.Value.StartsWith(ar, StringComparison.OrdinalIgnoreCase)))
       {
         context.Request.Path = new PathString("/");
+        context.Response.StatusCode = StatusCodes.Status200OK;
       }
 
       await next();
