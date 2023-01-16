@@ -26,6 +26,7 @@ internal static class Program
   private static class Targets
   {
     public const string RestoreTools = "restore-tools";
+    public const string AddChangelog = "add-changelog";
     public const string CleanBuildOutput = "clean-build-output";
     public const string CleanPackOutput = "clean-pack-output";
     public const string Build = "build";
@@ -72,6 +73,11 @@ internal static class Program
     Target(Targets.RestoreTools, () =>
     {
       Run("dotnet", "tool restore");
+    });
+
+    Target(AddChangelog, () =>
+    {
+      Run("dotnet", "tool run releasy add-changelog", "docs/Changelogs");
     });
 
     Target(Targets.CleanBuildOutput, () =>
