@@ -77,7 +77,7 @@ internal static class Program
 
     Target(Targets.AddChangelog, () =>
     {
-      Run("dotnet", "tool run releasy add-changelog", "docs/Changelogs");
+      Run("dotnet", "tool run releasy add-changelog", "changelogs");
     });
 
     Target(Targets.CleanBuildOutput, () =>

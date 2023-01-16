@@ -67,7 +67,7 @@ public static class ConfigureApplication
         && null != angularRoutes.FirstOrDefault(
           (ar) => context.Request.Path.Value.StartsWith(ar, StringComparison.OrdinalIgnoreCase)))
       {
-        context.Request.Path = new PathString("/");
+        context.Request.Path = new PathString("/index.html");
         context.Response.StatusCode = StatusCodes.Status200OK;
       }
 
