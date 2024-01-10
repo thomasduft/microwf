@@ -19,12 +19,7 @@ namespace tomware.Microwf.Infrastructure
     {
       get
       {
-        if (items == null)
-        {
-          items = new ConcurrentQueue<WorkItem>();
-        }
-
-        return items;
+        return this.items ??= new ConcurrentQueue<WorkItem>();
       }
     }
 
@@ -44,14 +39,11 @@ namespace tomware.Microwf.Infrastructure
 
     public async Task Enqueue(WorkItem item)
     {
-      this.logger.LogTrace("Enqueue work item", item);
+      this.logger.LogTrace("Enqueue work item {@WorkItem}", item);
 
       if (item.Retries > WorkItem.WORKITEM_RETRIES)
       {
-        this.logger.LogInformation(
-          "Amount of retries for work item {@WorkItem} exceeded!",
-          item
-        );
+        this.logger.LogInformation("Amount of retries for work item {@WorkItem} exceeded!", item);
 
         await this.PersistWorkItemsAsync(new List<WorkItem> { item });
       }
@@ -65,7 +57,7 @@ namespace tomware.Microwf.Infrastructure
 
     public async Task ProcessItemsAsync()
     {
-      while (this.Items.Count > 0)
+      while (!this.Items.IsEmpty)
       {
         var item = this.Dequeue();
         if (item == null) continue;
