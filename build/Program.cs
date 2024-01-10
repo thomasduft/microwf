@@ -1,241 +1,184 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using Bullseye;
+
+using McMaster.Extensions.CommandLineUtils;
 
 using static Bullseye.Targets;
 using static SimpleExec.Command;
 
-namespace targets;
+const string Solution = "microwf.sln";
+IList<string> packableProjects = new List<string>{
+  "microwf.Core",
+  "microwf.Domain",
+  "microwf.Infrastructure",
+  "microwf.AspNetCoreEngine"
+};
 
-internal static class Program
+var app = new CommandLineApplication
 {
-  private const string solution = "microwf.sln";
-  private const string packOutput = "./artifacts";
-  private const string nugetSource = "https://api.nuget.org/v3/index.json";
-  private const string envVarMissing = " environment variable is missing. Aborting.";
+  UsePagerForHelpText = false
+};
+app.HelpOption();
 
-  private static IList<string> packableProjects = new List<string>{
-    "microwf.Core",
-    "microwf.Domain",
-    "microwf.Infrastructure",
-    "microwf.AspNetCoreEngine"
-  };
+// 1. define custom options
+var versionOption = app.Option<string>("-rv|--release-version", "Release version that should be applied to the released artifacts.", CommandOptionType.SingleValue);
 
-  private static class Targets
+// 2. translate from Bullseye to McMaster.Extensions.CommandLineUtils
+app.Argument("targets", "A list of targets to run or list. If not specified, the \"default\" target will be run, or all targets will be listed.", true);
+foreach (var (aliases, description) in Options.Definitions)
+{
+  _ = app.Option(string.Join("|", aliases), description, CommandOptionType.NoValue);
+}
+
+app.OnExecuteAsync(async _ =>
+{
+  // translate from McMaster.Extensions.CommandLineUtils to Bullseye
+  var targets = app.Arguments[0].Values.OfType<string>();
+  var options = new Options(Options.Definitions
+    .Select(d => (d.Aliases[0], app.Options
+      .Single(o => d.Aliases.Contains($"--{o.LongName}")).HasValue())
+  ));
+
+  #region Tooling targets
+  const string RestoreTools = "restore-tools";
+  const string AddChangelog = "add-changelog";
+
+  Target(RestoreTools, () =>
   {
-    public const string RestoreTools = "restore-tools";
-    public const string AddChangelog = "add-changelog";
-    public const string CleanBuildOutput = "clean-build-output";
-    public const string CleanPackOutput = "clean-pack-output";
-    public const string Build = "build";
-    public const string Test = "test";
-    public const string UpdateChangelog = "update-changelog";
-    public const string Release = "release";
-    public const string Pack = "pack";
-    public const string Deploy = "deploy";
-    public const string DeployWebClient = "deploy-webclient";
-  }
+    Run("dotnet", "tool restore");
+  });
 
-  static async Task Main(string[] args)
+  Target(AddChangelog, () =>
   {
-    // TODO: encapsulate with sth. like McMaster.Extensions.CommandLineUtils
-    var version = string.Empty;
-    var key = string.Empty;
+    Run("dotnet", "tool run releasy add-changelog", "changelogs");
+  });
+  #endregion
 
-    if (args[0].Contains("--"))
+  #region Build targets
+  const string Clean = "clean";
+  const string Build = "build";
+  const string Test = "test";
+  const string Release = "release";
+
+  Target(Clean, () =>
+  {
+    Run("dotnet", $"clean {Solution} -c Release -v m --nologo");
+  });
+
+  Target(Build, DependsOn(Clean), () =>
+  {
+    Run("dotnet", $"build {Solution} -c Release --nologo");
+  });
+
+  Target(Test, DependsOn(Build), () =>
+  {
+    Run("dotnet", $"test {Solution} -c Release --no-build --nologo");
+  });
+
+  Target(Release, DependsOn(Test), () =>
+  {
+    if (string.IsNullOrWhiteSpace(versionOption.Value()))
     {
-      var firstArg = args[0].Split("--")[0].Trim();
-      var customArgs = args[0].Split("--")[1].Trim().Split("&");
-
-      if (customArgs.Any(x => x.Contains("version")))
-      {
-        var versionArgs = customArgs.First(x => x.Contains("version"));
-        version = versionArgs.Split('=')[1].Trim();
-      }
-
-      if (customArgs.Any(x => x.Contains("key")))
-      {
-        var keyArgs = customArgs.First(x => x.Contains("key"));
-        key = keyArgs.Split('=')[1].Trim();
-      }
-
-      args[0] = firstArg;
+      throw new TargetFailedException("Version for updating changelog is missing!");
     }
 
-    if (!string.IsNullOrWhiteSpace(version))
+    var version = versionOption.Value();
+    Console.WriteLine($"Releasing version: '{version}'");
+
+    // updating the changelog
+    Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
+
+    // committing the changelog changes
+    Run("git", $"commit -am \"Committing changelog changes for v{version}\"");
+
+    // applying the tag
+    Run("git", $"tag -a v{version} -m \"version '{version}'\"");
+
+    // pushing
+    Run("git", $"push origin v{version}");
+  });
+  #endregion
+
+  #region Deployment targets
+  const string ArtifactsDirectory = "./artifacts";
+  const string CleanArtifacts = "clean-artifacts";
+  const string Pack = "pack";
+
+  Target(CleanArtifacts, () =>
+  {
+    if (Directory.Exists(ArtifactsDirectory))
     {
-      Console.WriteLine($"Using version: '{version}'" + Environment.NewLine);
+      Directory.Delete(ArtifactsDirectory, true);
+    }
+  });
+
+  Target(Pack, DependsOn(Build, CleanArtifacts), () =>
+  {
+    if (string.IsNullOrWhiteSpace(versionOption.Value()))
+    {
+      throw new TargetFailedException("Version for packaging is missing!");
     }
 
-    #region Local build targets
-    Target(Targets.RestoreTools, () =>
-    {
-      Run("dotnet", "tool restore");
-    });
+    var version = versionOption.Value();
+    Console.WriteLine($"Pack for version: '{version}'");
 
-    Target(Targets.AddChangelog, () =>
+    // pack packages
+    var directory = Directory.CreateDirectory(ArtifactsDirectory).FullName;
+    var projects = GetFiles("src", $"*.csproj");
+    foreach (var project in projects)
     {
-      Run("dotnet", "tool run releasy add-changelog", "changelogs");
-    });
+      if (project.Contains(".Tests"))
+        continue;
 
-    Target(Targets.CleanBuildOutput, () =>
-    {
-      Run("dotnet", $"clean {solution} -c Release -v m --nologo");
-    });
-
-    Target(Targets.Build, DependsOn(Targets.CleanBuildOutput), () =>
-    {
-      Run("dotnet", $"build {solution} -c Release --nologo");
-    });
-
-    Target(Targets.Test, DependsOn(Targets.Build), () =>
-    {
-      Run("dotnet", $"test {solution} -c Release --no-build --nologo");
-    });
-
-    Target(Targets.UpdateChangelog, () =>
-    {
-      if (string.IsNullOrWhiteSpace(version))
+      if (packableProjects.Any(m => project.Contains(m)))
       {
-        throw new Bullseye.TargetFailedException("Version for updating changelog is missing!");
+        Run("dotnet", $"pack {project} -c Release -p:PackageVersion={version} -p:Version={version} -o {directory} --no-build --nologo");
       }
-
-      // updating the changelog
-      Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/microwf/issues/");
-
-      // committing the changelog changes
-      Run("git", $"commit -am \"Committing changelog changes for v'{version}'\"");
-    });
-
-    Target(Targets.Release, DependsOn(Targets.RestoreTools, Targets.Test, Targets.UpdateChangelog), () =>
-    {
-      if (string.IsNullOrWhiteSpace(version))
-      {
-        throw new Bullseye.TargetFailedException("Version for updating changelog is missing!");
-      }
-
-      // applying the tag
-      Run("git", $"tag -a v{version} -m \"version '{version}'\"");
-
-      // pushing
-      Run("git", $"push origin v{version}");
-    });
-    #endregion
-
-    #region Deployment targets
-    Target(Targets.CleanPackOutput, () =>
-    {
-      if (Directory.Exists(packOutput))
-      {
-        Directory.Delete(packOutput, true);
-      }
-    });
-
-    Target(Targets.Pack, DependsOn(Targets.Build, Targets.CleanPackOutput), () =>
-    {
-      if (string.IsNullOrWhiteSpace(version))
-      {
-        throw new Bullseye.TargetFailedException("Version for packaging is missing!");
-      }
-
-      // pack packages
-      var directory = Directory.CreateDirectory(packOutput).FullName;
-      var projects = GetFiles("src", $"*.csproj");
-      foreach (var project in projects)
-      {
-        if (project.Contains(".Tests"))
-          continue;
-
-        if (packableProjects.Any(m => project.Contains(m)))
-        {
-          Run("dotnet", $"pack {project} -c Release -p:PackageVersion={version} -p:Version={version} -o {directory} --no-build --nologo");
-        }
-      }
-    });
-
-    Target(Targets.Deploy, DependsOn(Targets.RestoreTools, Targets.Test, Targets.Pack), () =>
-    {
-      if (string.IsNullOrWhiteSpace(key))
-      {
-        throw new Bullseye.TargetFailedException("Key for deploying is missing!");
-      }
-
-      // push packages
-      var directory = Directory.CreateDirectory(packOutput).FullName;
-      var packages = GetFiles(directory, $"*.nupkg");
-      foreach (var package in packages)
-      {
-        Run("dotnet", $"nuget push {package} -s {nugetSource} -k {key}");
-      }
-    });
-    #endregion
-
-    #region Make life easier targets
-    Target(Targets.DeployWebClient, () =>
-    {
-      Run("npm", "install", "samples/WebClient");
-      Run("npm", "run publish", "samples/WebClient");
-
-      // delete all files, not directories in samples/WebApi/wwwroot
-      var files = Directory.GetFiles("samples/WebApi/wwwroot");
-      foreach (var file in files)
-      {
-        File.Delete(file);
-      }
-
-      // copy files of samples/WebClient/dist to samples/WebApi/wwwroot
-      CopyDirectory("samples/WebClient/dist", "samples/WebApi/wwwroot");
-
-      // care about special assets
-      CopyDirectory("samples/WebClient/dist/assets/js", "samples/WebApi/wwwroot/assets/js");
-    });
-    #endregion
-
-    await RunTargetsAndExitAsync(
-      args,
-      ex => ex is SimpleExec.ExitCodeException
-        || ex.Message.EndsWith(envVarMissing, StringComparison.InvariantCultureIgnoreCase)
-    );
-  }
-
-  private static IEnumerable<string> GetFiles(
-      string directoryToScan,
-      string filter
-    )
-  {
-    List<string> files = new List<string>();
-
-    files.AddRange(Directory.GetFiles(
-      directoryToScan,
-      filter,
-      SearchOption.AllDirectories
-    ));
-
-    return files;
-  }
-
-  static void CopyDirectory(string sourceDir, string destinationDir, bool recursive = false)
-  {
-    var dir = new DirectoryInfo(sourceDir);
-    if (!dir.Exists)
-      throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
-
-    foreach (FileInfo file in dir.GetFiles())
-    {
-      Directory.CreateDirectory(destinationDir);
-      string targetFilePath = Path.Combine(destinationDir, file.Name);
-      file.CopyTo(targetFilePath, true);
     }
+  });
+  #endregion
 
-    if (recursive)
+  await RunTargetsAndExitAsync(targets, options);
+});
+
+return await app.ExecuteAsync(args);
+
+#region Helpers
+static IEnumerable<string> GetFiles(
+  string directoryToScan,
+  string filter
+)
+{
+  List<string> files = new();
+
+  files.AddRange(Directory.GetFiles(
+    directoryToScan,
+    filter,
+    SearchOption.AllDirectories
+  ));
+
+  return files;
+}
+
+static void CopyDirectory(string sourceDir, string destinationDir, bool recursive = false)
+{
+  var dir = new DirectoryInfo(sourceDir);
+  if (!dir.Exists)
+    throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+  foreach (FileInfo file in dir.GetFiles())
+  {
+    Directory.CreateDirectory(destinationDir);
+    string targetFilePath = Path.Combine(destinationDir, file.Name);
+    file.CopyTo(targetFilePath, true);
+  }
+
+  if (recursive)
+  {
+    foreach (DirectoryInfo subDir in dir.GetDirectories())
     {
-      foreach (DirectoryInfo subDir in dir.GetDirectories())
-      {
-        string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
-        CopyDirectory(subDir.FullName, newDestinationDir, true);
-      }
+      string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+      CopyDirectory(subDir.FullName, newDestinationDir, true);
     }
   }
 }
+#endregion
