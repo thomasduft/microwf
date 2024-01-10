@@ -4,7 +4,7 @@
 
 ### Added
 
-- Addes support for net8.0
+- Added support for net8.0
 
 ## [3.1.1] - 2022-11-28
 
