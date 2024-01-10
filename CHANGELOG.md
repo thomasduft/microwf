@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.0] - 2024-01-10
+
+### Added
+
+- Addes support for net8.0
+
 ## [3.1.1] - 2022-11-28
 
 ### Fixed
