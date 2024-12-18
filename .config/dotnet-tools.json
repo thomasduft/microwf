@@ -6,19 +6,22 @@
       "version": "0.11.0",
       "commands": [
         "releasy"
-      ]
+      ],
+      "rollForward": false
     },
     "dotnet-outdated-tool": {
-      "version": "4.6.1",
+      "version": "4.6.4",
       "commands": [
         "dotnet-outdated"
-      ]
+      ],
+      "rollForward": false
     },
     "dotnet-ef": {
-      "version": "8.0.4",
+      "version": "9.0.0",
       "commands": [
         "dotnet-ef"
-      ]
+      ],
+      "rollForward": false
     }
   }
 }
