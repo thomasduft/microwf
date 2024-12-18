@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build:targets",
-      "program": "${workspaceFolder}/build/bin/Debug/net8.0/targets.dll",
+      "program": "${workspaceFolder}/build/bin/Debug/net9.0/targets.dll",
       "args": [
         "pack --version=0.0.2&key=1234567890"
       ],
@@ -19,7 +19,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build:WebApi",
-      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net8.0/WebApi.dll",
+      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net9.0/WebApi.dll",
       "args": [
         "--urls",
         "https://localhost:5001"
@@ -39,7 +39,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build:ConsoleClient",
-      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net8.0/ConsoleClient.dll",
+      "program": "${workspaceRoot}/samples/ConsoleClient/bin/Debug/net9.0/ConsoleClient.dll",
       "args": [],
       "cwd": "${workspaceRoot}/samples/ConsoleClient",
       "stopAtEntry": false,
