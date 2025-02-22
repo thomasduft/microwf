@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.3.0] - 2025-02-22
+
+### Added
+
+- Added support for .NET 9.0.
+
 ## [3.2.0] - 2024-01-10
 
 ### Added
