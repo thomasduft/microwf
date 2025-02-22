@@ -51,7 +51,7 @@ public class AuthorizationController : Controller
     {
       // If the client application requested promptless authentication,
       // return an error indicating that the user is not logged in.
-      if (request.HasPrompt(Prompts.None))
+      if (request.HasPromptValue(PromptValues.None))
       {
         return base.Forbid(
           authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
@@ -78,7 +78,7 @@ public class AuthorizationController : Controller
       && result.Properties?.IssuedUtc is not null
       && DateTimeOffset.UtcNow - result.Properties.IssuedUtc > TimeSpan.FromSeconds(request.MaxAge.Value))
     {
-      if (request.HasPrompt(Prompts.None))
+      if (request.HasPromptValue(PromptValues.None))
       {
         return Forbid(
           authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
@@ -135,7 +135,7 @@ public class AuthorizationController : Controller
       // return an authorization response without displaying the consent form.
       case ConsentTypes.Implicit:
       case ConsentTypes.External when authorizations.Any():
-      case ConsentTypes.Explicit when authorizations.Any() && !request.HasPrompt(Prompts.Consent):
+      case ConsentTypes.Explicit when authorizations.Any() && !request.HasPromptValue(PromptValues.Consent):
         var principal = await _signInManager.CreateUserPrincipalAsync(user);
 
         // Note: in this sample, the granted scopes match the requested scope
@@ -168,8 +168,8 @@ public class AuthorizationController : Controller
 
       // At this point, no authorization was found in the database and an error must be returned
       // if the client application specified prompt=none in the authorization request.
-      case ConsentTypes.Explicit when request.HasPrompt(Prompts.None):
-      case ConsentTypes.Systematic when request.HasPrompt(Prompts.None):
+      case ConsentTypes.Explicit when request.HasPromptValue(PromptValues.None):
+      case ConsentTypes.Systematic when request.HasPromptValue(PromptValues.None):
         return Forbid(
           authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
           properties: new AuthenticationProperties(new Dictionary<string, string>

@@ -60,10 +60,10 @@ public static class STSConfigureServices
       {
         // Enable the authorization, device, logout, token, userinfo and verification endpoints.
         options.SetAuthorizationEndpointUris("connect/authorize")
-               .SetLogoutEndpointUris("connect/logout")
+               .SetEndSessionEndpointUris("connect/logout")
                .SetTokenEndpointUris("connect/token")
                .SetIntrospectionEndpointUris("connect/introspect")
-               .SetUserinfoEndpointUris("connect/userinfo");
+               .SetUserInfoEndpointUris("connect/userinfo");
 
         // Note: this sample uses the code, device, password and refresh token flows, but you
         // can enable the other flows if you need to support implicit or client credentials.
@@ -92,9 +92,9 @@ public static class STSConfigureServices
         options.UseAspNetCore()
                .EnableStatusCodePagesIntegration()
                .EnableAuthorizationEndpointPassthrough()
-               .EnableLogoutEndpointPassthrough()
+               .EnableEndSessionEndpointPassthrough()
                .EnableTokenEndpointPassthrough()
-               .EnableUserinfoEndpointPassthrough();
+               .EnableUserInfoEndpointPassthrough();
 
         options.DisableAccessTokenEncryption();
       })
