@@ -6,12 +6,12 @@ using static Bullseye.Targets;
 using static SimpleExec.Command;
 
 const string Solution = "microwf.slnx";
-IList<string> packableProjects = new List<string>{
+IList<string> packableProjects = [
   "microwf.Core",
   "microwf.Domain",
   "microwf.Infrastructure",
   "microwf.AspNetCoreEngine"
-};
+];
 
 var app = new CommandLineApplication
 {
@@ -64,17 +64,17 @@ app.OnExecuteAsync(async _ =>
     Run("dotnet", $"clean {Solution} -c Release -v m --nologo");
   });
 
-  Target(Build, DependsOn(Clean), () =>
+  Target(Build, [Clean], () =>
   {
     Run("dotnet", $"build {Solution} -c Release --nologo");
   });
 
-  Target(Test, DependsOn(Build), () =>
+  Target(Test, [Build], () =>
   {
     Run("dotnet", $"test {Solution} -c Release --no-build --nologo");
   });
 
-  Target(Release, DependsOn(Test), () =>
+  Target(Release, [Test], () =>
   {
     if (string.IsNullOrWhiteSpace(versionOption.Value()))
     {
@@ -111,7 +111,7 @@ app.OnExecuteAsync(async _ =>
     }
   });
 
-  Target(Pack, DependsOn(Build, CleanArtifacts), () =>
+  Target(Pack, [Build, CleanArtifacts], () =>
   {
     if (string.IsNullOrWhiteSpace(versionOption.Value()))
     {
@@ -148,15 +148,14 @@ static IEnumerable<string> GetFiles(
   string filter
 )
 {
-  List<string> files = new();
-
-  files.AddRange(Directory.GetFiles(
-    directoryToScan,
-    filter,
-    SearchOption.AllDirectories
-  ));
-
-  return files;
+  return
+  [
+    .. Directory.GetFiles(
+      directoryToScan,
+      filter,
+      SearchOption.AllDirectories
+    ),
+  ];
 }
 
 static void CopyDirectory(string sourceDir, string destinationDir, bool recursive = false)
