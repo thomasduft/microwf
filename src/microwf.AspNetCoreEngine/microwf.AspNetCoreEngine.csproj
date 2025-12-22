@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -19,17 +19,11 @@
     <PackageTags>StateMachine Workflow micro</PackageTags>
     <PackageProjectUrl>https://github.com/thomasduft/microwf</PackageProjectUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
-  </ItemGroup>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    <OutputType>Library</OutputType>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\microwf.Core\microwf.Core.csproj" />

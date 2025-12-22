@@ -108,7 +108,7 @@ namespace tomware.Microwf.Engine
         totalPages = result.TotalPages
       };
 
-      this.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+      this.Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
     }
   }
 }
